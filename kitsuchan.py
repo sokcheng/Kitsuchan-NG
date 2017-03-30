@@ -44,7 +44,7 @@ logger = logging.getLogger('discord')
 logger.setLevel(logging.INFO)
 
 bot = discord.ext.commands.Bot(command_prefix="ki!")
-bot.description = "A Discord bot that fetches anime images."
+bot.description = "A Discord bot that fetches anime images and does other things."
 bot.session = aiohttp.ClientSession(loop=bot.loop)
 
 def check_if_admin(ctx):
