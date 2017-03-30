@@ -12,6 +12,7 @@ Usage::
 
 # Standard modules
 import os
+import html
 import logging
 import random
 import sys
@@ -78,11 +79,15 @@ async def on_command_error(exception, ctx):
     else:
         logger.info(str(exception))
 
-@bot.group(help="Command group for info. ki!help info for details.", aliases=["i"])
+@bot.group(brief="Command group for info. Run %shelp info for details." % (bot.command_prefix,),
+           aliases=["i"],
+           help=("Command group for a series of more specific commands. Does not do anything if "
+                 "you run it by itself."))
 async def info():
     pass
 
-@info.command(help="Fetch bot info.", aliases=["m"])
+@info.command(brief="Fetch bot info.", aliases=["m"],
+              help=("Display information about the bot. Mainly useful for version info."))
 async def me():
     logger.info("Displaying info about me.")
     embed = discord.Embed(title=APP_NAME)
@@ -93,7 +98,9 @@ async def me():
     embed.add_field(name="discord.py", value=discord.__version__)
     await bot.say(embed=embed)
 
-@info.command(help="Fetch server info.", aliases=["s"], pass_context=True)
+@info.command(brief="Fetch server info.", aliases=["s"], pass_context=True,
+              help=("Display information about the current server, such as owner info, region, "
+                    "custom emojis, and roles."))
 async def server(ctx):
     logger.info("Displaying info about server.")
     server = ctx.message.server
@@ -113,7 +120,8 @@ async def server(ctx):
     embed.add_field(name="Roles", value=roles, inline=False)
     await bot.say(embed=embed)
 
-@info.command(help="Fetch channel info.", aliases=["c"], pass_context=True)
+@info.command(brief="Fetch channel info.", aliases=["c"], pass_context=True,
+              help=("Display information about the current channel."))
 async def channel(ctx):
     logger.info("Displaying info about channel.")
     channel = ctx.message.channel
@@ -138,7 +146,8 @@ async def channel(ctx):
         embed.set_footer(text="NSFW content is enabled for this channel.")
     await bot.say(embed=embed)
 
-@info.command(help="Fetch channel info.", aliases=["u"], pass_context=True)
+@info.command(brief="Fetch channel info.", aliases=["u"], pass_context=True,
+              help=("Display information about the mentioned user, such as status and roles."))
 async def user(ctx):
     logger.info("Displaying info about user.")
     try:
@@ -164,7 +173,15 @@ async def user(ctx):
     embed.add_field(name="Roles", value=roles, inline=False)
     await bot.say(embed=embed)
 
-@bot.command(help="Retrieve an answer from DuckDuckGo.", aliases=["ddg"])
+@bot.command(brief="Retrieve an answer from DuckDuckGo.", aliases=["ddg"],
+             help=("This command is extremely versatile! Here are a few examples of things you "
+                   "can do with it:\n\n"
+                   "ddg roll 5d6 - Roll five 6-sided dice.\n"
+                   "ddg 40 f in c - Convert 40 degrees Fahrenheit to Celsius.\n"
+                   "ddg (5+6)^2/4 - Produces 30.25.\n"
+                   "ddg random number 1 100 - Generate a random number from 1 to 100.\n"
+                   "ddg random name - Generate a random name.\n"
+                   "ddg random fortune - Generate a random fortune."))
 async def duckduckgo(*query):
     logger.info("Retrieving DuckDuckGo answer with tags %s." % (query,))
     query_search = " ".join(query)
@@ -176,7 +193,7 @@ async def duckduckgo(*query):
             data = await response.json()
             if len(data) == 0:
                 raise errors.ZeroDataLengthError()
-            answer = data.get("Answer")
+            answer = html.unescape(data.get("Answer"))
             embed = discord.Embed(title=answer)
             params_short = urllib.parse.urlencode({"q": query_search})
             embed.description = BASE_URL_DUCKDUCKGO % params_short
@@ -187,7 +204,9 @@ async def duckduckgo(*query):
             await bot.say(message)
             logger.info(message)
 
-@bot.command(help="Fetch an image from IbSear.ch.", aliases=["ib"], pass_context=True)
+@bot.command(brief="Fetch an image from IbSear.ch.", aliases=["ib"], pass_context=True,
+             help=("Search IbSear.ch for an anime picture. You may pass standard imageboard "
+                   "tags as arguments to refine the result a bit."))
 async def ibsearch(ctx, *tags):
     logger.info("Fetching image with tags %s." % (tags,))
     if ctx.message.channel.id in WHITELIST_NSFW:
@@ -219,7 +238,8 @@ async def ibsearch(ctx, *tags):
             await bot.say(message)
             logger.info(message)
 
-@bot.command(help="Halts the bot.", aliases=["h"])
+@bot.command(brief="Halt the bot.", aliases=["h"],
+             help="End execution of the bot. Requires the user's ID to be whitelisted.")
 @commands.check(check_if_admin)
 async def halt():
     logger.warning("Halting bot!")
@@ -227,7 +247,8 @@ async def halt():
     await bot.logout()
     bot.session.close()
 
-@bot.command(help="Restarts the bot.", aliases=["r"])
+@bot.command(brief="Restart the bot.", aliases=["r"],
+             help="Restart execution of the bot. Requires the user's ID to be whitelisted.")
 @commands.check(check_if_admin)
 async def restart():
     logger.warning("Restarting bot!")
