@@ -2,6 +2,11 @@
 
 """Retrieve anime images with a Discord bot.
 
+This is free and unencumbered software released into the public domain, under the Creative Commons
+CC0 1.0 Universal Public Domain Dedication.
+
+URL to legal text: https://creativecommons.org/publicdomain/zero/1.0/legalcode
+
 Usage::
 
 Required environment variables:
