@@ -21,6 +21,7 @@ Optional environment variables:
 # Standard modules
 import os
 import html
+import json
 import logging
 import random
 import sys
@@ -125,20 +126,20 @@ async def about(ctx):
 @info.command(brief="Display guild info.", aliases=["s"],
               help=("Display information about the current guild, such as owner info, region, "
                     "custom emojis, and roles."))
-async def guildg(ctx):
+async def guild(ctx):
     """Display guild info about the current context."""
     logger.info("Displaying info about guild.")
     guild = ctx.message.guild
     if guild is None:
         raise errors.ContextError("Not in a guild.")
     embed = discord.Embed(title=guild.name)
-    embed.description = guild.id
+    embed.description = str(guild.id)
     embed.set_thumbnail(url=guild.icon_url)
     embed.add_field(name="Owner", value=guild.owner.name)
     embed.add_field(name="Members", value=str(guild.member_count))
-    count_channels = str(len(tuple(0 for x in guild.channels if str(x.type) == "text")))
+    count_channels = str(len(tuple(0 for x in guild.channels if isinstance(x, discord.TextChannel))))
     embed.add_field(name="Text channels", value=count_channels)
-    count_channels_voice = str(len(tuple(0 for x in guild.channels if str(x.type) == "voice")))
+    count_channels_voice = str(len(tuple(0 for x in guild.channels if isinstance(x, discord.VoiceChannel))))
     embed.add_field(name="Voice channels", value=count_channels_voice)
     embed.add_field(name="Region", value=str(guild.region))
     embed.add_field(name="Created at", value=guild.created_at.ctime())
@@ -164,15 +165,15 @@ async def channel(ctx):
         pass
     else:
         embed.description = channel.topic
-    embed.add_field(name="Channel ID", value=channel.id)
+    embed.add_field(name="Channel ID", value=str(channel.id))
     try:
         channel.guild
     except AttributeError:
         pass
     else:
-        embed.add_field(name="guild", value=channel.guild.name)
+        embed.add_field(name="Guild", value=channel.guild.name)
     embed.add_field(name="Created at", value=channel.created_at.ctime())
-    if channel.id in WHITELIST_NSFW:
+    if str(channel.id) in WHITELIST_NSFW:
         embed.set_footer(text="NSFW content is enabled for this channel.")
     await ctx.send(embed=embed)
 
@@ -189,7 +190,7 @@ async def user(ctx):
     if user.display_name != user.name:
         embed.description = user.name
     embed.set_thumbnail(url=user.avatar_url)
-    embed.add_field(name="User ID", value=user.id)
+    embed.add_field(name="User ID", value=str(user.id))
     if user.bot:
         embed.add_field(name="Bot?", value="Yes")
     status = str(user.status).capitalize()
@@ -234,7 +235,8 @@ async def duckduckgo(ctx, *query):
     url = BASE_URL_DUCKDUCKGO % params
     async with bot.session.get(url) as response:
         if response.status == 200:
-            data = await response.json()
+            data = await response.text()
+            data = json.loads(data)
             if len(data) == 0:
                 raise errors.ZeroDataLengthError()
             answer = html.unescape(data.get("Answer"))
