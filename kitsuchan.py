@@ -37,6 +37,8 @@ API_KEY_IBSEARCH = os.environ["API_KEY_IBSEARCH_KITSUCHAN"]
 WHITELIST_ADMINS = os.environ["WHITELIST_ADMINS_KITSUCHAN"]
 WHITELIST_NSFW = os.environ.get("WHITELIST_NSFW_KITSUCHAN", [])
 
+BASE_URL_DUCKDUCKGO = "https://duckduckgo.com/?%s"
+
 BASE_URL_IBSEARCH = "https://ibsear.ch/api/v1/images.json?%s"
 BASE_URL_IBSEARCH_IMAGE = "https://im1.ibsear.ch/%s"
 BASE_URL_IBSEARCH_XXX = "https://ibsearch.xxx/api/v1/images.json?%s"
@@ -165,6 +167,24 @@ async def user(ctx):
     embed.add_field(name="Roles", value=roles, inline=False)
     await bot.say(embed=embed)
 
+@bot.command(help="Retrieve an answer from DuckDuckGo.", aliases=["ddg"])
+async def duckduckgo(*query):
+    logger.info("Retrieving DuckDuckGo answer with tags %s." % (query,))
+    query_search = "+".join(urllib.parse.quote(term) for term in query)
+    params = urllib.parse.urlencode({"q": query_search, "t": "ffsb",
+                                     "format": "json", "ia": "answer"}, safe="+")
+    url = BASE_URL_DUCKDUCKGO % params
+    async with bot.session.get(url) as response:
+        if response.status == 200:
+            data = await response.json()
+            answer = data.get("Answer")
+            embed = discord.Embed(title=answer)
+            params_short = urllib.parse.urlencode({"q": query_search}, safe="+")
+            embed.description = BASE_URL_DUCKDUCKGO % params_short
+            await bot.say(embed=embed)
+        else:
+            await bot.say("Failed to fetch answer. :(")
+
 @bot.command(help="Fetch an image from IbSear.ch.", aliases=["ib"], pass_context=True)
 async def ibsearch(ctx, *tags):
     logger.info("Fetching image with tags %s." % (tags,))
@@ -176,8 +196,8 @@ async def ibsearch(ctx, *tags):
         logger.info("NSFW disallowed for channel %s." % (ctx.message.channel.id,))
         base_url = BASE_URL_IBSEARCH
         base_url_image = BASE_URL_IBSEARCH_IMAGE
-    query_tags = urllib.parse.quote_plus(" ".join(tags))
-    params = urllib.parse.urlencode({"key": API_KEY_DISCORD, "q": query_tags})
+    query_tags = "+".join(urllib.parse.quote(tag) for tag in tags)
+    params = urllib.parse.urlencode({"key": API_KEY_DISCORD, "q": query_tags}, safe="+")
     url = base_url % params
     async with bot.session.get(url) as response:
         if response.status == 200:
