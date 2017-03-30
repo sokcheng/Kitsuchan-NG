@@ -69,7 +69,7 @@ def check_if_bot_owner(ctx):
 def check_if_channel_admin(ctx):
     """Check whether the sender of a message is marked as a channel admin.""" 
     if ctx.message.channel.permissions_for(ctx.message.author).administrator == True \
-    or ctx.message.author.id == ctx.server.owner.id:
+    or ctx.message.author.id == ctx.guild.owner.id:
         return True
     return False
 
@@ -105,13 +105,13 @@ async def on_command_error(exception, ctx):
 @bot.group(brief="Command group for info. Run help info for details.", aliases=["i"],
            help=("Command group for a series of more specific commands. Does not do anything if "
                  "you run it by itself."))
-async def info():
+async def info(ctx):
     """Do nothing, but act as a placeholder for several subcommands."""
     pass
 
 @info.command(brief="Display bot info.", aliases=["m"],
               help=("Display information about the bot. Mainly useful for version info."))
-async def me():
+async def me(ctx):
     """Display bot info."""
     logger.info("Displaying info about me.")
     embed = discord.Embed(title=APP_NAME)
@@ -120,36 +120,36 @@ async def me():
     embed.set_thumbnail(url=bot.user.avatar_url)
     embed.add_field(name="Version", value=APP_VERSION_STRING)
     embed.add_field(name="discord.py", value=discord.__version__)
-    await bot.say(embed=embed)
+    await ctx.send(embed=embed)
 
-@info.command(brief="Display server info.", aliases=["s"], pass_context=True,
-              help=("Display information about the current server, such as owner info, region, "
+@info.command(brief="Display guild info.", aliases=["s"],
+              help=("Display information about the current guild, such as owner info, region, "
                     "custom emojis, and roles."))
-async def server(ctx):
-    """Display server info about the current context."""
-    logger.info("Displaying info about server.")
-    server = ctx.message.server
-    if server is None:
-        raise errors.ContextError("Not in a server.")
-    embed = discord.Embed(title=server.name)
-    embed.description = server.id
-    embed.set_thumbnail(url=server.icon_url)
-    embed.add_field(name="Owner", value=server.owner.name)
-    embed.add_field(name="Members", value=str(server.member_count))
-    count_channels = str(len(tuple(0 for x in server.channels if str(x.type) == "text")))
+async def guildg(ctx):
+    """Display guild info about the current context."""
+    logger.info("Displaying info about guild.")
+    guild = ctx.message.guild
+    if guild is None:
+        raise errors.ContextError("Not in a guild.")
+    embed = discord.Embed(title=guild.name)
+    embed.description = guild.id
+    embed.set_thumbnail(url=guild.icon_url)
+    embed.add_field(name="Owner", value=guild.owner.name)
+    embed.add_field(name="Members", value=str(guild.member_count))
+    count_channels = str(len(tuple(0 for x in guild.channels if str(x.type) == "text")))
     embed.add_field(name="Text channels", value=count_channels)
-    count_channels_voice = str(len(tuple(0 for x in server.channels if str(x.type) == "voice")))
+    count_channels_voice = str(len(tuple(0 for x in guild.channels if str(x.type) == "voice")))
     embed.add_field(name="Voice channels", value=count_channels_voice)
-    embed.add_field(name="Region", value=str(server.region))
-    embed.add_field(name="Created at", value=server.created_at.ctime())
-    emojis = ", ".join((emoji.name for emoji in server.emojis))
+    embed.add_field(name="Region", value=str(guild.region))
+    embed.add_field(name="Created at", value=guild.created_at.ctime())
+    emojis = ", ".join((emoji.name for emoji in guild.emojis))
     if len(emojis) > 0:
         embed.add_field(name="Custom emojis", value=emojis)
-    roles = ", ".join((role.name for role in server.roles))
+    roles = ", ".join((role.name for role in guild.roles))
     embed.add_field(name="Roles", value=roles, inline=False)
-    await bot.say(embed=embed)
+    await ctx.send(embed=embed)
 
-@info.command(brief="Display channel info.", aliases=["c"], pass_context=True,
+@info.command(brief="Display channel info.", aliases=["c"],
               help=("Display information about the current channel."))
 async def channel(ctx):
     """Display channel info about the current context."""
@@ -166,17 +166,17 @@ async def channel(ctx):
         embed.description = channel.topic
     embed.add_field(name="Channel ID", value=channel.id)
     try:
-        channel.server
+        channel.guild
     except AttributeError:
         pass
     else:
-        embed.add_field(name="Server", value=channel.server.name)
+        embed.add_field(name="guild", value=channel.guild.name)
     embed.add_field(name="Created at", value=channel.created_at.ctime())
     if channel.id in WHITELIST_NSFW:
         embed.set_footer(text="NSFW content is enabled for this channel.")
-    await bot.say(embed=embed)
+    await ctx.send(embed=embed)
 
-@info.command(brief="Display user info.", aliases=["u"], pass_context=True,
+@info.command(brief="Display user info.", aliases=["u"],
               help=("Display information about the mentioned user, such as status and roles."))
 async def user(ctx):
     """Display info about the first user mentioned in this command."""
@@ -198,19 +198,19 @@ async def user(ctx):
     embed.add_field(name="Status", value=status)
     if user.game:
         embed.add_field(name="Playing", value=user.game.name)
-    embed.add_field(name="Joined server at", value=user.joined_at.ctime())
+    embed.add_field(name="Joined guild at", value=user.joined_at.ctime())
     embed.add_field(name="Joined Discord at", value=user.created_at.ctime())
     roles = ", ".join((str(role) for role in user.roles))
     embed.add_field(name="Roles", value=roles, inline=False)
-    await bot.say(embed=embed)
+    await ctx.send(embed=embed)
 
 @bot.command(help="Repeat the user's text back at them.", aliases=["say"])
-async def echo(*text):
+async def echo(ctx, *text):
     """Repeat the user's text back at them.
     
     *text - A list of strings, which is concatenated into one string before being echoed.
     """
-    await bot.say(" ".join(text))
+    await ctx.send(" ".join(text))
 
 @bot.command(brief="Retrieve an answer from DuckDuckGo.", aliases=["ddg"],
              help=("Query the DuckDuckGo Instant Answers API.\n\n"
@@ -222,7 +222,7 @@ async def echo(*text):
                    "ddg random number 1 100 - Generate a random number from 1 to 100.\n"
                    "ddg random name - Generate a random name.\n"
                    "ddg random fortune - Generate a random fortune."))
-async def duckduckgo(*query):
+async def duckduckgo(ctx, *query):
     """Retrieve an answer from DuckDuckGo, using the Instant Answers JSON API.
     
     *query - A list of strings to be used in the search criteria.
@@ -241,14 +241,14 @@ async def duckduckgo(*query):
             embed = discord.Embed(title=answer)
             params_short = urllib.parse.urlencode({"q": query_search})
             embed.description = BASE_URL_DUCKDUCKGO % params_short
-            await bot.say(embed=embed)
+            await ctx.send(embed=embed)
             logger.info("Answer retrieved!")
         else:
             message = "Failed to fetch answer. :("
-            await bot.say(message)
+            await ctx.send(message)
             logger.info(message)
 
-@bot.command(brief="Fetch an image from IbSear.ch.", aliases=["ib"], pass_context=True,
+@bot.command(brief="Fetch an image from IbSear.ch.", aliases=["ib"],
              help=("Search IbSear.ch for an anime picture. You may pass standard imageboard "
                    "tags as arguments to refine the result a bit."))
 async def ibsearch(ctx, *tags):
@@ -279,30 +279,30 @@ async def ibsearch(ctx, *tags):
             url_image = base_url_image % (data[index]["path"],)
             embed.description = url_image
             embed.set_image(url=url_image)
-            await bot.say(embed=embed)
+            await ctx.send(embed=embed)
             logger.info("Image retrieved!")
         else:
             message = "Failed to fetch image. :("
-            await bot.say(message)
+            await ctx.send(message)
             logger.info(message)
 
 @bot.command(brief="Halt the bot.", aliases=["h"],
              help="End execution of the bot. Can only be done by the bot owner.")
 @commands.check(check_if_bot_owner)
-async def halt():
+async def halt(ctx):
     """Halt the bot. Must be bot owner to execute."""
     logger.warning("Halting bot!")
-    await bot.say("Halting.")
+    await ctx.send("Halting.")
     await bot.logout()
     bot.session.close()
 
 @bot.command(brief="Restart the bot.", aliases=["r"],
              help="Restart execution of the bot. Can only be done by the bot owner.")
 @commands.check(check_if_bot_owner)
-async def restart():
+async def restart(ctx):
     """Restart the bot. Must be bot owner to execute."""
     logger.warning("Restarting bot!")
-    await bot.say("Restarting.")
+    await ctx.send("Restarting.")
     await bot.logout()
     bot.session.close()
     os.execl(os.path.realpath(__file__), *sys.argv)

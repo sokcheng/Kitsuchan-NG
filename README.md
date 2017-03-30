@@ -1,5 +1,7 @@
 # kitsuchan-ng
 
+This bot uses the `rewrite` branch of `discord.py`. Install that and not the regular one.
+
 # How to run
 `kitsuchan-ng` reads its config from environment variables. The following ones are **mandatory**:
 
