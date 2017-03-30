@@ -49,9 +49,9 @@ WHITELIST_NSFW = os.environ.get("WHITELIST_NSFW", [])
 BASE_URL_DUCKDUCKGO = "https://duckduckgo.com/?%s"
 
 BASE_URL_IBSEARCH = "https://ibsear.ch/api/v1/images.json?%s"
-BASE_URL_IBSEARCH_IMAGE = "https://im1.ibsear.ch/%s"
+BASE_URL_IBSEARCH_IMAGE = "https://%s.ibsear.ch/%s"
 BASE_URL_IBSEARCH_XXX = "https://ibsearch.xxx/api/v1/images.json?%s"
-BASE_URL_IBSEARCH_XXX_IMAGE = "https://im1.ibsearch.xxx/%s"
+BASE_URL_IBSEARCH_XXX_IMAGE = "https://%s.ibsearch.xxx/%s"
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger('discord')
@@ -289,7 +289,7 @@ async def ibsearch(ctx, *tags):
             index = random.randint(1, len(data)) - 1
             result = data[index]
             embed = discord.Embed()
-            url_image = base_url_image % (data[index]["path"],)
+            url_image = base_url_image % (data[index]["server"], data[index]["path"])
             embed.description = url_image
             embed.set_image(url=url_image)
             await ctx.send(embed=embed)
