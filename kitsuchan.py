@@ -4,10 +4,14 @@
 
 Usage::
 
-    >>> Set environment variables API_KEY_DISCORD_KITSUCHAN and API_KEY_IBSEARCH_KITSUCHAN
-    >>> Set environment variable WHITELIST_ADMINS_KITSUCHAN as a list of Discord users with admin
-    >>> Optionally set WHITELIST_NSFW_KITSUCHAN for channels you wish to whitelist
-    >>> kitsuchan.py
+Required environment variables:
+* API_KEY_DISCORD - OAuth token for Discord.
+* API_KEY_IBSEARCH - API key for IbSear.ch.
+* WHITELIST_ADMINS - List of Discord user IDs who can admin the bot.
+
+Optional environment variables:
+* WHITELIST_NSFW - List of channels to allow NSFW content on.
+* COMMAND_PREFIX - Override command prefix.
 """
 
 # Standard modules
@@ -32,11 +36,13 @@ APP_URL = "https://github.com/n303p4/kitsuchan-ng"
 APP_VERSION = (0, 0, 1, "alpha", 1)
 APP_VERSION_STRING = "%s.%s.%s-%s%s" % APP_VERSION
 
-API_KEY_DISCORD = os.environ["API_KEY_DISCORD_KITSUCHAN"]
-API_KEY_IBSEARCH = os.environ["API_KEY_IBSEARCH_KITSUCHAN"]
+API_KEY_DISCORD = os.environ["API_KEY_DISCORD"]
+API_KEY_IBSEARCH = os.environ["API_KEY_IBSEARCH"]
 
-WHITELIST_ADMINS = os.environ["WHITELIST_ADMINS_KITSUCHAN"]
-WHITELIST_NSFW = os.environ.get("WHITELIST_NSFW_KITSUCHAN", [])
+WHITELIST_ADMINS = os.environ["WHITELIST_ADMINS"]
+WHITELIST_NSFW = os.environ.get("WHITELIST_NSFW", [])
+
+COMMAND_PREFIX = os.environ.get("COMMAND_PREFIX", None)
 
 BASE_URL_DUCKDUCKGO = "https://duckduckgo.com/?%s"
 
@@ -67,7 +73,10 @@ def is_human(ctx):
 @bot.event
 async def on_ready():
     """Conduct preparations once the bot is ready to go."""
-    bot.command_prefix = bot.user.name[:3].lower() + "!"
+    if isinstance(COMMAND_PREFIX, str):
+        bot.command_prefix = COMMAND_PREFIX
+    else:
+        bot.command_prefix = bot.user.name[:3].lower() + "!"
     game = discord.Game()
     game.name = bot.command_prefix + "help"
     await bot.change_presence(game=game)

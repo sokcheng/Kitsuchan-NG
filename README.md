@@ -1,25 +1,27 @@
 # kitsuchan-ng
 A fairly good Discord bot, hopefully.
 
-# How to set up
-Set up the following environment variables:
+# How to run
+`kitsuchan-ng` reads its config from environment variables. The following ones are **mandatory**:
 
-* `API_KEY_DISCORD_KITSUCHAN` - This is the OAuth token for your bot's account.
-* `API_KEY_IBSEARCH_KITSUCHAN` - This is the API key for IbSear.ch. You can easily get one for
-  free with no registration needed, so there's no excuse for you not to get one.
-* `WHITELIST_ADMINS_KITSUCHAN` - This contains a list of user IDs that can restart and halt the bot.
+* `API_KEY_DISCORD` - OAuth token for your Discord bot account.
+* `API_KEY_IBSEARCH` - API key for IbSear.ch. You can easily get one for free with no registration
+  needed, so there's no excuse for you not to get one.
+* `WHITELIST_ADMINS` - A list of user IDs that can restart and halt the bot. Ideally, your own
+  user ID (not the bot's ID) should be in this list at minimum.
 
-Optionally, set up the following as well:
+Optionally, you may set the following as well:
 
-* `WHITELIST_NSFW_KITSUCHAN` - This contains a list of channel IDs for which NSFW content may be
-  posted.
+* `WHITELIST_NSFW` - This contains a list of channel IDs for which NSFW content may be posted.
+* `COMMAND_PREFIX` - Override the command prefix with anything of your liking.
 
-Once you have these set up, simply run `kitsuchan.py` and the bot will wake up. The program will
-*not run* unless the first three variables are set up.
+To run the program, it's suggested you do something like:
+
+`API_KEY_DISCORD=key1 API_KEY_IBSEARCH=key2 WHITELIST_ADMINS=yourID python3 kitsuchan.py`
 
 # How to use
 By default, `kitsuchan-ng` uses `kit!` for its prefix where `kit` are the first three letters of
-the bot account's username.
+the bot account's username. You can override this.
 
 # Supported commands
 
@@ -33,6 +35,6 @@ the bot account's username.
   useful command the bot has right now, due to the high versatility of the Instant Answers API.
 * `ibsearch <list of tags>` - Search IbSear.ch for anime pictures.
 * `halt` - Halt the bot. The user who issues the command must have their ID listed in
-  `WHITELIST_ADMINS_KITSUCHAN`.
+  `WHITELIST_ADMINS`.
 * `restart` - Restart the bot. The user who issues the command must have their ID listed in
-  `WHITELIST_ADMINS_KITSUCHAN`.
+  `WHITELIST_ADMINS`.
