@@ -74,10 +74,7 @@ async def on_command_error(exception, ctx):
     if isinstance(exception, discord.ext.commands.CheckFailure):
         logger.info("%s (%s) tried to issue a command but was denied." % (ctx.message.author.name,
                                                                           ctx.message.author.id))
-    elif isinstance(exception, errors.InputError):
-        logger.info(str(exception))
-    elif isinstance(exception, errors.ContextError):
-        logger.info(str(exception))
+    # Add more specificity to this at some point.
     else:
         logger.info(str(exception))
 
@@ -177,6 +174,8 @@ async def duckduckgo(*query):
     async with bot.session.get(url) as response:
         if response.status == 200:
             data = await response.json()
+            if len(data) == 0:
+                raise errors.ZeroDataLengthError()
             answer = data.get("Answer")
             embed = discord.Embed(title=answer)
             params_short = urllib.parse.urlencode({"q": query_search})
@@ -205,6 +204,8 @@ async def ibsearch(ctx, *tags):
     async with bot.session.get(url) as response:
         if response.status == 200:
             data = await response.json()
+            if len(data) == 0:
+                raise errors.ZeroDataLengthError()
             index = random.randint(1, len(data)) - 1
             result = data[index]
             embed = discord.Embed()

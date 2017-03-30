@@ -19,3 +19,9 @@ class ContextError(Error):
         self.message = "Invalid context."
     def __str__(self):
         return self.message
+
+class ZeroDataLengthError(Error):
+    def __init__(self):
+        self.message = "Data length is 0."
+    def __str__(self):
+        return self.message
