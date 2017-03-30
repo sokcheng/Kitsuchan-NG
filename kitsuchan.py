@@ -261,7 +261,14 @@ async def ibsearch(ctx, *tags):
     """Retrieve a randomized image from IbSear.ch.
     
     *tags - A list of tag strings to be used in the search criteria.
-    """
+    
+    This command accepts common imageboard tags and keywords. Here are a few examples:
+    
+    >> ibsearch red_hair armor - Search for images tagged with either red_hair or armor.
+    >> ibsearch +animal_ears +armor - Search for images tagged with both red_hair and armor.
+    >> ibsearch 1280x1024 - Search for images that are 1920x1080.
+    >> ibsearch 5:4 - Search for images in 5:4 aspect ratio.
+    >> ibsearch random: - You don't care about what you get."""
     logger.info("Fetching image with tags %s." % (tags,))
     if str(ctx.message.channel.id) in WHITELIST_NSFW:
         logger.info("NSFW allowed for channel %s." % (ctx.message.channel.id,))
