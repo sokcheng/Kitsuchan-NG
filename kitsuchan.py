@@ -202,7 +202,7 @@ async def ibsearch(ctx, *tags):
     async with bot.session.get(url) as response:
         if response.status == 200:
             data = await response.json()
-            index = random.randint(1, len(data))
+            index = random.randint(1, len(data)) - 1
             result = data[index]
             embed = discord.Embed()
             embed.set_image(url=base_url_image % (data[index]["path"],))
