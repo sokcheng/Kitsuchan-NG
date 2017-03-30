@@ -61,6 +61,7 @@ def is_human(ctx):
 
 @bot.event
 async def on_ready():
+    bot.command_prefix = bot.user.name[:2].lower() + "!"
     game = discord.Game()
     game.name = bot.command_prefix + "help"
     await bot.change_presence(game=game)
