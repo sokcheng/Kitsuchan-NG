@@ -225,6 +225,7 @@ async def duckduckgo(ctx, *query):
     *query - A list of strings to be used in the search criteria.
     
     This command is extremely versatile! Here are a few examples of things you can do with it:
+    
     >> ddg roll 5d6 - Roll five 6-sided dice.
     >> ddg 40 f in c - Convert 40 degrees Fahrenheit to Celsius.
     >> ddg (5+6)^2/4 - Produces 30.25.
