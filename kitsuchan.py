@@ -205,7 +205,9 @@ async def ibsearch(ctx, *tags):
             index = random.randint(1, len(data)) - 1
             result = data[index]
             embed = discord.Embed()
-            embed.set_image(url=base_url_image % (data[index]["path"],))
+            url_image = base_url_image % (data[index]["path"],)
+            embed.description = url_image
+            embed.set_image(url=url_image)
             await bot.say(embed=embed)
         else:
             await bot.say("Failed to fetch images. :(")
