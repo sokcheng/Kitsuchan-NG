@@ -23,6 +23,7 @@ the bot account's username.
 
 # Supported commands
 
+* `help` - Display help information.
 * `info me` - Display info about the bot itself.
 * `info server` - Display info about the current server.
 * `info channnel` - Display info about the current channel.
