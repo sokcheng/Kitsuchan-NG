@@ -13,7 +13,7 @@ Optionally, you may set the following as well:
 
 To run the program, it's suggested you do something like:
 
-`API_KEY_DISCORD=key1 API_KEY_IBSEARCH=key2 WHITELIST_ADMINS=yourID python3 kitsuchan.py`
+`API_KEY_DISCORD=key1 API_KEY_IBSEARCH=key2 python3 kitsuchan.py`
 
 # How to use
 By default, `kitsuchan-ng` uses `kit!` for its prefix where `kit` are the first three letters of
