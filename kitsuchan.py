@@ -240,6 +240,7 @@ async def duckduckgo(ctx, *query):
     url = BASE_URL_DUCKDUCKGO % params
     async with bot.session.get(url) as response:
         if response.status == 200:
+            # This should be response.json() directly, but DuckDuckGo returns an incorrect MIME.
             data = await response.text()
             data = json.loads(data)
             if len(data) == 0:
