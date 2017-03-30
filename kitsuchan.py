@@ -109,9 +109,9 @@ async def info(ctx):
     """Do nothing, but act as a placeholder for several subcommands."""
     pass
 
-@info.command(brief="Display bot info.", aliases=["m"],
+@info.command(brief="Display bot info.", aliases=["a"],
               help=("Display information about the bot. Mainly useful for version info."))
-async def me(ctx):
+async def about(ctx):
     """Display bot info."""
     logger.info("Displaying info about me.")
     embed = discord.Embed(title=APP_NAME)
