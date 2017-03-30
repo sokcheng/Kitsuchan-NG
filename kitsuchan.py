@@ -32,8 +32,8 @@ import errors
 
 APP_NAME = "kitsuchan-ng"
 APP_URL = "https://github.com/n303p4/kitsuchan-ng"
-APP_VERSION = (0, 0, 1, "alpha", 1)
-APP_VERSION_STRING = "%s.%s.%s-%s%s" % APP_VERSION
+APP_VERSION = (0, 0, 2)
+APP_VERSION_STRING = "%s.%s.%s" % APP_VERSION
 
 API_KEY_DISCORD = os.environ["API_KEY_DISCORD"]
 API_KEY_IBSEARCH = os.environ["API_KEY_IBSEARCH"]
