@@ -38,7 +38,7 @@ import errors
 
 APP_NAME = "kitsuchan-ng"
 APP_URL = "https://github.com/n303p4/kitsuchan-ng"
-APP_VERSION = (0, 0, 2)
+APP_VERSION = (0, 0, 3)
 APP_VERSION_STRING = "%s.%s.%s" % APP_VERSION
 
 API_KEY_DISCORD = os.environ["API_KEY_DISCORD"]
@@ -120,6 +120,7 @@ async def about(ctx):
     embed.description = bot.description
     embed.set_thumbnail(url=bot.user.avatar_url)
     embed.add_field(name="Version", value=APP_VERSION_STRING)
+    embed.add_field(name="Python", value="%s.%s.%s" % sys.version_info[:3])
     embed.add_field(name="discord.py", value=discord.__version__)
     await ctx.send(embed=embed)
 
