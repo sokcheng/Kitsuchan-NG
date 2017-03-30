@@ -173,7 +173,8 @@ async def user(ctx):
     await bot.say(embed=embed)
 
 @bot.command(brief="Retrieve an answer from DuckDuckGo.", aliases=["ddg"],
-             help=("This command is extremely versatile! Here are a few examples of things you "
+             help=("Query the DuckDuckGo Instant Answers API.\n\n"
+                   "This command is extremely versatile! Here are a few examples of things you "
                    "can do with it:\n\n"
                    "ddg roll 5d6 - Roll five 6-sided dice.\n"
                    "ddg 40 f in c - Convert 40 degrees Fahrenheit to Celsius.\n"
