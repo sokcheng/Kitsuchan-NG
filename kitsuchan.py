@@ -257,7 +257,7 @@ async def ibsearch(ctx, *tags):
     *tags - A list of strings to be used in the search criteria.
     """
     logger.info("Fetching image with tags %s." % (tags,))
-    if ctx.message.channel.id in WHITELIST_NSFW:
+    if str(ctx.message.channel.id) in WHITELIST_NSFW:
         logger.info("NSFW allowed for channel %s." % (ctx.message.channel.id,))
         base_url = BASE_URL_IBSEARCH_XXX
         base_url_image = BASE_URL_IBSEARCH_XXX_IMAGE
