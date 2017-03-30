@@ -7,8 +7,6 @@ A fairly good Discord bot, hopefully.
 * `API_KEY_DISCORD` - OAuth token for your Discord bot account.
 * `API_KEY_IBSEARCH` - API key for IbSear.ch. You can easily get one for free with no registration
   needed, so there's no excuse for you not to get one.
-* `WHITELIST_ADMINS` - A list of user IDs that can restart and halt the bot. Ideally, your own
-  user ID (not the bot's ID) should be in this list at minimum.
 
 Optionally, you may set the following as well:
 
@@ -34,7 +32,5 @@ the bot account's username. You can override this.
 * `duckduckgo <list of terms>` - Fetch Instant Answer from DuckDuckGo. This is probably the most
   useful command the bot has right now, due to the high versatility of the Instant Answers API.
 * `ibsearch <list of tags>` - Search IbSear.ch for anime pictures.
-* `halt` - Halt the bot. The user who issues the command must have their ID listed in
-  `WHITELIST_ADMINS`.
-* `restart` - Restart the bot. The user who issues the command must have their ID listed in
-  `WHITELIST_ADMINS`.
+* `halt` - Halt the bot. Only the bot's owner can do this.
+* `restart` - Restart the bot. Only the bot's owner can do this.

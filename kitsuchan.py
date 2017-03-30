@@ -7,7 +7,6 @@ Usage::
 Required environment variables:
 * API_KEY_DISCORD - OAuth token for Discord.
 * API_KEY_IBSEARCH - API key for IbSear.ch.
-* WHITELIST_ADMINS - List of Discord user IDs who can admin the bot.
 
 Optional environment variables:
 * WHITELIST_NSFW - List of channels to allow NSFW content on.
@@ -39,7 +38,6 @@ APP_VERSION_STRING = "%s.%s.%s-%s%s" % APP_VERSION
 API_KEY_DISCORD = os.environ["API_KEY_DISCORD"]
 API_KEY_IBSEARCH = os.environ["API_KEY_IBSEARCH"]
 
-WHITELIST_ADMINS = os.environ["WHITELIST_ADMINS"]
 WHITELIST_NSFW = os.environ.get("WHITELIST_NSFW", [])
 
 COMMAND_PREFIX = os.environ.get("COMMAND_PREFIX", None)
@@ -59,9 +57,16 @@ bot = discord.ext.commands.Bot(command_prefix="kit!")
 bot.description = "A Discord bot that fetches anime images and does other things."
 bot.session = aiohttp.ClientSession(loop=bot.loop)
 
-def check_if_admin(ctx):
-    """Check whether the sender of a message is marked as an admin."""
-    if ctx.message.author.id in WHITELIST_ADMINS:
+def check_if_bot_owner(ctx):
+    """Check whether the sender of a message is marked as the bot's owner."""
+    if ctx.message.author.id == bot.owner.id:
+        return True
+    return False
+
+def check_if_channel_admin(ctx):
+    """Check whether the sender of a message is marked as a channel admin.""" 
+    if ctx.message.channel.permissions_for(ctx.message.author).administrator == True \
+    or ctx.message.author.id == ctx.server.owner.id:
         return True
     return False
 
@@ -77,6 +82,8 @@ async def on_ready():
         bot.command_prefix = COMMAND_PREFIX
     else:
         bot.command_prefix = bot.user.name[:3].lower() + "!"
+    app_info = await bot.application_info()
+    bot.owner = app_info.owner
     game = discord.Game()
     game.name = bot.command_prefix + "help"
     await bot.change_presence(game=game)
@@ -126,6 +133,10 @@ async def server(ctx):
     embed.set_thumbnail(url=server.icon_url)
     embed.add_field(name="Owner", value=server.owner.name)
     embed.add_field(name="Members", value=str(server.member_count))
+    count_channels = str(len(tuple(0 for x in server.channels if str(x.type) == "text")))
+    embed.add_field(name="Text channels", value=count_channels)
+    count_channels_voice = str(len(tuple(0 for x in server.channels if str(x.type) == "voice")))
+    embed.add_field(name="Voice channels", value=count_channels_voice)
     embed.add_field(name="Region", value=str(server.region))
     embed.add_field(name="Created at", value=server.created_at.ctime())
     emojis = ", ".join((emoji.name for emoji in server.emojis))
@@ -273,20 +284,20 @@ async def ibsearch(ctx, *tags):
             logger.info(message)
 
 @bot.command(brief="Halt the bot.", aliases=["h"],
-             help="End execution of the bot. Requires the user's ID to be whitelisted.")
-@commands.check(check_if_admin)
+             help="End execution of the bot. Can only be done by the bot owner.")
+@commands.check(check_if_bot_owner)
 async def halt():
-    """Halt the bot. Must be admin to execute."""
+    """Halt the bot. Must be bot owner to execute."""
     logger.warning("Halting bot!")
     await bot.say("Halting.")
     await bot.logout()
     bot.session.close()
 
 @bot.command(brief="Restart the bot.", aliases=["r"],
-             help="Restart execution of the bot. Requires the user's ID to be whitelisted.")
-@commands.check(check_if_admin)
+             help="Restart execution of the bot. Can only be done by the bot owner.")
+@commands.check(check_if_bot_owner)
 async def restart():
-    """Restart the bot. Must be admin to execute."""
+    """Restart the bot. Must be bot owner to execute."""
     logger.warning("Restarting bot!")
     await bot.say("Restarting.")
     await bot.logout()
