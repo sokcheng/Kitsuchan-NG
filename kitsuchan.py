@@ -170,16 +170,16 @@ async def user(ctx):
 @bot.command(help="Retrieve an answer from DuckDuckGo.", aliases=["ddg"])
 async def duckduckgo(*query):
     logger.info("Retrieving DuckDuckGo answer with tags %s." % (query,))
-    query_search = "+".join(urllib.parse.quote(term) for term in query)
+    query_search = " ".join(query)
     params = urllib.parse.urlencode({"q": query_search, "t": "ffsb",
-                                     "format": "json", "ia": "answer"}, safe="+")
+                                     "format": "json", "ia": "answer"})
     url = BASE_URL_DUCKDUCKGO % params
     async with bot.session.get(url) as response:
         if response.status == 200:
             data = await response.json()
             answer = data.get("Answer")
             embed = discord.Embed(title=answer)
-            params_short = urllib.parse.urlencode({"q": query_search}, safe="+")
+            params_short = urllib.parse.urlencode({"q": query_search})
             embed.description = BASE_URL_DUCKDUCKGO % params_short
             await bot.say(embed=embed)
         else:
@@ -196,8 +196,8 @@ async def ibsearch(ctx, *tags):
         logger.info("NSFW disallowed for channel %s." % (ctx.message.channel.id,))
         base_url = BASE_URL_IBSEARCH
         base_url_image = BASE_URL_IBSEARCH_IMAGE
-    query_tags = "+".join(tags)
-    params = urllib.parse.urlencode({"key": API_KEY_IBSEARCH, "q": query_tags}, safe="+")
+    query_tags = " ".join(tags)
+    params = urllib.parse.urlencode({"key": API_KEY_IBSEARCH, "q": query_tags})
     url = base_url % params
     async with bot.session.get(url) as response:
         if response.status == 200:
