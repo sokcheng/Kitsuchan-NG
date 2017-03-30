@@ -49,7 +49,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger('discord')
 logger.setLevel(logging.INFO)
 
-bot = discord.ext.commands.Bot(command_prefix="ki!")
+bot = discord.ext.commands.Bot(command_prefix="kit!")
 bot.description = "A Discord bot that fetches anime images and does other things."
 bot.session = aiohttp.ClientSession(loop=bot.loop)
 
@@ -79,8 +79,7 @@ async def on_command_error(exception, ctx):
     else:
         logger.info(str(exception))
 
-@bot.group(brief="Command group for info. Run %shelp info for details." % (bot.command_prefix,),
-           aliases=["i"],
+@bot.group(brief="Command group for info. Run help info for details.", aliases=["i"],
            help=("Command group for a series of more specific commands. Does not do anything if "
                  "you run it by itself."))
 async def info():
