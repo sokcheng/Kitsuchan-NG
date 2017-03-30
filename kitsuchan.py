@@ -182,8 +182,11 @@ async def duckduckgo(*query):
             params_short = urllib.parse.urlencode({"q": query_search})
             embed.description = BASE_URL_DUCKDUCKGO % params_short
             await bot.say(embed=embed)
+            logger.info("Answer retrieved!")
         else:
-            await bot.say("Failed to fetch answer. :(")
+            message = "Failed to fetch answer. :("
+            await bot.say(message)
+            logger.info(message)
 
 @bot.command(help="Fetch an image from IbSear.ch.", aliases=["ib"], pass_context=True)
 async def ibsearch(ctx, *tags):
@@ -209,8 +212,11 @@ async def ibsearch(ctx, *tags):
             embed.description = url_image
             embed.set_image(url=url_image)
             await bot.say(embed=embed)
+            logger.info("Image retrieved!")
         else:
-            await bot.say("Failed to fetch images. :(")
+            message = "Failed to fetch image. :("
+            await bot.say(message)
+            logger.info(message)
 
 @bot.command(help="Halts the bot.", aliases=["h"])
 @commands.check(check_if_admin)
