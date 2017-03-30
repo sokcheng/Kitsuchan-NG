@@ -101,8 +101,6 @@ async def on_command_error(exception, ctx):
     if isinstance(exception, discord.ext.commands.CheckFailure):
         logger.info("%s (%s) tried to issue a command but was denied." % (ctx.author.name,
                                                                           ctx.author.id))
-    elif isinstance(exception, errors.ZeroDataLengthError):
-        logger.info(str(exception))
     # Add more specificity to this at some point.
     else:
         logger.info(str(exception))
