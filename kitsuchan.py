@@ -36,6 +36,8 @@ import discord.ext.commands as commands
 # Bundled modules
 import errors
 
+assert (sys.version_info >= (3,5)), "This program requires Python 3.5 or higher."
+
 APP_NAME = "kitsuchan-ng"
 APP_URL = "https://github.com/n303p4/kitsuchan-ng"
 APP_VERSION = (0, 0, 3)
@@ -63,21 +65,21 @@ bot.session = aiohttp.ClientSession(loop=bot.loop)
 
 def check_if_bot_owner(ctx):
     """Check whether the sender of a message is marked as the bot's owner."""
-    if ctx.message.author.id == bot.owner.id:
+    if ctx.author.id == bot.owner.id:
         return True
     return False
 
 def check_if_channel_admin(ctx):
     """Check whether the sender of a message is marked as a channel admin.""" 
-    if ctx.message.channel.permissions_for(ctx.message.author).administrator == True \
-    or ctx.message.author.id == ctx.guild.owner.id:
+    if ctx.channel.permissions_for(ctx.author).administrator == True \
+    or ctx.author.id == ctx.guild.owner.id:
         return True
     return False
 
 @bot.check
 def is_human(ctx):
     """Check whether the sender of a message is a human or a bot."""
-    return not ctx.message.author.bot
+    return not ctx.author.bot
 
 @bot.event
 async def on_ready():
@@ -97,8 +99,10 @@ async def on_ready():
 async def on_command_error(exception, ctx):
     """Handle errors that occur in commands."""
     if isinstance(exception, discord.ext.commands.CheckFailure):
-        logger.info("%s (%s) tried to issue a command but was denied." % (ctx.message.author.name,
-                                                                          ctx.message.author.id))
+        logger.info("%s (%s) tried to issue a command but was denied." % (ctx.author.name,
+                                                                          ctx.author.id))
+    elif isinstance(exception, errors.ZeroDataLengthError):
+        logger.info(str(exception))
     # Add more specificity to this at some point.
     else:
         logger.info(str(exception))
@@ -134,7 +138,7 @@ async def about(ctx):
 async def guild(ctx):
     """Display information about the current guild, such as owner, region, emojis, and roles."""
     logger.info("Displaying info about guild.")
-    guild = ctx.message.guild
+    guild = ctx.guild
     if guild is None:
         raise errors.ContextError("Not in a guild.")
     embed = discord.Embed(title=guild.name)
@@ -159,7 +163,7 @@ async def guild(ctx):
 async def channel(ctx):
     """Display information about the current channel."""
     logger.info("Displaying info about channel.")
-    channel = ctx.message.channel
+    channel = ctx.channel
     if channel is None:
         raise errors.ContextError()
     embed = discord.Embed(title="#%s" % (channel.name,))
@@ -190,7 +194,7 @@ async def user(ctx):
     try:
         user = ctx.message.mentions[0]
     except IndexError:
-        user = ctx.message.author
+        user = ctx.author
     embed = discord.Embed(title=user.display_name)
     if user.display_name != user.name:
         embed.description = user.name
@@ -244,6 +248,9 @@ async def duckduckgo(ctx, *query):
             data = await response.text()
             data = json.loads(data)
             if len(data) == 0:
+                # I wanted to put statements like this in on_command_error.
+                # However, it seems not to work when the ctx.send is in an elif block. :/
+                await ctx.send("Could not find any results.")
                 raise errors.ZeroDataLengthError()
             answer = html.unescape(data.get("Answer"))
             embed = discord.Embed(title=answer)
@@ -270,12 +277,12 @@ async def ibsearch(ctx, *tags):
     >> ib 5:4 - Search for images in 5:4 aspect ratio.
     >> ib random: - You don't care about what you get."""
     logger.info("Fetching image with tags %s." % (tags,))
-    if str(ctx.message.channel.id) in WHITELIST_NSFW:
-        logger.info("NSFW allowed for channel %s." % (ctx.message.channel.id,))
+    if str(ctx.channel.id) in WHITELIST_NSFW:
+        logger.info("NSFW allowed for channel %s." % (ctx.channel.id,))
         base_url = BASE_URL_IBSEARCH_XXX
         base_url_image = BASE_URL_IBSEARCH_XXX_IMAGE
     else:
-        logger.info("NSFW disallowed for channel %s." % (ctx.message.channel.id,))
+        logger.info("NSFW disallowed for channel %s." % (ctx.channel.id,))
         base_url = BASE_URL_IBSEARCH
         base_url_image = BASE_URL_IBSEARCH_IMAGE
     query_tags = " ".join(tags)
@@ -285,6 +292,7 @@ async def ibsearch(ctx, *tags):
         if response.status == 200:
             data = await response.json()
             if len(data) == 0:
+                await ctx.send("Could not find any results.")
                 raise errors.ZeroDataLengthError()
             index = random.randint(1, len(data)) - 1
             result = data[index]
