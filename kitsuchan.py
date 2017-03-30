@@ -118,6 +118,8 @@ async def channel(ctx):
     if channel.server:
         embed.add_field(name="Server", value=channel.server.name)
     embed.add_field(name="Created at", value=channel.created_at.ctime())
+    if channel.id in WHITELIST_NSFW:
+        embed.set_footer(text="NSFW content is enabled for this channel.")
     await bot.say(embed=embed)
 
 @info.command(help="Fetch channel info.", aliases=["u"], pass_context=True)
