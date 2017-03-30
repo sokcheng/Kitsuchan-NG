@@ -1,5 +1,4 @@
 # kitsuchan-ng
-A fairly good Discord bot, hopefully.
 
 # How to run
 `kitsuchan-ng` reads its config from environment variables. The following ones are **mandatory**:
