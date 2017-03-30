@@ -47,6 +47,26 @@ bot = discord.ext.commands.Bot(command_prefix="ki!")
 bot.description = "A Discord bot that fetches anime images and does other things."
 bot.session = aiohttp.ClientSession(loop=bot.loop)
 
+class Error(Exception):
+    pass
+
+class InputError(Error):
+    def __init__(self, expression=None, message=None):
+        self.expression = str(expression)
+        if isinstance(message, str):
+            self.message = message
+        else:
+            self.message = "Invalid input: %s" % (self.expression)
+    def __str__(self):
+        return self.message
+
+class ContextError(Error):
+    def __init__(self, ctx=None):
+        self.ctx = ctx
+        self.message = "Invalid context."
+    def __str__(self):
+        return self.message
+
 def check_if_admin(ctx):
     if ctx.message.author.id in WHITELIST_ADMINS:
         return True
@@ -68,6 +88,10 @@ async def on_command_error(exception, ctx):
     if isinstance(exception, discord.ext.commands.CheckFailure):
         logger.info("%s (%s) tried to issue a command but was denied." % (ctx.message.author.name,
                                                                           ctx.message.author.id))
+    elif isinstance(exception, InputError):
+        logger.info(str(exception))
+    elif isinstance(exception, ContextError):
+        logger.info(str(exception))
     else:
         logger.info(str(exception))
 
@@ -91,7 +115,7 @@ async def server(ctx):
     logger.info("Displaying info about server.")
     server = ctx.message.server
     if server is None:
-        raise
+        raise ContextError("Not in a server.")
     embed = discord.Embed(title=server.name)
     embed.description = server.id
     embed.set_thumbnail(url=server.icon_url)
@@ -111,11 +135,20 @@ async def channel(ctx):
     logger.info("Displaying info about channel.")
     channel = ctx.message.channel
     if channel is None:
-        raise
+        raise ContextError()
     embed = discord.Embed(title="#%s" % (channel.name,))
-    embed.description = channel.topic
+    try:
+        channel.topic
+    except AttributeError:
+        pass
+    else:
+        embed.description = channel.topic
     embed.add_field(name="Channel ID", value=channel.id)
-    if channel.server:
+    try:
+        channel.server
+    except AttributeError:
+        pass
+    else:
         embed.add_field(name="Server", value=channel.server.name)
     embed.add_field(name="Created at", value=channel.created_at.ctime())
     if channel.id in WHITELIST_NSFW:
@@ -128,7 +161,7 @@ async def user(ctx):
     try:
         user = ctx.message.mentions[0]
     except IndexError:
-        raise IndexError
+        raise InputError("No users mentioned.")
     embed = discord.Embed(title=user.display_name)
     if user.display_name != user.name:
         embed.description = user.name
