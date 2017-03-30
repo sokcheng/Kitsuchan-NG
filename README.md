@@ -28,7 +28,9 @@ the bot account's username.
 * `info server` - Display info about the current server.
 * `info channnel` - Display info about the current channel.
 * `info user <mention>` - Display info about the mentioned user.
-* `duckduckgo <list of terms>` - Fetch Instant Answer from DuckDuckGo.
+* `echo <text>` - Repeat the user's text back at them.
+* `duckduckgo <list of terms>` - Fetch Instant Answer from DuckDuckGo. This is probably the most
+  useful command the bot has right now, due to the high versatility of the Instant Answers API.
 * `ibsearch <list of tags>` - Search IbSear.ch for anime pictures.
 * `halt` - Halt the bot. The user who issues the command must have their ID listed in
   `WHITELIST_ADMINS_KITSUCHAN`.

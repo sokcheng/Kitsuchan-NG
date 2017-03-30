@@ -172,6 +172,10 @@ async def user(ctx):
     embed.add_field(name="Roles", value=roles, inline=False)
     await bot.say(embed=embed)
 
+@bot.command(help="Repeat the user's text back at them.", aliases=["say"])
+async def echo(*text):
+    await bot.say(" ".join(text))
+
 @bot.command(brief="Retrieve an answer from DuckDuckGo.", aliases=["ddg"],
              help=("Query the DuckDuckGo Instant Answers API.\n\n"
                    "This command is extremely versatile! Here are a few examples of things you "
