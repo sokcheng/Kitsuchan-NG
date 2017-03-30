@@ -197,8 +197,9 @@ async def ibsearch(ctx, *tags):
         base_url = BASE_URL_IBSEARCH
         base_url_image = BASE_URL_IBSEARCH_IMAGE
     query_tags = "+".join(urllib.parse.quote(tag) for tag in tags)
-    params = urllib.parse.urlencode({"key": API_KEY_DISCORD, "q": query_tags}, safe="+")
+    params = urllib.parse.urlencode({"key": API_KEY_IBSEARCH, "q": query_tags}, safe="+")
     url = base_url % params
+    print(url)
     async with bot.session.get(url) as response:
         if response.status == 200:
             data = await response.json()
