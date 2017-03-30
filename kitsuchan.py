@@ -103,17 +103,23 @@ async def on_command_error(exception, ctx):
     else:
         logger.info(str(exception))
 
-@bot.group(brief="Command group for info. Run help info for details.", aliases=["i"],
-           help=("Command group for a series of more specific commands. Does not do anything if "
-                 "you run it by itself."))
+@bot.group(aliases=["i"], invoke_without_command=True)
 async def info(ctx):
-    """Do nothing, but act as a placeholder for several subcommands."""
-    pass
+    """Command group for information commands."""
+    embed = discord.Embed(title=info.name)
+    embed.description = info.help
+    for command in info.commands:
+        try:
+            command.brief
+        except AttributeError:
+            pass
+        else:
+            embed.add_field(name="%s %s" % (info.name, command.name), value=command.brief)
+    await ctx.send(embed=embed)
 
-@info.command(brief="Display bot info.", aliases=["a"],
-              help=("Display information about the bot. Mainly useful for version info."))
+@info.command(brief="Display bot information.", aliases=["a"])
 async def about(ctx):
-    """Display bot info."""
+    """Display information about this bot, such as library versions."""
     logger.info("Displaying info about me.")
     embed = discord.Embed(title=APP_NAME)
     embed.url = APP_URL
@@ -124,11 +130,9 @@ async def about(ctx):
     embed.add_field(name="discord.py", value=discord.__version__)
     await ctx.send(embed=embed)
 
-@info.command(brief="Display guild info.", aliases=["s"],
-              help=("Display information about the current guild, such as owner info, region, "
-                    "custom emojis, and roles."))
+@info.command(brief="Display guild information.", aliases=["s"])
 async def guild(ctx):
-    """Display guild info about the current context."""
+    """Display information about the current guild, such as owner, region, emojis, and roles."""
     logger.info("Displaying info about guild.")
     guild = ctx.message.guild
     if guild is None:
@@ -151,10 +155,9 @@ async def guild(ctx):
     embed.add_field(name="Roles", value=roles, inline=False)
     await ctx.send(embed=embed)
 
-@info.command(brief="Display channel info.", aliases=["c"],
-              help=("Display information about the current channel."))
+@info.command(brief="Display channel info.", aliases=["c"])
 async def channel(ctx):
-    """Display channel info about the current context."""
+    """Display information about the current channel."""
     logger.info("Displaying info about channel.")
     channel = ctx.message.channel
     if channel is None:
@@ -178,15 +181,16 @@ async def channel(ctx):
         embed.set_footer(text="NSFW content is enabled for this channel.")
     await ctx.send(embed=embed)
 
-@info.command(brief="Display user info.", aliases=["u"],
-              help=("Display information about the mentioned user, such as status and roles."))
+@info.command(brief="Display user info.", aliases=["u"])
 async def user(ctx):
-    """Display info about the first user mentioned in this command."""
+    """Display information about you, such as status and roles.
+    
+    Mention a user while invoking this command to display information about that user."""
     logger.info("Displaying info about user.")
     try:
         user = ctx.message.mentions[0]
     except IndexError:
-        raise errors.InputError("No users mentioned.")
+        user = ctx.message.author
     embed = discord.Embed(title=user.display_name)
     if user.display_name != user.name:
         embed.description = user.name
@@ -206,7 +210,7 @@ async def user(ctx):
     embed.add_field(name="Roles", value=roles, inline=False)
     await ctx.send(embed=embed)
 
-@bot.command(help="Repeat the user's text back at them.", aliases=["say"])
+@bot.command(brief="Repeat the user's text back at them.", aliases=["say"])
 async def echo(ctx, *text):
     """Repeat the user's text back at them.
     
@@ -214,20 +218,19 @@ async def echo(ctx, *text):
     """
     await ctx.send(" ".join(text))
 
-@bot.command(brief="Retrieve an answer from DuckDuckGo.", aliases=["ddg"],
-             help=("Query the DuckDuckGo Instant Answers API.\n\n"
-                   "This command is extremely versatile! Here are a few examples of things you "
-                   "can do with it:\n\n"
-                   "ddg roll 5d6 - Roll five 6-sided dice.\n"
-                   "ddg 40 f in c - Convert 40 degrees Fahrenheit to Celsius.\n"
-                   "ddg (5+6)^2/4 - Produces 30.25.\n"
-                   "ddg random number 1 100 - Generate a random number from 1 to 100.\n"
-                   "ddg random name - Generate a random name.\n"
-                   "ddg random fortune - Generate a random fortune."))
+@bot.command(brief="Retrieve an answer from DuckDuckGo.", aliases=["ddg"])
 async def duckduckgo(ctx, *query):
     """Retrieve an answer from DuckDuckGo, using the Instant Answers JSON API.
     
     *query - A list of strings to be used in the search criteria.
+    
+    This command is extremely versatile! Here are a few examples of things you can do with it:
+    >> ddg roll 5d6 - Roll five 6-sided dice.
+    >> ddg 40 f in c - Convert 40 degrees Fahrenheit to Celsius.
+    >> ddg (5+6)^2/4 - Produces 30.25.
+    >> ddg random number 1 100 - Generate a random number from 1 to 100.
+    >> ddg random name - Generate a random name.
+    >> ddg random fortune - Generate a random fortune.
     """
     logger.info("Retrieving DuckDuckGo answer with tags %s." % (query,))
     query_search = " ".join(query)
@@ -251,13 +254,11 @@ async def duckduckgo(ctx, *query):
             await ctx.send(message)
             logger.info(message)
 
-@bot.command(brief="Fetch an image from IbSear.ch.", aliases=["ib"],
-             help=("Search IbSear.ch for an anime picture. You may pass standard imageboard "
-                   "tags as arguments to refine the result a bit."))
+@bot.command(brief="Fetch an image from IbSear.ch.", aliases=["ib"])
 async def ibsearch(ctx, *tags):
     """Retrieve a randomized image from IbSear.ch.
     
-    *tags - A list of strings to be used in the search criteria.
+    *tags - A list of tag strings to be used in the search criteria.
     """
     logger.info("Fetching image with tags %s." % (tags,))
     if str(ctx.message.channel.id) in WHITELIST_NSFW:
@@ -289,8 +290,7 @@ async def ibsearch(ctx, *tags):
             await ctx.send(message)
             logger.info(message)
 
-@bot.command(brief="Halt the bot.", aliases=["h"],
-             help="End execution of the bot. Can only be done by the bot owner.")
+@bot.command(brief="Halt the bot.", aliases=["h"])
 @commands.check(check_if_bot_owner)
 async def halt(ctx):
     """Halt the bot. Must be bot owner to execute."""
@@ -299,8 +299,7 @@ async def halt(ctx):
     await bot.logout()
     bot.session.close()
 
-@bot.command(brief="Restart the bot.", aliases=["r"],
-             help="Restart execution of the bot. Can only be done by the bot owner.")
+@bot.command(brief="Restart the bot.", aliases=["r"])
 @commands.check(check_if_bot_owner)
 async def restart(ctx):
     """Restart the bot. Must be bot owner to execute."""
