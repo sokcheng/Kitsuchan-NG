@@ -28,8 +28,9 @@ the bot account's username.
 * `info server` - Display info about the current server.
 * `info channnel` - Display info about the current channel.
 * `info user <mention>` - Display info about the mentioned user.
-* `ibsearch <list of tags>` - Searches IbSear.ch for anime pictures.
-* `halt` - Halts the bot. Requires the user who issues the command to have their ID listed in
+* `duckduckgo <list of terms>` - Fetch Instant Answer from DuckDuckGo.
+* `ibsearch <list of tags>` - Search IbSear.ch for anime pictures.
+* `halt` - Halt the bot. The user who issues the command must have their ID listed in
   `WHITELIST_ADMINS_KITSUCHAN`.
-* `restart` - Restarts the bot. Requires the user who issues the command to have their ID listed in
+* `restart` - Restart the bot. The user who issues the command must have their ID listed in
   `WHITELIST_ADMINS_KITSUCHAN`.
