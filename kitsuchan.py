@@ -54,16 +54,19 @@ bot.description = "A Discord bot that fetches anime images and does other things
 bot.session = aiohttp.ClientSession(loop=bot.loop)
 
 def check_if_admin(ctx):
+    """Check whether the sender of a message is marked as an admin."""
     if ctx.message.author.id in WHITELIST_ADMINS:
         return True
     return False
 
 @bot.check
 def is_human(ctx):
+    """Check whether the sender of a message is a human or a bot."""
     return not ctx.message.author.bot
 
 @bot.event
 async def on_ready():
+    """Conduct preparations once the bot is ready to go."""
     bot.command_prefix = bot.user.name[:3].lower() + "!"
     game = discord.Game()
     game.name = bot.command_prefix + "help"
@@ -72,6 +75,7 @@ async def on_ready():
 
 @bot.event
 async def on_command_error(exception, ctx):
+    """Handle errors that occur in commands."""
     if isinstance(exception, discord.ext.commands.CheckFailure):
         logger.info("%s (%s) tried to issue a command but was denied." % (ctx.message.author.name,
                                                                           ctx.message.author.id))
@@ -83,11 +87,13 @@ async def on_command_error(exception, ctx):
            help=("Command group for a series of more specific commands. Does not do anything if "
                  "you run it by itself."))
 async def info():
+    """Do nothing, but act as a placeholder for several subcommands."""
     pass
 
-@info.command(brief="Fetch bot info.", aliases=["m"],
+@info.command(brief="Display bot info.", aliases=["m"],
               help=("Display information about the bot. Mainly useful for version info."))
 async def me():
+    """Display bot info."""
     logger.info("Displaying info about me.")
     embed = discord.Embed(title=APP_NAME)
     embed.url = APP_URL
@@ -97,10 +103,11 @@ async def me():
     embed.add_field(name="discord.py", value=discord.__version__)
     await bot.say(embed=embed)
 
-@info.command(brief="Fetch server info.", aliases=["s"], pass_context=True,
+@info.command(brief="Display server info.", aliases=["s"], pass_context=True,
               help=("Display information about the current server, such as owner info, region, "
                     "custom emojis, and roles."))
 async def server(ctx):
+    """Display server info about the current context."""
     logger.info("Displaying info about server.")
     server = ctx.message.server
     if server is None:
@@ -119,9 +126,10 @@ async def server(ctx):
     embed.add_field(name="Roles", value=roles, inline=False)
     await bot.say(embed=embed)
 
-@info.command(brief="Fetch channel info.", aliases=["c"], pass_context=True,
+@info.command(brief="Display channel info.", aliases=["c"], pass_context=True,
               help=("Display information about the current channel."))
 async def channel(ctx):
+    """Display channel info about the current context."""
     logger.info("Displaying info about channel.")
     channel = ctx.message.channel
     if channel is None:
@@ -145,9 +153,10 @@ async def channel(ctx):
         embed.set_footer(text="NSFW content is enabled for this channel.")
     await bot.say(embed=embed)
 
-@info.command(brief="Fetch channel info.", aliases=["u"], pass_context=True,
+@info.command(brief="Display user info.", aliases=["u"], pass_context=True,
               help=("Display information about the mentioned user, such as status and roles."))
 async def user(ctx):
+    """Display info about the first user mentioned in this command."""
     logger.info("Displaying info about user.")
     try:
         user = ctx.message.mentions[0]
@@ -174,6 +183,10 @@ async def user(ctx):
 
 @bot.command(help="Repeat the user's text back at them.", aliases=["say"])
 async def echo(*text):
+    """Repeat the user's text back at them.
+    
+    *text - A list of strings, which is concatenated into one string before being echoed.
+    """
     await bot.say(" ".join(text))
 
 @bot.command(brief="Retrieve an answer from DuckDuckGo.", aliases=["ddg"],
@@ -187,6 +200,10 @@ async def echo(*text):
                    "ddg random name - Generate a random name.\n"
                    "ddg random fortune - Generate a random fortune."))
 async def duckduckgo(*query):
+    """Retrieve an answer from DuckDuckGo, using the Instant Answers JSON API.
+    
+    *query - A list of strings to be used in the search criteria.
+    """
     logger.info("Retrieving DuckDuckGo answer with tags %s." % (query,))
     query_search = " ".join(query)
     params = urllib.parse.urlencode({"q": query_search, "t": "ffsb",
@@ -212,6 +229,10 @@ async def duckduckgo(*query):
              help=("Search IbSear.ch for an anime picture. You may pass standard imageboard "
                    "tags as arguments to refine the result a bit."))
 async def ibsearch(ctx, *tags):
+    """Retrieve a randomized image from IbSear.ch.
+    
+    *tags - A list of strings to be used in the search criteria.
+    """
     logger.info("Fetching image with tags %s." % (tags,))
     if ctx.message.channel.id in WHITELIST_NSFW:
         logger.info("NSFW allowed for channel %s." % (ctx.message.channel.id,))
@@ -246,6 +267,7 @@ async def ibsearch(ctx, *tags):
              help="End execution of the bot. Requires the user's ID to be whitelisted.")
 @commands.check(check_if_admin)
 async def halt():
+    """Halt the bot. Must be admin to execute."""
     logger.warning("Halting bot!")
     await bot.say("Halting.")
     await bot.logout()
@@ -255,6 +277,7 @@ async def halt():
              help="Restart execution of the bot. Requires the user's ID to be whitelisted.")
 @commands.check(check_if_admin)
 async def restart():
+    """Restart the bot. Must be admin to execute."""
     logger.warning("Restarting bot!")
     await bot.say("Restarting.")
     await bot.logout()
