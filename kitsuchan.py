@@ -26,7 +26,7 @@ import discord.ext.commands as commands
 # Bundled modules
 import errors
 
-APP_NAME = "kitsuchan"
+APP_NAME = "kitsuchan-ng"
 APP_URL = "https://github.com/n303p4/kitsuchan-ng"
 APP_VERSION = (0, 0, 1, "alpha", 1)
 APP_VERSION_STRING = "%s.%s.%s-%s%s" % APP_VERSION
