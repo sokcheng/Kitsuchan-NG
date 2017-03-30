@@ -9,8 +9,8 @@ Required environment variables:
 * API_KEY_IBSEARCH - API key for IbSear.ch.
 
 Optional environment variables:
+* COMMAND_PREFIX - Override the bot's command prefix.
 * WHITELIST_NSFW - List of channels to allow NSFW content on.
-* COMMAND_PREFIX - Override command prefix.
 """
 
 # Standard modules
@@ -37,10 +37,8 @@ APP_VERSION_STRING = "%s.%s.%s-%s%s" % APP_VERSION
 
 API_KEY_DISCORD = os.environ["API_KEY_DISCORD"]
 API_KEY_IBSEARCH = os.environ["API_KEY_IBSEARCH"]
-
-WHITELIST_NSFW = os.environ.get("WHITELIST_NSFW", [])
-
 COMMAND_PREFIX = os.environ.get("COMMAND_PREFIX", None)
+WHITELIST_NSFW = os.environ.get("WHITELIST_NSFW", [])
 
 BASE_URL_DUCKDUCKGO = "https://duckduckgo.com/?%s"
 

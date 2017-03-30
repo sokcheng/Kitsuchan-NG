@@ -5,13 +5,12 @@ A fairly good Discord bot, hopefully.
 `kitsuchan-ng` reads its config from environment variables. The following ones are **mandatory**:
 
 * `API_KEY_DISCORD` - OAuth token for your Discord bot account.
-* `API_KEY_IBSEARCH` - API key for IbSear.ch. You can easily get one for free with no registration
-  needed, so there's no excuse for you not to get one.
+* `API_KEY_IBSEARCH` - API key for IbSear.ch. You can get one for free with no registration.
 
 Optionally, you may set the following as well:
 
-* `WHITELIST_NSFW` - This contains a list of channel IDs for which NSFW content may be posted.
 * `COMMAND_PREFIX` - Override the command prefix with anything of your liking.
+* `WHITELIST_NSFW` - This contains a list of channel IDs for which NSFW content may be posted.
 
 To run the program, it's suggested you do something like:
 
