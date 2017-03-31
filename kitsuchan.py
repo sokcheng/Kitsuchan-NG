@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-"""Retrieve anime images with a Discord bot.
+"""Retrieve anime images and do other stuff with a Discord bot.
 
 This is free and unencumbered software released into the public domain, under the Creative Commons
 CC0 1.0 Universal Public Domain Dedication.
