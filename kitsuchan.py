@@ -55,6 +55,9 @@ BASE_URL_IBSEARCH_IMAGE = "https://%s.ibsear.ch/%s"
 BASE_URL_IBSEARCH_XXX = "https://ibsearch.xxx/api/v1/images.json?%s"
 BASE_URL_IBSEARCH_XXX_IMAGE = "https://%s.ibsearch.xxx/%s"
 
+BASE_URL_XKCD = "https://xkcd.com/%s/info.0.json"
+BASE_URL_XKCD_API = "https://xkcd.com/%s/info.0.json"
+
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger('discord')
 logger.setLevel(logging.INFO)
@@ -277,7 +280,7 @@ async def duckduckgo(ctx, *query):
                 # However, it seems not to work when the ctx.send is in an elif block. :/
                 await ctx.send("Could not find any results.")
                 raise errors.ZeroDataLengthError()
-            answer = html.unescape(data.get("Answer"))
+            answer = html.unescape(data["Answer"])
             embed = discord.Embed(title=answer)
             params_short = urllib.parse.urlencode({"q": query_search})
             embed.description = BASE_URL_DUCKDUCKGO % params_short
@@ -329,6 +332,38 @@ async def ibsearch(ctx, *tags):
             logger.info("Image retrieved!")
         else:
             message = "Failed to fetch image. :("
+            await ctx.send(message)
+            logger.info(message)
+
+@bot.command(brief="Fetch a comic from xkcd.", aliases=["xk"])
+async def xkcd(ctx, comic_id=""):
+    """Retrieve a comic from xkcd.
+    
+    comic_id - A desired comic ID. Leave blank for latest comic. Set to r for a random comic.
+    """
+    logger.info("Retrieving xkcd comic with ID %s." % (comic_id,))
+    if comic_id.lower() in ("random", "r"):
+        url = BASE_URL_XKCD_API % ("",)
+        async with bot.session.get(url) as response:
+            if response.status == 200:
+                data = await response.json()
+                comic_id = random.randint(1, data["num"])
+            else:
+                message = "Failed to generate random image."
+                await ctx.send(message)
+                logger.info(message)
+                return
+    url = BASE_URL_XKCD_API % (comic_id,)
+    async with bot.session.get(url) as response:
+        if response.status == 200:
+            data = await response.json()
+            title = data["safe_title"]
+            embed = discord.Embed(title=title)
+            embed.description = "%s\n%s" % (BASE_URL_XKCD % comic_id, data.get("alt"),)
+            embed.set_image(url=data["img"])
+            await ctx.send(embed=embed)
+        else:
+            message = "That comic doesn't exist."
             await ctx.send(message)
             logger.info(message)
 
