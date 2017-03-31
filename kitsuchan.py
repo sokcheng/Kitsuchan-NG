@@ -11,9 +11,9 @@ Usage::
 
 Required environment variables:
 * API_KEY_DISCORD - OAuth token for Discord.
-* API_KEY_IBSEARCH - API key for IbSear.ch.
 
 Optional environment variables:
+* API_KEY_IBSEARCH - API key for IbSear.ch.
 * COMMAND_PREFIX - Override the bot's command prefix.
 * WHITELIST_NSFW - List of channels to allow NSFW content on.
 """
@@ -96,5 +96,5 @@ if __name__ == "__main__":
     logger.info("Warming up...")
     bot.add_cog(cogs.core.Core(bot, logger))
     bot.add_cog(cogs.mod.Moderation(bot, logger))
-    bot.add_cog(cogs.web.Web(bot, logger, API_KEY_IBSEARCH))
+    bot.add_cog(cogs.web.Web(bot, logger))
     bot.run(API_KEY_DISCORD)

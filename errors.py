@@ -56,3 +56,11 @@ class BotPermissionsError(Error):
         self.message = message
     def __str__(self):
         return self.message
+
+class KeyError(Error):
+    """Raise when an API key is not specified.
+    """
+    def __init__(self, message):
+        self.message = message
+    def __str__(self):
+        return self.message
