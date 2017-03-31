@@ -27,6 +27,8 @@ BASE_URL_IBSEARCH_IMAGE = "https://%s.ibsear.ch/%s"
 BASE_URL_IBSEARCH_XXX = "https://ibsearch.xxx/api/v1/images.json?%s"
 BASE_URL_IBSEARCH_XXX_IMAGE = "https://%s.ibsearch.xxx/%s"
 
+BASE_URL_WIKIPEDIA = "https://en.wikipedia.org/w/api.php?%s"
+
 BASE_URL_XKCD = "https://xkcd.com/%s/"
 BASE_URL_XKCD_API = "https://xkcd.com/%s/info.0.json"
 
@@ -76,6 +78,32 @@ class Web:
                 self.logger.info("Answer retrieved!")
             else:
                 message = "Failed to fetch answer. :("
+                await ctx.send(message)
+                self.logger.info(message)
+
+    @commands.command(brief="Search Wikipedia.", aliases=["wikipedia"])
+    async def wiki(self, ctx, *query):
+        """Search Wikipedia.
+        
+        *query - A list of strings to be used in the search criteria.
+        """
+        self.logger.info("Searching Wikipedia with query %s." % (query,))
+        query_search = " ".join(query)
+        params = urllib.parse.urlencode({"action": "opensearch", "search": query_search})
+        url = BASE_URL_WIKIPEDIA % params
+        async with self.bot.session.get(url) as response:
+            if response.status == 200:
+                data = await response.json()
+                if len(data) == 0:
+                    await ctx.send("Could not find any results.")
+                    raise errors.ZeroDataLengthError()
+                for index in range(0, min(3, len(data[1]))):
+                    embed = discord.Embed(title=data[1][index], url=data[3][index])
+                    embed.description = data[2][index]
+                    await ctx.send(embed=embed)
+                self.logger.info("Data retrieved!")
+            else:
+                message = "Failed to reach Wikipedia. :("
                 await ctx.send(message)
                 self.logger.info(message)
 
