@@ -11,9 +11,10 @@ import discord
 from discord.ext import commands
 
 # Bundled modules
-from environment import *
+import settings
 import checks
 import helpers
+import utils
 
 logger = logging.getLogger(__name__)
 
@@ -48,10 +49,11 @@ class Moderation:
     async def allownsfw(self, ctx):
         """Whitelists channel for NSFW content.
         
-        Is NOT persistent. If the bot restarts, it won't remember this info."""
-        if str(ctx.channel.id) not in WHITELIST_NSFW:
+        Persistent! Channel ID is stored as an SHA-512 hash."""
+        hash_id_channel = utils.to_hash(str(ctx.channel.id))
+        if hash_id_channel not in settings.manager["WHITELIST_NSFW"]:
             self.logger.info("NSFW content for %s is now enabled." % (ctx.channel.id,))
-            WHITELIST_NSFW.append(str(ctx.channel.id))
+            settings.manager["WHITELIST_NSFW"].append(hash_id_channel)
             await ctx.send("NSFW content for this channel is now enabled.")
         else:
             await ctx.send("NSFW content is already enabled for this channel.")
@@ -59,12 +61,13 @@ class Moderation:
     @commands.command(brief="Blacklists channel for NSFW content.")
     @commands.check(checks.is_channel_admin)
     async def denynsfw(self, ctx):
-        """Whitelists channel for NSFW content.
+        """Blacklists channel for NSFW content.
         
-        Is NOT persistent. If the bot restarts, it won't remember this info."""
-        if str(ctx.channel.id) in WHITELIST_NSFW:
+        Persistent!"""
+        hash_id_channel = utils.to_hash(str(ctx.channel.id))
+        if hash_id_channel in settings.manager["WHITELIST_NSFW"]:
             self.logger.info("NSFW content for %s is now disabled." % (ctx.channel.id,))
-            WHITELIST_NSFW.remove(str(ctx.channel.id))
+            settings.manager["WHITELIST_NSFW"].remove(hash_id_channel)
             await ctx.send("NSFW content for this channel is now disabled.")
         else:
             await ctx.send("NSFW content is already disabled for this channel.")

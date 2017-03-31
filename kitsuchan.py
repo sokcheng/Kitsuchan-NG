@@ -6,16 +6,6 @@ This is free and unencumbered software released into the public domain, under th
 CC0 1.0 Universal Public Domain Dedication.
 
 URL to legal text: https://creativecommons.org/publicdomain/zero/1.0/legalcode
-
-Usage::
-
-Required environment variables:
-* OAUTH_TOKEN_DISCORD - OAuth token for Discord.
-
-Optional environment variables:
-* API_KEY_IBSEARCH - API key for IbSear.ch.
-* COMMAND_PREFIX - Override the bot's command prefix.
-* WHITELIST_NSFW - List of channels to allow NSFW content on.
 """
 
 # Standard modules
@@ -28,8 +18,8 @@ import asyncio
 import discord
 
 # Bundled modules
-from environment import *
 from app_info import *
+import settings
 import cogs.core
 import cogs.mod
 import cogs.web
@@ -59,8 +49,9 @@ def is_human(ctx):
 @bot.event
 async def on_ready():
     """Conduct preparations once the bot is ready to go."""
-    if isinstance(COMMAND_PREFIX, str):
-        bot.command_prefix = COMMAND_PREFIX
+    command_prefix = settings.manager.get("COMMAND_PREFIX")
+    if isinstance(command_prefix, str):
+        bot.command_prefix = command_prefix
     else:
         bot.command_prefix = bot.user.name[:3].lower() + "!"
     app_info = await bot.application_info()
@@ -83,7 +74,8 @@ async def on_command_error(exception, ctx):
 def main():
     """It's the main function. You call this to start the bot."""
     logger.info("Warming up...")
-    for extension in EXTENSIONS:
+    extensions = settings.manager.get("Extensions", settings.DEFAULT_EXTENSIONS)
+    for extension in extensions:
         logger.info("Loading extension %s", extension)
         try:
             bot.load_extension(extension)
@@ -92,7 +84,7 @@ def main():
             logger.warning(error)
         except discord.ClientException as error:
             logger.warning(error)
-    bot.run(OAUTH_TOKEN_DISCORD)
+    bot.run(settings.manager.get("OAUTH_TOKEN_DISCORD"))
 
 if __name__ == "__main__":
     main()

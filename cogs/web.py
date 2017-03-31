@@ -16,8 +16,9 @@ import discord
 from discord.ext import commands
 
 # Bundled modules
-from environment import *
+import settings
 import errors
+import utils
 
 # Constants
 
@@ -45,6 +46,7 @@ class Web:
     def __init__(self, bot, logger):
         self.name = "Web APIs"
         self.bot = bot
+        self.key_ibsearch = settings.manager.get("API_KEY_IBSEARCH")
         self.logger = logger
     
     @commands.command(brief="Retrieve an answer from DuckDuckGo.", aliases=["ddg"])
@@ -127,12 +129,13 @@ class Web:
         >> ib 1280x1024 - Search for images that are 1920x1080.
         >> ib 5:4 - Search for images in 5:4 aspect ratio.
         >> ib random: - You don't care about what you get."""
-        if not API_KEY_IBSEARCH:
-            message = "API key not specified! Halting."
-            ctx.send(message)
+        if not self.key_ibsearch:
+            message = "API key not specified! Command halted."
+            await ctx.send(message)
             raise errors.KeyError(message)
         self.logger.info("Fetching image with tags %s." % (tags,))
-        if str(ctx.channel.id) in WHITELIST_NSFW:
+        hash_id_channel = utils.to_hash(str(ctx.channel.id))
+        if hash_id_channel in settings.manager["WHITELIST_NSFW"]:
             self.logger.info("NSFW allowed for channel %s." % (ctx.channel.id,))
             base_url = BASE_URL_IBSEARCH_XXX
             base_url_image = BASE_URL_IBSEARCH_XXX_IMAGE
@@ -141,7 +144,7 @@ class Web:
             base_url = BASE_URL_IBSEARCH
             base_url_image = BASE_URL_IBSEARCH_IMAGE
         query_tags = " ".join(tags)
-        params = urllib.parse.urlencode({"key": API_KEY_IBSEARCH, "q": query_tags})
+        params = urllib.parse.urlencode({"key": self.key_ibsearch, "q": query_tags})
         url = base_url % params
         async with self.bot.session.get(url) as response:
             if response.status == 200:

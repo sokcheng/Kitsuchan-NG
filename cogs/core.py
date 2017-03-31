@@ -15,8 +15,9 @@ from discord.ext import commands
 # Bundled modules
 from __main__ import __file__ as FILE_MAIN # This sucks
 from app_info import *
-from environment import *
+import settings
 import errors
+import utils
 
 logger = logging.getLogger(__name__)
 
@@ -98,7 +99,8 @@ class Core:
         except AttributeError:
             pass
         embed.add_field(name="Created at", value=channel.created_at.ctime())
-        if str(channel.id) in WHITELIST_NSFW:
+        hash_id_channel = utils.to_hash(str(ctx.channel.id))
+        if hash_id_channel in settings.manager["WHITELIST_NSFW"]:
             embed.set_footer(text="NSFW content is enabled for this channel.")
         await ctx.send(embed=embed)
 
@@ -149,6 +151,7 @@ class Core:
         self.logger.warning("Halting bot!")
         await ctx.send("Halting.")
         await self.bot.logout()
+        settings.save()
         self.bot.session.close()
 
     @commands.command(brief="Restart the self.bot.", aliases=["r"])
@@ -162,4 +165,5 @@ class Core:
         await ctx.send("Restarting.")
         await self.bot.logout()
         self.bot.session.close()
+        settings.save()
         os.execl(os.path.realpath(FILE_MAIN), *sys.argv)
