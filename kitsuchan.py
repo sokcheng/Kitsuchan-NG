@@ -38,6 +38,8 @@ import errors
 
 assert (sys.version_info >= (3,5)), "This program requires Python 3.5 or higher."
 
+# Constants (and WHITELIST_NSFW, which is mutable)
+
 APP_NAME = "kitsuchan-ng"
 APP_URL = "https://github.com/n303p4/kitsuchan-ng"
 APP_VERSION = (0, 0, 4)
@@ -58,6 +60,8 @@ BASE_URL_IBSEARCH_XXX_IMAGE = "https://%s.ibsearch.xxx/%s"
 BASE_URL_XKCD = "https://xkcd.com/%s/"
 BASE_URL_XKCD_API = "https://xkcd.com/%s/info.0.json"
 
+# Initialization
+
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger('discord')
 logger.setLevel(logging.INFO)
@@ -65,6 +69,8 @@ logger.setLevel(logging.INFO)
 bot = discord.ext.commands.Bot(command_prefix="kit!")
 bot.description = "A Discord bot that fetches anime images and does other things."
 bot.session = aiohttp.ClientSession(loop=bot.loop)
+
+# Helper functions
 
 async def generate_help_group(group):
     """A helper function to generate help for a group.
@@ -104,6 +110,8 @@ async def function_by_mentions(ctx, func, pass_member_id:bool, *params):
             logger.info(error)
             break
 
+# Checking functions
+
 def check_if_bot_owner(ctx):
     """Check whether the sender of a message is marked as the bot's owner."""
     if ctx.author.id == bot.owner.id:
@@ -122,6 +130,8 @@ def check_if_channel_admin(ctx):
 def is_human(ctx):
     """Check whether the sender of a message is a human or a bot."""
     return not ctx.author.bot
+
+# Events
 
 @bot.event
 async def on_ready():
@@ -146,6 +156,8 @@ async def on_command_error(exception, ctx):
     # Add more specificity to this at some point.
     else:
         logger.info(str(exception))
+
+# Commands
 
 @bot.group(aliases=["i"], invoke_without_command=True)
 async def info(ctx):
