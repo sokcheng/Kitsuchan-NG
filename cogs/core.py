@@ -13,7 +13,7 @@ from discord.ext import commands
 
 # Bundled modules
 from __main__ import __file__ as FILE_MAIN # This sucks
-from kitsuchan import APP_NAME, APP_URL, APP_VERSION_STRING # This also sucks
+from app_info import *
 from environment import *
 import errors
 import helpers
