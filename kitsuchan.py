@@ -63,20 +63,6 @@ bot = discord.ext.commands.Bot(command_prefix="kit!")
 bot.description = "A Discord bot that fetches anime images and does other things."
 bot.session = aiohttp.ClientSession(loop=bot.loop)
 
-def check_if_bot_owner(ctx):
-    """Check whether the sender of a message is marked as the bot's owner."""
-    if ctx.author.id == bot.owner.id:
-        return True
-    return False
-
-def check_if_channel_admin(ctx):
-    """Check whether the sender of a message could conceivably be an admin.""" 
-    permissions_author = ctx.channel.permissions_for(ctx.author)
-    if (permissions_author.manage_channels and permissions_author.manage_guild) is True \
-    or ctx.author.id == ctx.guild.owner.id:
-        return True
-    return False
-
 async def generate_help_group(group):
     """A helper function to generate help for a group.
     
@@ -92,6 +78,20 @@ async def generate_help_group(group):
         except AttributeError:
             pass
     return embed
+
+def check_if_bot_owner(ctx):
+    """Check whether the sender of a message is marked as the bot's owner."""
+    if ctx.author.id == bot.owner.id:
+        return True
+    return False
+
+def check_if_channel_admin(ctx):
+    """Check whether the sender of a message could conceivably be an admin.""" 
+    permissions_author = ctx.channel.permissions_for(ctx.author)
+    if (permissions_author.manage_channels and permissions_author.manage_guild) is True \
+    or ctx.author.id == ctx.guild.owner.id:
+        return True
+    return False
 
 @bot.check
 def is_human(ctx):
