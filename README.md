@@ -15,19 +15,19 @@ Optionally, you may set the following as well:
 
 To run the program, it's suggested you do something like:
 
-`API_KEY_DISCORD=key1 API_KEY_IBSEARCH=key2 python3 kitsuchan.py`
+`OAUTH_TOKEN_DISCORD=key1 API_KEY_IBSEARCH=key2 python3 kitsuchan.py`
 
 # How to use
 By default, `kitsuchan-ng` uses `kit!` for its prefix where `kit` are the first three letters of
 the bot account's username. You can override this.
 
-# Supported commands
+# Supported commands (not complete)
 
 * `help` - Display help information.
-* `info me` - Display info about the bot itself.
-* `info server` - Display info about the current server.
-* `info channnel` - Display info about the current channel.
-* `info user <mention>` - Display info about the mentioned user.
+* `info` - Display info about the bot itself.
+* `guildinfo` - Display info about the current guild.
+* `channnelinfo` - Display info about the current channel.
+* `userinfo <mention>` - Display info about the mentioned user.
 * `echo <text>` - Repeat the user's text back at them.
 * `duckduckgo <list of terms>` - Fetch Instant Answer from DuckDuckGo. This is probably the most
   useful command the bot has right now, due to the high versatility of the Instant Answers API.
