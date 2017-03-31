@@ -20,12 +20,10 @@ Optional environment variables:
 
 # Standard modules
 import os
-import html
 import json
 import logging
 import random
 import sys
-import urllib.parse
 
 # Third-party modules
 import aiohttp
@@ -34,31 +32,19 @@ import discord
 import discord.ext.commands as commands
 
 # Bundled modules
+import checks
 import errors
+from environment import *
+import cogs.web
 
 assert (sys.version_info >= (3,5)), "This program requires Python 3.5 or higher."
 
-# Constants (and WHITELIST_NSFW, which is mutable)
+# Constants
 
 APP_NAME = "kitsuchan-ng"
 APP_URL = "https://github.com/n303p4/kitsuchan-ng"
 APP_VERSION = (0, 0, 4)
 APP_VERSION_STRING = "%s.%s.%s" % APP_VERSION
-
-API_KEY_DISCORD = os.environ["API_KEY_DISCORD"]
-API_KEY_IBSEARCH = os.environ["API_KEY_IBSEARCH"]
-COMMAND_PREFIX = os.environ.get("COMMAND_PREFIX", None)
-WHITELIST_NSFW = os.environ.get("WHITELIST_NSFW", "").split(":")
-
-BASE_URL_DUCKDUCKGO = "https://duckduckgo.com/?%s"
-
-BASE_URL_IBSEARCH = "https://ibsear.ch/api/v1/images.json?%s"
-BASE_URL_IBSEARCH_IMAGE = "https://%s.ibsear.ch/%s"
-BASE_URL_IBSEARCH_XXX = "https://ibsearch.xxx/api/v1/images.json?%s"
-BASE_URL_IBSEARCH_XXX_IMAGE = "https://%s.ibsearch.xxx/%s"
-
-BASE_URL_XKCD = "https://xkcd.com/%s/"
-BASE_URL_XKCD_API = "https://xkcd.com/%s/info.0.json"
 
 # Initialization
 
@@ -115,14 +101,6 @@ async def function_by_mentions(ctx, func, pass_member_id:bool, *params):
 def check_if_bot_owner(ctx):
     """Check whether the sender of a message is marked as the bot's owner."""
     if ctx.author.id == bot.owner.id:
-        return True
-    return False
-
-def check_if_channel_admin(ctx):
-    """Check whether the sender of a message could conceivably be an admin.""" 
-    permissions_author = ctx.channel.permissions_for(ctx.author)
-    if (permissions_author.manage_channels and permissions_author.manage_guild) is True \
-    or ctx.author.id == ctx.guild.owner.id:
         return True
     return False
 
@@ -262,127 +240,6 @@ async def echo(ctx, *text):
     """
     await ctx.send(" ".join(text))
 
-@bot.command(brief="Retrieve an answer from DuckDuckGo.", aliases=["ddg"])
-async def duckduckgo(ctx, *query):
-    """Retrieve an answer from DuckDuckGo, using the Instant Answers JSON API.
-    
-    *query - A list of strings to be used in the search criteria.
-    
-    This command is extremely versatile! Here are a few examples of things you can do with it:
-    
-    >> ddg roll 5d6 - Roll five 6-sided dice.
-    >> ddg 40 f in c - Convert 40 degrees Fahrenheit to Celsius.
-    >> ddg (5+6)^2/4 - Produces 30.25.
-    >> ddg random number 1 100 - Generate a random number from 1 to 100.
-    >> ddg random name - Generate a random name.
-    >> ddg random fortune - Generate a random fortune.
-    """
-    logger.info("Retrieving DuckDuckGo answer with tags %s." % (query,))
-    query_search = " ".join(query)
-    params = urllib.parse.urlencode({"q": query_search, "t": "ffsb",
-                                     "format": "json", "ia": "answer"})
-    url = BASE_URL_DUCKDUCKGO % params
-    async with bot.session.get(url) as response:
-        if response.status == 200:
-            # This should be response.json() directly, but DuckDuckGo returns an incorrect MIME.
-            data = await response.text()
-            data = json.loads(data)
-            if len(data) == 0:
-                # I wanted to put statements like this in on_command_error.
-                # However, it seems not to work when the ctx.send is in an elif block. :/
-                await ctx.send("Could not find any results.")
-                raise errors.ZeroDataLengthError()
-            answer = html.unescape(data["Answer"])
-            embed = discord.Embed(title=answer)
-            params_short = urllib.parse.urlencode({"q": query_search})
-            embed.description = BASE_URL_DUCKDUCKGO % params_short
-            await ctx.send(embed=embed)
-            logger.info("Answer retrieved!")
-        else:
-            message = "Failed to fetch answer. :("
-            await ctx.send(message)
-            logger.info(message)
-
-@bot.command(brief="Fetch an image from IbSear.ch.", aliases=["ib"])
-async def ibsearch(ctx, *tags):
-    """Retrieve a randomized image from IbSear.ch.
-    
-    *tags - A list of tag strings to be used in the search criteria.
-    
-    This command accepts common imageboard tags and keywords. Here are a few examples:
-    
-    >> ib red_hair armor - Search for images tagged with either red_hair or armor.
-    >> ib +animal_ears +armor - Search for images tagged with both red_hair and armor.
-    >> ib 1280x1024 - Search for images that are 1920x1080.
-    >> ib 5:4 - Search for images in 5:4 aspect ratio.
-    >> ib random: - You don't care about what you get."""
-    logger.info("Fetching image with tags %s." % (tags,))
-    if str(ctx.channel.id) in WHITELIST_NSFW:
-        logger.info("NSFW allowed for channel %s." % (ctx.channel.id,))
-        base_url = BASE_URL_IBSEARCH_XXX
-        base_url_image = BASE_URL_IBSEARCH_XXX_IMAGE
-    else:
-        logger.info("NSFW disallowed for channel %s." % (ctx.channel.id,))
-        base_url = BASE_URL_IBSEARCH
-        base_url_image = BASE_URL_IBSEARCH_IMAGE
-    query_tags = " ".join(tags)
-    params = urllib.parse.urlencode({"key": API_KEY_IBSEARCH, "q": query_tags})
-    url = base_url % params
-    async with bot.session.get(url) as response:
-        if response.status == 200:
-            data = await response.json()
-            if len(data) == 0:
-                await ctx.send("Could not find any results.")
-                raise errors.ZeroDataLengthError()
-            index = random.randint(1, len(data)) - 1
-            result = data[index]
-            embed = discord.Embed()
-            url_image = base_url_image % (data[index]["server"], data[index]["path"])
-            embed.description = url_image
-            embed.set_image(url=url_image)
-            await ctx.send(embed=embed)
-            logger.info("Image retrieved!")
-        else:
-            message = "Failed to fetch image. :("
-            await ctx.send(message)
-            logger.info(message)
-
-@bot.command(brief="Fetch a comic from xkcd.", aliases=["xk"])
-async def xkcd(ctx, comic_id=""):
-    """Retrieve a comic from xkcd.
-    
-    comic_id - A desired comic ID. Leave blank for latest comic. Set to r for a random comic.
-    """
-    logger.info("Retrieving xkcd comic with ID %s." % (comic_id,))
-    if comic_id.lower() in ("random", "r"):
-        url = BASE_URL_XKCD_API % ("",)
-        async with bot.session.get(url) as response:
-            if response.status == 200:
-                data = await response.json()
-                comic_id = random.randint(1, data["num"])
-            else:
-                message = "Could not reach xkcd. :("
-                await ctx.send(message)
-                logger.info(message)
-                return
-    url = BASE_URL_XKCD_API % (comic_id,)
-    async with bot.session.get(url) as response:
-        if response.status == 200:
-            data = await response.json()
-            title = data["safe_title"]
-            embed = discord.Embed(title=title)
-            embed.description = "%s\n%s" % (BASE_URL_XKCD % comic_id, data.get("alt"),)
-            embed.set_image(url=data["img"])
-            await ctx.send(embed=embed)
-        elif response.status == 404:
-            message = "That comic doesn't exist."
-            await ctx.send(message)
-            logger.info(message)
-        else:
-            message = "Could not reach xkcd. :("
-            await ctx.send(message)
-            logger.info(message)
-
 @bot.group(brief="Moderation commands", aliases=["m", "moderate"], invoke_without_command=True)
 async def mod(ctx):
     """Command group for moderation commands."""
@@ -390,19 +247,19 @@ async def mod(ctx):
     await ctx.send(embed=embed)
 
 @mod.command(brief="Kick all users mentioned by this command.")
-@commands.check(check_if_channel_admin)
+@commands.check(checks.is_channel_admin)
 async def kick(ctx):
     """Kick all users mentioned by this command."""
     await function_by_mentions(ctx, bot.http.kick, True, ctx.guild.id)
 
 @mod.command(brief="Ban all users mentioned by this command.")
-@commands.check(check_if_channel_admin)
+@commands.check(checks.is_channel_admin)
 async def ban(ctx):
     """Ban all users mentioned by this command."""
     await function_by_mentions(ctx, bot.http.ban, True, ctx.guild.id)
 
 @mod.command(brief="Whitelists channel for NSFW content.", aliases=["nsfw"])
-@commands.check(check_if_channel_admin)
+@commands.check(checks.is_channel_admin)
 async def permitnsfw(ctx):
     """Whitelists channel for NSFW content.
     
@@ -415,7 +272,7 @@ async def permitnsfw(ctx):
         await ctx.send("NSFW content is already enabled for this channel.")
 
 @mod.command(brief="Blacklists channel for NSFW content.", aliases=["sfw"])
-@commands.check(check_if_channel_admin)
+@commands.check(checks.is_channel_admin)
 async def revokensfw(ctx):
     """Whitelists channel for NSFW content.
     
@@ -448,4 +305,5 @@ async def restart(ctx):
 
 if __name__ == "__main__":
     logger.info("Warming up...")
+    bot.add_cog(cogs.web.APIs(bot, logger, API_KEY_IBSEARCH))
     bot.run(API_KEY_DISCORD)
