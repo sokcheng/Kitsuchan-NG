@@ -49,5 +49,5 @@ def save():
 
 try:
     load()
-except Exception:
+except (FileNotFoundError or IOError or json.decoder.JSONDecodeError):
     save()
