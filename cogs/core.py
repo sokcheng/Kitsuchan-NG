@@ -48,7 +48,7 @@ class Core:
     async def about(self, ctx):
         """Display information about this bot, such as library versions."""
         self.logger.info("Displaying info about me.")
-        uptime = str(datetime.datetime.now() - self.bot.time_started)
+        uptime = str(datetime.datetime.now() - self.bot.time_started).split(".")[0]
         embed = discord.Embed(title=APP_NAME)
         embed.url = APP_URL
         embed.description = self.bot.description
