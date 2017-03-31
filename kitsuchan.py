@@ -361,7 +361,7 @@ async def xkcd(ctx, comic_id=""):
                 data = await response.json()
                 comic_id = random.randint(1, data["num"])
             else:
-                message = "Failed to generate random image."
+                message = "Could not reach xkcd. :("
                 await ctx.send(message)
                 logger.info(message)
                 return
@@ -374,8 +374,12 @@ async def xkcd(ctx, comic_id=""):
             embed.description = "%s\n%s" % (BASE_URL_XKCD % comic_id, data.get("alt"),)
             embed.set_image(url=data["img"])
             await ctx.send(embed=embed)
-        else:
+        elif response.status == 404:
             message = "That comic doesn't exist."
+            await ctx.send(message)
+            logger.info(message)
+        else:
+            message = "Could not reach xkcd. :("
             await ctx.send(message)
             logger.info(message)
 
