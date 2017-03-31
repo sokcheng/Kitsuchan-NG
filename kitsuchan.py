@@ -20,22 +20,16 @@ Optional environment variables:
 
 # Standard modules
 import os
-import json
 import logging
-import random
 import sys
 
 # Third-party modules
 import aiohttp
 import asyncio
 import discord
-import discord.ext.commands as commands
 
 # Bundled modules
-import checks
-import errors
 from environment import *
-import helpers
 import cogs.core
 import cogs.mod
 import cogs.web
