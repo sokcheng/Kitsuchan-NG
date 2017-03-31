@@ -312,6 +312,7 @@ async def ibsearch(ctx, *tags):
 
 @bot.group(brief="Moderation commands", aliases=["m", "moderate"], invoke_without_command=True)
 async def mod(ctx):
+    """Command group for moderation commands."""
     embed = await generate_help_group(mod)
     await ctx.send(embed=embed)
 
