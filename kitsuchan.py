@@ -19,7 +19,6 @@ Optional environment variables:
 """
 
 # Standard modules
-import os
 import logging
 import sys
 
