@@ -86,7 +86,7 @@ async def generate_help_group(group):
         embed.description = group.help
     except AttributeError:
         pass
-    for command in group.commands:
+    for command in tuple(group.commands)[::-1]:
         try:
             embed.add_field(name="%s %s" % (group.name, command.name), value=command.brief)
         except AttributeError:
@@ -332,11 +332,29 @@ async def kick(ctx):
             logger.info(error)
             break
 
+@mod.command(brief="Ban all users mentioned by this command.")
+@commands.check(check_if_channel_admin)
+async def ban(ctx):
+    """Ban all users mentioned by this command."""
+    if len(ctx.message.mentions) == 0:
+        message = "Please mentionx member(s) to be banned."
+        await ctx.send(message)
+        raise errors.InputError(ctx.message.mentions, message)
+    for member in ctx.message.mentions:
+        # This is a weird hack.
+        try:
+            await bot.http.ban(member.id, member.guild.id)
+        except discord.Forbidden as error:
+            await ctx.send("I don't have permission to do that.")
+            logger.info(error)
+            break
+
 @mod.command(brief="Whitelists channel for NSFW content.", aliases=["nsfw"])
 @commands.check(check_if_channel_admin)
 async def permitnsfw(ctx):
     """Whitelists channel for NSFW content."""
     if str(ctx.channel.id) not in WHITELIST_NSFW:
+        logger.info("NSFW content for %s is now enabled." % (ctx.channel.id,))
         WHITELIST_NSFW.append(str(ctx.channel.id))
         await ctx.send("NSFW content for this channel is now enabled.")
     else:
@@ -347,6 +365,7 @@ async def permitnsfw(ctx):
 async def revokensfw(ctx):
     """Whitelists channel for NSFW content."""
     if str(ctx.channel.id) in WHITELIST_NSFW:
+        logger.info("NSFW content for %s is now disabled." % (ctx.channel.id,))
         WHITELIST_NSFW.remove(str(ctx.channel.id))
         await ctx.send("NSFW content for this channel is now disabled.")
     else:
