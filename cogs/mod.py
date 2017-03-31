@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+"""Contains a cog for moderation commands."""
+
 # Third-party modules
 import asyncio
 import discord

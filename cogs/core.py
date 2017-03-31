@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+"""Contains a cog with the bot's core commands."""
+
 # Standard modules
 import sys
 import os
