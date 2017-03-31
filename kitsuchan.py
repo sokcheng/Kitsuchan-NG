@@ -46,7 +46,7 @@ APP_VERSION_STRING = "%s.%s.%s" % APP_VERSION
 API_KEY_DISCORD = os.environ["API_KEY_DISCORD"]
 API_KEY_IBSEARCH = os.environ["API_KEY_IBSEARCH"]
 COMMAND_PREFIX = os.environ.get("COMMAND_PREFIX", None)
-WHITELIST_NSFW = os.environ.get("WHITELIST_NSFW", [])
+WHITELIST_NSFW = os.environ.get("WHITELIST_NSFW", "").split(":")
 
 BASE_URL_DUCKDUCKGO = "https://duckduckgo.com/?%s"
 
@@ -70,11 +70,28 @@ def check_if_bot_owner(ctx):
     return False
 
 def check_if_channel_admin(ctx):
-    """Check whether the sender of a message is marked as a channel admin.""" 
-    if ctx.channel.permissions_for(ctx.author).administrator == True \
+    """Check whether the sender of a message could conceivably be an admin.""" 
+    permissions_author = ctx.channel.permissions_for(ctx.author)
+    if (permissions_author.manage_channels is True and permissions_author.manage_guild == True) \
     or ctx.author.id == ctx.guild.owner.id:
         return True
     return False
+
+async def generate_help_group(group):
+    """A helper function to generate help for a group.
+    
+    Accepts a discord.ext.commands.Group as argument and returns a discord.Embed"""
+    embed = discord.Embed(title=group.name)
+    try:
+        embed.description = group.help
+    except AttributeError:
+        pass
+    for command in group.commands:
+        try:
+            embed.add_field(name="%s %s" % (group.name, command.name), value=command.brief)
+        except AttributeError:
+            pass
+    return embed
 
 @bot.check
 def is_human(ctx):
@@ -108,15 +125,7 @@ async def on_command_error(exception, ctx):
 @bot.group(aliases=["i"], invoke_without_command=True)
 async def info(ctx):
     """Command group for information commands."""
-    embed = discord.Embed(title=info.name)
-    embed.description = info.help
-    for command in info.commands:
-        try:
-            command.brief
-        except AttributeError:
-            pass
-        else:
-            embed.add_field(name="%s %s" % (info.name, command.name), value=command.brief)
+    embed = await generate_help_group(info)
     await ctx.send(embed=embed)
 
 @info.command(brief="Display bot information.", aliases=["a"])
@@ -166,18 +175,14 @@ async def channel(ctx):
         raise errors.ContextError()
     embed = discord.Embed(title="#%s" % (channel.name,))
     try:
-        channel.topic
+        embed.description = channel.topic
     except AttributeError:
         pass
-    else:
-        embed.description = channel.topic
     embed.add_field(name="Channel ID", value=str(channel.id))
     try:
-        channel.guild
+        embed.add_field(name="Guild", value=channel.guild.name)
     except AttributeError:
         pass
-    else:
-        embed.add_field(name="Guild", value=channel.guild.name)
     embed.add_field(name="Created at", value=channel.created_at.ctime())
     if str(channel.id) in WHITELIST_NSFW:
         embed.set_footer(text="NSFW content is enabled for this channel.")
@@ -304,6 +309,48 @@ async def ibsearch(ctx, *tags):
             message = "Failed to fetch image. :("
             await ctx.send(message)
             logger.info(message)
+
+@bot.group(brief="Moderation commands", aliases=["m", "moderate"], invoke_without_command=True)
+async def mod(ctx):
+    embed = await generate_help_group(mod)
+    await ctx.send(embed=embed)
+
+@mod.command(brief="Kick all users mentioned by this command.")
+@commands.check(check_if_channel_admin)
+async def kick(ctx):
+    """Kick all users mentioned by this command."""
+    if len(ctx.message.mentions) == 0:
+        message = "Please mentionx member(s) to be kicked."
+        await ctx.send(message)
+        raise errors.InputError(ctx.message.mentions, message)
+    for member in ctx.message.mentions:
+        # This is a weird hack.
+        try:
+            await bot.http.kick(member.id, member.guild.id)
+        except discord.Forbidden as error:
+            await ctx.send("I don't have permission to do that.")
+            logger.info(error)
+            break
+
+@mod.command(brief="Whitelists channel for NSFW content.", aliases=["nsfw"])
+@commands.check(check_if_channel_admin)
+async def permitnsfw(ctx):
+    """Whitelists channel for NSFW content."""
+    if str(ctx.channel.id) not in WHITELIST_NSFW:
+        WHITELIST_NSFW.append(str(ctx.channel.id))
+        await ctx.send("NSFW content for this channel is now enabled.")
+    else:
+        await ctx.send("NSFW content is already enabled for this channel.")
+
+@mod.command(brief="Blacklists channel for NSFW content.", aliases=["sfw"])
+@commands.check(check_if_channel_admin)
+async def revokensfw(ctx):
+    """Whitelists channel for NSFW content."""
+    if str(ctx.channel.id) in WHITELIST_NSFW:
+        WHITELIST_NSFW.remove(str(ctx.channel.id))
+        await ctx.send("NSFW content for this channel is now disabled.")
+    else:
+        await ctx.send("NSFW content is already disabled for this channel.")
 
 @bot.command(brief="Halt the bot.", aliases=["h"])
 @commands.check(check_if_bot_owner)
