@@ -55,7 +55,7 @@ BASE_URL_IBSEARCH_IMAGE = "https://%s.ibsear.ch/%s"
 BASE_URL_IBSEARCH_XXX = "https://ibsearch.xxx/api/v1/images.json?%s"
 BASE_URL_IBSEARCH_XXX_IMAGE = "https://%s.ibsearch.xxx/%s"
 
-BASE_URL_XKCD = "https://xkcd.com/%s/info.0.json"
+BASE_URL_XKCD = "https://xkcd.com/%s/"
 BASE_URL_XKCD_API = "https://xkcd.com/%s/info.0.json"
 
 logging.basicConfig(level=logging.INFO)
