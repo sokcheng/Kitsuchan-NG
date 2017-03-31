@@ -9,8 +9,9 @@ URL to legal text: https://creativecommons.org/publicdomain/zero/1.0/legalcode
 """
 
 # Standard modules
-import logging
 import sys
+import datetime
+import logging
 
 # Third-party modules
 import aiohttp
@@ -49,6 +50,7 @@ def is_human(ctx):
 @bot.event
 async def on_ready():
     """Conduct preparations once the bot is ready to go."""
+    bot.time_started = datetime.datetime.now()
     command_prefix = settings.manager.get("COMMAND_PREFIX")
     if isinstance(command_prefix, str):
         bot.command_prefix = command_prefix

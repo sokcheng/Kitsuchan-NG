@@ -5,6 +5,7 @@
 # Standard modules
 import sys
 import os
+import datetime
 import logging
 
 # Third party modules
@@ -47,11 +48,13 @@ class Core:
     async def about(self, ctx):
         """Display information about this bot, such as library versions."""
         self.logger.info("Displaying info about me.")
+        uptime = str(datetime.datetime.now() - self.bot.time_started)
         embed = discord.Embed(title=APP_NAME)
         embed.url = APP_URL
         embed.description = self.bot.description
         embed.set_thumbnail(url=self.bot.user.avatar_url)
         embed.add_field(name="Version", value=APP_VERSION_STRING)
+        embed.add_field(name="Uptime", value=uptime)
         embed.add_field(name="Python", value="%s.%s.%s" % sys.version_info[:3])
         embed.add_field(name="discord.py", value=discord.__version__)
         await ctx.send(embed=embed)
