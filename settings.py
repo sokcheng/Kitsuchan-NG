@@ -11,8 +11,8 @@ DEFAULT_EXTENSIONS = ("cogs.core", "cogs.mod", "cogs.web")
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 manager = {
-               "OAuthTokenDiscord": "",
-               "WhitelistNSFW": [],
+               "OAUTH_TOKEN_DISCORD": "",
+               "WHITELIST_NSFW": [],
            }
 
 def load():
@@ -21,7 +21,7 @@ def load():
             new_settings = json.load(f)
         for key, value in new_settings.items():
             # Rewrite this, sir.
-            if (key is "WhitelistNSFW" and not isinstance(value, list)):
+            if (key is "WHITELIST_NSFW" and not isinstance(value, list)):
                 continue
             elif (key is "OAUTH_TOKEN_DISCORD" and not isinstance(value, str)):
                 continue
