@@ -82,7 +82,7 @@ async def generate_help_group(group):
 async def function_by_mentions(ctx, func, pass_member_id:bool, *params):
     """A generic helper function that executes a function on all members listed in a context.
     
-    func - The function you desire to run. Has to accept member ID as a string, to increase flexibility.
+    func - The function you desire to run. Must accept either discord.Member or discord.Member.id.
     pass_member_id - Boolean. If true, then member IDs will be passed to func.
                      If false, then member objects will be passed to func.
     *params - A list of additional parameters to be passed to func."""
