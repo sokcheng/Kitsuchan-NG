@@ -2,6 +2,9 @@
 
 """Contains a cog for moderation commands."""
 
+# Standard modules
+import logging
+
 # Third-party modules
 import asyncio
 import discord
@@ -11,6 +14,12 @@ from discord.ext import commands
 from environment import *
 import checks
 import helpers
+
+logger = logging.getLogger(__name__)
+
+def setup(bot):
+    """Setup function for Moderation."""
+    bot.add_cog(Moderation(bot, logger))
 
 class Moderation:
     """discord.py cog containing core functions of the bot.

@@ -80,9 +80,19 @@ async def on_command_error(exception, ctx):
     else:
         logger.info(str(exception))
 
-if __name__ == "__main__":
+def main():
+    """It's the main function. You call this to start the bot."""
     logger.info("Warming up...")
-    bot.add_cog(cogs.core.Core(bot, logger))
-    bot.add_cog(cogs.mod.Moderation(bot, logger))
-    bot.add_cog(cogs.web.Web(bot, logger))
+    for extension in EXTENSIONS:
+        logger.info("Loading extension %s", extension)
+        try:
+            bot.load_extension(extension)
+            logger.info("Extension %s loaded", extension)
+        except ModuleNotFoundError as error:
+            logger.warning(error)
+        except discord.ClientException as error:
+            logger.warning(error)
     bot.run(OAUTH_TOKEN_DISCORD)
+
+if __name__ == "__main__":
+    main()

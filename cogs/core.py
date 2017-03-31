@@ -5,6 +5,7 @@
 # Standard modules
 import sys
 import os
+import logging
 
 # Third party modules
 import asyncio
@@ -16,6 +17,12 @@ from __main__ import __file__ as FILE_MAIN # This sucks
 from app_info import *
 from environment import *
 import errors
+
+logger = logging.getLogger(__name__)
+
+def setup(bot):
+    """Setup function for Core."""
+    bot.add_cog(Core(bot, logger))
 
 class Core:
     """discord.py cog containing core functions of the bot.

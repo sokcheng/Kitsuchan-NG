@@ -5,6 +5,7 @@
 # Standard modules
 import html
 import json
+import logging
 import random
 import urllib.parse
 
@@ -31,6 +32,12 @@ BASE_URL_WIKIPEDIA = "https://en.wikipedia.org/w/api.php?%s"
 
 BASE_URL_XKCD = "https://xkcd.com/%s/"
 BASE_URL_XKCD_API = "https://xkcd.com/%s/info.0.json"
+
+logger = logging.getLogger(__name__)
+
+def setup(bot):
+    """Setup function for Web."""
+    bot.add_cog(Web(bot, logger))
 
 class Web:
     """This is a cog that contains Web API hooks.
