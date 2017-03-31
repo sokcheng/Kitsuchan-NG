@@ -55,7 +55,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger('discord')
 logger.setLevel(logging.INFO)
 
-bot = discord.ext.commands.Bot(command_prefix="kit!")
+bot = discord.ext.commands.Bot(command_prefix="kit!", pm_help=True)
 bot.description = "A Discord bot that fetches anime images and does other things."
 bot.session = aiohttp.ClientSession(loop=bot.loop)
 
