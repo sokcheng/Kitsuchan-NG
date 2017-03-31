@@ -388,7 +388,9 @@ async def ban(ctx):
 @mod.command(brief="Whitelists channel for NSFW content.", aliases=["nsfw"])
 @commands.check(check_if_channel_admin)
 async def permitnsfw(ctx):
-    """Whitelists channel for NSFW content."""
+    """Whitelists channel for NSFW content.
+    
+    Is NOT persistent. If the bot restarts, it won't remember this info."""
     if str(ctx.channel.id) not in WHITELIST_NSFW:
         logger.info("NSFW content for %s is now enabled." % (ctx.channel.id,))
         WHITELIST_NSFW.append(str(ctx.channel.id))
@@ -399,7 +401,9 @@ async def permitnsfw(ctx):
 @mod.command(brief="Blacklists channel for NSFW content.", aliases=["sfw"])
 @commands.check(check_if_channel_admin)
 async def revokensfw(ctx):
-    """Whitelists channel for NSFW content."""
+    """Whitelists channel for NSFW content.
+    
+    Is NOT persistent. If the bot restarts, it won't remember this info."""
     if str(ctx.channel.id) in WHITELIST_NSFW:
         logger.info("NSFW content for %s is now disabled." % (ctx.channel.id,))
         WHITELIST_NSFW.remove(str(ctx.channel.id))
