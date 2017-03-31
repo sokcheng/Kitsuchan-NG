@@ -3,13 +3,13 @@
 This bot uses the `rewrite` branch of `discord.py`. Install that and not the regular one.
 
 # How to run
-`kitsuchan-ng` reads its config from environment variables. The following ones are **mandatory**:
+`kitsuchan-ng` reads its config from environment variables. The following key is **mandatory**:
 
 * `API_KEY_DISCORD` - OAuth token for your Discord bot account.
-* `API_KEY_IBSEARCH` - API key for IbSear.ch. You can get one for free with no registration.
 
 Optionally, you may set the following as well:
 
+* `API_KEY_IBSEARCH` - API key for IbSear.ch. You can get one for free with no registration. The `ibsearch` command will refuse to run without this.
 * `COMMAND_PREFIX` - Override the command prefix with anything of your liking.
 * `WHITELIST_NSFW` - This contains a list of channel IDs for which NSFW content may be posted.
 
