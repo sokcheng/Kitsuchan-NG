@@ -46,7 +46,7 @@ assert (sys.version_info >= (3,5)), "This program requires Python 3.5 or higher.
 
 APP_NAME = "kitsuchan-ng"
 APP_URL = "https://github.com/n303p4/kitsuchan-ng"
-APP_VERSION = (0, 0, 4)
+APP_VERSION = (0, 1, 0)
 APP_VERSION_STRING = "%s.%s.%s" % APP_VERSION
 
 # Initialization
