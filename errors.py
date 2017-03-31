@@ -40,3 +40,19 @@ class ZeroDataLengthError(Error):
         self.message = "Data length is 0."
     def __str__(self):
         return self.message
+
+class UserPermissionsError(Error):
+    """Raise when a command executes but the user does not have permission.
+    """
+    def __init__(self, message):
+        self.message = message
+    def __str__(self):
+        return self.message
+
+class BotPermissionsError(Error):
+    """Raise when the bot tries to do a thing, but fails.
+    """
+    def __init__(self, message):
+        self.message = message
+    def __str__(self):
+        return self.message

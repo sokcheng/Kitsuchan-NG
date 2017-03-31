@@ -15,8 +15,8 @@ import discord
 from discord.ext import commands
 
 # Bundled modules
-import errors
 from environment import *
+import errors
 
 # Constants
 
@@ -30,10 +30,11 @@ BASE_URL_IBSEARCH_XXX_IMAGE = "https://%s.ibsearch.xxx/%s"
 BASE_URL_XKCD = "https://xkcd.com/%s/"
 BASE_URL_XKCD_API = "https://xkcd.com/%s/info.0.json"
 
-class APIs:
+class Web:
     """This is a cog that contains Web API hooks.
     """
     def __init__(self, bot, logger, api_key_ibsearch):
+        self.name = "Web APIs"
         self.bot = bot
         self.logger = logger
         self.api_key_ibsearch = api_key_ibsearch
