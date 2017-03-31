@@ -5,7 +5,7 @@ This bot uses the `rewrite` branch of `discord.py`. Install that and not the reg
 # How to run
 `kitsuchan-ng` reads its config from environment variables. The following key is **mandatory**:
 
-* `API_KEY_DISCORD` - OAuth token for your Discord bot account.
+* `OAUTH_TOKEN_DISCORD` - OAuth token for your Discord bot account.
 
 Optionally, you may set the following as well:
 

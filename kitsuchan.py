@@ -10,7 +10,7 @@ URL to legal text: https://creativecommons.org/publicdomain/zero/1.0/legalcode
 Usage::
 
 Required environment variables:
-* API_KEY_DISCORD - OAuth token for Discord.
+* OAUTH_TOKEN_DISCORD - OAuth token for Discord.
 
 Optional environment variables:
 * API_KEY_IBSEARCH - API key for IbSear.ch.
@@ -85,4 +85,4 @@ if __name__ == "__main__":
     bot.add_cog(cogs.core.Core(bot, logger))
     bot.add_cog(cogs.mod.Moderation(bot, logger))
     bot.add_cog(cogs.web.Web(bot, logger))
-    bot.run(API_KEY_DISCORD)
+    bot.run(OAUTH_TOKEN_DISCORD)

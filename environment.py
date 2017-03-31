@@ -4,7 +4,7 @@
 
 import os
 
-API_KEY_DISCORD = os.environ["API_KEY_DISCORD"]
+OAUTH_TOKEN_DISCORD = os.environ["OAUTH_TOKEN_DISCORD"]
 API_KEY_IBSEARCH = os.environ.get("API_KEY_IBSEARCH", None)
 COMMAND_PREFIX = os.environ.get("COMMAND_PREFIX", None)
 WHITELIST_NSFW = os.environ.get("WHITELIST_NSFW", "").split(":")
