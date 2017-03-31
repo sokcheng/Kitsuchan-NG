@@ -79,6 +79,28 @@ async def generate_help_group(group):
             pass
     return embed
 
+async def function_by_mentions(ctx, func, pass_member_id:bool, *params):
+    """A generic helper function that executes a function on all members listed in a context.
+    
+    func - The function you desire to run. Has to accept member ID as a string, to increase flexibility.
+    pass_member_id - Boolean. If true, then member IDs will be passed to func.
+                     If false, then member objects will be passed to func.
+    *params - A list of additional parameters to be passed to func."""
+    if len(ctx.message.mentions) == 0:
+        message = "Please mention some member(s)."
+        await ctx.send(message)
+        raise errors.InputError(ctx.message.mentions, message)
+    for member in ctx.message.mentions:
+        try:
+            if pass_member_id:
+                await func(member.id, *params)
+            else:
+                await func(member, *params)
+        except discord.Forbidden as error:
+            await ctx.send("I don't have permission to do that.")
+            logger.info(error)
+            break
+
 def check_if_bot_owner(ctx):
     """Check whether the sender of a message is marked as the bot's owner."""
     if ctx.author.id == bot.owner.id:
@@ -320,35 +342,13 @@ async def mod(ctx):
 @commands.check(check_if_channel_admin)
 async def kick(ctx):
     """Kick all users mentioned by this command."""
-    if len(ctx.message.mentions) == 0:
-        message = "Please mentionx member(s) to be kicked."
-        await ctx.send(message)
-        raise errors.InputError(ctx.message.mentions, message)
-    for member in ctx.message.mentions:
-        # This is a weird hack.
-        try:
-            await bot.http.kick(member.id, member.guild.id)
-        except discord.Forbidden as error:
-            await ctx.send("I don't have permission to do that.")
-            logger.info(error)
-            break
+    await function_by_mentions(ctx, bot.http.kick, True, ctx.guild.id)
 
 @mod.command(brief="Ban all users mentioned by this command.")
 @commands.check(check_if_channel_admin)
 async def ban(ctx):
     """Ban all users mentioned by this command."""
-    if len(ctx.message.mentions) == 0:
-        message = "Please mentionx member(s) to be banned."
-        await ctx.send(message)
-        raise errors.InputError(ctx.message.mentions, message)
-    for member in ctx.message.mentions:
-        # This is a weird hack.
-        try:
-            await bot.http.ban(member.id, member.guild.id)
-        except discord.Forbidden as error:
-            await ctx.send("I don't have permission to do that.")
-            logger.info(error)
-            break
+    await function_by_mentions(ctx, bot.http.ban, True, ctx.guild.id)
 
 @mod.command(brief="Whitelists channel for NSFW content.", aliases=["nsfw"])
 @commands.check(check_if_channel_admin)
