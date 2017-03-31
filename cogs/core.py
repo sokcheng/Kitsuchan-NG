@@ -16,7 +16,6 @@ from __main__ import __file__ as FILE_MAIN # This sucks
 from app_info import *
 from environment import *
 import errors
-import helpers
 
 class Core:
     """discord.py cog containing core functions of the bot.
