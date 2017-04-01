@@ -17,13 +17,11 @@ import logging
 import aiohttp
 import asyncio
 import discord
+from discord.ext import commands
 
 # Bundled modules
 from app_info import *
 import settings
-import cogs.core
-import cogs.mod
-import cogs.web
 
 assert (sys.version_info >= (3,5)), "This program requires Python 3.5 or higher."
 assert (discord.version_info >= (1,0)), "This program requires Discord 1.0 or higher."
@@ -34,7 +32,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger('discord')
 logger.setLevel(logging.INFO)
 
-bot = discord.ext.commands.Bot(command_prefix="kit!", pm_help=True)
+bot = commands.Bot(command_prefix="kit!", pm_help=True)
 bot.description = "A Discord bot that fetches anime images and does other things."
 bot.session = aiohttp.ClientSession(loop=bot.loop)
 
@@ -66,7 +64,7 @@ async def on_ready():
 @bot.event
 async def on_command_error(exception, ctx):
     """Handle errors that occur in commands."""
-    if isinstance(exception, discord.ext.commands.CheckFailure):
+    if isinstance(exception, commands.CheckFailure):
         logger.info("%s (%s) tried to issue a command but was denied." % (ctx.author.name,
                                                                           ctx.author.id))
     # Add more specificity to this at some point.
@@ -85,6 +83,8 @@ def main():
         except ModuleNotFoundError as error:
             logger.warning(error)
         except discord.ClientException as error:
+            logger.warning(error)
+        except NameError as error:
             logger.warning(error)
     bot.run(settings.manager.get("OAUTH_TOKEN_DISCORD"))
 

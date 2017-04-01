@@ -6,7 +6,7 @@ import json
 import logging
 
 FILENAME = "config.json"
-DEFAULT_EXTENSIONS = ("cogs.core", "cogs.mod", "cogs.web")
+DEFAULT_EXTENSIONS = ("cogs.core", "cogs.mod", "cogs.web", "cogs.react")
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
