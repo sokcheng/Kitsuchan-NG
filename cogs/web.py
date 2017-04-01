@@ -115,9 +115,9 @@ class Web:
                 await ctx.send(message)
                 self.logger.info(message)
 
-    @commands.command(brief="Fetch an image from IbSear.ch.", aliases=["ib"])
+    @commands.command(brief="Fetch an anime image from IbSear.ch.", aliases=["ib"])
     async def ibsearch(self, ctx, *tags):
-        """Retrieve a randomized image from IbSear.ch.
+        """Fetch a randomized anime image from IbSear.ch.
         
         *tags - A list of tag strings to be used in the search criteria.
         
