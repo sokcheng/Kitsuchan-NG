@@ -68,9 +68,7 @@ async def on_command_error(exception, ctx):
         await ctx.send("Permission denied!")
         logger.info("%s (%s) tried to issue a command but was denied." % (ctx.author.name,
                                                                           ctx.author.id))
-    elif isinstance(exception, commands.CommandNotFound):
-        logger.info(exception)
-    elif isinstance(exception, discord.HTTPException):
+    elif isinstance(exception, (discord.HTTPException, MissingRequiredArgument)):
         await ctx.send(str(exception))
         logger.info(exception)
     else:
