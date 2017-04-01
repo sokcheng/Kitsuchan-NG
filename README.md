@@ -18,9 +18,7 @@ Optionally, you may set the following as well:
 * `WHITELIST_NSFW` - This contains a list of channel IDs for which NSFW content may be posted.
 * `EXTENSIONS` - This overrides the bot's default extension list.
 
-To run the program, it's suggested you do something like:
-
-`OAUTH_TOKEN_DISCORD=key1 API_KEY_IBSEARCH=key2 python3 kitsuchan.py`
+Then just run `kitsuchan.py`.
 
 # How to use
 By default, `kitsuchan-ng` uses `kit!` for its prefix where `kit` are the first three letters of
