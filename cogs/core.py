@@ -130,6 +130,21 @@ class Core:
         embed.add_field(name="Roles", value=roles, inline=False)
         await ctx.send(embed=embed)
     
+    @commands.command(brief="Display a user's avatar.")
+    async def avatar(self, ctx):
+        """Display your avatar. Mention a user to display their's."""
+        self.logger.info("Displaying user avatar.")
+        try:
+            user = ctx.message.mentions[0]
+        except IndexError:
+            user = ctx.author
+        name = user.name
+        url = user.avatar_url
+        embed = discord.Embed(title="The avatar of %s" % (name,))
+        embed.url = url
+        embed.set_image(url=url)
+        await ctx.send(embed=embed)
+    
     @commands.command(brief="Repeat the user's text back at them.", aliases=["say"])
     async def echo(self, ctx, *text):
         """Repeat the user's text back at them.
