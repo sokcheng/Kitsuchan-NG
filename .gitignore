@@ -90,3 +90,6 @@ ENV/
 
 # Config file
 config.json
+
+# Testing stuff
+staging/

@@ -74,7 +74,7 @@ async def on_command_error(exception, ctx):
 def main():
     """It's the main function. You call this to start the bot."""
     logger.info("Warming up...")
-    extensions = settings.manager.get("Extensions", settings.DEFAULT_EXTENSIONS)
+    extensions = settings.manager.get("EXTENSIONS", settings.DEFAULT_EXTENSIONS)
     for extension in extensions:
         logger.info("Loading extension %s", extension)
         try:
