@@ -7,7 +7,6 @@ import logging
 import random
 
 # Third-party modules
-import asyncio
 import discord
 from discord.ext import commands
 

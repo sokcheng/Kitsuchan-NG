@@ -6,7 +6,6 @@
 import logging
 
 # Third-party modules
-import asyncio
 import discord
 from discord.ext import commands
 

@@ -3,7 +3,6 @@
 """Helper functions for kitsuchan-ng."""
 
 # Third-party modules
-import asyncio
 import discord
 
 # Bundled modules
