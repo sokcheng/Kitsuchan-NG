@@ -12,6 +12,8 @@ def is_bot_owner(ctx):
 
 def is_channel_admin(ctx):
     """Check whether the sender of a message could conceivably be an admin.""" 
+    if ctx.guild is None:
+        return False
     permissions_author = ctx.channel.permissions_for(ctx.author)
     if (permissions_author.manage_channels and permissions_author.manage_guild) is True \
     or ctx.author.id == ctx.guild.owner.id:

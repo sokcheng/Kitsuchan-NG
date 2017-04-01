@@ -54,8 +54,8 @@ async def on_ready():
         bot.command_prefix = command_prefix
     else:
         bot.command_prefix = bot.user.name[:3].lower() + "!"
-    app_info = await bot.application_info()
-    bot.owner = app_info.owner
+    ainfo = await bot.application_info()
+    bot.owner = ainfo.owner
     game = discord.Game()
     game.name = bot.command_prefix + "help"
     await bot.change_presence(game=game)
@@ -65,11 +65,16 @@ async def on_ready():
 async def on_command_error(exception, ctx):
     """Handle errors that occur in commands."""
     if isinstance(exception, commands.CheckFailure):
+        await ctx.send("Permission denied!")
         logger.info("%s (%s) tried to issue a command but was denied." % (ctx.author.name,
                                                                           ctx.author.id))
-    # Add more specificity to this at some point.
+    elif isinstance(exception, commands.CommandNotFound):
+        logger.info(exception)
+    elif isinstance(exception, discord.HTTPException):
+        await ctx.send(str(exception))
+        logger.info(exception)
     else:
-        logger.info(str(exception))
+        logger.info(exception)
 
 def main():
     """It's the main function. You call this to start the bot."""
