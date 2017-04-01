@@ -33,7 +33,7 @@ logger = logging.getLogger('discord')
 logger.setLevel(logging.INFO)
 
 bot = commands.Bot(command_prefix="kit!", pm_help=True)
-bot.description = "A Discord bot that fetches anime images and does other things."
+bot.description = APP_DESCRIPTION
 bot.session = aiohttp.ClientSession(loop=bot.loop)
 
 # Checking functions
