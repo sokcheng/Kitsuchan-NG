@@ -84,7 +84,7 @@ class Reactions:
     @commands.command(brief="Display facedesk reaction image", aliases=["facedesk"])
     async def fdesk(self, ctx):
         """Display facedesk reaction image"""
-        await self.send_image(ctx, IMAGE_FDESK)
+        await self.send_image(ctx, IMAGE_FACEDESK)
 
     @commands.command(brief='Display "let me love you" reaction image', aliases=["letmeloveyou"])
     async def lmly(self, ctx):
