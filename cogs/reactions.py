@@ -76,6 +76,10 @@ class Reactions:
             embed.description = str(url_image)
         await ctx.send(embed=embed)
 
+    @commands.command(brief="Kill yourself.", hidden=True)
+    async def kys(self, ctx):
+        await ctx.send("That's mean. :<")
+
     @commands.command(brief="Display dead chat reaction image")
     async def dead(self, ctx):
         """Display dead chat reaction image"""
