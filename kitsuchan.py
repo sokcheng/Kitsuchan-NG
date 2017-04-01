@@ -61,6 +61,12 @@ async def on_ready():
     logger.info("Bot is ONLINE! Username: %s, User ID: %s", bot.user.name, bot.user.id)
 
 @bot.event
+async def on_command(ctx):
+    """A secondary command invocation."""
+    if ctx.invoked_with == "help":
+        await ctx.send("Help sent to DM.")
+
+@bot.event
 async def on_command_error(exception, ctx):
     """Handle errors that occur in commands."""
     if isinstance(exception, commands.CheckFailure):
