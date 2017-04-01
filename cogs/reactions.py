@@ -80,42 +80,42 @@ class Reactions:
     async def kys(self, ctx):
         await ctx.send("That's mean. :<")
 
-    @commands.command(brief="Display dead chat reaction image")
+    @commands.command(brief="Display dead chat reaction image.")
     async def dead(self, ctx):
-        """Display dead chat reaction image"""
+        """Display dead chat reaction image."""
         await self.send_image(ctx, IMAGE_DEAD)
 
-    @commands.command(brief="Display facedesk reaction image", aliases=["facedesk"])
+    @commands.command(brief="Display facedesk reaction image.", aliases=["facedesk"])
     async def fdesk(self, ctx):
-        """Display facedesk reaction image"""
+        """Display facedesk reaction image."""
         await self.send_image(ctx, IMAGE_FACEDESK)
 
-    @commands.command(brief='Display "let me love you" reaction image', aliases=["letmeloveyou"])
+    @commands.command(brief='Display "let me love you" reaction image.', aliases=["letmeloveyou"])
     async def lmly(self, ctx):
-        """Display "let me love you" reaction image"""
+        """Display "let me love you" reaction image."""
         await self.send_image(ctx, IMAGE_LMLY)
 
-    @commands.command(brief="Display WHAT reaction image")
+    @commands.command(brief="Display WHAT reaction image.")
     async def what(self, ctx):
-        """Display WHAT reaction image"""
+        """Display WHAT reaction image."""
         await self.send_image(ctx, IMAGE_WHAT)
 
-    @commands.command(brief='Display "Wakarimasen, lol" reaction image', aliases=["wakarimasenlol"])
+    @commands.command(brief='Display "Wakarimasen, lol" reaction image.', aliases=["wakarimasenlol"])
     async def wlol(self, ctx):
-        """Display "Wakarimasen, lol" reaction image"""
+        """Display "Wakarimasen, lol" reaction image."""
         await self.send_image(ctx, IMAGE_WLOL)
 
-    @commands.command(brief="Display images of anime boots")
+    @commands.command(brief="Display images of anime boots.")
     async def boots(self, ctx):
-        """Display images of anime boots"""
+        """Display images of anime boots."""
         await self.send_image(ctx, IMAGES_BOOTS)
 
-    @commands.command(brief="Display reaction images to lewd things")
+    @commands.command(brief="Display reaction images to lewd things.")
     async def lewd(self, ctx):
-        """Display reaction images to lewd things"""
+        """Display reaction images to lewd things."""
         await self.send_image(ctx, IMAGES_LEWD)
 
-    @commands.command(brief="Display a sandwich", hidden=True)
+    @commands.command(brief="Display a sandwich.", hidden=True)
     async def sandwich(self, ctx):
-        """Display images of sandwiches"""
+        """Display images of sandwiches."""
         await self.send_image(ctx, IMAGES_SANDWICH)
