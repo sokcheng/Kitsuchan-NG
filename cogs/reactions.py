@@ -114,7 +114,7 @@ class Reactions:
         """Display reaction images to lewd things."""
         await self.send_image(ctx, IMAGES_LEWD)
 
-    @commands.command(brief="Display a sandwich.", hidden=True)
+    @commands.command(brief="Display a sandwich.")
     async def sandwich(self, ctx):
         """Display images of sandwiches."""
         await self.send_image(ctx, IMAGES_SANDWICHES)
