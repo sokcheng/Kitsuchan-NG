@@ -61,8 +61,8 @@ async def on_ready():
     logger.info("Bot is ONLINE! Username: %s, User ID: %s", bot.user.name, bot.user.id)
 
 @bot.event
-async def on_command(ctx):
-    """A secondary command invocation."""
+async def on_command_completion(ctx):
+    """Trigger when a command completes successfully."""
     if ctx.invoked_with == "help":
         await ctx.send("Help sent to DM.")
 
