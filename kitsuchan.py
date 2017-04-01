@@ -80,11 +80,8 @@ def main():
         try:
             bot.load_extension(extension)
             logger.info("Extension %s loaded", extension)
-        except ModuleNotFoundError as error:
-            logger.warning(error)
-        except discord.ClientException as error:
-            logger.warning(error)
-        except NameError as error:
+        except Exception as error:
+            logger.warning("Extension %s seems to be broken", extension)
             logger.warning(error)
     bot.run(settings.manager.get("OAUTH_TOKEN_DISCORD"))
 
