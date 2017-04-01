@@ -16,6 +16,7 @@ from discord.ext import commands
 # Bundled modules
 from __main__ import __file__ as FILE_MAIN # This sucks
 from app_info import *
+import checks
 import settings
 import errors
 import utils
@@ -37,12 +38,6 @@ class Core:
         self.name = "Core Functions"
         self.bot = bot
         self.logger = logger
-    
-    def is_bot_owner(self, ctx):
-        """Check whether the sender of a message is marked as the bot's owner."""
-        if ctx.author.id == self.bot.owner.id:
-            return True
-        return False
 
     @commands.command(brief="Display bot information.", aliases=["info"])
     async def about(self, ctx):
@@ -145,12 +140,9 @@ class Core:
         await ctx.send(" ".join(text))
     
     @commands.command(brief="Halt the self.bot.", aliases=["h"])
+    @commands.check(checks.is_bot_owner)
     async def halt(self, ctx):
         """Halt the self.bot. Must be bot owner to execute."""
-        if not self.is_bot_owner(ctx):
-            message = "%s does not have permission." % str(ctx.author.id)
-            await ctx.send(message)
-            raise errors.UserPermissionsError(message)
         self.logger.warning("Halting bot!")
         await ctx.send("Halting.")
         await self.bot.logout()
@@ -158,12 +150,9 @@ class Core:
         self.bot.session.close()
 
     @commands.command(brief="Restart the self.bot.", aliases=["r"])
+    @commands.check(checks.is_bot_owner)
     async def restart(self, ctx):
         """Restart the self.bot. Must be bot owner to execute."""
-        if not self.is_bot_owner(ctx):
-            message = "%s does not have permission." % str(ctx.author.id)
-            await ctx.send(message)
-            raise errors.UserPermissionsError(message)
         self.logger.warning("Restarting bot!")
         await ctx.send("Restarting.")
         await self.bot.logout()
