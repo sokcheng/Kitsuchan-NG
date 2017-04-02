@@ -136,10 +136,6 @@ class Web:
         >> ib 1280x1024 - Search for images that are 1920x1080.
         >> ib 5:4 - Search for images in 5:4 aspect ratio.
         >> ib random: - You don't care about what you get."""
-        if len(query) == 0:
-            message = "Please enter a query."
-            await ctx.send(message)
-            raise errors.InputError("", message)
         if not self.key_ibsearch:
             message = "API key not specified! Command halted."
             await ctx.send(message)
