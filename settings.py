@@ -17,11 +17,12 @@ manager = {
            }
 
 def load():
+    """Load config settings from FILENAME."""
     try:
         with open(FILENAME) as f:
             new_settings = json.load(f)
         for key, value in new_settings.items():
-            # Rewrite this, sir.
+            # This if/elif block checks types. If a setting is of the wrong type, it is skipped.
             if (key is "WHITELIST_NSFW" and not isinstance(value, list)):
                 continue
             elif (key is "OAUTH_TOKEN_DISCORD" and not isinstance(value, str)):
@@ -29,6 +30,8 @@ def load():
             elif (key is "API_KEY_IBSEARCH" and not isinstance(value, str)):
                 continue
             elif (key is "COMMAND_PREFIX" and not isinstance(value, str)):
+                continue
+            elif (key is "EXTENSIONS" and not isinstance(value, list)):
                 continue
             manager[key] = value
     except FileNotFoundError as error:
@@ -42,6 +45,7 @@ def load():
         raise error
 
 def save():
+    """Save config settings to FILENAME."""
     try:
         with open(FILENAME, "w") as f:
             json.dump(manager, f)
