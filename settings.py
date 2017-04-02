@@ -15,6 +15,7 @@ manager = {}
 
 def load():
     """Load config settings from FILENAME."""
+    logger.info("Loading config file.")
     try:
         with open(FILENAME) as f:
             new_settings = json.load(f)
@@ -32,7 +33,7 @@ def load():
                 continue
             manager[key] = value
     except FileNotFoundError as error:
-        logger.critical("Config file not found!")
+        logger.warning("Config file not found!")
         raise error
     except IOError as error:
         logger.critical("Config file could not be read!")
@@ -43,6 +44,7 @@ def load():
 
 def save():
     """Save config settings to FILENAME."""
+    logger.info("Saving/creating config file.")
     try:
         with open(FILENAME, "w") as f:
             json.dump(manager, f)

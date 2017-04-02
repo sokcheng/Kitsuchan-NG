@@ -69,15 +69,18 @@ async def on_command_completion(ctx):
 @bot.event
 async def on_command_error(exception, ctx):
     """Handle errors that occur in commands."""
+    if not isinstance(exception, commands.CommandNotFound):
+        await bot.owner.send(exception.__class__.__name__)
+        await bot.owner.send(str(exception))
     if isinstance(exception, commands.CheckFailure):
         await ctx.send("Permission denied!")
-        logger.info("%s (%s) tried to issue a command but was denied." % (ctx.author.name,
+        logger.warning("%s (%s) tried to issue a command but was denied." % (ctx.author.name,
                                                                           ctx.author.id))
     elif isinstance(exception, (discord.HTTPException, commands.MissingRequiredArgument)):
         await ctx.send(str(exception))
-        logger.info(exception)
+        logger.warning(exception)
     else:
-        logger.info(exception)
+        logger.warning(exception)
 
 def main():
     """It's the main function. You call this to start the bot."""
