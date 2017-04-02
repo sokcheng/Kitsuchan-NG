@@ -81,6 +81,11 @@ async def on_command_error(exception, ctx):
 
 def main():
     """It's the main function. You call this to start the bot."""
+    try:
+        settings.manager["OAUTH_TOKEN_DISCORD"]
+    except KeyError:
+        print("Please enter an OAuth token for this bot, so it can sign into Discord.")
+        settings.manager["OAUTH_TOKEN_DISCORD"] = input("> ")
     logger.info("Warming up...")
     extensions = settings.manager.get("EXTENSIONS", settings.DEFAULT_EXTENSIONS)
     for extension in extensions:
@@ -91,7 +96,7 @@ def main():
         except Exception as error:
             logger.warning("Extension %s seems to be broken", extension)
             logger.warning(error)
-    bot.run(settings.manager.get("OAUTH_TOKEN_DISCORD"))
+    bot.run(settings.manager["OAUTH_TOKEN_DISCORD"])
 
 if __name__ == "__main__":
     main()

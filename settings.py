@@ -11,10 +11,7 @@ DEFAULT_EXTENSIONS = ("cogs.core", "cogs.utilities", "cogs.moderation", "cogs.we
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-manager = {
-               "OAUTH_TOKEN_DISCORD": "",
-               "WHITELIST_NSFW": [],
-           }
+manager = {}
 
 def load():
     """Load config settings from FILENAME."""
