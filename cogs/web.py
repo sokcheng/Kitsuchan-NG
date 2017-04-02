@@ -63,6 +63,10 @@ class Web:
         >> ddg random name - Generate a random name.
         >> ddg random fortune - Generate a random fortune.
         """
+        if len(query) == 0:
+            message = "Please enter a query."
+            await ctx.send(message)
+            raise errors.InputError("", message)
         self.logger.info("Retrieving DuckDuckGo answer with tags %s." % (query,))
         query_search = " ".join(query)
         params = urllib.parse.urlencode({"q": query_search, "t": "ffsb",
@@ -95,6 +99,10 @@ class Web:
         
         *query - A list of strings to be used in the search criteria.
         """
+        if len(query) == 0:
+            message = "Please enter a query."
+            await ctx.send(message)
+            raise errors.InputError("", message)
         self.logger.info("Searching Wikipedia with query %s." % (query,))
         query_search = " ".join(query)
         params = urllib.parse.urlencode({"action": "opensearch", "search": query_search})
@@ -128,6 +136,10 @@ class Web:
         >> ib 1280x1024 - Search for images that are 1920x1080.
         >> ib 5:4 - Search for images in 5:4 aspect ratio.
         >> ib random: - You don't care about what you get."""
+        if len(query) == 0:
+            message = "Please enter a query."
+            await ctx.send(message)
+            raise errors.InputError("", message)
         if not self.key_ibsearch:
             message = "API key not specified! Command halted."
             await ctx.send(message)

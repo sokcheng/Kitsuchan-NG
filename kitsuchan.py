@@ -63,15 +63,19 @@ async def on_ready():
 @bot.event
 async def on_command_completion(ctx):
     """Trigger when a command completes successfully."""
-    if ctx.invoked_with == "help":
-        await ctx.send("Help sent to DM.")
+    if not isinstance(ctx.channel, discord.DMChannel):
+        if ctx.invoked_with == "help":
+            await ctx.send("Help sent to DM.")
 
 @bot.event
 async def on_command_error(exception, ctx):
     """Handle errors that occur in commands."""
-    if not isinstance(exception, commands.CommandNotFound):
+    # This section checks if the bot's owner DM'ed the bot the command.
+    # The point of this is that the owner can debug the bot easily.
+    if isinstance(ctx.channel, discord.DMChannel) and ctx.author.id == bot.owner.id:
         await bot.owner.send(exception.__class__.__name__)
         await bot.owner.send(str(exception))
+        return
     if isinstance(exception, commands.CheckFailure):
         await ctx.send("Permission denied!")
         logger.warning("%s (%s) tried to issue a command but was denied." % (ctx.author.name,
