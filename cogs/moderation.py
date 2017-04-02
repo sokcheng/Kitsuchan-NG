@@ -50,6 +50,7 @@ class Moderation:
         
         Persistent! Channel ID is stored as an SHA-512 hash."""
         hash_id_channel = utils.to_hash(str(ctx.channel.id))
+        settings.manager.setdefault("WHITELIST_NSFW", [])
         if hash_id_channel not in settings.manager["WHITELIST_NSFW"]:
             self.logger.info("NSFW content for %s is now enabled." % (ctx.channel.id,))
             settings.manager["WHITELIST_NSFW"].append(hash_id_channel)
@@ -64,6 +65,7 @@ class Moderation:
         
         Persistent!"""
         hash_id_channel = utils.to_hash(str(ctx.channel.id))
+        settings.manager.setdefault("WHITELIST_NSFW", [])
         if hash_id_channel in settings.manager["WHITELIST_NSFW"]:
             self.logger.info("NSFW content for %s is now disabled." % (ctx.channel.id,))
             settings.manager["WHITELIST_NSFW"].remove(hash_id_channel)

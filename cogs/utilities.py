@@ -93,6 +93,7 @@ class Utilities:
             pass
         embed.add_field(name="Created at", value=channel.created_at.ctime())
         hash_id_channel = utils.to_hash(str(ctx.channel.id))
+        settings.manager.setdefault("WHITELIST_NSFW", [])
         if hash_id_channel in settings.manager["WHITELIST_NSFW"]:
             embed.set_footer(text="NSFW content is enabled for this channel.")
         await ctx.send(embed=embed)

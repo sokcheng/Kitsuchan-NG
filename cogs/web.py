@@ -134,6 +134,7 @@ class Web:
             raise errors.KeyError(message)
         self.logger.info("Fetching image with tags %s." % (tags,))
         hash_id_channel = utils.to_hash(str(ctx.channel.id))
+        settings.manager.setdefault("WHITELIST_NSFW", [])
         if hash_id_channel in settings.manager["WHITELIST_NSFW"]:
             self.logger.info("NSFW allowed for channel %s." % (ctx.channel.id,))
             base_url = BASE_URL_IBSEARCH_XXX
