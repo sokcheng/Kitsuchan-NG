@@ -47,7 +47,7 @@ class Web:
         self.key_ibsearch = settings.manager.get("API_KEY_IBSEARCH")
         self.logger = logger
 
-    @commands.command(brief="Search Wikipedia.", aliases=["wikipedia"])
+    @commands.command(aliases=["wikipedia"])
     async def wiki(self, ctx, *query):
         """Search Wikipedia.
         
@@ -77,7 +77,7 @@ class Web:
                 await ctx.send(message)
                 self.logger.info(message)
 
-    @commands.command(brief="Fetch an anime image from IbSear.ch.", aliases=["ib"])
+    @commands.command(aliases=["ib"])
     async def ibsearch(self, ctx, *tags):
         """Fetch a randomized anime image from IbSear.ch.
         
@@ -127,9 +127,9 @@ class Web:
                 await ctx.send(message)
                 self.logger.info(message)
 
-    @commands.command(brief="Fetch a comic from xkcd.", aliases=["xk"])
+    @commands.command(aliases=["xk"])
     async def xkcd(self, ctx, comic_id=""):
-        """Retrieve a comic from xkcd.
+        """Fetch a comic from xkcd.
         
         comic_id - A desired comic ID. Leave blank for latest comic. Set to r for a random comic.
         """

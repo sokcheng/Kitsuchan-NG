@@ -39,7 +39,7 @@ class Utilities:
         embed = await helpers.generate_help_embed_group(self.info)
         await ctx.send(embed=embed)
 
-    @info.command(brief="Display guild information.", aliases=["g", "server", "s"])
+    @info.command(brief="Display guild info.", aliases=["g", "server", "s"])
     async def guild(self, ctx):
         """Display information about the current guild, such as owner, region, emojis, and roles."""
         self.logger.info("Displaying info about guild.")
