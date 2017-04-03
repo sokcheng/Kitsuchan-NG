@@ -48,7 +48,8 @@ class Moderation:
     async def prune(self, ctx, count:int):
         """Prune messages."""
         counter = 0
-        for message in self.bot.messages:
+        message_list = list(self.bot.messages)
+        for message in message_list:
             if counter == count:
                 break
             if message.channel.id == ctx.channel.id:
