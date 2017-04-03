@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-"""Retrieve anime images and do other stuff with a Discord bot."""
+"""A modular Discord bot, written in Python 3."""
 
 # Standard modules
 import sys
