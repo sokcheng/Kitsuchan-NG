@@ -49,7 +49,7 @@ class Web:
         self.key_ibsearch = settings.manager.get("API_KEY_IBSEARCH")
         self.logger = logger
     
-    @commands.command(brief="Retrieve an answer from DuckDuckGo.", aliases=["ddg"])
+    @commands.command(brief="Retrieve an answer from DuckDuckGo.", aliases=["ddg"], hidden=True)
     async def duckduckgo(self, ctx, *query):
         """Retrieve an answer from DuckDuckGo, using the Instant Answers JSON API.
         
