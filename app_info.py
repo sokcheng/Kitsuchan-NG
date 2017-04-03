@@ -10,5 +10,5 @@ DESCRIPTION = ("This is a running instance of `%s`, a modular Discord bot. Origi
                "with anime images and basic utility in mind, it has become a fairly flexible "
                "bot with a high level of extensibility. `%s` surely isn't finished yet; please "
                "report any bugs you observe!") % (NAME, NAME,)
-VERSION = (0, 2, 2)
+VERSION = (0, 2, 3)
 VERSION_STRING = "%s.%s.%s" % VERSION
