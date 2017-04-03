@@ -42,6 +42,7 @@ async def generate_help_embed_group(group):
         pass
     for command in tuple(group.commands)[::-1]:
         try:
+            # Check to see if there's a brief version of the help. If not, make your own.
             if not command.brief:
                 value = str(command.help).split("\n")[0]
             else:
