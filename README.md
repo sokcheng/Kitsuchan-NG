@@ -6,7 +6,12 @@ functions to it.
 This bot uses the `rewrite` branch of `discord.py`. Install that and not the regular one.
 
 # How to run
-Just run `kitsuchan.py`. On first run, the bot will prompt you for a Discord OAuth token.
+To install the `rewrite` branch, run the following:
+
+```python3 -m pip install -U git+https://github.com/Rapptz/discord.py@rewrite```
+
+Then just run `kitsuchan.py`. On first run, the bot will prompt you for a
+Discord OAuth token.
 
 `kitsuchan-ng` reads and saves its config to and from the file config.json.
 This file will be created upon startup. The following parameter is MANDATORY:
