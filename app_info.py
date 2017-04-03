@@ -8,5 +8,5 @@ NAME = "kitsuchan-ng"
 URL = "https://github.com/n303p4/kitsuchan-ng"
 DESCRIPTION = ("A Discord bot that fetches anime images and does other things. It's modular "
                    "and extensible, so you can add addtional functions to it quite easily.")
-VERSION = (0, 2, 1)
+VERSION = (0, 2, 2)
 VERSION_STRING = "%s.%s.%s" % VERSION
