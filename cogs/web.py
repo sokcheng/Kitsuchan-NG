@@ -7,6 +7,7 @@ import html
 import json
 import logging
 import random
+import re
 import urllib.parse
 
 # Third-party modules
@@ -67,6 +68,8 @@ class Web:
             message = "Please enter a query."
             await ctx.send(message)
             raise errors.InputError("", message)
+        elif "ip" in query:
+            raise errors.UserPermissionsError("%s (%s) tried to search IP address!" % (ctx.author.name, ctx.author.id,))
         self.logger.info("Retrieving DuckDuckGo answer with tags %s." % (query,))
         query_search = " ".join(query)
         params = urllib.parse.urlencode({"q": query_search, "t": "ffsb",
