@@ -37,8 +37,3 @@ the bot account's username. You can override this.
 * `ibsearch <list of tags>` - Search IbSear.ch for anime pictures.
 * `halt` - Halt the bot. Only the bot's owner can do this.
 * `restart` - Restart the bot. Only the bot's owner can do this.
-
-# Licensing
-
-`kitsuchan-ng` is released under the Creative Commons CC0 1.0 Universal Public Domain Dedication.
-You may find the legal text [here](https://creativecommons.org/publicdomain/zero/1.0/legalcode).
