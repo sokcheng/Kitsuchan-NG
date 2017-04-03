@@ -33,7 +33,7 @@ class Moderation:
 
     @commands.group(aliases=["m", "moderate"], invoke_without_command=True)
     async def mod(self, ctx):
-        """Moderation subcommands."""
+        """Moderation subcommands, e.g. kick, ban."""
         embed = await helpers.generate_help_embed_group(self.mod)
         await ctx.send(embed=embed)
 

@@ -45,7 +45,7 @@ class Core:
     
     @commands.group(aliases=["a"], invoke_without_command=True)
     async def sudo(self, ctx):
-        """Administrative subcommands."""
+        """Administrative subcommands, e.g. halt, restart."""
         embed = await helpers.generate_help_embed_group(self.sudo)
         await ctx.send(embed=embed)
     
