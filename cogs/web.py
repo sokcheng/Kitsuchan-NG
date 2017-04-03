@@ -22,8 +22,6 @@ import utils
 
 # Constants
 
-BASE_URL_DUCKDUCKGO = "https://duckduckgo.com/?%s"
-
 BASE_URL_IBSEARCH = "https://ibsear.ch/api/v1/images.json?%s"
 BASE_URL_IBSEARCH_IMAGE = "https://%s.ibsear.ch/%s"
 BASE_URL_IBSEARCH_XXX = "https://ibsearch.xxx/api/v1/images.json?%s"
@@ -48,56 +46,6 @@ class Web:
         self.bot = bot
         self.key_ibsearch = settings.manager.get("API_KEY_IBSEARCH")
         self.logger = logger
-    
-    # This command has the potential to expose an IP address of the bot's host. Do not use.
-    @commands.command(brief="Retrieve an answer from DuckDuckGo.", aliases=["ddg"], hidden=True)
-    async def duckduckgo(self, ctx, *query):
-        """Retrieve an answer from DuckDuckGo, using the Instant Answers JSON API.
-        
-        *query - A list of strings to be used in the search criteria.
-        
-        This command is extremely versatile! Here are a few examples of things you can do with it:
-        
-        >> ddg roll 5d6 - Roll five 6-sided dice.
-        >> ddg 40 f in c - Convert 40 degrees Fahrenheit to Celsius.
-        >> ddg (5+6)^2/4 - Produces 30.25.
-        >> ddg random number 1 100 - Generate a random number from 1 to 100.
-        >> ddg random name - Generate a random name.
-        >> ddg random fortune - Generate a random fortune.
-        """
-        raise errors.UserPermissionsError("This command is blocked.")
-        if len(query) == 0:
-            message = "Please enter a query."
-            await ctx.send(message)
-            raise errors.InputError("", message)
-        for string in query:
-            if string.lower() == "ip":
-                raise errors.UserPermissionsError("%s (%s) tried to search IP address!" % (ctx.author.name, ctx.author.id,))
-        self.logger.info("Retrieving DuckDuckGo answer with tags %s." % (query,))
-        query_search = " ".join(query)
-        params = urllib.parse.urlencode({"q": query_search, "t": "ffsb",
-                                         "format": "json", "ia": "answer"})
-        url = BASE_URL_DUCKDUCKGO % params
-        async with self.bot.session.get(url) as response:
-            if response.status == 200:
-                # This should be response.json() directly, but DuckDuckGo returns an incorrect MIME.
-                data = await response.text()
-                data = json.loads(data)
-                if len(data) == 0:
-                    # I wanted to put statements like this in on_command_error.
-                    # However, it seems not to work when the ctx.send is in an elif block. :/
-                    await ctx.send("Could not find any results.")
-                    raise errors.ZeroDataLengthError()
-                answer = html.unescape(data["Answer"])
-                embed = discord.Embed(title=answer)
-                params_short = urllib.parse.urlencode({"q": query_search})
-                embed.description = BASE_URL_DUCKDUCKGO % params_short
-                await ctx.send(embed=embed)
-                self.logger.info("Answer retrieved!")
-            else:
-                message = "Failed to fetch answer. :("
-                await ctx.send(message)
-                self.logger.info(message)
 
     @commands.command(brief="Search Wikipedia.", aliases=["wikipedia"])
     async def wiki(self, ctx, *query):
