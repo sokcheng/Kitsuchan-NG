@@ -43,13 +43,7 @@ class Core:
         """
         await ctx.send(" ".join(text))
     
-    @commands.group(aliases=["a"], invoke_without_command=True)
-    async def sudo(self, ctx):
-        """Administrative subcommands, e.g. halt, restart."""
-        embed = await helpers.generate_help_embed_group(self.sudo)
-        await ctx.send(embed=embed)
-    
-    @sudo.command(brief="Halt the bot.", aliases=["h"])
+    @commands.command()
     @commands.check(checks.is_bot_owner)
     async def halt(self, ctx):
         """Halt the bot. Must be bot owner to execute."""
@@ -59,7 +53,7 @@ class Core:
         settings.save()
         self.bot.session.close()
 
-    @sudo.command(brief="Restart the bot.", aliases=["r"])
+    @commands.command()
     @commands.check(checks.is_bot_owner)
     async def restart(self, ctx):
         """Restart the bot. Must be bot owner to execute."""
