@@ -15,6 +15,7 @@ from discord.ext import commands
 from app_info import *
 import settings
 import errors
+import helpers
 import utils
 
 logger = logging.getLogger(__name__)
@@ -34,7 +35,13 @@ class Utilities:
         self.bot = bot
         self.logger = logger
 
-    @commands.command(brief="Display bot information.", aliases=["info"])
+    @commands.group(aliases=["i"], invoke_without_command=True)
+    async def info(self, ctx):
+        """Information subcommands."""
+        embed = await helpers.generate_help_embed_group(self.info)
+        await ctx.send(embed=embed)
+
+    @info.command(brief="Display bot information.", aliases=["a", "bot", "b"])
     async def about(self, ctx):
         """Display information about this bot, such as library versions."""
         self.logger.info("Displaying info about me.")
@@ -49,8 +56,8 @@ class Utilities:
         embed.add_field(name="discord.py", value=discord.__version__)
         await ctx.send(embed=embed)
 
-    @commands.command(brief="Display guild information.", aliases=["ginfo"])
-    async def guildinfo(self, ctx):
+    @info.command(brief="Display guild information.", aliases=["g", "server", "s"])
+    async def guild(self, ctx):
         """Display information about the current guild, such as owner, region, emojis, and roles."""
         self.logger.info("Displaying info about guild.")
         guild = ctx.guild
@@ -74,8 +81,8 @@ class Utilities:
         embed.add_field(name="Roles", value=roles, inline=False)
         await ctx.send(embed=embed)
 
-    @commands.command(brief="Display channel info.", aliases=["cinfo"])
-    async def channelinfo(self, ctx):
+    @info.command(brief="Display channel info.", aliases=["c"])
+    async def channel(self, ctx):
         """Display information about the current channel."""
         self.logger.info("Displaying info about channel.")
         channel = ctx.channel
@@ -98,8 +105,8 @@ class Utilities:
             embed.set_footer(text="NSFW content is enabled for this channel.")
         await ctx.send(embed=embed)
 
-    @commands.command(brief="Display user info.", aliases=["uinfo"])
-    async def userinfo(self, ctx):
+    @info.command(brief="Display user info.", aliases=["u"])
+    async def user(self, ctx):
         """Display information about you, such as status and roles.
         
         Mention a user while invoking this command to display information about that user."""

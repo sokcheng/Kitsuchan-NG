@@ -14,6 +14,7 @@ from discord.ext import commands
 # Bundled modules
 from __main__ import __file__ as FILE_MAIN # This sucks
 import checks
+import helpers
 import settings
 import utils
 
@@ -42,20 +43,26 @@ class Core:
         """
         await ctx.send(" ".join(text))
     
-    @commands.command(brief="Halt the self.bot.", aliases=["h"])
+    @commands.group(aliases=["a"], invoke_without_command=True)
+    async def sudo(self, ctx):
+        """Administrative subcommands."""
+        embed = await helpers.generate_help_embed_group(self.sudo)
+        await ctx.send(embed=embed)
+    
+    @sudo.command(brief="Halt the bot.", aliases=["h"])
     @commands.check(checks.is_bot_owner)
     async def halt(self, ctx):
-        """Halt the self.bot. Must be bot owner to execute."""
+        """Halt the bot. Must be bot owner to execute."""
         self.logger.warning("Halting bot!")
         await ctx.send("Halting.")
         await self.bot.logout()
         settings.save()
         self.bot.session.close()
 
-    @commands.command(brief="Restart the self.bot.", aliases=["r"])
+    @sudo.command(brief="Restart the bot.", aliases=["r"])
     @commands.check(checks.is_bot_owner)
     async def restart(self, ctx):
-        """Restart the self.bot. Must be bot owner to execute."""
+        """Restart the bot. Must be bot owner to execute."""
         self.logger.warning("Restarting bot!")
         await ctx.send("Restarting.")
         await self.bot.logout()

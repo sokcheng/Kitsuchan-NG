@@ -31,19 +31,25 @@ class Moderation:
         self.bot = bot
         self.logger = logger
 
-    @commands.command(brief="Kick all users mentioned by this command.")
+    @commands.group(aliases=["m", "moderate"], invoke_without_command=True)
+    async def mod(self, ctx):
+        """Moderation subcommands."""
+        embed = await helpers.generate_help_embed_group(self.mod)
+        await ctx.send(embed=embed)
+
+    @mod.command(brief="Kick all users mentioned by this command.")
     @commands.check(checks.is_channel_admin)
     async def kick(self, ctx):
         """Kick all users mentioned by this command."""
         await helpers.function_by_mentions(ctx, self.bot.http.kick, True, ctx.guild.id)
 
-    @commands.command(brief="Ban all users mentioned by this command.")
+    @mod.command(brief="Ban all users mentioned by this command.")
     @commands.check(checks.is_channel_admin)
     async def ban(self, ctx):
         """Ban all users mentioned by this command."""
         await helpers.function_by_mentions(ctx, self.bot.http.ban, True, ctx.guild.id)
 
-    @commands.command(brief="Whitelists channel for NSFW content.")
+    @mod.command(brief="Whitelists channel for NSFW content.")
     @commands.check(checks.is_channel_admin)
     async def allownsfw(self, ctx):
         """Whitelists channel for NSFW content.
@@ -58,7 +64,7 @@ class Moderation:
         else:
             await ctx.send("NSFW content is already enabled for this channel.")
 
-    @commands.command(brief="Blacklists channel for NSFW content.")
+    @mod.command(brief="Blacklists channel for NSFW content.")
     @commands.check(checks.is_channel_admin)
     async def denynsfw(self, ctx):
         """Blacklists channel for NSFW content.

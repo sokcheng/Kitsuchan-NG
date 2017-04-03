@@ -12,6 +12,7 @@ from discord.ext import commands
 
 # Bundled modules
 import utils
+import helpers
 
 # Single image links.
 IMAGE_DEAD = "https://s-media-cache-ak0.pinimg.com/736x/ec/61/ef/ec61ef110a5d2e01bf8ae48331b63723.jpg"
@@ -75,46 +76,52 @@ class Reactions:
             embed.description = str(url_image)
         await ctx.send(embed=embed)
 
-    @commands.command(brief="Kill yourself.", hidden=True)
+    @commands.group(aliases=["r"], invoke_without_command=True)
+    async def react(self, ctx):
+        """Reaction image subcommands."""
+        embed = await helpers.generate_help_embed_group(self.react)
+        await ctx.send(embed=embed)
+
+    @react.command(brief="Kill yourself.", hidden=True)
     async def kys(self, ctx):
         await ctx.send("That's mean. :<")
 
-    @commands.command(brief="Display dead chat reaction image.")
+    @react.command(brief="Display dead chat reaction image.")
     async def dead(self, ctx):
         """Display dead chat reaction image."""
         await self.send_image(ctx, IMAGE_DEAD)
 
-    @commands.command(brief="Display facedesk reaction image.", aliases=["facedesk"])
+    @react.command(brief="Display facedesk reaction image.", aliases=["facedesk"])
     async def fdesk(self, ctx):
         """Display facedesk reaction image."""
         await self.send_image(ctx, IMAGE_FACEDESK)
 
-    @commands.command(brief='Display "let me love you" reaction image.', aliases=["letmeloveyou"])
+    @react.command(brief='Display "let me love you" reaction image.', aliases=["letmeloveyou"])
     async def lmly(self, ctx):
         """Display "let me love you" reaction image."""
         await self.send_image(ctx, IMAGE_LMLY)
 
-    @commands.command(brief="Display WHAT reaction image.")
+    @react.command(brief="Display WHAT reaction image.")
     async def what(self, ctx):
         """Display WHAT reaction image."""
         await self.send_image(ctx, IMAGE_WHAT)
 
-    @commands.command(brief='Display "Wakarimasen, lol" reaction image.', aliases=["wakarimasenlol"])
+    @react.command(brief='Display "Wakarimasen, lol" reaction image.', aliases=["wakarimasenlol"])
     async def wlol(self, ctx):
         """Display "Wakarimasen, lol" reaction image."""
         await self.send_image(ctx, IMAGE_WLOL)
 
-    @commands.command(brief="Display images of anime boots.")
+    @react.command(brief="Display images of anime boots.")
     async def boots(self, ctx):
         """Display images of anime boots."""
         await self.send_image(ctx, IMAGES_BOOTS)
 
-    @commands.command(brief="Display reaction images to lewd things.")
+    @react.command(brief="Display reaction images to lewd things.")
     async def lewd(self, ctx):
         """Display reaction images to lewd things."""
         await self.send_image(ctx, IMAGES_LEWD)
 
-    @commands.command(brief="Display a sandwich.")
+    @react.command(brief="Display a sandwich.")
     async def sandwich(self, ctx):
         """Display images of sandwiches."""
         await self.send_image(ctx, IMAGES_SANDWICHES)
