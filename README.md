@@ -5,6 +5,17 @@ functions to it.
 
 This bot uses the `rewrite` branch of `discord.py`. Install that and not the regular one.
 
+# Isn't this basically similar in concept to Twentysix26's Red bot? Why not just use that?
+
+It *is* basically similar. In fact, I recommend you use Red instead of `kitsuchan-ng` if you need
+something that's actually meant for serious work. Red has a far larger library of extensions, its
+codebase is more mature, and it has a good community of people behind it. `kitsuchan-ng` by
+contrast is a young, unproven bot with an unstable API and no community.
+
+So, if Red exists, why did I make this bot? Simple, it's for fun. I also made it because I hope to
+improve my own coding skills as it's being built. The code is released as open-source in hopes that
+perhaps someone else will find it useful, too.
+
 # How to run
 To install the `rewrite` branch, run the following:
 
