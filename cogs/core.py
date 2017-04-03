@@ -5,6 +5,7 @@
 # Standard modules
 import sys
 import os
+import datetime
 import logging
 
 # Third party modules
@@ -13,6 +14,7 @@ from discord.ext import commands
 
 # Bundled modules
 from __main__ import __file__ as FILE_MAIN # This sucks
+import app_info
 import checks
 import helpers
 import settings
@@ -34,8 +36,23 @@ class Core:
     def __init__(self, bot, logger):
         self.bot = bot
         self.logger = logger
+
+    @commands.command()
+    async def about(self, ctx):
+        """Display information about this bot, such as library versions."""
+        self.logger.info("Displaying info about the bot.")
+        uptime = str(datetime.datetime.now() - self.bot.time_started).split(".")[0]
+        embed = discord.Embed(title=app_info.NAME)
+        embed.url = app_info.URL
+        embed.description = self.bot.description
+        embed.set_thumbnail(url=self.bot.user.avatar_url)
+        embed.add_field(name="Version", value=app_info.VERSION_STRING)
+        embed.add_field(name="Uptime", value=uptime)
+        embed.add_field(name="Python", value="%s.%s.%s" % sys.version_info[:3])
+        embed.add_field(name="discord.py", value=discord.__version__)
+        await ctx.send(embed=embed)
     
-    @commands.command(brief="Repeat the user's text back at them.", aliases=["say"])
+    @commands.command(aliases=["say"])
     async def echo(self, ctx, *text):
         """Repeat the user's text back at them.
         

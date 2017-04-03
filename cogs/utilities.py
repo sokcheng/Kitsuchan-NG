@@ -4,7 +4,6 @@
 
 # Standard modules
 import sys
-import datetime
 import logging
 
 # Third party modules
@@ -12,7 +11,6 @@ import discord
 from discord.ext import commands
 
 # Bundled modules
-from app_info import *
 import settings
 import errors
 import helpers
@@ -39,21 +37,6 @@ class Utilities:
     async def info(self, ctx):
         """Information subcommands, e.g. channel and bot information."""
         embed = await helpers.generate_help_embed_group(self.info)
-        await ctx.send(embed=embed)
-
-    @info.command(brief="Display bot information.", aliases=["a", "bot", "b"])
-    async def about(self, ctx):
-        """Display information about this bot, such as library versions."""
-        self.logger.info("Displaying info about me.")
-        uptime = str(datetime.datetime.now() - self.bot.time_started).split(".")[0]
-        embed = discord.Embed(title=APP_NAME)
-        embed.url = APP_URL
-        embed.description = self.bot.description
-        embed.set_thumbnail(url=self.bot.user.avatar_url)
-        embed.add_field(name="Version", value=APP_VERSION_STRING)
-        embed.add_field(name="Uptime", value=uptime)
-        embed.add_field(name="Python", value="%s.%s.%s" % sys.version_info[:3])
-        embed.add_field(name="discord.py", value=discord.__version__)
         await ctx.send(embed=embed)
 
     @info.command(brief="Display guild information.", aliases=["g", "server", "s"])

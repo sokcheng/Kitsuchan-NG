@@ -13,7 +13,7 @@ import discord
 from discord.ext import commands
 
 # Bundled modules
-from app_info import *
+import app_info
 import settings
 
 assert (sys.version_info >= (3,5)), "This program requires Python 3.5 or higher."
@@ -26,7 +26,7 @@ logger = logging.getLogger('discord')
 logger.setLevel(logging.INFO)
 
 bot = commands.Bot(command_prefix="kit!", pm_help=True)
-bot.description = APP_DESCRIPTION
+bot.description = app_info.DESCRIPTION
 bot.session = aiohttp.ClientSession(loop=bot.loop)
 
 # Checking functions
