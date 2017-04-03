@@ -58,7 +58,10 @@ class Core:
         
         *text - A list of strings, which is concatenated into one string before being echoed.
         """
-        await ctx.send(" ".join(text))
+        message = " ".join(text)
+        if len(message) == 0:
+            message = "Echo?"
+        await ctx.send(message)
     
     @commands.command()
     @commands.check(checks.is_bot_owner)
