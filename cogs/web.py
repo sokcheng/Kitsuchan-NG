@@ -64,12 +64,14 @@ class Web:
         >> ddg random name - Generate a random name.
         >> ddg random fortune - Generate a random fortune.
         """
+        raise errors.UserPermissionsError("This command is blocked.")
         if len(query) == 0:
             message = "Please enter a query."
             await ctx.send(message)
             raise errors.InputError("", message)
-        elif "ip" in query:
-            raise errors.UserPermissionsError("%s (%s) tried to search IP address!" % (ctx.author.name, ctx.author.id,))
+        for string in query:
+            if string.lower() == "ip":
+                raise errors.UserPermissionsError("%s (%s) tried to search IP address!" % (ctx.author.name, ctx.author.id,))
         self.logger.info("Retrieving DuckDuckGo answer with tags %s." % (query,))
         query_search = " ".join(query)
         params = urllib.parse.urlencode({"q": query_search, "t": "ffsb",
