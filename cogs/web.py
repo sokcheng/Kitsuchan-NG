@@ -49,6 +49,7 @@ class Web:
         self.key_ibsearch = settings.manager.get("API_KEY_IBSEARCH")
         self.logger = logger
     
+    # This command has the potential to expose an IP address of the bot's host. Do not use.
     @commands.command(brief="Retrieve an answer from DuckDuckGo.", aliases=["ddg"], hidden=True)
     async def duckduckgo(self, ctx, *query):
         """Retrieve an answer from DuckDuckGo, using the Instant Answers JSON API.
