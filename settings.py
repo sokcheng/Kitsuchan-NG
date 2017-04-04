@@ -13,11 +13,13 @@ logger = logging.getLogger(__name__)
 
 manager = {}
 
-def load():
-    """Load config settings from FILENAME."""
+def load(filename:str=FILENAME):
+    """Load config settings from filename.
+    
+    filename - The name of the file you wish to write to."""
     logger.info("Loading config file.")
     try:
-        with open(FILENAME) as f:
+        with open(filename) as f:
             new_settings = json.load(f)
         for key, value in new_settings.items():
             # This if/elif block checks types. If a setting is of the wrong type, it is skipped.
@@ -42,11 +44,14 @@ def load():
         logger.critical("Config file is not valid JSON!")
         raise error
 
-def save():
-    """Save config settings to FILENAME."""
+def save(filename:str=FILENAME, manager=manager):
+    """Save config settings to FILENAME.
+    
+    filename - The name of the file you wish to write to.
+    manager - The JSON data you want to write."""
     logger.info("Saving/creating config file.")
     try:
-        with open(FILENAME, "w") as f:
+        with open(filename, "w") as f:
             json.dump(manager, f)
     except IOError as error:
         logger.warning("Could not write config!")
