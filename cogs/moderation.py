@@ -34,13 +34,13 @@ class Moderation:
     @commands.check(checks.is_channel_admin)
     async def kick(self, ctx):
         """Kick all users mentioned by this command."""
-        await helpers.function_by_mentions(ctx, self.bot.http.kick, True, ctx.guild.id)
+        await helpers.function_by_mentions(ctx, ctx.guild.kick)
 
     @commands.command()
     @commands.check(checks.is_channel_admin)
     async def ban(self, ctx):
         """Ban all users mentioned by this command."""
-        await helpers.function_by_mentions(ctx, self.bot.http.ban, True, ctx.guild.id)
+        await helpers.function_by_mentions(ctx, ctx.guild.ban)
         
     @commands.command()
     @commands.check(checks.is_channel_admin)

@@ -83,7 +83,7 @@ class Reactions:
     @commands.group(aliases=["r"], invoke_without_command=True)
     async def react(self, ctx):
         """A variety of reactions and reaction images."""
-        embed = await helpers.generate_help_embed_group(self.react)
+        embed = await helpers.generate_help_embed(self.react)
         await ctx.send(embed=embed)
 
     @react.command()
