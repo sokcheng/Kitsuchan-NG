@@ -34,10 +34,6 @@ BASE_URL_XKCD_API = "https://xkcd.com/%s/info.0.json"
 
 logger = logging.getLogger(__name__)
 
-def setup(bot):
-    """Setup function for Web."""
-    bot.add_cog(Web(bot))
-
 class Web:
     """This is a cog that contains Web API hooks.
     """
@@ -162,3 +158,7 @@ class Web:
                 message = "Could not reach xkcd. :("
                 await ctx.send(message)
                 logger.info(message)
+
+def setup(bot):
+    """Setup function for Web."""
+    bot.add_cog(Web(bot))

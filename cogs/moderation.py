@@ -17,10 +17,6 @@ import utils
 
 logger = logging.getLogger(__name__)
 
-def setup(bot):
-    """Setup function for Moderation."""
-    bot.add_cog(Moderation(bot))
-
 class Moderation:
     """discord.py cog containing moderation functions of the bot.
     
@@ -83,3 +79,7 @@ class Moderation:
             await ctx.send("NSFW content for this channel is now disabled.")
         else:
             await ctx.send("NSFW content is already disabled for this channel.")
+
+def setup(bot):
+    """Setup function for Moderation."""
+    bot.add_cog(Moderation(bot))

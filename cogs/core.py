@@ -22,10 +22,6 @@ import utils
 
 logger = logging.getLogger(__name__)
 
-def setup(bot):
-    """Setup function for Core."""
-    bot.add_cog(Core(bot))
-
 class Core:
     """discord.py cog containing core functions of the bot.
     
@@ -125,3 +121,7 @@ class Core:
             await ctx.send("Extension is already disabled.")
         else:
             await ctx.send("Extension disabled.")
+
+def setup(bot):
+    """Setup function for Core."""
+    bot.add_cog(Core(bot))

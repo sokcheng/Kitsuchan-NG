@@ -18,10 +18,6 @@ import utils
 
 logger = logging.getLogger(__name__)
 
-def setup(bot):
-    """Setup function for Utilities."""
-    bot.add_cog(Utilities())
-
 class Utilities:
     """discord.py cog containing utility functions of the bot.
     
@@ -168,3 +164,7 @@ class Utilities:
                 await ctx.send(embed=embed)
                 return
         await ctx.send("No, %s did not say \"%s\". Or it was deleted." % (user.name, quote,))
+
+def setup(bot):
+    """Setup function for Utilities."""
+    bot.add_cog(Utilities())

@@ -51,10 +51,6 @@ IMAGES_SANDWICHES = ("https://i.imgur.com/kyTDwIX.png",
 
 logger = logging.getLogger(__name__)
 
-def setup(bot):
-    """Setup function for Reactions."""
-    bot.add_cog(Reactions())
-
 class Reactions:
     """discord.py cog containing reaction image functions of the bot.
     
@@ -125,3 +121,7 @@ class Reactions:
     async def sandwich(self, ctx):
         """Display a sandwich."""
         await self.send_image(ctx, IMAGES_SANDWICHES)
+
+def setup(bot):
+    """Setup function for Reactions."""
+    bot.add_cog(Reactions())
