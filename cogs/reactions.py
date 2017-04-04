@@ -53,7 +53,7 @@ logger = logging.getLogger(__name__)
 
 def setup(bot):
     """Setup function for Reactions."""
-    bot.add_cog(Reactions(bot, logger))
+    bot.add_cog(Reactions())
 
 class Reactions:
     """discord.py cog containing reaction image functions of the bot.
@@ -61,9 +61,8 @@ class Reactions:
     bot - The parent discord.Client object for the cog.
     logger - A logger to assign the cog.
     """
-    def __init__(self, bot, logger):
-        self.bot = bot
-        self.logger = logger
+    def __init__(self):
+        pass
 
     async def send_image(self, ctx, url_image):
         """A helper function that just creates an embed with an image and sends it off."""

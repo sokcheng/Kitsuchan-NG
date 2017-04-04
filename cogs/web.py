@@ -36,7 +36,7 @@ logger = logging.getLogger(__name__)
 
 def setup(bot):
     """Setup function for Web."""
-    bot.add_cog(Web(bot, logger))
+    bot.add_cog(Web(bot))
 
 class Web:
     """This is a cog that contains Web API hooks.
@@ -45,7 +45,6 @@ class Web:
         self.name = "Web APIs"
         self.bot = bot
         self.key_ibsearch = settings.manager.get("API_KEY_IBSEARCH")
-        self.logger = logger
 
     @commands.command(aliases=["wikipedia"])
     async def wiki(self, ctx, *query):
@@ -57,7 +56,7 @@ class Web:
             message = "Please enter a query."
             await ctx.send(message)
             raise errors.InputError("", message)
-        self.logger.info("Searching Wikipedia with query %s." % (query,))
+        logger.info("Searching Wikipedia with query %s." % (query,))
         query_search = " ".join(query)
         params = urllib.parse.urlencode({"action": "opensearch", "search": query_search})
         url = BASE_URL_WIKIPEDIA % params
@@ -71,11 +70,11 @@ class Web:
                     embed = discord.Embed(title=data[1][index], url=data[3][index])
                     embed.description = data[2][index]
                     await ctx.send(embed=embed)
-                self.logger.info("Data retrieved!")
+                logger.info("Data retrieved!")
             else:
                 message = "Failed to reach Wikipedia. :("
                 await ctx.send(message)
-                self.logger.info(message)
+                logger.info(message)
 
     @commands.command(aliases=["ib"])
     async def ibsearch(self, ctx, *tags):
@@ -94,15 +93,15 @@ class Web:
             message = "API key not specified! Command halted."
             await ctx.send(message)
             raise errors.KeyError(message)
-        self.logger.info("Fetching image with tags %s." % (tags,))
+        logger.info("Fetching image with tags %s." % (tags,))
         hash_id_channel = utils.to_hash(str(ctx.channel.id))
         settings.manager.setdefault("WHITELIST_NSFW", [])
         if hash_id_channel in settings.manager["WHITELIST_NSFW"]:
-            self.logger.info("NSFW allowed for channel %s." % (ctx.channel.id,))
+            logger.info("NSFW allowed for channel %s." % (ctx.channel.id,))
             base_url = BASE_URL_IBSEARCH_XXX
             base_url_image = BASE_URL_IBSEARCH_XXX_IMAGE
         else:
-            self.logger.info("NSFW disallowed for channel %s." % (ctx.channel.id,))
+            logger.info("NSFW disallowed for channel %s." % (ctx.channel.id,))
             base_url = BASE_URL_IBSEARCH
             base_url_image = BASE_URL_IBSEARCH_IMAGE
         query_tags = " ".join(tags)
@@ -121,11 +120,11 @@ class Web:
                 embed.description = url_image
                 embed.set_image(url=url_image)
                 await ctx.send(embed=embed)
-                self.logger.info("Image retrieved!")
+                logger.info("Image retrieved!")
             else:
                 message = "Failed to fetch image. :("
                 await ctx.send(message)
-                self.logger.info(message)
+                logger.info(message)
 
     @commands.command(aliases=["xk"])
     async def xkcd(self, ctx, comic_id=""):
@@ -133,7 +132,7 @@ class Web:
         
         comic_id - A desired comic ID. Leave blank for latest comic. Set to r for a random comic.
         """
-        self.logger.info("Retrieving xkcd comic with ID %s." % (comic_id,))
+        logger.info("Retrieving xkcd comic with ID %s." % (comic_id,))
         if comic_id.lower() in ("random", "r"):
             url = BASE_URL_XKCD_API % ("",)
             async with self.bot.session.get(url) as response:
@@ -143,7 +142,7 @@ class Web:
                 else:
                     message = "Could not reach xkcd. :("
                     await ctx.send(message)
-                    self.logger.info(message)
+                    logger.info(message)
                     return
         url = BASE_URL_XKCD_API % (comic_id,)
         async with self.bot.session.get(url) as response:
@@ -157,8 +156,8 @@ class Web:
             elif response.status == 404:
                 message = "That comic doesn't exist."
                 await ctx.send(message)
-                self.logger.info(message)
+                logger.info(message)
             else:
                 message = "Could not reach xkcd. :("
                 await ctx.send(message)
-                self.logger.info(message)
+                logger.info(message)

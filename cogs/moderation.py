@@ -19,7 +19,7 @@ logger = logging.getLogger(__name__)
 
 def setup(bot):
     """Setup function for Moderation."""
-    bot.add_cog(Moderation(bot, logger))
+    bot.add_cog(Moderation(bot))
 
 class Moderation:
     """discord.py cog containing moderation functions of the bot.
@@ -29,7 +29,6 @@ class Moderation:
     """
     def __init__(self, bot, logger):
         self.bot = bot
-        self.logger = logger
 
     @commands.command()
     @commands.check(checks.is_channel_admin)
@@ -65,7 +64,7 @@ class Moderation:
         hash_id_channel = utils.to_hash(str(ctx.channel.id))
         settings.manager.setdefault("WHITELIST_NSFW", [])
         if hash_id_channel not in settings.manager["WHITELIST_NSFW"]:
-            self.logger.info("NSFW content for %s is now enabled." % (ctx.channel.id,))
+            logger.info("NSFW content for %s is now enabled." % (ctx.channel.id,))
             settings.manager["WHITELIST_NSFW"].append(hash_id_channel)
             await ctx.send("NSFW content for this channel is now enabled.")
         else:
@@ -80,7 +79,7 @@ class Moderation:
         hash_id_channel = utils.to_hash(str(ctx.channel.id))
         settings.manager.setdefault("WHITELIST_NSFW", [])
         if hash_id_channel in settings.manager["WHITELIST_NSFW"]:
-            self.logger.info("NSFW content for %s is now disabled." % (ctx.channel.id,))
+            logger.info("NSFW content for %s is now disabled." % (ctx.channel.id,))
             settings.manager["WHITELIST_NSFW"].remove(hash_id_channel)
             await ctx.send("NSFW content for this channel is now disabled.")
         else:

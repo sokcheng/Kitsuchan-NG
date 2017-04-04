@@ -24,7 +24,7 @@ logger = logging.getLogger(__name__)
 
 def setup(bot):
     """Setup function for Core."""
-    bot.add_cog(Core(bot, logger))
+    bot.add_cog(Core(bot))
 
 class Core:
     """discord.py cog containing core functions of the bot.
@@ -35,12 +35,11 @@ class Core:
     
     def __init__(self, bot, logger):
         self.bot = bot
-        self.logger = logger
 
     @commands.command()
     async def about(self, ctx):
         """Display information about this bot, such as library versions."""
-        self.logger.info("Displaying info about the bot.")
+        logger.info("Displaying info about the bot.")
         uptime = str(datetime.datetime.now() - self.bot.time_started).split(".")[0]
         embed = discord.Embed(title=app_info.NAME)
         embed.url = app_info.URL
@@ -67,7 +66,7 @@ class Core:
     @commands.check(checks.is_bot_owner)
     async def halt(self, ctx):
         """Halt the bot. Must be bot owner to execute."""
-        self.logger.warning("Halting bot!")
+        logger.warning("Halting bot!")
         await ctx.send("Halting.")
         await self.bot.logout()
         settings.save()
@@ -77,7 +76,7 @@ class Core:
     @commands.check(checks.is_bot_owner)
     async def restart(self, ctx):
         """Restart the bot. Must be bot owner to execute."""
-        self.logger.warning("Restarting bot!")
+        logger.warning("Restarting bot!")
         await ctx.send("Restarting.")
         await self.bot.logout()
         self.bot.session.close()

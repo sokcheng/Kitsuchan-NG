@@ -20,7 +20,7 @@ logger = logging.getLogger(__name__)
 
 def setup(bot):
     """Setup function for Utilities."""
-    bot.add_cog(Utilities(bot, logger))
+    bot.add_cog(Utilities())
 
 class Utilities:
     """discord.py cog containing utility functions of the bot.
@@ -29,9 +29,8 @@ class Utilities:
     logger - A logger to assign the cog.
     """
     
-    def __init__(self, bot, logger):
-        self.bot = bot
-        self.logger = logger
+    def __init__(self):
+        pass
 
     @commands.group(aliases=["i"], invoke_without_command=True)
     async def info(self, ctx):
@@ -42,7 +41,7 @@ class Utilities:
     @info.command(brief="Display guild info.", aliases=["g", "server", "s"])
     async def guild(self, ctx):
         """Display information about the current guild, such as owner, region, emojis, and roles."""
-        self.logger.info("Displaying info about guild.")
+        logger.info("Displaying info about guild.")
         guild = ctx.guild
         if guild is None:
             raise errors.ContextError("Not in a guild.")
@@ -67,7 +66,7 @@ class Utilities:
     @info.command(brief="Display channel info.", aliases=["c"])
     async def channel(self, ctx):
         """Display information about the current channel."""
-        self.logger.info("Displaying info about channel.")
+        logger.info("Displaying info about channel.")
         channel = ctx.channel
         if channel is None:
             raise errors.ContextError()
@@ -93,7 +92,7 @@ class Utilities:
         """Display information about you, such as status and roles.
         
         Mention a user while invoking this command to display information about that user."""
-        self.logger.info("Displaying info about user.")
+        logger.info("Displaying info about user.")
         try:
             user = ctx.message.mentions[0]
         except IndexError:
@@ -120,7 +119,7 @@ class Utilities:
     @commands.command(brief="Display a user's avatar.")
     async def avatar(self, ctx):
         """Display your avatar. Mention a user to display their's."""
-        self.logger.info("Displaying user avatar.")
+        logger.info("Displaying user avatar.")
         try:
             user = ctx.message.mentions[0]
         except IndexError:
