@@ -34,7 +34,7 @@ class Utilities:
 
     @commands.group(aliases=["i"], invoke_without_command=True)
     async def info(self, ctx):
-        """Information subcommands, e.g. channel and bot information."""
+        """Information subcommands, e.g. channel information."""
         embed = await helpers.generate_help_embed_group(self.info)
         await ctx.send(embed=embed)
 
