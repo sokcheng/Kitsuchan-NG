@@ -79,10 +79,15 @@ async def on_command_error(exception, ctx):
         return
     if isinstance(exception, (commands.BadArgument,
                               commands.MissingRequiredArgument,
-                              commands.UserInputError,
-                              discord.HTTPException)):
+                              commands.UserInputError)):
         embed = discord.Embed(title="Error", color=discord.Color.red())
         embed.description = str(exception)
+        await ctx.send(embed=embed)
+        logger.warning(exception)
+    elif isinstance(exception, commands.CommandInvokeError) \
+    and isinstance(exception.original, discord.HTTPException):
+        embed = discord.Embed(title="Error", color=discord.Color.red())
+        embed.description = str(exception.original)
         await ctx.send(embed=embed)
         logger.warning(exception)
     elif isinstance(exception, commands.CheckFailure):
@@ -90,7 +95,7 @@ async def on_command_error(exception, ctx):
         logger.warning("%s (%s) tried to issue a command but was denied." % (ctx.author.name,
                                                                              ctx.author.id))
     else:
-        logger.warning(exception)
+        logger.warning("%s:%s" % (exception.__class__.__name__, exception))
 
 def main():
     """It's the main function. You call this to start the bot."""

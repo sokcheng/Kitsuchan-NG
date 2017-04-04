@@ -14,15 +14,13 @@ async def function_by_mentions(ctx, func, pass_member_id:bool, *params):
                      If false, then member objects will be passed to func.
     *params - A list of additional parameters to be passed to func."""
     if len(ctx.message.mentions) == 0:
-        message = "No user(s) were not mentioned."
-        await ctx.send(message)
+        message = "No user(s) were mentioned."
         raise commands.UserInputError(message)
     for member in ctx.message.mentions:
-        try:
-            if pass_member_id:
-                await func(member.id, *params)
-            else:
-                await func(member, *params)
+        if pass_member_id:
+            await func(member.id, *params)
+        else:
+            await func(member, *params)
 
 async def generate_help_embed_group(group):
     """A helper function to generate help for a group.
