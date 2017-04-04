@@ -132,16 +132,12 @@ class Utilities:
         await ctx.send(embed=embed)
         
     @commands.command()
-    async def quote(self, ctx):
+    async def quote(self, ctx, member:discord.Member):
         """Quote a user."""
         logger.info("Quoting a user.")
-        try:
-            user = ctx.message.mentions[0]
-        except IndexError:
-            user = ctx.author
         async for message in ctx.channel.history():
-            if message.author.id == user.id:
-                title = "%s said..." % user.name
+            if message.author.id == member.id:
+                title = "%s said..." % member.name
                 embed = discord.Embed(title=title)
                 embed.description = message.content
                 await ctx.send(embed=embed)
@@ -149,23 +145,17 @@ class Utilities:
         await ctx.send("Could not quote that user.")
 
     @commands.command()
-    async def didsay(self, ctx, member=None, *args):
-        """Checks if a user said a particular phrase.
-        
-        This is not well written and can be improved."""
+    async def didsay(self, ctx, member:discord.Member, *args):
+        """Checks if a user said a particular phrase."""
         logger.info("Checking if someone said something.")
-        try:
-            user = ctx.message.mentions[0]
-        except IndexError:
-            user = ctx.author
         quote = " ".join(args)
         if len(quote) == 0:
             raise errors.InputError(quote, "Please specify a quote.")
         async for message in ctx.channel.history():
-            if message.author.id == user.id and quote in message.content:
-                title = "Yes, %s said..." % (user.name,)
+            if message.author.id == member.id and quote in message.content:
+                title = "Yes, %s said..." % (member.name,)
                 embed = discord.Embed(title=title)
                 embed.description = message.content
                 await ctx.send(embed=embed)
                 return
-        await ctx.send("No, %s did not say \"%s\". Or it was deleted." % (user.name, quote,))
+        await ctx.send("No, %s did not say \"%s\". Or it was deleted." % (member.name, quote,))
