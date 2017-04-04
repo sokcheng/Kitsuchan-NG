@@ -56,6 +56,8 @@ class Core:
         except Exception:
             cookies_eaten = 4
         embed.add_field(name="Cookies eaten", value=str(cookies_eaten))
+        if len(self.bot.extensions) > 0:
+            embed.add_field(name="Extensions", value=", ".join(self.bot.extensions), inline=False)
         await ctx.send(embed=embed)
     
     @commands.command(aliases=["say"])
@@ -98,3 +100,28 @@ class Core:
         self.bot.session.close()
         settings.save()
         os.execl(os.path.realpath(FILE_MAIN), *sys.argv)
+
+    @commands.command(name="load-extension", aliases=["loade"])
+    @commands.check(checks.is_bot_owner)
+    async def _load_extension(self, ctx, extension_name:str):
+        """Enable the use of an extension."""
+        self.bot.load_extension(extension_name)
+        settings.manager.setdefault("EXTENSIONS", settings.DEFAULT_EXTENSIONS)
+        if extension_name not in settings.manager["EXTENSIONS"]:
+            settings.manager["EXTENSIONS"].append(extension_name)
+            await ctx.send("Extension enabled.")
+        else:
+            await ctx.send("Extension is already enabled.")
+
+    @commands.command(name="unload-extension", aliases=["uloade"])
+    @commands.check(checks.is_bot_owner)
+    async def _unload_extension(self, ctx, extension_name:str):
+        """Disable the use of an extension."""
+        self.bot.unload_extension(extension_name)
+        settings.manager.setdefault("EXTENSIONS", settings.DEFAULT_EXTENSIONS)
+        try:
+            settings.manager["EXTENSIONS"].remove(extension_name)
+        except ValueError:
+            await ctx.send("Extension is already disabled.")
+        else:
+            await ctx.send("Extension disabled.")

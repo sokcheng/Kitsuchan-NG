@@ -6,7 +6,7 @@ import json
 import logging
 
 FILENAME = "config.json"
-DEFAULT_EXTENSIONS = ("cogs.core", "cogs.utilities", "cogs.moderation", "cogs.web", "cogs.reactions")
+DEFAULT_EXTENSIONS = ["cogs.core", "cogs.utilities", "cogs.moderation", "cogs.web", "cogs.reactions"]
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -16,6 +16,7 @@ manager = {}
 def load():
     """Load config settings from FILENAME."""
     logger.info("Loading config file.")
+    manager.setdefault("EXTENSIONS", DEFAULT_EXTENSIONS)
     try:
         with open(FILENAME) as f:
             new_settings = json.load(f)

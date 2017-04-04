@@ -85,7 +85,8 @@ async def on_command_error(exception, ctx):
         await ctx.send(embed=embed)
         logger.warning(exception)
     elif isinstance(exception, commands.CommandInvokeError) \
-    and isinstance(exception.original, discord.HTTPException):
+    and isinstance(exception.original, (discord.HTTPException,
+                                        ModuleNotFoundError)):
         embed = discord.Embed(title="Error", color=discord.Color.red())
         embed.description = str(exception.original)
         await ctx.send(embed=embed)
