@@ -78,8 +78,7 @@ async def on_command_error(exception, ctx):
         await bot.owner.send(str(exception))
         return
     if isinstance(exception, commands.BadArgument):
-        message = "Command not entered properly! Use the `help` command for more info."
-        await ctx.send(message)
+        await ctx.send(str(exception))
         logger.warning(exception)
     elif isinstance(exception, commands.CheckFailure):
         await ctx.send("Permission denied!")
