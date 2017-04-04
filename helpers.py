@@ -4,9 +4,7 @@
 
 # Third-party modules
 import discord
-
-# Bundled modules
-import errors
+from discord.ext import commands
 
 async def function_by_mentions(ctx, func, pass_member_id:bool, *params):
     """A generic helper function that executes a function on all members listed in a context.
@@ -16,20 +14,15 @@ async def function_by_mentions(ctx, func, pass_member_id:bool, *params):
                      If false, then member objects will be passed to func.
     *params - A list of additional parameters to be passed to func."""
     if len(ctx.message.mentions) == 0:
-        message = "Please mention some member(s)."
+        message = "No user(s) were not mentioned."
         await ctx.send(message)
-        raise errors.InputError(ctx.message.mentions, message)
+        raise commands.UserInputError(message)
     for member in ctx.message.mentions:
         try:
             if pass_member_id:
                 await func(member.id, *params)
             else:
                 await func(member, *params)
-        except discord.Forbidden as error:
-            message = "I don't have permission to do that."
-            await ctx.send(message)
-            raise errors.BotPermissionsError(message)
-            break
 
 async def generate_help_embed_group(group):
     """A helper function to generate help for a group.

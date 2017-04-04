@@ -53,9 +53,9 @@ class Web:
         *query - A list of strings to be used in the search criteria.
         """
         if len(query) == 0:
-            message = "Please enter a query."
+            message = "Query not specified."
             await ctx.send(message)
-            raise errors.InputError("", message)
+            raise commands.UserInputError(message)
         logger.info("Searching Wikipedia with query %s." % (query,))
         query_search = " ".join(query)
         params = urllib.parse.urlencode({"action": "opensearch", "search": query_search})

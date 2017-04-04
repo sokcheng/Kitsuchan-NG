@@ -72,8 +72,6 @@ class Utilities:
         logger.info("Displaying info about channel.")
         if not channel:
             channel = ctx.channel
-        if channel is None:
-            raise errors.ContextError()
         embed = discord.Embed(title="#%s" % (channel.name,))
         try:
             embed.description = channel.topic
@@ -161,7 +159,7 @@ class Utilities:
         logger.info("Checking if someone said something.")
         quote = " ".join(phrase)
         if len(quote) == 0:
-            raise errors.InputError(quote, "Please specify a quote.")
+            raise commands.UserInputError("A quote was not specified.")
         async for message in ctx.channel.history():
             if message.author.id == user.id and quote in message.content:
                 title = "Yes, %s said..." % (user.name,)
