@@ -33,7 +33,7 @@ class Core:
     logger - A logger to assign the cog.
     """
     
-    def __init__(self, bot, logger):
+    def __init__(self, bot):
         self.bot = bot
 
     @commands.command()

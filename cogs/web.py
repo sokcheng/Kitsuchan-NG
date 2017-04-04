@@ -41,7 +41,7 @@ def setup(bot):
 class Web:
     """This is a cog that contains Web API hooks.
     """
-    def __init__(self, bot, logger):
+    def __init__(self, bot):
         self.name = "Web APIs"
         self.bot = bot
         self.key_ibsearch = settings.manager.get("API_KEY_IBSEARCH")
@@ -63,13 +63,14 @@ class Web:
         async with self.bot.session.get(url) as response:
             if response.status == 200:
                 data = await response.json()
+                embed = discord.Embed()
                 if len(data) == 0:
                     await ctx.send("Could not find any results.")
                     raise errors.ZeroDataLengthError()
                 for index in range(0, min(3, len(data[1]))):
-                    embed = discord.Embed(title=data[1][index], url=data[3][index])
-                    embed.description = data[2][index]
-                    await ctx.send(embed=embed)
+                    description = "%s\n%s" % (data[3][index], data[2][index])
+                    embed.add_field(name=data[1][index], value=description, inline=True)
+                await ctx.send(embed=embed)
                 logger.info("Data retrieved!")
             else:
                 message = "Failed to reach Wikipedia. :("

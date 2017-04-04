@@ -27,7 +27,7 @@ class Moderation:
     bot - The parent discord.Client object for the cog.
     logger - A logger to assign the cog.
     """
-    def __init__(self, bot, logger):
+    def __init__(self, bot):
         self.bot = bot
 
     @commands.command()
