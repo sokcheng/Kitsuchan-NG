@@ -153,7 +153,7 @@ class Utilities:
         user - A member to mention.
         *phrase - Command checks against this to see what was said."""
         logger.info("Checking if someone said something.")
-        quote = " ".join(args)
+        quote = " ".join(phrase)
         if len(quote) == 0:
             raise errors.InputError(quote, "Please specify a quote.")
         async for message in ctx.channel.history():
