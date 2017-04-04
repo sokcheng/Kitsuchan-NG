@@ -39,7 +39,8 @@ Optionally, you may set the following as well:
   Channel IDs are stored as SHA-512 hashes.
 * `EXTENSIONS` - This overrides the bot's default extension list.
 
-In the future, one objective of mine is to implement per-cog settings.
+For your convenience, a `config.json.example` file is provided. In the future, one objective of
+mine is to implement per-cog settings.
 
 By default, `kitsuchan-ng` uses `kit!` for its prefix where `kit` are the first three letters of
 the bot account's username. You can override this with the aforementioned `COMMAND_PREFIX`
