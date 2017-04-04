@@ -116,7 +116,7 @@ class Utilities:
         embed.add_field(name="Roles", value=roles, inline=False)
         await ctx.send(embed=embed)
     
-    @commands.command(brief="Display a user's avatar.")
+    @commands.command()
     async def avatar(self, ctx):
         """Display your avatar. Mention a user to display their's."""
         logger.info("Displaying user avatar.")
@@ -130,3 +130,42 @@ class Utilities:
         embed.url = url
         embed.set_image(url=url)
         await ctx.send(embed=embed)
+        
+    @commands.command()
+    async def quote(self, ctx):
+        """Quote a user."""
+        logger.info("Quoting a user.")
+        try:
+            user = ctx.message.mentions[0]
+        except IndexError:
+            user = ctx.author
+        async for message in ctx.channel.history():
+            if message.author.id == user.id:
+                title = "%s said..." % user.name
+                embed = discord.Embed(title=title)
+                embed.description = message.content
+                await ctx.send(embed=embed)
+                return
+        await ctx.send("Could not quote that user.")
+
+    @commands.command()
+    async def didsay(self, ctx, member=None, *args):
+        """Checks if a user said a particular phrase.
+        
+        This is not well written and can be improved."""
+        logger.info("Checking if someone said something.")
+        try:
+            user = ctx.message.mentions[0]
+        except IndexError:
+            user = ctx.author
+        quote = " ".join(args)
+        if len(quote) == 0:
+            raise errors.InputError(quote, "Please specify a quote.")
+        async for message in ctx.channel.history():
+            if message.author.id == user.id and quote in message.content:
+                title = "Yes, %s said..." % (user.name,)
+                embed = discord.Embed(title=title)
+                embed.description = message.content
+                await ctx.send(embed=embed)
+                return
+        await ctx.send("No, %s did not say \"%s\"." % (user.name, quote,))
