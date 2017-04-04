@@ -4,8 +4,8 @@
 
 Yes, it's slightly bad practice to put this in a Python file."""
 
-NAME = "kitsuchan-ng"
-URL = "https://github.com/n303p4/kitsuchan-ng"
+NAME = "Kitsuchan-NG"
+URL = "https://github.com/n303p4/Kitsuchan-NG"
 DESCRIPTION = ("This is a running instance of `%s`, a modular Discord bot. Originally designed "
                "with anime images and basic utility in mind, it has become a fairly flexible "
                "bot with a high level of extensibility. `%s` surely isn't finished yet; please "

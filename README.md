@@ -1,26 +1,27 @@
-# kitsuchan-ng
+# Kitsuchan-NG
 
-A small, modular Discord bot. There's a lot of stuff that can be improved, but it's easy to add
-functions to it.
+A small, modular, extensible Discord bot written in Python 3. There's a lot of stuff that can be
+improved, but it's easy to add functions to it.
 
-This bot uses the `rewrite` branch of `discord.py`. Install that and not the regular one.
+# Why not just use Twentysix26's Red bot?
 
-# Isn't this basically similar in concept to Twentysix26's Red bot? Why not just use that?
+I recommend you use Red instead of Kitsuchan-NG if you need something that's actually meant for
+serious work. Red has a far larger library of extensions, its codebase is more mature, and it has
+a good community of people behind it. Kitsuchan-NG by contrast is a young, unproven bot with an
+unstable API and no community. The bot may randomly piss itself, as there can and will be big
+scary bugs.
 
-It *is* basically similar. In fact, I recommend you use Red instead of `kitsuchan-ng` if you need
-something that's actually meant for serious work. Red has a far larger library of extensions, its
-codebase is more mature, and it has a good community of people behind it. `kitsuchan-ng` by
-contrast is a young, unproven bot with an unstable API and no community.
-
-So, if Red exists, why did I make this bot? Simple, it's for fun. I also made it because I hope to
-improve my own coding skills as it's being built. `kitsuchan-ng` is released as open-source for
-ideological reasons, and in hopes that perhaps someone else will find it useful, too.
+So, if Red exists, why did I make Kitsuchan-NG? Simple, it's meant for fun. I also made it because
+I hope to improve my own coding skills as it's being built. Kitsuchan-NG is released as open-source
+for ideological reasons, and in hopes that perhaps someone else will find it useful, too.
 
 # How to run
-You'll need Python 3.5 or higher, as `kitsuchan-ng` is not compatible with Python 3.4 and below.
+You'll need Python 3.5 or higher, as Kitsuchan-NG is not compatible with Python 3.4 and below.
 There are no plans to add support for older Python versions, as this would be a hassle for me.
 
-To install the `rewrite` branch of `discord.py`, run the following:
+You'll need the `rewrite` branch of `discord.py`, as Kitsuchan-NG does not support the stable
+`async` version. Use `venv` if you need both branches installed at once. To install `rewrite`,
+run the following command:
 
 ```python3 -m pip install -U git+https://github.com/Rapptz/discord.py@rewrite```
 
@@ -28,7 +29,7 @@ Then just run `kitsuchan.py`. On first run, the bot will prompt you for a Discor
 
 # How to configure
 
-`kitsuchan-ng` reads and saves its config to and from the file `config.json`. This file will be
+Kitsuchan-NG reads and saves its config to and from the file `config.json`. This file will be
 created automatically upon startup. The following parameter in the config is **mandatory**:
 
 * `OAUTH_TOKEN_DISCORD` - OAuth token for your Discord bot account.
@@ -45,6 +46,6 @@ Optionally, you may set the following as well:
 For your convenience, a `config.json.example` file is provided. In the future, one objective of
 mine is to implement per-cog settings.
 
-By default, `kitsuchan-ng` uses `kit!` for its prefix where `kit` are the first three letters of
+By default, Kitsuchan-NG uses `kit!` for its prefix where `kit` are the first three letters of
 the bot account's username. You can override this with the aforementioned `COMMAND_PREFIX`
 parameter.
