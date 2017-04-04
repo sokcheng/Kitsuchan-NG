@@ -88,7 +88,7 @@ async def on_command_error(exception, ctx):
     elif isinstance(exception, commands.CheckFailure):
         await ctx.send("Permission denied!")
         logger.warning("%s (%s) tried to issue a command but was denied." % (ctx.author.name,
-                                                                          ctx.author.id))
+                                                                             ctx.author.id))
     else:
         logger.warning(exception)
 
