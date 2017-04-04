@@ -21,15 +21,15 @@ def load():
             new_settings = json.load(f)
         for key, value in new_settings.items():
             # This if/elif block checks types. If a setting is of the wrong type, it is skipped.
-            if (key is "WHITELIST_NSFW" and not isinstance(value, list)):
+            if (key == "WHITELIST_NSFW" and not isinstance(value, list)):
                 continue
-            elif (key is "OAUTH_TOKEN_DISCORD" and not isinstance(value, str)):
+            elif (key == "OAUTH_TOKEN_DISCORD" and not isinstance(value, str)):
                 continue
-            elif (key is "API_KEY_IBSEARCH" and not isinstance(value, str)):
+            elif (key == "API_KEY_IBSEARCH" and not isinstance(value, str)):
                 continue
-            elif (key is "COMMAND_PREFIX" and not isinstance(value, str)):
+            elif (key == "COMMAND_PREFIX" and not isinstance(value, str)):
                 continue
-            elif (key is "EXTENSIONS" and not isinstance(value, list)):
+            elif (key == "EXTENSIONS" and not isinstance(value, list)):
                 continue
             manager[key] = value
     except FileNotFoundError as error:
