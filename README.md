@@ -13,19 +13,19 @@ codebase is more mature, and it has a good community of people behind it. `kitsu
 contrast is a young, unproven bot with an unstable API and no community.
 
 So, if Red exists, why did I make this bot? Simple, it's for fun. I also made it because I hope to
-improve my own coding skills as it's being built. The code is released as open-source in hopes that
-perhaps someone else will find it useful, too.
+improve my own coding skills as it's being built. `kitsuchan-ng` is released as open-source for
+ideological reasons, and in hopes that perhaps someone else will find it useful, too.
 
 # How to run
-To install the `rewrite` branch, run the following:
+To install the `rewrite` branch of `discord.py`, run the following:
 
 ```python3 -m pip install -U git+https://github.com/Rapptz/discord.py@rewrite```
 
 Then just run `kitsuchan.py`. On first run, the bot will prompt you for a
 Discord OAuth token.
 
-`kitsuchan-ng` reads and saves its config to and from the file config.json.
-This file will be created upon startup. The following parameter is MANDATORY:
+`kitsuchan-ng` reads and saves its config to and from the file `config.json`. This file will be
+created automatically upon startup. The following parameter in the config is **mandatory**:
 
 * `OAUTH_TOKEN_DISCORD` - OAuth token for your Discord bot account.
 
@@ -37,6 +37,9 @@ Optionally, you may set the following as well:
 * `WHITELIST_NSFW` - This contains a list of channel IDs for which NSFW content may be posted.
 * `EXTENSIONS` - This overrides the bot's default extension list.
 
+In the future, one objective of mine is to implement per-cog settings.
+
 # How to use
 By default, `kitsuchan-ng` uses `kit!` for its prefix where `kit` are the first three letters of
-the bot account's username. You can override this.
+the bot account's username. You can override this with the aforementioned `COMMAND_PREFIX`
+parameter.
