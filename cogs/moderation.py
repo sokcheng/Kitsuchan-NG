@@ -50,11 +50,14 @@ class Moderation:
 
     @commands.command()
     @commands.check(checks.is_channel_admin)
-    async def allownsfw(self, ctx):
+    async def allownsfw(self, ctx, *, channel:discord.TextChannel=None):
         """Whitelists channel for NSFW content.
+        Defaults to current channel. Channel ID is stored as an SHA-512 hash.
         
-        Persistent! Channel ID is stored as an SHA-512 hash."""
-        hash_id_channel = utils.to_hash(str(ctx.channel.id))
+        channel - Optional. Mention a channel to change settings for that channel."""
+        if not channel:
+            channel = ctx.channel
+        hash_id_channel = utils.to_hash(str(channel.id))
         settings.manager.setdefault("WHITELIST_NSFW", [])
         if hash_id_channel not in settings.manager["WHITELIST_NSFW"]:
             logger.info("NSFW content for %s is now enabled." % (ctx.channel.id,))
@@ -65,11 +68,14 @@ class Moderation:
 
     @commands.command()
     @commands.check(checks.is_channel_admin)
-    async def denynsfw(self, ctx):
+    async def denynsfw(self, ctx, *, channel:discord.TextChannel=None):
         """Blacklists channel for NSFW content.
+        Defaults to current channel.
         
-        Persistent!"""
-        hash_id_channel = utils.to_hash(str(ctx.channel.id))
+        channel - Optional. Mention a channel to change settings for that channel."""
+        if not channel:
+            channel = ctx.channel
+        hash_id_channel = utils.to_hash(str(channel.id))
         settings.manager.setdefault("WHITELIST_NSFW", [])
         if hash_id_channel in settings.manager["WHITELIST_NSFW"]:
             logger.info("NSFW content for %s is now disabled." % (ctx.channel.id,))
