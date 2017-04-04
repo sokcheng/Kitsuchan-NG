@@ -64,10 +64,14 @@ class Utilities:
         await ctx.send(embed=embed)
 
     @info.command(brief="Display channel info.", aliases=["c"])
-    async def channel(self, ctx):
-        """Display information about the current channel."""
+    async def channel(self, ctx, *, channel:discord.TextChannel=None):
+        """Display information about a channel channel.
+        Defaults to the current channel.
+        
+        channel - Optional argument. A specific channel to get information about."""
         logger.info("Displaying info about channel.")
-        channel = ctx.channel
+        if not channel:
+            channel = ctx.channel
         if channel is None:
             raise errors.ContextError()
         embed = discord.Embed(title="#%s" % (channel.name,))
@@ -81,17 +85,18 @@ class Utilities:
         except AttributeError:
             pass
         embed.add_field(name="Created at", value=channel.created_at.ctime())
-        hash_id_channel = utils.to_hash(str(ctx.channel.id))
+        hash_id_channel = utils.to_hash(str(channel.id))
         settings.manager.setdefault("WHITELIST_NSFW", [])
         if hash_id_channel in settings.manager["WHITELIST_NSFW"]:
             embed.set_footer(text="NSFW content is enabled for this channel.")
         await ctx.send(embed=embed)
 
     @info.command(brief="Display user info.", aliases=["u"])
-    async def user(self, ctx):
-        """Display information about you, such as status and roles.
+    async def user(self, ctx, *, user:discord.Member=None):
+        """Display information about a user, such as status and roles.
+        Defaults to the user who invoked the command.
         
-        Mention a user while invoking this command to display information about that user."""
+        user - Optional argument. A user in the current channel to get user information about."""
         logger.info("Displaying info about user.")
         try:
             user = ctx.message.mentions[0]
@@ -117,12 +122,13 @@ class Utilities:
         await ctx.send(embed=embed)
     
     @commands.command()
-    async def avatar(self, ctx):
-        """Display your avatar. Mention a user to display their's."""
+    async def avatar(self, ctx, *, user:discord.Member=None):
+        """Display a user's avatar.
+        Defaults to displaying the avatar of the user who invoked the command.
+        
+        user - A member who you can mention for avatar."""
         logger.info("Displaying user avatar.")
-        try:
-            user = ctx.message.mentions[0]
-        except IndexError:
+        if not user:
             user = ctx.author
         name = user.name
         url = user.avatar_url
