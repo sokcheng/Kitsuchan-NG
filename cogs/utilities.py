@@ -168,4 +168,4 @@ class Utilities:
                 embed.description = message.content
                 await ctx.send(embed=embed)
                 return
-        await ctx.send("No, %s did not say \"%s\"." % (user.name, quote,))
+        await ctx.send("No, %s did not say \"%s\". Or it was deleted." % (user.name, quote,))
