@@ -44,16 +44,9 @@ class Moderation:
         
     @commands.command()
     @commands.check(checks.is_channel_admin)
-    async def prune(self, ctx, count:int):
-        """Prune messages."""
-        counter = 0
-        message_list = list(self.bot.messages)
-        for message in message_list:
-            if counter == count:
-                break
-            if message.channel.id == ctx.channel.id:
-                await message.delete()
-            counter += 1
+    async def purge(self, ctx, limit:int):
+        """Purge a certain number of messages."""
+        await ctx.channel.purge(limit=limit)
 
     @commands.command()
     @commands.check(checks.is_channel_admin)
