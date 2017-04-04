@@ -77,16 +77,18 @@ async def on_command_error(exception, ctx):
         await bot.owner.send(exception.__class__.__name__)
         await bot.owner.send(str(exception))
         return
-    if isinstance(exception, commands.BadArgument):
-        await ctx.send(str(exception))
+    if isinstance(exception, (commands.BadArgument,
+                              commands.MissingRequiredArgument,
+                              commands.UserInputError,
+                              discord.HTTPException)):
+        embed = discord.Embed(title="Error", color=discord.Color.red())
+        embed.description = str(exception)
+        await ctx.send(embed=embed)
         logger.warning(exception)
     elif isinstance(exception, commands.CheckFailure):
         await ctx.send("Permission denied!")
         logger.warning("%s (%s) tried to issue a command but was denied." % (ctx.author.name,
                                                                           ctx.author.id))
-    elif isinstance(exception, (discord.HTTPException, commands.MissingRequiredArgument)):
-        await ctx.send(str(exception))
-        logger.warning(exception)
     else:
         logger.warning(exception)
 
