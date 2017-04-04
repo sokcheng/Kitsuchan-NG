@@ -36,6 +36,13 @@ def is_human(ctx):
     """Check whether the sender of a message is a human or a bot."""
     return not ctx.author.bot
 
+@bot.check
+def is_public(ctx):
+    """Check whether the channel is a DM-based channel."""
+    if ctx.author.id == bot.owner.id:
+        return True
+    return not isinstance(ctx.channel, discord.DMChannel)
+
 # Events
 
 @bot.event
