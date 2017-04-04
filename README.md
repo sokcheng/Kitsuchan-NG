@@ -17,6 +17,9 @@ improve my own coding skills as it's being built. `kitsuchan-ng` is released as 
 ideological reasons, and in hopes that perhaps someone else will find it useful, too.
 
 # How to run
+You'll need Python 3.5 or higher, as `kitsuchan-ng` is not compatible with Python 3.4 and below.
+There are no plans to add support for older Python versions, as this would be a hassle for me.
+
 To install the `rewrite` branch of `discord.py`, run the following:
 
 ```python3 -m pip install -U git+https://github.com/Rapptz/discord.py@rewrite```
