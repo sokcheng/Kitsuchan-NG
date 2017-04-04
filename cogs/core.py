@@ -101,9 +101,9 @@ class Core:
         settings.save()
         os.execl(os.path.realpath(FILE_MAIN), *sys.argv)
 
-    @commands.command(name="load-extension", aliases=["loade"])
+    @commands.command(aliases=["nload-extension"])
     @commands.check(checks.is_bot_owner)
-    async def _load_extension(self, ctx, extension_name:str):
+    async def loade(self, ctx, extension_name:str):
         """Enable the use of an extension."""
         self.bot.load_extension(extension_name)
         settings.manager.setdefault("EXTENSIONS", settings.DEFAULT_EXTENSIONS)
@@ -113,9 +113,9 @@ class Core:
         else:
             await ctx.send("Extension is already enabled.")
 
-    @commands.command(name="unload-extension", aliases=["uloade"])
+    @commands.command(aliases=["unload-extension"])
     @commands.check(checks.is_bot_owner)
-    async def _unload_extension(self, ctx, extension_name:str):
+    async def uloade(self, ctx, extension_name:str):
         """Disable the use of an extension."""
         self.bot.unload_extension(extension_name)
         settings.manager.setdefault("EXTENSIONS", settings.DEFAULT_EXTENSIONS)
