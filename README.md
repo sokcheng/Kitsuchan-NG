@@ -21,8 +21,9 @@ To install the `rewrite` branch of `discord.py`, run the following:
 
 ```python3 -m pip install -U git+https://github.com/Rapptz/discord.py@rewrite```
 
-Then just run `kitsuchan.py`. On first run, the bot will prompt you for a
-Discord OAuth token.
+Then just run `kitsuchan.py`. On first run, the bot will prompt you for a Discord OAuth token.
+
+# How to configure
 
 `kitsuchan-ng` reads and saves its config to and from the file `config.json`. This file will be
 created automatically upon startup. The following parameter in the config is **mandatory**:
@@ -39,7 +40,6 @@ Optionally, you may set the following as well:
 
 In the future, one objective of mine is to implement per-cog settings.
 
-# How to use
 By default, `kitsuchan-ng` uses `kit!` for its prefix where `kit` are the first three letters of
 the bot account's username. You can override this with the aforementioned `COMMAND_PREFIX`
 parameter.
