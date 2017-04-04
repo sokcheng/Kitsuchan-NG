@@ -66,8 +66,12 @@ class Core:
     @commands.check(checks.is_bot_owner)
     async def halt(self, ctx):
         """Halt the bot. Must be bot owner to execute."""
-        logger.warning("Halting bot!")
-        await ctx.send("Halting.")
+        confirm = await helpers.yes_no(ctx, self.bot)
+        if not confirm:
+            return
+        logger.warning("Bot is going for HALT now!")
+        embed = discord.Embed(title="Halting.", color=discord.Color.red())
+        await ctx.send(embed=embed)
         await self.bot.logout()
         settings.save()
         self.bot.session.close()
@@ -76,8 +80,12 @@ class Core:
     @commands.check(checks.is_bot_owner)
     async def restart(self, ctx):
         """Restart the bot. Must be bot owner to execute."""
-        logger.warning("Restarting bot!")
-        await ctx.send("Restarting.")
+        confirm = await helpers.yes_no(ctx, self.bot)
+        if not confirm:
+            return
+        logger.warning("Bot is going for RESTART now!")
+        embed = discord.Embed(title="Restarting.", color=discord.Color.red())
+        await ctx.send(embed=embed)
         await self.bot.logout()
         self.bot.session.close()
         settings.save()

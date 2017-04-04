@@ -8,7 +8,7 @@ NAME = "Kitsuchan-NG"
 URL = "https://github.com/n303p4/Kitsuchan-NG"
 DESCRIPTION = ("This is a running instance of [%s](%s), a modular Discord bot. Originally "
                "designed with anime images and basic utility in mind, it has become a fairly "
-               "flexible bot with a high level of extensibility. %s surely isn't finished yet; "
-               "please report any bugs you observe!") % (NAME, URL, NAME,)
-VERSION = (0, 2, 5)
+               "flexible bot with decent extensibility. %s surely isn't finished yet; plese "
+               "report any bugs you observe!") % (NAME, URL, NAME,)
+VERSION = (0, 2, 6)
 VERSION_STRING = "%s.%s.%s" % VERSION
