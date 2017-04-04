@@ -16,7 +16,6 @@ manager = {}
 def load():
     """Load config settings from FILENAME."""
     logger.info("Loading config file.")
-    manager.setdefault("EXTENSIONS", DEFAULT_EXTENSIONS)
     try:
         with open(FILENAME) as f:
             new_settings = json.load(f)
