@@ -41,8 +41,7 @@ class Core:
         """Display information about this bot, such as library versions."""
         logger.info("Displaying info about the bot.")
         uptime = str(datetime.datetime.now() - self.bot.time_started).split(".")[0]
-        embed = discord.Embed(title=app_info.NAME)
-        embed.url = app_info.URL
+        embed = discord.Embed()
         embed.description = self.bot.description
         embed.set_thumbnail(url=self.bot.user.avatar_url)
         embed.add_field(name="Version", value=app_info.VERSION_STRING)
