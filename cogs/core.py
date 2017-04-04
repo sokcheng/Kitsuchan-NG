@@ -44,10 +44,18 @@ class Core:
         embed = discord.Embed()
         embed.description = self.bot.description
         embed.set_thumbnail(url=self.bot.user.avatar_url)
+        ainfo = await self.bot.application_info()
+        owner = ainfo.owner.mention
         embed.add_field(name="Version", value=app_info.VERSION_STRING)
+        embed.add_field(name="Owner", value=owner)
         embed.add_field(name="Uptime", value=uptime)
         embed.add_field(name="Python", value="%s.%s.%s" % sys.version_info[:3])
         embed.add_field(name="discord.py", value=discord.__version__)
+        try:
+            cookies_eaten = sum(discord.version_info[:3]) * sum(app_info.VERSION[:3])
+        except Exception:
+            cookies_eaten = 4
+        embed.add_field(name="Cookies eaten", value=str(cookies_eaten))
         await ctx.send(embed=embed)
     
     @commands.command(aliases=["say"])
