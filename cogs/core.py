@@ -60,6 +60,7 @@ class Core:
         message = " ".join(text)
         if len(message) == 0:
             message = "Echo?"
+        message = "\u200B" + message
         await ctx.send(message)
     
     @commands.command()
