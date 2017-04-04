@@ -36,6 +36,7 @@ Optionally, you may set the following as well:
   The `ibsearch` command will refuse to run without this.
 * `COMMAND_PREFIX` - Override the command prefix with anything of your liking.
 * `WHITELIST_NSFW` - This contains a list of channel IDs for which NSFW content may be posted.
+  Channel IDs are stored as SHA-512 hashes.
 * `EXTENSIONS` - This overrides the bot's default extension list.
 
 In the future, one objective of mine is to implement per-cog settings.
