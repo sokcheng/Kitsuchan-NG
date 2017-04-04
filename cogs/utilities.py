@@ -147,7 +147,7 @@ class Utilities:
         await ctx.send("Could not quote that user.")
 
     @commands.command()
-    async def didsay(self, ctx, member:discord.Member, *phrase):
+    async def didsay(self, ctx, user:discord.Member, *phrase):
         """Checks if a user said a particular phrase.
         
         user - A member to mention.
