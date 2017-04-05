@@ -59,7 +59,7 @@ async def on_ready():
     game = discord.Game()
     game.name = bot.command_prefix + "help"
     await bot.change_presence(game=game)
-    logger.info("Bot is ONLINE! Username: %s, User ID: %s", bot.user.name, bot.user.id)
+    logger.info(f"Bot is ONLINE! Username: {bot.user.name}, User ID: {bot.user.id}")
 
 @bot.event
 async def on_command_completion(ctx):
@@ -93,10 +93,10 @@ async def on_command_error(exception, ctx):
         logger.warning(exception)
     elif isinstance(exception, commands.CheckFailure):
         await ctx.send("Permission denied!")
-        logger.warning("%s (%s) tried to issue a command but was denied." % (ctx.author.name,
-                                                                             ctx.author.id))
+        logger.warning((f"{ctx.author.name} ({ctx.author.id}) tried to issue a command but "
+                        "was denied."))
     else:
-        logger.warning("%s:%s" % (exception.__class__.__name__, exception))
+        logger.warning(f"{exception.__class__.__name__}:{exception}")
 
 def main():
     """It's the main function. You call this to start the bot."""
@@ -108,12 +108,12 @@ def main():
     logger.info("Warming up...")
     extensions = settings.manager.get("EXTENSIONS", settings.DEFAULT_EXTENSIONS)
     for extension in extensions:
-        logger.info("Loading extension %s", extension)
+        logger.info(f"Loading extension {extension}")
         try:
             bot.load_extension(extension)
-            logger.info("Extension %s loaded", extension)
+            logger.info(f"Extension {extension} loaded")
         except Exception as error:
-            logger.warning("Extension %s seems to be broken", extension)
+            logger.warning(f"Extension {extension} seems to be broken")
             logger.warning(error)
     bot.run(settings.manager["OAUTH_TOKEN_DISCORD"])
 

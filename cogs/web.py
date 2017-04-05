@@ -52,7 +52,7 @@ class Web:
             message = "Query not specified."
             await ctx.send(message)
             raise commands.UserInputError(message)
-        logger.info("Searching Wikipedia with query %s." % (query,))
+        logger.info(f"Searching Wikipedia with query {query}.")
         query_search = " ".join(query)
         params = urllib.parse.urlencode({"action": "opensearch", "search": query_search})
         url = BASE_URL_WIKIPEDIA % params
@@ -64,7 +64,7 @@ class Web:
                     await ctx.send("Could not find any results.")
                     raise errors.ZeroDataLengthError()
                 for index in range(0, min(3, len(data[1]))):
-                    description = "%s\n%s" % (data[3][index], data[2][index])
+                    description = f"{data[3][index]}\n{data[2][index]}"
                     embed.add_field(name=data[1][index], value=description, inline=True)
                 await ctx.send(embed=embed)
                 logger.info("Data retrieved!")
@@ -90,15 +90,15 @@ class Web:
             message = "API key not specified! Command halted."
             await ctx.send(message)
             raise errors.KeyError(message)
-        logger.info("Fetching image with tags %s." % (tags,))
+        logger.info(f"Fetching image with tags {tags}.")
         hash_id_channel = utils.to_hash(str(ctx.channel.id))
         settings.manager.setdefault("WHITELIST_NSFW", [])
         if hash_id_channel in settings.manager["WHITELIST_NSFW"]:
-            logger.info("NSFW allowed for channel %s." % (ctx.channel.id,))
+            logger.info(f"NSFW allowed for channel {ctx.channel.id}.")
             base_url = BASE_URL_IBSEARCH_XXX
             base_url_image = BASE_URL_IBSEARCH_XXX_IMAGE
         else:
-            logger.info("NSFW disallowed for channel %s." % (ctx.channel.id,))
+            logger.info(f"NSFW disallowed for channel {ctx.channel.id}.")
             base_url = BASE_URL_IBSEARCH
             base_url_image = BASE_URL_IBSEARCH_IMAGE
         query_tags = " ".join(tags)
@@ -129,7 +129,7 @@ class Web:
         
         comic_id - A desired comic ID. Leave blank for latest comic. Set to r for a random comic.
         """
-        logger.info("Retrieving xkcd comic with ID %s." % (comic_id,))
+        logger.info(f"Retrieving xkcd comic with ID {comic_id}.")
         if comic_id.lower() in ("random", "r"):
             url = BASE_URL_XKCD_API % ("",)
             async with self.bot.session.get(url) as response:

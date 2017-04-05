@@ -44,7 +44,7 @@ async def generate_help_embed(group):
                     value = str(command.help).split("\n")[0]
                 else:
                     value = command.brief
-                embed.add_field(name="%s %s" % (group.name, command.name), value=value)
+                embed.add_field(name=f"{group.name} {command.name}", value=value)
             except AttributeError:
                 pass
         return embed

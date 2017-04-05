@@ -68,7 +68,7 @@ class Utilities:
         logger.info("Displaying info about channel.")
         if not channel:
             channel = ctx.channel
-        embed = discord.Embed(title="#%s" % (channel.name,))
+        embed = discord.Embed(title=f"#{channel.name}")
         try:
             embed.description = channel.topic
         except AttributeError:
@@ -124,11 +124,9 @@ class Utilities:
         logger.info("Displaying user avatar.")
         if not user:
             user = ctx.author
-        name = user.name
-        url = user.avatar_url
-        embed = discord.Embed(title="The avatar of %s" % (name,))
-        embed.url = url
-        embed.set_image(url=url)
+        embed = discord.Embed(title=f"The avatar of {user.name}")
+        embed.url = user.avatar_url
+        embed.set_image(url=user.avatar_url)
         await ctx.send(embed=embed)
         
     @commands.command()
@@ -139,10 +137,13 @@ class Utilities:
         logger.info("Quoting a user.")
         async for message in ctx.channel.history():
             if message.author.id == user.id:
-                title = "%s said..." % user.name
+                title = f"{user.name} said..."
                 embed = discord.Embed(title=title)
                 embed.description = message.content
                 await ctx.send(embed=embed)
+                if len(message.embeds) > 0:
+                    for embed in message.embeds:
+                        await ctx.send(embed=embed)
                 return
         await ctx.send("Could not quote that user.")
 
@@ -158,12 +159,12 @@ class Utilities:
             raise commands.UserInputError("A quote was not specified.")
         async for message in ctx.channel.history():
             if message.author.id == user.id and quote in message.content:
-                title = "Yes, %s said..." % (user.name,)
+                title = f"Yes, {user.name} said..."
                 embed = discord.Embed(title=title)
                 embed.description = message.content
                 await ctx.send(embed=embed)
                 return
-        await ctx.send("No, %s did not say \"%s\". Or it was deleted." % (user.name, quote,))
+        await ctx.send(f"No, {user.name} did not say \"{quote}\". Or it was deleted.")
 
 def setup(bot):
     """Setup function for Utilities."""

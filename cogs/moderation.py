@@ -56,7 +56,7 @@ class Moderation:
         hash_id_channel = utils.to_hash(str(channel.id))
         settings.manager.setdefault("WHITELIST_NSFW", [])
         if hash_id_channel not in settings.manager["WHITELIST_NSFW"]:
-            logger.info("NSFW content for %s is now enabled." % (ctx.channel.id,))
+            logger.info(f"NSFW content for {ctx.channel.id} is now enabled.")
             settings.manager["WHITELIST_NSFW"].append(hash_id_channel)
             await ctx.send("NSFW content for this channel is now enabled.")
         else:
@@ -74,7 +74,7 @@ class Moderation:
         hash_id_channel = utils.to_hash(str(channel.id))
         settings.manager.setdefault("WHITELIST_NSFW", [])
         if hash_id_channel in settings.manager["WHITELIST_NSFW"]:
-            logger.info("NSFW content for %s is now disabled." % (ctx.channel.id,))
+            logger.info(f"NSFW content for {ctx.channel.id} is now disabled.")
             settings.manager["WHITELIST_NSFW"].remove(hash_id_channel)
             await ctx.send("NSFW content for this channel is now disabled.")
         else:

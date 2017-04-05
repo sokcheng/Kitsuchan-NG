@@ -52,7 +52,7 @@ class Core:
         except Exception:
             cookies_eaten = 4
         embed.add_field(name="Cookies eaten", value=str(cookies_eaten))
-        if len(self.bot.extensions) > 0:
+        if checks.is_bot_owner(ctx) and len(self.bot.extensions) > 0:
             embed.add_field(name="Extensions", value=", ".join(self.bot.extensions), inline=False)
         await ctx.send(embed=embed)
     
