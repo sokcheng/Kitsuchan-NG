@@ -30,8 +30,12 @@ class Web:
     async def _duckduckgo(self, ctx, *query):
         """Retrieve an answer from DuckDuckGo, using the Instant Answers JSON API.
         
-        THIS IS NOT A COMMAND AND SHOULD **NOT** BE USED AS A COMMAND. THE REASON IS BECAUSE IT IS
-        POTENTIALLY DANGEROUS, AS THE FULL EXTENT OF THE DUCKDUCKGO API IS VERY WIDE.
+        This is NOT a command, and should **NOT** be used as one! The reason why is because the
+        Instant Answers API is extremely broad and could possibly reveal personal information.
+        The only safe way to use this is by carefully controlling what gets fed into the *query
+        parameter.
+        
+        *query - Your search query goes here.
         """
         if len(query) == 0:
             message = "Query was not specified."
@@ -70,14 +74,6 @@ class Web:
     async def rname(self, ctx):
         """Retrieve a random name from the Internet."""
         await self._duckduckgo(ctx, "random", "name")
-
-    @commands.command(aliases=["randint", "randomnumber"])
-    async def rng(self, ctx, start:int=1, end:int=100):
-        """Retrieve a random number from the Internet.
-        
-        start - The initial number of the range. Default 1.
-        end - The ending number of the range. Default 100."""
-        await self._duckduckgo(ctx, "random", "number", str(start), str(end))
 
 def setup(bot):
     """Setup function for Web."""
