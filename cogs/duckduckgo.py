@@ -22,7 +22,7 @@ BASE_URL_DUCKDUCKGO = "https://duckduckgo.com/?%s"
 logger = logging.getLogger(__name__)
 
 class Web:
-    """This is a cog that contains Web API hooks.
+    """This is a cog that contains DuckDuckGo Instant Answers API hooks.
     """
     def __init__(self, bot):
         self.bot = bot
