@@ -10,8 +10,7 @@ DEFAULT_EXTENSIONS = ["cogs.core",
                       "cogs.utilities",
                       "cogs.moderation",
                       "cogs.web",
-                      "cogs.reactions",
-                      "cogs.duckduckgo"]
+                      "cogs.reactions"]
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)

@@ -1,6 +1,6 @@
 {
     "API_KEY_IBSEARCH": "Your Key Goes Here",
     "COMMAND_PREFIX": "myprefix!",
-    "EXTENSIONS": ["cogs.core", "cogs.utilities", "cogs.moderation", "cogs.web", "cogs.reactions", "cogs.duckduckgo"],
+    "EXTENSIONS": ["cogs.core", "cogs.utilities", "cogs.moderation", "cogs.web", "cogs.reactions"],
     "OAUTH_TOKEN_DISCORD": "Your OAuth Token Goes Here"
 }
