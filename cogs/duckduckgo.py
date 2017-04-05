@@ -21,7 +21,7 @@ BASE_URL_DUCKDUCKGO = "https://duckduckgo.com/?%s"
 
 logger = logging.getLogger(__name__)
 
-class Web:
+class Fun:
     """This is a cog that contains DuckDuckGo Instant Answers API hooks.
     """
     def __init__(self, bot):
@@ -76,5 +76,5 @@ class Web:
         await self._duckduckgo(ctx, "random", "name")
 
 def setup(bot):
-    """Setup function for Web."""
-    bot.add_cog(Web(bot))
+    """Setup function for Fun."""
+    bot.add_cog(Fun(bot))
