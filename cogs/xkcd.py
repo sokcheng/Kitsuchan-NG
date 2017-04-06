@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-"""Contains a cog for stuff that hooks into web APIs."""
+"""This cog contains some basic xkcd commands."""
 
 # Standard modules
 import logging
@@ -18,8 +18,7 @@ BASE_URL_XKCD_API = "https://xkcd.com/%s/info.0.json"
 logger = logging.getLogger(__name__)
 
 class Web:
-    """This is a cog that contains Web API hooks.
-    """
+    """This cog contains some basic xkcd commands."""
     def __init__(self, bot):
         self.name = "Web APIs"
         self.bot = bot
@@ -65,9 +64,14 @@ class Web:
         await self._xkcd(ctx, comic_id)
 
     @commands.command(hidden=True)
-    async def antigravity(self, ctx, comic_id=""):
+    async def antigravity(self, ctx):
         """Fetch the antigravity comic from xkcd."""
         await self._xkcd(ctx, "353")
+
+    @commands.command(hidden=True)
+    async def sudo(self, ctx):
+        """Fetch the sudo comic from xkcd."""
+        await self._xkcd(ctx, "149")
 
 def setup(bot):
     """Setup function for Web."""

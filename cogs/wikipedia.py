@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-"""Contains a cog for stuff that hooks into web APIs."""
+"""This cog contains a Wikipedia query command."""
 
 # Standard modules
 import logging
@@ -20,8 +20,7 @@ BASE_URL_WIKIPEDIA_API = "https://en.wikipedia.org/w/api.php?%s"
 logger = logging.getLogger(__name__)
 
 class Web:
-    """This is a cog that contains Web API hooks.
-    """
+    """This cog contains a Wikipedia query command."""
     def __init__(self, bot):
         self.name = "Web APIs"
         self.bot = bot

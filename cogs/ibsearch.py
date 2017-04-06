@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-"""Contains a cog for stuff that hooks into web APIs."""
+"""This cog handles IbSear.ch queries."""
 
 # Standard modules
 import logging
@@ -26,8 +26,7 @@ BASE_URL_IBSEARCH_XXX_IMAGE = "https://%s.ibsearch.xxx/%s"
 logger = logging.getLogger(__name__)
 
 class Web:
-    """This is a cog that contains Web API hooks.
-    """
+    """This cog handles IbSear.ch queries."""
     def __init__(self, bot):
         self.name = "Web APIs"
         self.bot = bot
