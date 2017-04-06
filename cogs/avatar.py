@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-"""Contains a cog with the bot's utility commands."""
+"""Contains a cog that fetches user avatars."""
 
 # Standard modules
 import logging
@@ -12,11 +12,7 @@ from discord.ext import commands
 logger = logging.getLogger(__name__)
 
 class Utilities:
-    """discord.py cog containing utility functions of the bot.
-    
-    bot - The parent discord.Client object for the cog.
-    logger - A logger to assign the cog.
-    """
+    """discord.py cog containing avatar fetcher."""
     
     def __init__(self):
         pass

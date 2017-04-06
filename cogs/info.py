@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-"""Contains a cog with the bot's utility commands."""
+"""Contains a cog with the bot's info commands."""
 
 # Standard modules
 import logging
@@ -18,11 +18,7 @@ import utils
 logger = logging.getLogger(__name__)
 
 class Utilities:
-    """discord.py cog containing utility functions of the bot.
-    
-    bot - The parent discord.Client object for the cog.
-    logger - A logger to assign the cog.
-    """
+    """discord.py cog containing info commands, such as server and user info."""
     
     def __init__(self):
         pass
