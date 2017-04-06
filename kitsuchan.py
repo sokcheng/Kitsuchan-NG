@@ -25,7 +25,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger('discord')
 logger.setLevel(logging.INFO)
 
-bot = commands.Bot(command_prefix="kit!", pm_help=True)
+bot = commands.Bot(command_prefix=commands.when_mentioned, pm_help=True)
 bot.description = app_info.DESCRIPTION
 bot.session = aiohttp.ClientSession(loop=bot.loop)
 
@@ -52,12 +52,13 @@ async def on_ready():
     command_prefix = settings.manager.get("COMMAND_PREFIX")
     if isinstance(command_prefix, str):
         bot.command_prefix = command_prefix
-    else:
-        bot.command_prefix = bot.user.name[:3].lower() + "!"
     ainfo = await bot.application_info()
     bot.owner = ainfo.owner
     game = discord.Game()
-    game.name = bot.command_prefix + "help"
+    if callable(bot.command_prefix):
+        game.name = f"@{bot.user.name} help"
+    else:
+        game.name = f"{bot.command_prefix}help"
     await bot.change_presence(game=game)
     logger.info(f"Bot is ONLINE! Username: {bot.user.name}, User ID: {bot.user.id}")
 
