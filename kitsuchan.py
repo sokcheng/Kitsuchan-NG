@@ -101,6 +101,10 @@ async def on_command_error(exception, ctx):
 def main():
     """It's the main function. You call this to start the bot."""
     try:
+        settings.load()
+    except (FileNotFoundError or IOError or json.decoder.JSONDecodeError):
+        settings.save()
+    try:
         settings.manager["OAUTH_TOKEN_DISCORD"]
     except KeyError:
         print("Please enter an OAuth token for this bot, so it can sign into Discord.")

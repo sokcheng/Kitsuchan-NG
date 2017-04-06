@@ -62,8 +62,3 @@ def save(filename:str=FILENAME, manager=manager):
             json.dump(manager, f)
     except IOError as error:
         logger.warning("Could not write config!")
-
-try:
-    load()
-except (FileNotFoundError or IOError or json.decoder.JSONDecodeError):
-    save()
