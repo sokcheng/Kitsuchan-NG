@@ -99,26 +99,32 @@ class Core:
     @commands.check(checks.is_bot_owner)
     async def loade(self, ctx, extension_name:str):
         """Enable the use of an extension."""
+        logger.info(f"Loading extension {extension_name}...")
         self.bot.load_extension(extension_name)
         settings.manager.setdefault("EXTENSIONS", settings.DEFAULT_EXTENSIONS)
         if extension_name not in settings.manager["EXTENSIONS"]:
             settings.manager["EXTENSIONS"].append(extension_name)
-            await ctx.send("Extension enabled.")
+            message = f"Extension {extension_name} loaded"
         else:
-            await ctx.send("Extension is already enabled.")
+            message = f"Extension {extension_name} is already loaded"
+        await ctx.send(message)
+        logger.info(message)
 
     @commands.command(aliases=["unload-extension"])
     @commands.check(checks.is_bot_owner)
     async def uloade(self, ctx, extension_name:str):
         """Disable the use of an extension."""
+        logger.info(f"Unloading extension {extension_name}...")
         self.bot.unload_extension(extension_name)
         settings.manager.setdefault("EXTENSIONS", settings.DEFAULT_EXTENSIONS)
         try:
             settings.manager["EXTENSIONS"].remove(extension_name)
         except ValueError:
-            await ctx.send("Extension is already disabled.")
+            message = f"Extension {extension_name} is already unloaded"
         else:
-            await ctx.send("Extension disabled.")
+            message = f"Extension {extension_name} unloaded"
+        await ctx.send(message)
+        logger.info(message)
 
 def setup(bot):
     """Setup function for Core."""
