@@ -3,7 +3,6 @@
 """Contains a cog with the bot's utility commands."""
 
 # Standard modules
-import sys
 import logging
 
 # Third party modules
@@ -112,57 +111,6 @@ class Utilities:
         roles = ", ".join((str(role) for role in user.roles))
         embed.add_field(name="Roles", value=roles, inline=False)
         await ctx.send(embed=embed)
-    
-    @commands.command()
-    async def avatar(self, ctx, *, user:discord.Member=None):
-        """Display a user's avatar.
-        Defaults to displaying the avatar of the user who invoked the command.
-        
-        user - A member who you can mention for avatar."""
-        logger.info("Displaying user avatar.")
-        if not user:
-            user = ctx.author
-        embed = discord.Embed(title=f"The avatar of {user.name}")
-        embed.url = user.avatar_url
-        embed.set_image(url=user.avatar_url)
-        await ctx.send(embed=embed)
-        
-    @commands.command()
-    async def quote(self, ctx, user:discord.Member):
-        """Quote a user.
-        
-        user - The user you wish to quote."""
-        logger.info("Quoting a user.")
-        async for message in ctx.channel.history():
-            if message.author.id == user.id:
-                title = f"{user.name} said..."
-                embed = discord.Embed(title=title)
-                embed.description = message.content
-                await ctx.send(embed=embed)
-                if len(message.embeds) > 0:
-                    for embed in message.embeds:
-                        await ctx.send(embed=embed)
-                return
-        await ctx.send("Could not quote that user.")
-
-    @commands.command()
-    async def didsay(self, ctx, user:discord.Member, *phrase):
-        """Checks if a user said a particular phrase.
-        
-        user - A member to mention.
-        *phrase - Command checks against this to see what was said."""
-        logger.info("Checking if someone said something.")
-        quote = " ".join(phrase)
-        if len(quote) == 0:
-            raise commands.UserInputError("A quote was not specified.")
-        async for message in ctx.channel.history():
-            if message.author.id == user.id and quote in message.content:
-                title = f"Yes, {user.name} said..."
-                embed = discord.Embed(title=title)
-                embed.description = message.content
-                await ctx.send(embed=embed)
-                return
-        await ctx.send(f"No, {user.name} did not say \"{quote}\". Or it was deleted.")
 
 def setup(bot):
     """Setup function for Utilities."""
