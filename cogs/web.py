@@ -123,12 +123,8 @@ class Web:
                 await ctx.send(message)
                 logger.info(message)
 
-    @commands.command(aliases=["xk"])
-    async def xkcd(self, ctx, comic_id=""):
-        """Fetch a comic from xkcd.
-        
-        comic_id - A desired comic ID. Leave blank for latest comic. Set to r for a random comic.
-        """
+    async def _xkcd(self, ctx, comic_id=""):
+        """Helper function for xkcd comics."""
         logger.info(f"Retrieving xkcd comic with ID {comic_id}.")
         if comic_id.lower() in ("random", "r"):
             url = BASE_URL_XKCD_API % ("",)
@@ -158,6 +154,19 @@ class Web:
                 message = "Could not reach xkcd. :("
                 await ctx.send(message)
                 logger.info(message)
+
+    @commands.command(aliases=["xk"])
+    async def xkcd(self, ctx, comic_id=""):
+        """Fetch a comic from xkcd.
+        
+        comic_id - A desired comic ID. Leave blank for latest comic. Set to r for a random comic.
+        """
+        await self._xkcd(ctx, comic_id)
+
+    @commands.command(hidden=True)
+    async def antigravity(self, ctx, comic_id=""):
+        """Fetch the antigravity comic from xkcd."""
+        await self._xkcd(ctx, "353")
 
 def setup(bot):
     """Setup function for Web."""
