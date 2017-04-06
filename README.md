@@ -3,18 +3,6 @@
 A small, modular, extensible Discord bot written in Python 3. There's a lot of stuff that can be
 improved, but it's easy to add functions to it.
 
-# Why not just use Twentysix26's Red bot?
-
-I recommend you use Red instead of Kitsuchan-NG if you need something that's actually meant for
-serious work. Red has a far larger library of extensions, its codebase is more mature, and it has
-a good community of people behind it. Kitsuchan-NG by contrast is a young, unproven bot with an
-unstable API and no community. The bot may randomly piss itself, as there can and will be big
-scary bugs.
-
-So, if Red exists, why did I make Kitsuchan-NG? Simple, it's meant for fun. I also made it because
-I hope to improve my own coding skills as it's being built. Kitsuchan-NG is released as open-source
-for ideological reasons, and in hopes that perhaps someone else will find it useful, too.
-
 # How to run
 You'll need Python 3.5 or higher, as Kitsuchan-NG is not compatible with Python 3.4 and below.
 There are no plans to add support for older Python versions, as this would be a hassle for me.
