@@ -111,6 +111,21 @@ class Core:
         await ctx.send(message)
         logger.info(message)
 
+    @commands.command(aliases=["reload-extension"])
+    @commands.check(checks.is_bot_owner)
+    async def rloade(self, ctx, extension_name:str):
+        """Reload an already-loaded extension."""
+        logger.info(f"Reloading extension {extension_name}...")
+        settings.manager.setdefault("EXTENSIONS", settings.DEFAULT_EXTENSIONS)
+        if extension_name in settings.manager["EXTENSIONS"]:
+            self.bot.unload_extension(extension_name)
+            self.bot.load_extension(extension_name)
+            message = f"Extension {extension_name} reloaded"
+        else:
+            message = f"Extension {extension_name} not currently loaded; please load it"
+        await ctx.send(message)
+        logger.info(message)
+
     @commands.command(aliases=["unload-extension"])
     @commands.check(checks.is_bot_owner)
     async def uloade(self, ctx, extension_name:str):
