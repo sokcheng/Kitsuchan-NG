@@ -29,17 +29,6 @@ def load(filename:str=FILENAME):
         with open(filename) as f:
             new_settings = json.load(f)
         for key, value in new_settings.items():
-            # This if/elif block checks types. If a setting is of the wrong type, it is skipped.
-            if (key == "WHITELIST_NSFW" and not isinstance(value, list)):
-                continue
-            elif (key == "OAUTH_TOKEN_DISCORD" and not isinstance(value, str)):
-                continue
-            elif (key == "API_KEY_IBSEARCH" and not isinstance(value, str)):
-                continue
-            elif (key == "COMMAND_PREFIX" and not isinstance(value, str)):
-                continue
-            elif (key == "EXTENSIONS" and not isinstance(value, list)):
-                continue
             manager[key] = value
     except FileNotFoundError as error:
         logger.warning("Config file not found!")
