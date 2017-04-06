@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-"""This module contains environment variables that have been passed to the program as config."""
+"""This module handles I/O operations to configuration files."""
 
 import os
 import json
@@ -9,7 +9,7 @@ import logging
 FILENAME = "config.json"
 FOLDER_COGS = "cogs"
 DEFAULT_EXTENSIONS = []
-# This dynamically creates the default list of cogs.
+# Dynamically create the default list of cogs.
 for fname in os.listdir(FOLDER_COGS):
     if os.path.isfile(os.path.join(FOLDER_COGS, fname)):
         DEFAULT_EXTENSIONS.append("%s.%s" % (FOLDER_COGS, fname.replace(".py", "")))
