@@ -10,9 +10,10 @@ FILENAME = "config.json"
 FOLDER_COGS = "cogs"
 DEFAULT_EXTENSIONS = []
 # Dynamically create the default list of cogs.
-for fname in os.listdir(FOLDER_COGS):
-    if os.path.isfile(os.path.join(FOLDER_COGS, fname)):
-        DEFAULT_EXTENSIONS.append("%s.%s" % (FOLDER_COGS, fname.replace(".py", "")))
+if os.path.isdir(FOLDER_COGS):
+    for fname in os.listdir(FOLDER_COGS):
+        if os.path.isfile(os.path.join(FOLDER_COGS, fname)):
+            DEFAULT_EXTENSIONS.append("%s.%s" % (FOLDER_COGS, fname.replace(".py", "")))
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
