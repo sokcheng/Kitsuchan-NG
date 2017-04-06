@@ -92,9 +92,7 @@ class Utilities:
         
         user - Optional argument. A user in the current channel to get user information about."""
         logger.info("Displaying info about user.")
-        try:
-            user = ctx.message.mentions[0]
-        except IndexError:
+        if not user:
             user = ctx.author
         embed = discord.Embed(title=user.display_name)
         if user.display_name != user.name:
