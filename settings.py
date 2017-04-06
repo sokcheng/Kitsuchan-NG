@@ -2,15 +2,17 @@
 
 """This module contains environment variables that have been passed to the program as config."""
 
+import os
 import json
 import logging
 
 FILENAME = "config.json"
-DEFAULT_EXTENSIONS = ["cogs.core",
-                      "cogs.utilities",
-                      "cogs.moderation",
-                      "cogs.web",
-                      "cogs.reactions"]
+FOLDER_COGS = "cogs"
+DEFAULT_EXTENSIONS = []
+# This dynamically creates the default list of cogs.
+for fname in os.listdir(FOLDER_COGS):
+    if os.path.isfile(os.path.join(FOLDER_COGS, fname)):
+        DEFAULT_EXTENSIONS.append("%s.%s" % (FOLDER_COGS, fname.replace(".py", "")))
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
