@@ -127,6 +127,15 @@ class Core:
         await ctx.send(message)
         logger.info(message)
 
+    @commands.command(aliases=["list-extensions"])
+    @commands.check(checks.is_bot_owner)
+    async def liste(self, ctx):
+        """Display list of currently-enabled bot extensions."""
+        logger.info(f"Extension list requested.")
+        extensions = "\n".join(self.bot.extensions)
+        message = f"```Loaded extensions:\n{extensions}```"
+        await ctx.author.send(message)
+
 def setup(bot):
     """Setup function for Core."""
     bot.add_cog(Core(bot))
