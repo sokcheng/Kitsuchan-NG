@@ -130,6 +130,9 @@ class Core:
     @commands.check(checks.is_bot_owner)
     async def uloade(self, ctx, extension_name:str):
         """Disable the use of an extension."""
+        prompt = await helpers.yes_no(ctx, self.bot)
+        if not prompt:
+            return
         logger.info(f"Unloading extension {extension_name}...")
         self.bot.unload_extension(extension_name)
         settings.manager.setdefault("EXTENSIONS", settings.DEFAULT_EXTENSIONS)
