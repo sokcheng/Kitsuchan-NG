@@ -5,6 +5,7 @@
 # Standard modules
 import logging
 import random
+import urllib.parse
 
 # Third-party modules
 import discord
