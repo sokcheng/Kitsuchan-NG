@@ -34,6 +34,5 @@ Optionally, you may set the following as well:
 For your convenience, a `config.json.example` file is provided. In the future, one objective of
 mine is to implement per-cog settings.
 
-By default, Kitsuchan-NG uses `kit!` for its prefix where `kit` are the first three letters of
-the bot account's username. You can override this with the aforementioned `COMMAND_PREFIX`
-parameter.
+By default, Kitsuchan-NG responds to mentions as its default command prefix. You can override this
+with the aforementioned `COMMAND_PREFIX` parameter.
