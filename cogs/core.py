@@ -63,6 +63,7 @@ class Core:
         message = " ".join(text)
         if len(message) == 0:
             message = "Echo?"
+        # Insert eight zero-width spaces here to avoid triggering other bots with the echo.
         message = "\u200B"*8 + message
         await ctx.send(message)
     
@@ -95,7 +96,7 @@ class Core:
         settings.save()
         os.execl(os.path.realpath(FILE_MAIN), *sys.argv)
 
-    @commands.command(aliases=["nload-extension"])
+    @commands.command(aliases=["load-extension"])
     @commands.check(checks.is_bot_owner)
     async def loade(self, ctx, extension_name:str):
         """Enable the use of an extension."""
