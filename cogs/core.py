@@ -155,6 +155,20 @@ class Core:
         if not isinstance(ctx.channel, discord.DMChannel):
             await ctx.send("Sent to DM!")
 
+    @commands.command()
+    @commands.is_owner()
+    async def eval(self, ctx, *expression):
+        """Display list of currently-enabled bot extensions."""
+        expression = " ".join(expression)
+        logger.info(f"eval of {expression} requested.")
+        try:
+            output = eval(expression)
+        except Exception as error:
+            output = error
+        await ctx.author.send(f"```{output}```")
+        if not isinstance(ctx.channel, discord.DMChannel):
+            await ctx.send("Sent to DM!")
+
 def setup(bot):
     """Setup function for Core."""
     bot.add_cog(Core(bot))
