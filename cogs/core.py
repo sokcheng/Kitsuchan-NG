@@ -158,7 +158,7 @@ class Core:
     @commands.command()
     @commands.is_owner()
     async def eval(self, ctx, *expression):
-        """Display list of currently-enabled bot extensions."""
+        """Evaluate a command. Only the owner may run this."""
         expression = " ".join(expression)
         logger.info(f"eval of {expression} requested.")
         try:
