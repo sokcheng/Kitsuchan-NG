@@ -15,7 +15,6 @@ from discord.ext import commands
 # Bundled modules
 from __main__ import __file__ as FILE_MAIN # This sucks
 import app_info
-import checks
 import helpers
 import settings
 import utils
@@ -68,7 +67,7 @@ class Core:
         await ctx.send(message)
     
     @commands.command()
-    @commands.check(checks.is_bot_owner)
+    @commands.is_owner()
     async def halt(self, ctx):
         """Halt the bot. Must be bot owner to execute."""
         confirm = await helpers.yes_no(ctx, self.bot)
@@ -82,7 +81,7 @@ class Core:
         self.bot.session.close()
 
     @commands.command()
-    @commands.check(checks.is_bot_owner)
+    @commands.is_owner()
     async def restart(self, ctx):
         """Restart the bot. Must be bot owner to execute."""
         confirm = await helpers.yes_no(ctx, self.bot)
@@ -97,7 +96,7 @@ class Core:
         os.execl(os.path.realpath(FILE_MAIN), *sys.argv)
 
     @commands.command(aliases=["load-extension"])
-    @commands.check(checks.is_bot_owner)
+    @commands.is_owner()
     async def loade(self, ctx, extension_name:str):
         """Enable the use of an extension."""
         logger.info(f"Loading extension {extension_name}...")
@@ -112,7 +111,7 @@ class Core:
         logger.info(message)
 
     @commands.command(aliases=["reload-extension"])
-    @commands.check(checks.is_bot_owner)
+    @commands.is_owner()
     async def rloade(self, ctx, extension_name:str):
         """Reload an already-loaded extension."""
         logger.info(f"Reloading extension {extension_name}...")
@@ -127,7 +126,7 @@ class Core:
         logger.info(message)
 
     @commands.command(aliases=["unload-extension"])
-    @commands.check(checks.is_bot_owner)
+    @commands.is_owner()
     async def uloade(self, ctx, extension_name:str):
         """Disable the use of an extension."""
         prompt = await helpers.yes_no(ctx, self.bot)
@@ -146,7 +145,7 @@ class Core:
         logger.info(message)
 
     @commands.command(aliases=["list-extensions"])
-    @commands.check(checks.is_bot_owner)
+    @commands.is_owner()
     async def liste(self, ctx):
         """Display list of currently-enabled bot extensions."""
         logger.info("Extension list requested.")
