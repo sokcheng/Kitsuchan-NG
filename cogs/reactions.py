@@ -51,12 +51,8 @@ IMAGES_SANDWICHES = ("https://i.imgur.com/kyTDwIX.png",
 
 logger = logging.getLogger(__name__)
 
-class Reactions:
-    """discord.py cog containing reaction image functions of the bot.
-    
-    bot - The parent discord.Client object for the cog.
-    logger - A logger to assign the cog.
-    """
+class Fun:
+    """discord.py cog containing reaction image functions of the bot."""
     def __init__(self):
         pass
 
@@ -124,4 +120,4 @@ class Reactions:
 
 def setup(bot):
     """Setup function for Reactions."""
-    bot.add_cog(Reactions())
+    bot.add_cog(Fun())
