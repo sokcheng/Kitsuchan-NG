@@ -11,6 +11,7 @@ from discord.ext import commands
 
 # Bundled modules
 import settings
+import helpers
 import checks
 import utils
 
@@ -21,9 +22,16 @@ class Moderation:
     def __init__(self):
         pass
 
-    @commands.command()
+    @commands.group(invoke_without_command=True)
     @commands.check(checks.is_channel_admin)
-    async def allownsfw(self, ctx, *, channel:discord.TextChannel=None):
+    async def nsfw(self, ctx):
+        """NSFW toggle subcommands."""
+        embed = await helpers.generate_help_embed(self.nsfw)
+        await ctx.send(embed=embed)
+
+    @nsfw.command()
+    @commands.check(checks.is_channel_admin)
+    async def allow(self, ctx, *, channel:discord.TextChannel=None):
         """Whitelists channel for NSFW content.
         Defaults to current channel. Channel ID is stored as an SHA-512 hash.
         
@@ -39,9 +47,9 @@ class Moderation:
         else:
             await ctx.send("NSFW content is already enabled for this channel.")
 
-    @commands.command()
+    @nsfw.command()
     @commands.check(checks.is_channel_admin)
-    async def denynsfw(self, ctx, *, channel:discord.TextChannel=None):
+    async def deny(self, ctx, *, channel:discord.TextChannel=None):
         """Blacklists channel for NSFW content.
         Defaults to current channel.
         
