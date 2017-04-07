@@ -64,7 +64,7 @@ class Core:
         if len(message) == 0:
             message = "Echo?"
         # Split the message up by zero-width spaces so the bot doesn't trigger other bots.
-        message = "\u200B"*2 + "\u200B".join(tuple(message))
+        message = "\u200B"*8 + message
         await ctx.send(message)
     
     @commands.command()
