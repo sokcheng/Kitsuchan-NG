@@ -149,7 +149,7 @@ class Core:
     @commands.check(checks.is_bot_owner)
     async def liste(self, ctx):
         """Display list of currently-enabled bot extensions."""
-        logger.info(f"Extension list requested.")
+        logger.info("Extension list requested.")
         extensions = "\n".join(self.bot.extensions)
         message = f"```Loaded extensions:\n{extensions}```"
         await ctx.author.send(message)
