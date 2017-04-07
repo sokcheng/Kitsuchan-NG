@@ -165,7 +165,7 @@ class Core:
             output = eval(expression)
         except Exception as error:
             output = error
-        await ctx.author.send(f"```{output}```")
+        await ctx.author.send(f"Result of {expression}:```{output}```")
         if not isinstance(ctx.channel, discord.DMChannel):
             await ctx.send("Sent to DM!")
 
