@@ -154,7 +154,7 @@ class Core:
         message = f"```Loaded extensions:\n{extensions}```"
         await ctx.author.send(message)
         if not isinstance(ctx.channel, discord.DMChannel):
-            ctx.send("Sent to DM!")
+            await ctx.send("Sent to DM!")
 
 def setup(bot):
     """Setup function for Core."""
