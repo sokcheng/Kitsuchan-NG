@@ -33,7 +33,6 @@ class Web:
         """
         if len(query) == 0:
             message = "Query not specified."
-            await ctx.send(message)
             raise commands.UserInputError(message)
         logger.info(f"Searching Wikipedia with query {query}.")
         query_search = " ".join(query)
