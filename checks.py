@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 
-"""This module contains checks that could be used in various places around the bot."""
+"""This module contains checks that could be used in various places around the bot.
+
+This module is currently largely obsolete. Where possible, one should use discord.py builtins."""
 
 from __main__ import bot
 

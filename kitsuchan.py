@@ -39,7 +39,7 @@ def is_human(ctx):
 @bot.check
 def is_public(ctx):
     """Check whether the channel is a DM-based channel."""
-    if ctx.author.id == bot.owner.id:
+    if bot.is_owner(ctx.author):
         return True
     return not isinstance(ctx.channel, discord.DMChannel)
 
@@ -52,8 +52,6 @@ async def on_ready():
     command_prefix = settings.manager.get("COMMAND_PREFIX")
     if isinstance(command_prefix, str):
         bot.command_prefix = command_prefix
-    ainfo = await bot.application_info()
-    bot.owner = ainfo.owner
     game = discord.Game()
     if callable(bot.command_prefix):
         game.name = f"@{bot.user.name} help"
@@ -74,9 +72,9 @@ async def on_command_error(exception, ctx):
     """Handle errors that occur in commands."""
     # This section checks if the bot's owner DM'ed the bot the command.
     # The point of this is that the owner can debug the bot easily.
-    if isinstance(ctx.channel, discord.DMChannel) and ctx.author.id == bot.owner.id:
-        await bot.owner.send(exception.__class__.__name__)
-        await bot.owner.send(str(exception))
+    if isinstance(ctx.channel, discord.DMChannel) and bot.is_owner(ctx.author):
+        await ctx.author.send(exception.__class__.__name__)
+        await ctx.author.send(str(exception))
         return
     if isinstance(exception, (commands.BadArgument,
                               commands.MissingRequiredArgument,
