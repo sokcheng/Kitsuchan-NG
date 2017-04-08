@@ -34,7 +34,7 @@ class Fun:
             raise commands.UserInputError("Not enough choices specified. Separate choices with |")
         choice = None
         for choice_loaded in choices:
-            if choice_loaded.lower() == "python":
+            if "python" in choice_loaded.lower():
                 python = (f"{choice_loaded}, obviously",
                           f"{choice_loaded}, duh",
                           choice_loaded)
