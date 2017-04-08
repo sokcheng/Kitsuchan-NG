@@ -14,6 +14,7 @@ from discord.ext import commands
 
 BASE_URL_XKCD = "https://xkcd.com/%s/"
 BASE_URL_XKCD_API = "https://xkcd.com/%s/info.0.json"
+BASE_URL_XKCD_EXPLAIN = "http://www.explainxkcd.com/wiki/index.php/%s"
 
 logger = logging.getLogger(__name__)
 
@@ -42,8 +43,12 @@ class Web:
             if response.status == 200:
                 data = await response.json()
                 title = data["safe_title"]
-                embed = discord.Embed(title=title)
-                embed.description = "%s\n%s" % (BASE_URL_XKCD % comic_id, data.get("alt"),)
+                embed = discord.Embed(title=f"{title} ({comic_id})")
+                url_explanation = BASE_URL_XKCD_EXPLAIN % (comic_id,)
+                embed.description = f"[Explanation]({url_explanation})"
+                embed.url = BASE_URL_XKCD % (comic_id,)
+                if data.get('alt'):
+                    embed.set_footer(text=data['alt'])
                 embed.set_image(url=data["img"])
                 await ctx.send(embed=embed)
             elif response.status == 404:
