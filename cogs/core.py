@@ -171,6 +171,7 @@ class Core:
         embed.add_field(name="Input", value=f"```{expression}```", inline=False)
         embed.add_field(name="Output", value=f"```{output}```", inline=False)
         await ctx.send(embed=embed)
+        logger.info(f"Execution of {expression} complete. Output:\n{output}")
 
 def setup(bot):
     """Setup function for Core."""
