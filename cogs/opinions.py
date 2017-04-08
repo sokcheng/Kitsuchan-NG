@@ -12,11 +12,6 @@ from discord.ext import commands
 
 logger = logging.getLogger(__name__)
 
-QUOTES_LOVE = ("How lonely are you, that you're asking a bot if it likes you? Loser.",
-               "Lol, no.",
-               "Nope.",
-               "I'm just a bot. I am incapable of love.")
-
 class Fun:
     """discord.py cog containing functions that give the bot's opinion on something."""
     def __init__(self, bot):
