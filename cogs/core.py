@@ -54,6 +54,7 @@ class Core:
         await ctx.send(embed=embed)
     
     @commands.command(aliases=["say"])
+    @commands.is_owner()
     async def echo(self, ctx, *text):
         """Repeat the user's text back at them.
         
