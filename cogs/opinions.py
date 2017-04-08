@@ -24,10 +24,15 @@ class Fun:
         Syntax:
         choose x | y | z - Choose between x, y, and z.
         """
-        choices = " ".join(choices).split(" | ")
+        choices = " ".join(choices).split("|")
         if len(choices) <= 1:
             raise commands.UserInputError("Not enough choices specified. Separate choices with |")
+        # Eliminate leading and trailing whitespace.
+        for index in range(0, len(choices)):
+            choices[index] = choices[index].strip()
+        logger.info(f"Choosing between {choices}")
         choice = None
+        # Loaded choice. The program biases in favor of pythons.
         for choice_loaded in choices:
             if "python" in choice_loaded.lower():
                 python = (f"{choice_loaded}, obviously",
@@ -35,8 +40,10 @@ class Fun:
                           choice_loaded)
                 choice = random.choice(python)
                 break
+        # Couldn't find a python, so now the program actually choses randomly.
         if not choice:
             choice = random.choice(choices)
+        logger.info(f"Chose {choice}")
         title = f"{self.bot.user.display_name} chooses:"
         embed = discord.Embed(title=title, description=choice)
         await ctx.send(embed=embed)
