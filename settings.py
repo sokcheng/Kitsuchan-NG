@@ -6,7 +6,7 @@ import os
 import json
 import logging
 
-FILE_CONFIG = "config.json"
+FILENAME_CONFIG = "config.json"
 FOLDER_COGS = "cogs"
 DEFAULT_EXTENSIONS = []
 # Dynamically create the default list of cogs.
@@ -20,18 +20,18 @@ logger = logging.getLogger(__name__)
 
 manager = {}
 
-def load(filename:str=FILE_CONFIG):
+def load(filename:str=FILENAME_CONFIG):
     """Load config from a file. If no filename is specified, it modifies settings.manager.
     Otherwise, it returns the config it just loaded.
     
-    filename - The name of the file you wish to write to, defaults to FILE_CONFIG."""
+    filename - The name of the file you wish to write to, defaults to FILENAME_CONFIG."""
     logger.info("Loading config file.")
     try:
         with open(filename) as f:
             new_settings = json.load(f)
-        # Treat things differently here. If the filename is the stock FILE_CONFIG, then the load
+        # Treat things differently here. If the filename is the stock FILENAME_CONFIG, then the
         # command should modify the global manager and return None.
-        if filename == FILE_CONFIG:
+        if filename == FILENAME_CONFIG:
             for key, value in new_settings.items():
                 manager[key] = value
         # Otherwise, it returns the new_settings so they can be used in a cog-based extension.
@@ -47,10 +47,10 @@ def load(filename:str=FILE_CONFIG):
         logger.critical("Config file is not valid JSON!")
         raise error
 
-def save(filename:str=FILE_CONFIG, manager=manager):
+def save(filename:str=FILENAME_CONFIG, manager=manager):
     """Save JSON config settings to a file.
     
-    filename - The name of the file you wish to write to, defaults to FILE_CONFIG.
+    filename - The name of the file you wish to write to, defaults to FILENAME_CONFIG.
     manager - The JSON data you want to write, defaults to settings.manager.
     """
     logger.info("Saving/creating config file.")
