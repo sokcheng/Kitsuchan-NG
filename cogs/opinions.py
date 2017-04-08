@@ -35,7 +35,10 @@ class Fun:
         choice = None
         for choice_loaded in choices:
             if choice_loaded.lower() == "python":
-                choice = f"{choice_loaded}, obviously"
+                python = (f"{choice_loaded}, obviously",
+                          f"{choice_loaded}, duh",
+                          choice_loaded)
+                choice = random.choice(python)
         if not choice:
             choice = random.choice(choices)
         title = f"{self.bot.user.display_name} chooses:"
