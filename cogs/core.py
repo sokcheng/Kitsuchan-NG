@@ -61,6 +61,7 @@ class Core:
         *text - A list of strings, which is concatenated into one string before being echoed.
         """
         message = " ".join(text)
+        logger.info(f"ctx.author.display_name {ctx.author.id} requested echo of {message}")
         if len(message) == 0:
             message = "Echo?"
         # Split the message up by zero-width spaces so the bot doesn't trigger other bots.
