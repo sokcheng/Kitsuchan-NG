@@ -53,6 +53,23 @@ class Core:
         embed.add_field(name="Cookies eaten", value=str(cookies_eaten))
         await ctx.send(embed=embed)
     
+    @commands.command()
+    @commands.is_owner()
+    async def censor(self, ctx, times:int=1):
+        """Delete the bot's previous message(s).
+        
+        times - Number of message to delete."""
+        if times < 1:
+            return commands.UserInputError("Can't delete less than 1 message.")
+        logger.info(f"Deleting {times} previous messages.")
+        times_executed = 0
+        async for message in ctx.channel.history():
+            if times_executed == times:
+                break
+            if message.author.id == self.bot.user.id:
+                await message.delete()
+            times_executed += 1
+    
     @commands.command(aliases=["say"])
     @commands.is_owner()
     async def echo(self, ctx, *text):
