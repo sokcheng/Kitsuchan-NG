@@ -39,6 +39,7 @@ class Fun:
                           f"{choice_loaded}, duh",
                           choice_loaded)
                 choice = random.choice(python)
+                break
         if not choice:
             choice = random.choice(choices)
         title = f"{self.bot.user.display_name} chooses:"
