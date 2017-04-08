@@ -68,7 +68,7 @@ class Core:
                 break
             if message.author.id == self.bot.user.id:
                 await message.delete()
-            times_executed += 1
+                times_executed += 1
     
     @commands.command(aliases=["say"])
     @commands.is_owner()
