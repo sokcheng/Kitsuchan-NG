@@ -157,17 +157,20 @@ class Core:
 
     @commands.command()
     @commands.is_owner()
-    async def eval(self, ctx, *expression):
-        """Evaluate a command. Only the owner may run this."""
+    async def sh(self, ctx, *expression):
+        """Execute a system command. Only the owner may run this."""
         expression = " ".join(expression)
-        logger.info(f"eval of {expression} requested.")
-        try:
-            output = eval(expression)
-        except Exception as error:
-            output = error
-        await ctx.author.send(f"Result of evaluating `{expression}`:```{output}```")
-        if not isinstance(ctx.channel, discord.DMChannel):
-            await ctx.send("Sent to DM!")
+        if len(expression) == 0:
+            raise commands.UserInputError("No command was specified.")
+        logger.info(f"Shell execution of {expression} requested.")
+        with os.popen(expression) as popen:
+            output = popen.read()[:1018]
+        if len(output) == 0:
+            output = " "
+        embed = discord.Embed()
+        embed.add_field(name="Input", value=f"```{expression}```", inline=False)
+        embed.add_field(name="Output", value=f"```{output}```", inline=False)
+        await ctx.send(embed=embed)
 
 def setup(bot):
     """Setup function for Core."""
