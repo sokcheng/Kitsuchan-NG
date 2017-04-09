@@ -104,6 +104,11 @@ class Fun:
         await self.get(ctx, "nyan")
 
     @rem.command()
+    async def owo(self, ctx):
+        """owo"""
+        await self.get(ctx, "owo")
+
+    @rem.command()
     async def pout(self, ctx):
         """Pout!"""
         await self.get(ctx, "pout")
