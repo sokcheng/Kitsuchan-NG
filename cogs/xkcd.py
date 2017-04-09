@@ -43,7 +43,7 @@ class Web:
             if response.status == 200:
                 data = await response.json()
                 title = data["safe_title"]
-                embed = discord.Embed(title=f"{title} ({comic_id})")
+                embed = discord.Embed(title=f"{title} ({data['num']})")
                 url_explanation = BASE_URL_XKCD_EXPLAIN % (comic_id,)
                 embed.description = f"[Explanation]({url_explanation})"
                 embed.url = BASE_URL_XKCD % (comic_id,)
