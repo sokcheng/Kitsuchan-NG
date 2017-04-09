@@ -10,7 +10,6 @@ import discord
 from discord.ext import commands
 
 # Bundled modules
-import helpers
 import utils
 
 BASE_URL_API = "https://rra.ram.moe/i/r?type=%s"
@@ -49,92 +48,86 @@ class Fun:
                 await ctx.send(message)
                 logger.info(message)
 
-    @commands.group(aliases=["w"], invoke_without_command=True)
-    async def rem(self, ctx):
-        """A variety of weeb image commands."""
-        embed = await helpers.generate_help_embed(self.rem)
-        await ctx.send(embed=embed)
-
-    @rem.command()
+    @commands.command()
     async def cry(self, ctx):
         """Cry!"""
         await self.get(ctx, "cry")
 
-    @rem.command()
+    @commands.command()
     async def cuddle(self, ctx, member:discord.Member):
         """Cuddle a member!
         
         member - The member to be cuddled."""
         await self.get(ctx, "cuddle", member)
 
-    @rem.command()
+    @commands.command()
     async def hug(self, ctx, member:discord.Member):
         """Hug a member!
         
         member - The member to be hugged."""
         await self.get(ctx, "hug", member)
         
-    @rem.command()
+    @commands.command()
     async def kiss(self, ctx, member:discord.Member):
         """Kiss a member!
         
         member - The member to be kissed."""
         await self.get(ctx, "kiss", member)
 
-    @rem.command()
+    @commands.command()
     async def lewd(self, ctx):
         """Lewd!"""
         await self.get(ctx, "lewd")
 
-    @rem.command()
+    @commands.command()
     async def lick(self, ctx, member:discord.Member):
         """Lick a member!
         
         member - The member to be licked."""
         await self.get(ctx, "lick", member)
 
-    @rem.command()
+    @commands.command()
     async def nom(self, ctx):
         """Nom!"""
         await self.get(ctx, "nom")
 
-    @rem.command()
+    @commands.command()
     async def nyan(self, ctx):
         """Nyan!"""
         await self.get(ctx, "nyan")
 
-    @rem.command()
+    @commands.command()
     async def pout(self, ctx):
         """Pout!"""
         await self.get(ctx, "pout")
 
-    @rem.command()
+    @commands.command()
     async def slap(self, ctx, member:discord.Member):
         """Slap a member!
         
         member - The member to be slapped."""
         await self.get(ctx, "slap")
 
-    @rem.command()
+    @commands.command()
     async def smug(self, ctx):
         """Smug!"""
         await self.get(ctx, "smug")
 
-    @rem.command()
+    @commands.command()
     async def stare(self, ctx, member:discord.Member):
         """Stare at a member!
         
         member - The member to be stared at."""
         await self.get(ctx, "stare", member)
 
-    @rem.command()
+    @commands.command()
     async def tickle(self, ctx, member:discord.Member):
         """Tickle a member!
         
         member - The member to be tickled."""
         await self.get(ctx, "tickle", member)
 
-    @rem.command()
+    @commands.command()
     async def triggered(self, ctx):
         """Triggered!"""
         await self.get(ctx, "triggered")
