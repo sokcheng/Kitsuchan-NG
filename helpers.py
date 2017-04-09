@@ -9,33 +9,37 @@ import asyncio
 import discord
 from discord.ext import commands
 
-async def function_by_mentions(ctx, func, pass_member_id:bool=False, *params):
+async def function_by_mentions(ctx, func, pass_member_id:bool=False, *args, **kwargs):
     """A generic helper function that executes a function on all members listed in a context.
     
-    func - The function you desire to run. Must accept either discord.Member or discord.Member.id.
+    ctx - The context for which the function is to be applied.
+    func - The function to execute. Function must accept discord.Member or discord.Member.id.
     pass_member_id - Boolean. If true, then member IDs will be passed to func.
                      If false, then member objects will be passed to func.
-    *params - A list of additional parameters to be passed to func."""
+    *args - A list of additional arguments that func accepts.
+    **kwargs - A list of additional keyword arguments that func accepts."""
     if len(ctx.message.mentions) == 0:
         message = "No user(s) were mentioned."
         raise commands.UserInputError(message)
     for member in ctx.message.mentions:
         if pass_member_id:
-            await func(member.id, *params)
+            await func(member.id, *args, **kwargs)
         else:
-            await func(member, *params)
+            await func(member, *args, **kwargs)
 
-async def generate_help_embed(group):
-    """A helper function to generate help for a group.
+async def generate_help_embed(thing):
+    """A helper function to generate help for an object.
     
-    Accepts a discord.ext.commands.Group as argument and returns a discord.Embed"""
-    if type(group) is commands.Group:
-        embed = discord.Embed(title=group.name)
+    Accepts anything as an argument and returns a discord.Embed generating help for it.
+    
+    Currently, this only accepts discord.ext.commands.Group."""
+    if type(thing) is commands.Group:
+        embed = discord.Embed(title=thing.name)
         try:
-            embed.description = group.help
+            embed.description = thing.help
         except AttributeError:
             pass
-        for command in tuple(group.commands)[::-1]:
+        for command in tuple(thing.commands)[::-1]:
             try:
                 if command.hidden:
                     continue
@@ -44,13 +48,18 @@ async def generate_help_embed(group):
                     value = str(command.help).split("\n")[0]
                 else:
                     value = command.brief
-                embed.add_field(name=f"{group.name} {command.name}", value=value)
+                embed.add_field(name=f"{thing.name} {command.name}", value=value)
             except AttributeError:
                 pass
         return embed
 
-# Yes-no question.
 async def yes_no(ctx, client:discord.Client, message:str="Are you sure? Type yes to confirm."):
+    """Yes no helper. Ask a confirmation message with a timeout of 5 seconds.
+    
+    ctx - The context in which the question is being asked.
+    client - The client handling the question responses.
+    message - Optional messsage that the question should ask.
+    """
     embed = discord.Embed(title=message, color=discord.Color.red())
     await ctx.send(embed=embed)
     try:

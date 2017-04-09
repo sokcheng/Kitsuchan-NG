@@ -20,7 +20,6 @@ assert (sys.version_info >= (3,5)), "This program requires Python 3.5 or higher.
 assert (discord.version_info >= (1,0)), "This program requires Discord 1.0 or higher."
 
 # Initialization
-
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger('discord')
 logger.setLevel(logging.INFO)
@@ -30,21 +29,19 @@ bot.description = app_info.DESCRIPTION
 bot.session = aiohttp.ClientSession(loop=bot.loop)
 
 # Checking functions
-
 @bot.check
 def is_human(ctx):
-    """Check whether the sender of a message is a human or a bot."""
+    """Prevent the bot from responding to other bots."""
     return not ctx.author.bot
 
 @bot.check
 def is_public(ctx):
-    """Check whether the channel is a DM-based channel."""
+    """Prevent the bot from responding to DMs, unless it's the bot owner sending the DM."""
     if bot.is_owner(ctx.author):
         return True
     return not isinstance(ctx.channel, discord.DMChannel)
 
 # Events
-
 @bot.event
 async def on_ready():
     """Conduct preparations once the bot is ready to go."""
