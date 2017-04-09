@@ -11,8 +11,8 @@ import discord
 from discord.ext import commands
 
 # Bundled modules
-import utils
 import helpers
+import utils
 
 # Single image links.
 IMAGE_DEAD = "https://s-media-cache-ak0.pinimg.com/736x/ec/61/ef/ec61ef110a5d2e01bf8ae48331b63723.jpg"
@@ -72,37 +72,43 @@ class Fun:
         """Ask the bot to kill itself."""
         await ctx.send("That's mean. :<")
 
-    @commands.command()
+    @commands.group(aliases=["r"], invoke_without_command=True)
+    async def react(self, ctx):
+        """Various reaction image subcommands."""
+        embed = await helpers.generate_help_embed(self.react)
+        await ctx.send(embed=embed)
+
+    @react.command()
     async def dead(self, ctx):
         """Dead!"""
         await self.send_image(ctx, IMAGE_DEAD)
 
-    @commands.command(aliases=["facedesk"])
+    @react.command(aliases=["facedesk"])
     async def fdesk(self, ctx):
         """Facedesk!"""
         await self.send_image(ctx, IMAGE_FACEDESK)
 
-    @commands.command(aliases=["letmeloveyou"])
+    @react.command(aliases=["letmeloveyou"])
     async def lmly(self, ctx):
         """Let me love you!"""
         await self.send_image(ctx, IMAGE_LMLY)
 
-    @commands.command()
+    @react.command()
     async def what(self, ctx):
         """What?"""
         await self.send_image(ctx, IMAGE_WHAT)
 
-    @commands.command(aliases=["wakarimasenlol"])
+    @react.command(aliases=["wakarimasenlol"])
     async def wlol(self, ctx):
         """Wakarimasen, lol!"""
         await self.send_image(ctx, IMAGE_WLOL)
 
-    @commands.command()
+    @react.command()
     async def boots(self, ctx):
         """Boots!"""
         await self.send_image(ctx, IMAGES_BOOTS)
 
-    @commands.command()
+    @react.command()
     async def sandwich(self, ctx):
         """Sandwich!"""
         await self.send_image(ctx, IMAGES_SANDWICHES)
