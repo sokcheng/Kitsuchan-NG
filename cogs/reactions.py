@@ -74,37 +74,37 @@ class Fun:
 
     @commands.command()
     async def dead(self, ctx):
-        """Display dead chat reaction image."""
+        """Dead!"""
         await self.send_image(ctx, IMAGE_DEAD)
 
     @commands.command(aliases=["facedesk"])
     async def fdesk(self, ctx):
-        """Display facedesk reaction image."""
+        """Facedesk!"""
         await self.send_image(ctx, IMAGE_FACEDESK)
 
     @commands.command(aliases=["letmeloveyou"])
     async def lmly(self, ctx):
-        """Display "let me love you" reaction image."""
+        """Let me love you!"""
         await self.send_image(ctx, IMAGE_LMLY)
 
     @commands.command()
     async def what(self, ctx):
-        """Display WHAT reaction image."""
+        """What?"""
         await self.send_image(ctx, IMAGE_WHAT)
 
     @commands.command(aliases=["wakarimasenlol"])
     async def wlol(self, ctx):
-        """Display "Wakarimasen, lol" reaction image."""
+        """Wakarimasen, lol!"""
         await self.send_image(ctx, IMAGE_WLOL)
 
     @commands.command()
     async def boots(self, ctx):
-        """Display images of anime boots."""
+        """Boots!"""
         await self.send_image(ctx, IMAGES_BOOTS)
 
     @commands.command()
     async def sandwich(self, ctx):
-        """Display a sandwich."""
+        """Sandwich!"""
         await self.send_image(ctx, IMAGES_SANDWICHES)
 
 def setup(bot):
