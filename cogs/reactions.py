@@ -72,48 +72,37 @@ class Fun:
         """Ask the bot to kill itself."""
         await ctx.send("That's mean. :<")
 
-    @commands.group(aliases=["r"], invoke_without_command=True)
-    async def react(self, ctx):
-        """A variety of reactions and reaction images."""
-        embed = await helpers.generate_help_embed(self.react)
-        await ctx.send(embed=embed)
-
-    @react.command()
+    @commands.command()
     async def dead(self, ctx):
         """Display dead chat reaction image."""
         await self.send_image(ctx, IMAGE_DEAD)
 
-    @react.command(aliases=["facedesk"])
+    @commands.command(aliases=["facedesk"])
     async def fdesk(self, ctx):
         """Display facedesk reaction image."""
         await self.send_image(ctx, IMAGE_FACEDESK)
 
-    @react.command(aliases=["letmeloveyou"])
+    @commands.command(aliases=["letmeloveyou"])
     async def lmly(self, ctx):
         """Display "let me love you" reaction image."""
         await self.send_image(ctx, IMAGE_LMLY)
 
-    @react.command()
+    @commands.command()
     async def what(self, ctx):
         """Display WHAT reaction image."""
         await self.send_image(ctx, IMAGE_WHAT)
 
-    @react.command(aliases=["wakarimasenlol"])
+    @commands.command(aliases=["wakarimasenlol"])
     async def wlol(self, ctx):
         """Display "Wakarimasen, lol" reaction image."""
         await self.send_image(ctx, IMAGE_WLOL)
 
-    @react.command()
+    @commands.command()
     async def boots(self, ctx):
         """Display images of anime boots."""
         await self.send_image(ctx, IMAGES_BOOTS)
 
-    @react.command()
-    async def lewd(self, ctx):
-        """Display reaction images to lewd things."""
-        await self.send_image(ctx, IMAGES_LEWD)
-
-    @react.command()
+    @commands.command()
     async def sandwich(self, ctx):
         """Display a sandwich."""
         await self.send_image(ctx, IMAGES_SANDWICHES)
