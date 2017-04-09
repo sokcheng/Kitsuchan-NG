@@ -39,6 +39,9 @@ async def generate_help_embed(thing):
             embed.description = thing.help
         except AttributeError:
             pass
+        if len(thing.aliases) > 0:
+            aliases = ", ".join(thing.aliases)
+            embed.add_field(name="Aliases", value=aliases, inline=False)
         for command in tuple(thing.commands)[::-1]:
             try:
                 if command.hidden:
