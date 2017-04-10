@@ -40,9 +40,9 @@ class Fun:
                 if not member:
                     message=None
                 elif ctx.author.id != member.id:
-                    message=f"**{member.mention}, you got a {kind} from {ctx.author.display_name}!**"
+                    message=f"**{member.display_name}, you got a {kind} from {ctx.author.display_name}!**"
                 else:
-                    message=f"**{member.mention}, I'm so sorry. Have a {kind} anyway.**"
+                    message=f"**{member.display_name}, I'm so sorry. Have a {kind} anyway.**"
                 await ctx.send(message, embed=embed)
             else:
                 message = "Could not retrieve image. :("
