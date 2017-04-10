@@ -118,7 +118,7 @@ class Fun:
         """Slap a member!
         
         member - The member to be slapped."""
-        await self.get(ctx, "slap")
+        await self.get(ctx, "slap", member)
 
     @rem.command()
     async def smug(self, ctx):
