@@ -31,8 +31,8 @@ Shows the currently most played games
 ## didsay
 Checks if a user said a particular phrase.
 
-user - A member to mention.
-*phrase - Command checks against this to see what was said.
+* user - A member to mention.
+* *phrase - Command checks against this to see what was said.
 
 ## dtable
 Shows a list under this group commands.
@@ -132,7 +132,7 @@ Purge a certain number of messages.
 ## quote
 Quote a user.
 
-user - The user you wish to quote.
+* user - The user you wish to quote.
 
 ## react
 ### Aliases: r
