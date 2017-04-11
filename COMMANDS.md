@@ -34,9 +34,6 @@ Checks if a user said a particular phrase.
 * user - A member to mention.
 * *phrase - Command checks against this to see what was said.
 
-## dtable
-Shows a list under this group commands.
-
 ## echo
 ### Aliases: say
 Repeat the user's text back at them.
