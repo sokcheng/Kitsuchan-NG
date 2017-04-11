@@ -23,6 +23,7 @@ class Moderation:
 
     @commands.group(invoke_without_command=True)
     @commands.has_permissions(manage_channels=True)
+    @commands.bot_has_permissions(manage_channels=True)
     async def nsfw(self, ctx):
         """NSFW toggle subcommands."""
         embed = await helpers.generate_help_embed(self.nsfw)
@@ -30,6 +31,7 @@ class Moderation:
 
     @nsfw.command()
     @commands.has_permissions(manage_channels=True)
+    @commands.bot_has_permissions(manage_channels=True)
     async def allow(self, ctx, *, channel:discord.TextChannel=None):
         """Whitelists channel for NSFW content. Defaults to current channel.
         
@@ -47,6 +49,7 @@ class Moderation:
 
     @nsfw.command()
     @commands.has_permissions(manage_channels=True)
+    @commands.bot_has_permissions(manage_channels=True)
     async def deny(self, ctx, *, channel:discord.TextChannel=None):
         """Blacklists channel for NSFW content. Defaults to current channel.
         

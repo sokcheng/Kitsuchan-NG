@@ -7,13 +7,14 @@ import json
 import logging
 
 FILENAME_CONFIG = "config.json"
-FOLDER_COGS = "cogs"
 DEFAULT_EXTENSIONS = []
-# Dynamically create the default list of cogs.
-if os.path.isdir(FOLDER_COGS):
-    for fname in os.listdir(FOLDER_COGS):
-        if os.path.isfile(os.path.join(FOLDER_COGS, fname)):
-            DEFAULT_EXTENSIONS.append("%s.%s" % (FOLDER_COGS, fname.replace(".py", "")))
+# Dynamically create the default list of cogs. This is bonky but it works.
+for fname in os.listdir():
+    # Exclude __pycache__ and .git and other stuff this way.
+    if os.path.isdir(fname) and not fname.startswith("__") and not fname.startswith("."):
+        for fname2 in os.listdir(fname):
+            if os.path.isfile(os.path.join(fname, fname2)) and fname2.endswith(".py"):
+                DEFAULT_EXTENSIONS.append("%s.%s" % (fname, fname2.replace(".py", "")))
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
