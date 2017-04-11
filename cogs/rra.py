@@ -145,5 +145,5 @@ class Fun:
         await self.get(ctx, "triggered")
 
 def setup(bot):
-    """Setup function for Reactions."""
+    """Setup function for RRA."""
     bot.add_cog(Fun(bot))
