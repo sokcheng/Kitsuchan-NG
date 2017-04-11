@@ -14,7 +14,6 @@ from discord.ext import commands
 # Bundled modules
 import settings
 import errors
-import utils
 
 # Constants
 
@@ -50,9 +49,7 @@ class Web:
             await ctx.send(message)
             raise errors.KeyError(message)
         logger.info(f"Fetching image with tags {tags}.")
-        hash_id_channel = utils.to_hash(str(ctx.channel.id))
-        settings.manager.setdefault("WHITELIST_NSFW", [])
-        if hash_id_channel in settings.manager["WHITELIST_NSFW"]:
+        if "nsfw" in ctx.channel.name.lower():
             logger.info(f"NSFW allowed for channel {ctx.channel.id}.")
             base_url_api = BASE_URL_IBSEARCH_XXX_API
             base_url_image = BASE_URL_IBSEARCH_XXX_IMAGE
