@@ -26,9 +26,10 @@ class Utilities:
         logger.info("Displaying user avatar.")
         if not user:
             user = ctx.author
-        embed = discord.Embed(title=f"The avatar of {user.name}")
+        embed = discord.Embed()
         embed.url = user.avatar_url
         embed.set_image(url=user.avatar_url)
+        embed.set_footer(text=f"The avatar of {user.name}")
         await ctx.send(embed=embed)
 
 def setup(bot):
