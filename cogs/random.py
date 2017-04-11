@@ -35,8 +35,10 @@ class Utilities:
         if start > end:
             start, end = end, start
         number = random.randint(start, end)
-        logger.info(f"Generated random number, {number}.")
-        await ctx.send(str(number))
+        logger.info(f"Generated random number from {start} to {end}: {number}")
+        embed = discord.Embed(title=str(number))
+        embed.description = f"Random number from {start} to {end}"
+        await ctx.send(embed=embed)
     
     @commands.command()
     async def roll(self, ctx, *expressions):
