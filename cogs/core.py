@@ -209,6 +209,7 @@ class Core:
         data = "\n".join(data)
         with open("COMMANDS.md", "w") as f:
             f.write(data)
+        await ctx.send("Command list regenerated.")
 
 def setup(bot):
     """Setup function for Core."""

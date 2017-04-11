@@ -48,10 +48,8 @@ class Fun:
             logger.warning(message)
             raise commands.UserInputError(message)
         choice = random.choice(ANSWERS)
-        logger.info(f"Answer: {choice}")
-        embed = discord.Embed(title=f"{self.bot.user.display_name} says:")
-        embed.description = choice
-        await ctx.send(embed=embed)
+        logger.info(f"Magic 8-Ball queried; answer: {choice}")
+        await ctx.send(embed=choice)
 
 def setup(bot):
     """Setup function for 8ball."""

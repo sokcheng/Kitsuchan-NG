@@ -63,17 +63,14 @@ async def yes_no(ctx, client:discord.Client, message:str="Are you sure? Type yes
     client - The client handling the question responses.
     message - Optional messsage that the question should ask.
     """
-    embed = discord.Embed(title=message, color=discord.Color.red())
-    await ctx.send(embed=embed)
+    await ctx.send(message)
     try:
         message = await client.wait_for("message", timeout=5,
                                         check=lambda message: message.author == ctx.message.author)
     except asyncio.TimeoutError:
-        embed = discord.Embed(title="Timed out waiting.", color=discord.Color.red())
-        await ctx.send(embed=embed)
+        await ctx.send("Timed out waiting.")
         return False
     if message.clean_content.lower() != "yes":
-        embed = discord.Embed(title="Command cancelled.", color=discord.Color.red())
-        await ctx.send(embed=embed)
+        await ctx.send("Command cancelled.")
         return False
     return True

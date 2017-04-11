@@ -26,10 +26,8 @@ class Utilities:
         logger.info("Quoting a user.")
         async for message in ctx.channel.history():
             if message.author.id == user.id:
-                title = f"{user.name} said..."
-                embed = discord.Embed(title=title)
-                embed.description = message.content
-                await ctx.send(embed=embed)
+                quote = f"{message.content}\n- {user.name}"
+                await ctx.send(quote)
                 if len(message.embeds) > 0:
                     for embed in message.embeds:
                         await ctx.send(embed=embed)

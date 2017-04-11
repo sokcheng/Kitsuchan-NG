@@ -44,9 +44,7 @@ class Fun:
         if not choice:
             choice = random.choice(choices)
         logger.info(f"Chose {choice}")
-        title = f"{self.bot.user.display_name} chooses:"
-        embed = discord.Embed(title=title, description=choice)
-        await ctx.send(embed=embed)
+        await ctx.send(choice)
 
 def setup(bot):
     """Setup function for Reactions."""
