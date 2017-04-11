@@ -49,7 +49,7 @@ class Fun:
             raise commands.UserInputError(message)
         choice = random.choice(ANSWERS)
         logger.info(f"Magic 8-Ball queried; answer: {choice}")
-        await ctx.send(embed=choice)
+        await ctx.send(choice)
 
 def setup(bot):
     """Setup function for 8ball."""
