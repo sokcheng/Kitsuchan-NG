@@ -37,7 +37,7 @@ class Utilities:
         number = random.randint(start, end)
         logger.info(f"Generated random number from {start} to {end}: {number}")
         embed = discord.Embed(title=str(number))
-        embed.description = f"Random number from {start} to {end}"
+        embed.set_footer(text=f"Random number from {start} to {end}")
         await ctx.send(embed=embed)
     
     @commands.command()
