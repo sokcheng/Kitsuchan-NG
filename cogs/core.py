@@ -192,6 +192,22 @@ class Core:
         await ctx.send(embed=embed)
         logger.info(f"Execution of {expression} complete. Output:\n{output}")
 
+    @commands.command(hidden=True)
+    @commands.is_owner()
+    async def ghelp(self, ctx):
+        """Generate a file listing commands that the bot is capable of."""
+        data = ["#List of commands",
+                "Note that some of these commands are in the staging repo."]
+        for command in sorted(list(self.bot.commands), key=lambda x: x.name):
+            data.append("")
+            data.append(f"##{command.name}")
+            if len(command.aliases) > 0:
+                data.append("###Aliases: " + ", ".join(command.aliases))
+            data.append(str(command.help))
+        data = "\n".join(data)
+        with open("COMMANDS.md", "w") as f:
+            f.write(data)
+
 def setup(bot):
     """Setup function for Core."""
     bot.add_cog(Core(bot))

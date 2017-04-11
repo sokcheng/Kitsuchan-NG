@@ -41,6 +41,7 @@ class Fun:
 
     @commands.command(name="8ball")
     async def _eightball(self, ctx, *question):
+        """Ask the Magic 8-Ball a question."""
         question = " ".join(question)
         if len(question) == 0 or "?" not in question:
             message = "Please specify a question."
