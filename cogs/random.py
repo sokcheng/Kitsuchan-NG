@@ -11,6 +11,8 @@ import re
 import discord
 from discord.ext import commands
 
+SIDES_COIN = (":fox: Heads!", ":comet: Tails!")
+
 REGEX_DND = "[0-9]+[dD][0-9]+"
 REGEX_DND_SPLIT = "[dD]"
 REGEX_OBJECT_DND = re.compile(REGEX_DND)
@@ -25,6 +27,12 @@ class Utilities:
     """A dice roller module for the Utilities category."""
     def __init__(self):
         pass
+    
+    @commands.command(aliases=["coinflip"])
+    async def cflip(self, ctx):
+        """Flip a coin."""
+        choice = random.choice(SIDES_COIN)
+        await ctx.send(choice)
     
     @commands.command(aliases=["randint"])
     async def rng(self, ctx, start:int=1, end:int=100):
