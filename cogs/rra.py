@@ -71,14 +71,14 @@ class Fun:
     async def hug(self, ctx, member:discord.Member):
         """Hug a member!
         
-        member - The member to be hugged."""
+        * member - The member to be hugged."""
         await self.get(ctx, "hug", member)
         
     @rem.command()
     async def kiss(self, ctx, member:discord.Member):
         """Kiss a member!
         
-        member - The member to be kissed."""
+        * member - The member to be kissed."""
         await self.get(ctx, "kiss", member)
 
     @rem.command()
@@ -90,7 +90,7 @@ class Fun:
     async def lick(self, ctx, member:discord.Member):
         """Lick a member!
         
-        member - The member to be licked."""
+        * member - The member to be licked."""
         await self.get(ctx, "lick", member)
 
     @rem.command()
@@ -109,6 +109,13 @@ class Fun:
         await self.get(ctx, "owo")
 
     @rem.command()
+    async def pat(self, ctx, member:discord.Member):
+        """Pat a member!
+        
+        * member - The member to be patted."""
+        await self.get(ctx, "pat", member)
+
+    @rem.command()
     async def pout(self, ctx):
         """Pout!"""
         await self.get(ctx, "pout")
@@ -117,7 +124,7 @@ class Fun:
     async def slap(self, ctx, member:discord.Member):
         """Slap a member!
         
-        member - The member to be slapped."""
+        * member - The member to be slapped."""
         await self.get(ctx, "slap", member)
 
     @rem.command()
