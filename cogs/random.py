@@ -87,4 +87,5 @@ class Utilities:
         await ctx.send(message, embed=embed)
 
 def setup(bot):
+    """Setup function for random."""
     bot.add_cog(Utilities())
