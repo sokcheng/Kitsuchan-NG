@@ -47,11 +47,14 @@ class Utilities:
             raise commands.UserInputError("A quote was not specified.")
         # Generate a list of quotes to append to the embed.
         quotes = []
+        length = 0
         async for message in ctx.channel.history():
             if message.author.id == user.id and quote.lower() in message.content.lower():
                 quotes.append((message.created_at, message.content))
+            length += 1
         if len(quotes) == 0:
-            await ctx.send(f"No, {user.name} did not say \"{quote}\". Or it was deleted.")
+            await ctx.send((f"{user.name} did not say \"{quote}\" in the last {length} messages. "
+                           "Or it was deleted."))
         else:
             title = f"Yes, {user.name} did say {quote}."
             embed = discord.Embed(title=title)
