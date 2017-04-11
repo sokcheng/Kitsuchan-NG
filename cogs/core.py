@@ -92,9 +92,9 @@ class Core:
         confirm = await helpers.yes_no(ctx, self.bot)
         if not confirm:
             return
-        logger.warning("Bot is going for HALT now!")
-        embed = discord.Embed(title="Halting.", color=discord.Color.red())
-        await ctx.send(embed=embed)
+        message = "Bot is going for halt NOW!"
+        logger.warning(message)
+        await ctx.send(message)
         await self.bot.logout()
         settings.save()
         self.bot.session.close()
@@ -106,9 +106,9 @@ class Core:
         confirm = await helpers.yes_no(ctx, self.bot)
         if not confirm:
             return
-        logger.warning("Bot is going for RESTART now!")
-        embed = discord.Embed(title="Restarting.", color=discord.Color.red())
-        await ctx.send(embed=embed)
+        message = "Bot is going for restart NOW!"
+        logger.warning(message)
+        await ctx.send(message)
         await self.bot.logout()
         self.bot.session.close()
         settings.save()
