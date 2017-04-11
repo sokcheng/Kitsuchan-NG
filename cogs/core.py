@@ -197,7 +197,7 @@ class Core:
     async def ghelp(self, ctx):
         """Generate a file listing commands that the bot is capable of."""
         data = ["#List of commands",
-                "Note that some of these commands are in the staging repo."]
+                "Note that some of these commands are in the Kitsuchan-NG-cogs repo."]
         for command in sorted(list(self.bot.commands), key=lambda x: x.name):
             data.append("")
             data.append(f"##{command.name}")

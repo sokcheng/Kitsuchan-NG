@@ -1,5 +1,5 @@
 #List of commands
-Note that some of these commands are in the staging repo.
+Note that some of these commands are in the Kitsuchan-NG-cogs repo.
 
 ##8ball
 Ask the Magic 8-Ball a question.
