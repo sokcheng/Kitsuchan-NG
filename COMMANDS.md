@@ -1,5 +1,6 @@
 # List of commands
-Note that some of these commands are in the Kitsuchan-NG-cogs repo.
+* Note 1: Some of these commands are in the [Kitsuchan-NG-cogs](https://github.com/n303p4/Kitsuchan-NG-cogs) repo.
+* Note 2: This file was automatically generated and may look bad.
 
 ## 8ball
 Ask the Magic 8-Ball a question.
