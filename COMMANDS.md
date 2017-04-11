@@ -28,6 +28,12 @@ Delete the bot's previous message(s).
 ## cgames
 Shows the currently most played games
 
+## choose
+Choose between one of various supplied things.
+
+Syntax:
+* choose x | y | z - Choose between x, y, and z.
+
 ## didsay
 Checks if a user said a particular phrase.
 
@@ -116,9 +122,6 @@ Display list of currently-enabled bot extensions.
 ### Aliases: load-extension
 Enable the use of an extension.
 
-## nsfw
-NSFW toggle subcommands.
-
 ## pokedex
 ### Aliases: dex
 This is the list of pokemon queries you can perform.
@@ -168,6 +171,16 @@ Fetch the sudo comic from xkcd.
 
 ## to
 Convert text to a coded something.
+
+## translate
+Translate text using Google Translate. Syntax is as follows:
+
+`translate to_lang text`
+
+Where:
+
+`to_lang` - The language you want to translate to. Use `langlist` for details.
+`text` - The text to be translated.
 
 ## uloade
 ### Aliases: unload-extension
