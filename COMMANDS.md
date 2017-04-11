@@ -15,7 +15,7 @@ Fetch the antigravity comic from xkcd.
 Display a user's avatar.
 Defaults to displaying the avatar of the user who invoked the command.
 
-user - A member who you can mention for avatar.
+* user - A member who you can mention for avatar.
 
 ## ban
 Ban all users mentioned by this command.
@@ -23,7 +23,7 @@ Ban all users mentioned by this command.
 ## censor
 Delete the bot's previous message(s).
 
-times - Number of message to delete.
+* times - Number of message to delete.
 
 ## cgames
 Shows the currently most played games
@@ -41,7 +41,7 @@ Shows a list under this group commands.
 ### Aliases: say
 Repeat the user's text back at them.
 
-*text - A list of strings, which is concatenated into one string before being echoed.
+* *text - A list of strings, which is concatenated into one string before being echoed.
 
 ## foff
 ### Aliases: fuckoff
@@ -83,15 +83,15 @@ Displays an anonymous random fuck off message.
 ### Aliases: ib
 Fetch a randomized anime image from IbSear.ch.
 
-*tags - A list of tag strings to be used in the search criteria.
+* *tags - A list of tag strings to be used in the search criteria.
 
 This command accepts common imageboard tags and keywords. Here are a few examples:
 
->> ib red_hair armor - Search for images tagged with either red_hair or armor.
->> ib +animal_ears +armor - Search for images tagged with both red_hair and armor.
->> ib 1280x1024 - Search for images that are 1920x1080.
->> ib 5:4 - Search for images in 5:4 aspect ratio.
->> ib random: - You don't care about what you get.
+* ib red_hair armor - Search for images tagged with either red_hair or armor.
+* ib +animal_ears +armor - Search for images tagged with both animal_hair and armor.
+* ib 1280x1024 - Search for images that are 1920x1080.
+* ib 5:4 - Search for images in 5:4 aspect ratio.
+* ib random: - You don't care about what you get.
 
 ## ifoff
 ### Aliases: itemfoff, ifuckoff, itemfuckoff
@@ -153,15 +153,15 @@ Reload an already-loaded extension.
 ### Aliases: randint
 Randomly generate a number. Default range 1-100.
 
-start - Specify the starting number of the range.
-end - Specify the ending number of the range.
+* start - Specify the starting number of the range.
+* end - Specify the ending number of the range.
 
 ## roll
 Roll some dice, using D&D syntax.
 
 Examples:
-roll 5d6 - Roll five six sided dice.
-roll 1d20 2d8 - Roll one twenty sided die, and two eight sided dice.
+* roll 5d6 - Roll five six sided dice.
+* roll 1d20 2d8 - Roll one twenty sided die, and two eight sided dice.
 
 ## sh
 Execute a system command. Only the owner may run this.
@@ -183,10 +183,10 @@ Shows a list of all the people playing a game.
 ### Aliases: wikipedia
 Search Wikipedia.
 
-*query - A list of strings to be used in the search criteria.
+* *query - A list of strings to be used in the search criteria.
 
 ## xkcd
 ### Aliases: xk
 Fetch a comic from xkcd.
 
-comic_id - A desired comic ID. Leave blank for latest comic. Set to r for a random comic.
+* comic_id - A desired comic ID. Leave blank for latest comic. Set to r for a random comic.
