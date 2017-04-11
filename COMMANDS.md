@@ -1,59 +1,59 @@
-#List of commands
+# List of commands
 Note that some of these commands are in the Kitsuchan-NG-cogs repo.
 
-##8ball
+## 8ball
 Ask the Magic 8-Ball a question.
 
-##about
+## about
 Display information about this bot, such as library versions.
 
-##antigravity
+## antigravity
 Fetch the antigravity comic from xkcd.
 
-##avatar
+## avatar
 Display a user's avatar.
 Defaults to displaying the avatar of the user who invoked the command.
 
 user - A member who you can mention for avatar.
 
-##ban
+## ban
 Ban all users mentioned by this command.
 
-##censor
+## censor
 Delete the bot's previous message(s).
 
 times - Number of message to delete.
 
-##cgames
+## cgames
 Shows the currently most played games
 
-##didsay
+## didsay
 Checks if a user said a particular phrase.
 
 user - A member to mention.
 *phrase - Command checks against this to see what was said.
 
-##dtable
+## dtable
 Shows a list under this group commands.
 
-##echo
-###Aliases: say
+## echo
+### Aliases: say
 Repeat the user's text back at them.
 
 *text - A list of strings, which is concatenated into one string before being echoed.
 
-##foff
-###Aliases: fuckoff
+## foff
+### Aliases: fuckoff
 Displays a random fuck off message.
 
-##from
+## from
 Convert a coded something to text.
 
-##ghelp
+## ghelp
 Generate a file listing commands that the bot is capable of.
 
-##google
-###Aliases: g
+## google
+### Aliases: g
 Search the web with Google.
 Example: google A magical pug
 
@@ -68,18 +68,18 @@ https://twentysix26.github.io/Red-Docs/red_cog_approved_repos/#refactored-cogs
 Originally made by Kowlin https://github.com/Kowlin/refactored-cogs
 edited by Aioxas
 
-##halt
+## halt
 Halt the bot. Must be bot owner to execute.
 
-##help
+## help
 Shows this message.
 
-##iafoff
-###Aliases: itemafoff, iafuckoff, ianonymousfuckoff, itemanonymousfoff, itemanonymousfuckoff
+## iafoff
+### Aliases: itemafoff, iafuckoff, ianonymousfuckoff, itemanonymousfoff, itemanonymousfuckoff
 Displays an anonymous random fuck off message.
 
-##ibsearch
-###Aliases: ib
+## ibsearch
+### Aliases: ib
 Fetch a randomized anime image from IbSear.ch.
 
 *tags - A list of tag strings to be used in the search criteria.
@@ -92,100 +92,100 @@ This command accepts common imageboard tags and keywords. Here are a few example
 >> ib 5:4 - Search for images in 5:4 aspect ratio.
 >> ib random: - You don't care about what you get.
 
-##ifoff
-###Aliases: itemfoff, ifuckoff, itemfuckoff
+## ifoff
+### Aliases: itemfoff, ifuckoff, itemfuckoff
 Displays a random fuck off message for items.
 
-##info
-###Aliases: i
+## info
+### Aliases: i
 Information subcommands, e.g. channel information.
 
-##jisho
+## jisho
 Translates Japanese to English, and English to Japanese
 Works with Romaji, Hiragana, Kanji, and Katakana
 
-##kick
+## kick
 Kick all users mentioned by this command.
 
-##kys
+## kys
 Ask the bot to kill itself.
 
-##liste
-###Aliases: list-extensions
+## liste
+### Aliases: list-extensions
 Display list of currently-enabled bot extensions.
 
-##loade
-###Aliases: load-extension
+## loade
+### Aliases: load-extension
 Enable the use of an extension.
 
-##nsfw
+## nsfw
 NSFW toggle subcommands.
 
-##pokedex
-###Aliases: dex
+## pokedex
+### Aliases: dex
 This is the list of pokemon queries you can perform.
 
-##purge
+## purge
 Purge a certain number of messages.
 
-##quote
+## quote
 Quote a user.
 
 user - The user you wish to quote.
 
-##react
-###Aliases: r
+## react
+### Aliases: r
 Various reaction image subcommands.
 
-##rem
-###Aliases: w
+## rem
+### Aliases: w
 Various weeb image subcommands.
 
-##restart
+## restart
 Restart the bot. Must be bot owner to execute.
 
-##rloade
-###Aliases: reload-extension
+## rloade
+### Aliases: reload-extension
 Reload an already-loaded extension.
 
-##rng
-###Aliases: randint
+## rng
+### Aliases: randint
 Randomly generate a number. Default range 1-100.
 
 start - Specify the starting number of the range.
 end - Specify the ending number of the range.
 
-##roll
+## roll
 Roll some dice, using D&D syntax.
 
 Examples:
 roll 5d6 - Roll five six sided dice.
 roll 1d20 2d8 - Roll one twenty sided die, and two eight sided dice.
 
-##sh
+## sh
 Execute a system command. Only the owner may run this.
 
-##sudo
+## sudo
 Fetch the sudo comic from xkcd.
 
-##to
+## to
 Convert text to a coded something.
 
-##uloade
-###Aliases: unload-extension
+## uloade
+### Aliases: unload-extension
 Disable the use of an extension.
 
-##whoplays
+## whoplays
 Shows a list of all the people playing a game.
 
-##wiki
-###Aliases: wikipedia
+## wiki
+### Aliases: wikipedia
 Search Wikipedia.
 
 *query - A list of strings to be used in the search criteria.
 
-##xkcd
-###Aliases: xk
+## xkcd
+### Aliases: xk
 Fetch a comic from xkcd.
 
 comic_id - A desired comic ID. Leave blank for latest comic. Set to r for a random comic.

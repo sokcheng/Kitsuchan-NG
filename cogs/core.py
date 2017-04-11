@@ -196,13 +196,13 @@ class Core:
     @commands.is_owner()
     async def ghelp(self, ctx):
         """Generate a file listing commands that the bot is capable of."""
-        data = ["#List of commands",
+        data = ["# List of commands",
                 "Note that some of these commands are in the Kitsuchan-NG-cogs repo."]
         for command in sorted(list(self.bot.commands), key=lambda x: x.name):
             data.append("")
-            data.append(f"##{command.name}")
+            data.append(f"## {command.name}")
             if len(command.aliases) > 0:
-                data.append("###Aliases: " + ", ".join(command.aliases))
+                data.append("### Aliases: " + ", ".join(command.aliases))
             data.append(str(command.help))
         data = "\n".join(data)
         with open("COMMANDS.md", "w") as f:
