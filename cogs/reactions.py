@@ -57,7 +57,7 @@ class Fun:
         pass
 
     async def send_image(self, ctx, url_image):
-        """A helper function that just creates an embed with an image and sends it off."""
+        """A helper function that creates an embed with an image and sends it off."""
         embed = discord.Embed(color=utils.random_color())
         if isinstance(url_image, tuple):
             embed.set_image(url=random.choice(url_image))

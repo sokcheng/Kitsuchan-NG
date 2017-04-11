@@ -36,15 +36,15 @@ class Web:
     async def ibsearch(self, ctx, *tags):
         """Fetch a randomized anime image from IbSear.ch.
         
-        *tags - A list of tag strings to be used in the search criteria.
+        * *tags - A list of tag strings to be used in the search criteria.
         
         This command accepts common imageboard tags and keywords. Here are a few examples:
         
-        >> ib red_hair armor - Search for images tagged with either red_hair or armor.
-        >> ib +animal_ears +armor - Search for images tagged with both red_hair and armor.
-        >> ib 1280x1024 - Search for images that are 1920x1080.
-        >> ib 5:4 - Search for images in 5:4 aspect ratio.
-        >> ib random: - You don't care about what you get."""
+        * ib red_hair armor - Search for images tagged with either red_hair or armor.
+        * ib +animal_ears +armor - Search for images tagged with both animal_hair and armor.
+        * ib 1280x1024 - Search for images that are 1920x1080.
+        * ib 5:4 - Search for images in 5:4 aspect ratio.
+        * ib random: - You don't care about what you get."""
         if not self.key_ibsearch:
             message = "API key not specified! Command halted."
             await ctx.send(message)

@@ -29,7 +29,7 @@ class Web:
     async def wiki(self, ctx, *query):
         """Search Wikipedia.
         
-        *query - A list of strings to be used in the search criteria.
+        * *query - A list of strings to be used in the search criteria.
         """
         if len(query) == 0:
             message = "Query not specified."

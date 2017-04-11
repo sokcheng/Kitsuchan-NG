@@ -58,7 +58,7 @@ class Core:
     async def censor(self, ctx, times:int=1):
         """Delete the bot's previous message(s).
         
-        times - Number of message to delete."""
+        * times - Number of message to delete."""
         if times < 1:
             return commands.UserInputError("Can't delete less than 1 message.")
         logger.info(f"Deleting {times} previous messages.")
@@ -75,7 +75,7 @@ class Core:
     async def echo(self, ctx, *text):
         """Repeat the user's text back at them.
         
-        *text - A list of strings, which is concatenated into one string before being echoed.
+        * *text - A list of strings, which is concatenated into one string before being echoed.
         """
         message = " ".join(text)
         logger.info(f"ctx.author.display_name {ctx.author.id} requested echo of {message}")

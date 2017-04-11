@@ -31,10 +31,9 @@ class Moderation:
     @nsfw.command()
     @commands.has_permissions(manage_channels=True)
     async def allow(self, ctx, *, channel:discord.TextChannel=None):
-        """Whitelists channel for NSFW content.
-        Defaults to current channel. Channel ID is stored as an SHA-512 hash.
+        """Whitelists channel for NSFW content. Defaults to current channel.
         
-        channel - Optional. Mention a channel to change settings for that channel."""
+        * channel - Optional. Mention a channel to change settings for that channel."""
         if not channel:
             channel = ctx.channel
         hash_id_channel = utils.to_hash(str(channel.id))
@@ -49,10 +48,9 @@ class Moderation:
     @nsfw.command()
     @commands.has_permissions(manage_channels=True)
     async def deny(self, ctx, *, channel:discord.TextChannel=None):
-        """Blacklists channel for NSFW content.
-        Defaults to current channel.
+        """Blacklists channel for NSFW content. Defaults to current channel.
         
-        channel - Optional. Mention a channel to change settings for that channel."""
+        * channel - Optional. Mention a channel to change settings for that channel."""
         if not channel:
             channel = ctx.channel
         hash_id_channel = utils.to_hash(str(channel.id))

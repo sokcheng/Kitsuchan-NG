@@ -64,7 +64,7 @@ class Web:
     async def xkcd(self, ctx, comic_id=""):
         """Fetch a comic from xkcd.
         
-        comic_id - A desired comic ID. Leave blank for latest comic. Set to r for a random comic.
+        * comic_id - A desired comic ID. Leave blank for latest comic. Set to r for a random comic.
         """
         await self._xkcd(ctx, comic_id)
 

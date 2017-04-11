@@ -22,7 +22,7 @@ class Fun:
         """Choose between one of various supplied things.
         
         Syntax:
-        choose x | y | z - Choose between x, y, and z.
+        * choose x | y | z - Choose between x, y, and z.
         """
         choices = " ".join(choices).split("|")
         if len(choices) <= 1:

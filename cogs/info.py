@@ -60,7 +60,7 @@ class Utilities:
         """Display information about a channel channel.
         Defaults to the current channel.
         
-        channel - Optional argument. A specific channel to get information about."""
+        * channel - Optional argument. A specific channel to get information about."""
         logger.info("Displaying info about channel.")
         if not channel:
             channel = ctx.channel
@@ -86,7 +86,7 @@ class Utilities:
         """Display information about a user, such as status and roles.
         Defaults to the user who invoked the command.
         
-        user - Optional argument. A user in the current channel to get user information about."""
+        * user - Optional argument. A user in the current channel to get user information about."""
         logger.info("Displaying info about user.")
         if not user:
             user = ctx.author

@@ -30,8 +30,8 @@ class Utilities:
     async def rng(self, ctx, start:int=1, end:int=100):
         """Randomly generate a number. Default range 1-100.
         
-        start - Specify the starting number of the range.
-        end - Specify the ending number of the range."""
+        * start - Specify the starting number of the range.
+        * end - Specify the ending number of the range."""
         if start > end:
             start, end = end, start
         number = random.randint(start, end)
@@ -45,8 +45,8 @@ class Utilities:
         """Roll some dice, using D&D syntax.
         
         Examples:
-        roll 5d6 - Roll five six sided dice.
-        roll 1d20 2d8 - Roll one twenty sided die, and two eight sided dice."""
+        * roll 5d6 - Roll five six sided dice.
+        * roll 1d20 2d8 - Roll one twenty sided die, and two eight sided dice."""
         list_roll_parameters = []
         list_rolls = []
         # Message to be sent.

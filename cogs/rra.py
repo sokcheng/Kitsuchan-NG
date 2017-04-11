@@ -26,8 +26,8 @@ class Fun:
     async def get(self, ctx, kind:str, member:discord.Member=None):
         """A helper function that grabs an image and posts it in response to a member.
         
-        kind - The type of image to retrieve.
-        member - The member to mention in the command."""
+        * kind - The type of image to retrieve.
+        * member - The member to mention in the command."""
         logger.info(f"Fetching {kind} image.")
         hash_id_channel = utils.to_hash(str(ctx.channel.id))
         url = BASE_URL_API % (kind)
@@ -64,7 +64,7 @@ class Fun:
     async def cuddle(self, ctx, member:discord.Member):
         """Cuddle a member!
         
-        member - The member to be cuddled."""
+        * member - The member to be cuddled."""
         await self.get(ctx, "cuddle", member)
 
     @rem.command()

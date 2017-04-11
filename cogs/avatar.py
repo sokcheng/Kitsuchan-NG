@@ -22,7 +22,7 @@ class Utilities:
         """Display a user's avatar.
         Defaults to displaying the avatar of the user who invoked the command.
         
-        user - A member who you can mention for avatar."""
+        * user - A member who you can mention for avatar."""
         logger.info("Displaying user avatar.")
         if not user:
             user = ctx.author
