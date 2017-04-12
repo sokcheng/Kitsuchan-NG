@@ -23,6 +23,8 @@ MAX_DIE_SIZE = 2000
 
 logger = logging.getLogger(__name__)
 
+systemrandom = random.SystemRandom()
+
 class Utilities:
     """A dice roller module for the Utilities category."""
     def __init__(self):
@@ -31,7 +33,7 @@ class Utilities:
     @commands.command(aliases=["coinflip"])
     async def cflip(self, ctx):
         """Flip a coin."""
-        choice = random.choice(SIDES_COIN)
+        choice = systemrandom.choice(SIDES_COIN)
         await ctx.send(choice)
     
     @commands.command(aliases=["randint"])
@@ -42,7 +44,7 @@ class Utilities:
         * end - Specify the ending number of the range."""
         if start > end:
             start, end = end, start
-        number = random.randint(start, end)
+        number = systemrandom.randint(start, end)
         message = f"Random number from {start} to {end}: {number}"
         logger.info(message)
         await ctx.send(message)
@@ -82,7 +84,7 @@ class Utilities:
                 continue
             roll = [roll_parameters[0]]
             for times in roll_parameters[1:]:
-                roll.append(random.randint(1, roll_parameters[2]))
+                roll.append(systemrandom.randint(1, roll_parameters[2]))
             list_rolls.append(roll)
         if len(list_rolls) == 0:
             message = "Your rolls have been ignored, as they were too large."
