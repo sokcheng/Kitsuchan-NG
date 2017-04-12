@@ -11,7 +11,6 @@ import discord
 from discord.ext import commands
 
 # Bundled modules
-import helpers
 import utils
 
 logger = logging.getLogger(__name__)
@@ -77,11 +76,11 @@ class Reactions:
                 if not member:
                     message=None
                 elif self.bot.user.id == member.id:
-                    message=f"**Aw, thank you. Here, have one back. :3**"
+                    message=f"Aw, thank you. Here, have one back. :3"
                 elif ctx.author.id != member.id:
-                    message=f"**{member.display_name}, you got a {kind} from {ctx.author.display_name}!**"
+                    message=f"**{member.display_name}**, you got a {kind} from **{ctx.author.display_name}!**"
                 else:
-                    message=f"**{member.display_name}, I'm so sorry. Have a {kind} anyway.**"
+                    message=f"**{member.display_name}**, I'm so sorry. Have a {kind} anyway."
                 await ctx.send(message, embed=embed)
             else:
                 message = "Could not retrieve image. :("
