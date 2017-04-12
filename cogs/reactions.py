@@ -76,6 +76,8 @@ class Reactions:
                 embed.set_image(url=url_image)
                 if not member:
                     message=None
+                elif self.bot.user.id == member.id:
+                    message=f"**Aw, thank you. Here, have one back. :3**"
                 elif ctx.author.id != member.id:
                     message=f"**{member.display_name}, you got a {kind} from {ctx.author.display_name}!**"
                 else:

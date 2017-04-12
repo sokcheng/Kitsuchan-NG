@@ -67,11 +67,13 @@ async def on_command_completion(ctx):
 @bot.event
 async def on_command_error(exception, ctx):
     """Handle errors that occur in commands."""
+    
     # This section checks if the bot's owner DM'ed the bot the command.
     # The point of this is that the owner can debug the bot easily.
     if isinstance(ctx.channel, discord.DMChannel) and bot.is_owner(ctx.author):
         await ctx.author.send(f"`{exception.__class__.__name__}`\n`{exception}`")
         return
+    
     if isinstance(exception, (commands.BadArgument,
                               commands.MissingRequiredArgument,
                               commands.UserInputError)) \
@@ -86,6 +88,13 @@ async def on_command_error(exception, ctx):
         await ctx.send("Only the owner can do that. :<")
         logger.warning((f"{ctx.author.name} ({ctx.author.id}) tried to issue a command but "
                         "was denied."))
+    elif isinstance(exception, commands.NoPrivateMessage):
+        await ctx.send("Can't do that outside of a guild. :<")
+        logger.warning((f"{ctx.author.name} ({ctx.author.id}) tried to issue a command but "
+                        "was denied."))
+    elif isinstance(exception, commands.CommandOnCooldown):
+        await ctx.send("That command is being used too much; try again later. x.x")
+        logger.warning("A command is being spammed too much.")
     elif isinstance(exception, commands.CheckFailure):
         await ctx.send("No. Now move your hands away from that command. :<")
         logger.warning((f"{ctx.author.name} ({ctx.author.id}) tried to issue a command but "
@@ -106,6 +115,7 @@ def main():
         settings.manager["OAUTH_TOKEN_DISCORD"] = input("> ")
     logger.info("Warming up...")
     extensions = settings.manager.get("EXTENSIONS", settings.DEFAULT_EXTENSIONS)
+    
     for extension in extensions:
         logger.info(f"Loading extension {extension}")
         try:
@@ -114,6 +124,7 @@ def main():
         except Exception as error:
             logger.warning(f"Extension {extension} seems to be broken")
             logger.warning(error)
+    
     bot.run(settings.manager["OAUTH_TOKEN_DISCORD"])
 
 if __name__ == "__main__":

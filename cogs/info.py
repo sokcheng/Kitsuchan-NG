@@ -29,12 +29,11 @@ class Utilities:
         await ctx.send(embed=embed)
 
     @info.command(brief="Display guild info.", aliases=["g", "server", "s"])
+    @commands.guild_only()
     async def guild(self, ctx):
         """Display information about the current guild, such as owner, region, emojis, and roles."""
         logger.info("Displaying info about guild.")
         guild = ctx.guild
-        if guild is None:
-            raise errors.ContextError("Not in a guild.")
         embed = discord.Embed(title=guild.name)
         embed.description = str(guild.id)
         embed.set_thumbnail(url=guild.icon_url)
@@ -63,7 +62,7 @@ class Utilities:
         logger.info("Displaying info about channel.")
         if not channel:
             channel = ctx.channel
-        embed = discord.Embed(title=f"#{channel.name}")
+        embed = discord.Embed(title=f"{channel.mention}")
         try:
             embed.description = channel.topic
         except AttributeError:
