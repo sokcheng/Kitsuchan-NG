@@ -10,5 +10,5 @@ DESCRIPTION = (f"This is a running instance of [{NAME}]({URL}), a modular Discor
                "designed with anime images and basic utility in mind, it has become a fairly "
                f"flexible bot with decent extensibility. {NAME} surely isn't finished yet; please "
                "report any bugs you observe!")
-VERSION = (0, 2, 11)
-VERSION_STRING = "%s.%s.%s" % VERSION
+VERSION = (0, 2, 11, "a")
+VERSION_STRING = "%s.%s.%s%s" % VERSION

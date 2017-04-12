@@ -25,6 +25,10 @@ Delete the bot's previous message(s).
 
 * times - Number of message to delete.
 
+## cflip
+### Aliases: coinflip
+Flip a coin.
+
 ## cgames
 Shows the currently most played games
 
