@@ -25,14 +25,14 @@ class Utilities:
         * user - The user you wish to quote.
         """
         logger.info("Quoting a user.")
-        messages = []
+        quotes = []
         async for message in ctx.channel.history():
             if message.author.id == user.id:
-                messages.append(message)
-        if len(messages) == 0:
+                quotes.append(message)
+        if len(quotes) == 0:
             await ctx.send("Could not quote that user.")
         else:
-            message = random.choice(messages)
+            message = random.choice(quotes)
             quote = f"**{user.name} said:**\n{message.content}"
             await ctx.send(quote)
             if len(message.embeds) > 0:
