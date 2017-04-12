@@ -43,7 +43,7 @@ class Web:
         * ib 5:4 - Search for images in 5:4 aspect ratio.
         * ib random: - You don't care about what you get."""
         if not self.key_ibsearch:
-            message = "API key not specified! Command halted."
+            message = "API key required for this command, but none found. Contact the bot owner?"
             await ctx.send(message)
             raise errors.KeyError(message)
         logger.info(f"Fetching image with tags {tags}.")
@@ -62,7 +62,7 @@ class Web:
             if response.status == 200:
                 data = await response.json()
                 if len(data) == 0:
-                    await ctx.send("Could not find any results.")
+                    await ctx.send("Could not find any results. :<")
                     raise errors.ZeroDataLengthError()
                 index = random.randint(1, len(data)) - 1
                 result = data[index]
@@ -73,9 +73,9 @@ class Web:
                 await ctx.send(embed=embed)
                 logger.info("Image retrieved!")
             else:
-                message = "Failed to fetch image. :("
+                message = "Could not reach IbSear.ch. x.x"
                 await ctx.send(message)
-                logger.info(message)
+                logger.warning(message)
 
 def setup(bot):
     """Setup function for Web."""

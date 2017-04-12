@@ -70,25 +70,24 @@ async def on_command_error(exception, ctx):
     # This section checks if the bot's owner DM'ed the bot the command.
     # The point of this is that the owner can debug the bot easily.
     if isinstance(ctx.channel, discord.DMChannel) and bot.is_owner(ctx.author):
-        await ctx.author.send(exception.__class__.__name__)
-        await ctx.author.send(str(exception))
+        await ctx.author.send(f"`{exception.__class__.__name__}`\n`{exception}`")
         return
     if isinstance(exception, (commands.BadArgument,
                               commands.MissingRequiredArgument,
-                              commands.UserInputError)):
-        embed = discord.Embed(title="Error", color=discord.Color.red())
+                              commands.UserInputError)) \
+    or (isinstance(exception, commands.CommandInvokeError) \
+        and isinstance(exception.original, (discord.HTTPException,
+                                            ModuleNotFoundError))):
+        embed = discord.Embed(title="Error! x.x", color=discord.Color.red())
         embed.description = str(exception)
         await ctx.send(embed=embed)
         logger.warning(exception)
-    elif isinstance(exception, commands.CommandInvokeError) \
-    and isinstance(exception.original, (discord.HTTPException,
-                                        ModuleNotFoundError)):
-        embed = discord.Embed(title="Error", color=discord.Color.red())
-        embed.description = str(exception.original)
-        await ctx.send(embed=embed)
-        logger.warning(exception)
+    elif isinstance(exception, commands.NotOwner):
+        await ctx.send("Only the owner can do that. :<")
+        logger.warning((f"{ctx.author.name} ({ctx.author.id}) tried to issue a command but "
+                        "was denied."))
     elif isinstance(exception, commands.CheckFailure):
-        await ctx.send("Permission denied!")
+        await ctx.send("No. Now move your hands away from that command. :<")
         logger.warning((f"{ctx.author.name} ({ctx.author.id}) tried to issue a command but "
                         "was denied."))
     else:

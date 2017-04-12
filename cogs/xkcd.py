@@ -32,7 +32,7 @@ class Web:
                     data = await response.json()
                     comic_id = random.randint(1, data["num"])
                 else:
-                    message = "Could not reach xkcd. :("
+                    message = "Could not reach xkcd. x.x"
                     await ctx.send(message)
                     logger.info(message)
                     return
@@ -50,13 +50,13 @@ class Web:
                 embed.set_image(url=data["img"])
                 await ctx.send(embed=embed)
             elif response.status == 404:
-                message = "That comic doesn't exist."
+                message = "That comic doesn't exist. :<"
                 await ctx.send(message)
                 logger.info(message)
             else:
-                message = "Could not reach xkcd. :("
+                message = "Could not reach xkcd. x.x"
                 await ctx.send(message)
-                logger.info(message)
+                logger.warning(message)
 
     @commands.command(aliases=["xk"])
     async def xkcd(self, ctx, comic_id=""):

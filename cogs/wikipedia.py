@@ -41,7 +41,7 @@ class Web:
                 data = await response.json()
                 embed = discord.Embed()
                 if len(data) == 0:
-                    await ctx.send("Could not find any results.")
+                    await ctx.send("Could not find any results. :<")
                     raise errors.ZeroDataLengthError()
                 for index in range(0, min(3, len(data[1]))):
                     description = f"{data[3][index]}\n{data[2][index]}"
@@ -49,9 +49,9 @@ class Web:
                 await ctx.send(embed=embed)
                 logger.info("Data retrieved!")
             else:
-                message = "Failed to reach Wikipedia. :("
+                message = "Couldn't reach Wikipedia. x.x"
                 await ctx.send(message)
-                logger.info(message)
+                logger.warning(message)
 
 def setup(bot):
     """Setup function for Wikipedia."""

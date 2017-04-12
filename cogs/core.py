@@ -58,7 +58,7 @@ class Core:
     async def censor(self, ctx, times:int=1):
         """Delete the bot's previous message(s).
         
-        * times - Number of message to delete."""
+        * times - Number of message to delete. Defaults to 1."""
         if times < 1:
             return commands.UserInputError("Can't delete less than 1 message.")
         logger.info(f"Deleting {times} previous messages.")
@@ -123,9 +123,9 @@ class Core:
         settings.manager.setdefault("EXTENSIONS", settings.DEFAULT_EXTENSIONS)
         if extension_name not in settings.manager["EXTENSIONS"]:
             settings.manager["EXTENSIONS"].append(extension_name)
-            message = f"Extension {extension_name} loaded"
+            message = f"Extension {extension_name} loaded."
         else:
-            message = f"Extension {extension_name} is already loaded"
+            message = f"Extension {extension_name} is already loaded. :<"
         await ctx.send(message)
         logger.info(message)
 
@@ -138,9 +138,9 @@ class Core:
         if extension_name in settings.manager["EXTENSIONS"]:
             self.bot.unload_extension(extension_name)
             self.bot.load_extension(extension_name)
-            message = f"Extension {extension_name} reloaded"
+            message = f"Extension {extension_name} reloaded."
         else:
-            message = f"Extension {extension_name} not currently loaded; please load it"
+            message = f"Extension {extension_name} not currently loaded; please load it. :<"
         await ctx.send(message)
         logger.info(message)
 
@@ -157,9 +157,9 @@ class Core:
         try:
             settings.manager["EXTENSIONS"].remove(extension_name)
         except ValueError:
-            message = f"Extension {extension_name} is already unloaded"
+            message = f"Extension {extension_name} is already unloaded. :<"
         else:
-            message = f"Extension {extension_name} unloaded"
+            message = f"Extension {extension_name} unloaded."
         await ctx.send(message)
         logger.info(message)
 
@@ -209,7 +209,7 @@ class Core:
         data = "\n".join(data)
         with open("COMMANDS.md", "w") as f:
             f.write(data)
-        await ctx.send("Command list regenerated.")
+        await ctx.send("Command list regenerated. :3")
 
 def setup(bot):
     """Setup function for Core."""

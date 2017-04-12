@@ -29,7 +29,7 @@ class Utilities:
         embed = discord.Embed()
         embed.url = user.avatar_url
         embed.set_image(url=user.avatar_url)
-        embed.set_footer(text=f"The avatar of {user.name}")
+        embed.set_footer(text=f"Avatar for {user.name}")
         await ctx.send(embed=embed)
 
 def setup(bot):
