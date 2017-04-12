@@ -83,7 +83,7 @@ class Utilities:
                 message = "Some rolls have been ignored, as they were too large."
                 continue
             roll = [roll_parameters[0]]
-            for times in roll_parameters[1:]:
+            for times in range(roll_parameters[1]):
                 roll.append(systemrandom.randint(1, roll_parameters[2]))
             list_rolls.append(roll)
         if len(list_rolls) == 0:
