@@ -20,10 +20,13 @@ Defaults to displaying the avatar of the user who invoked the command.
 ## ban
 Ban all users mentioned by this command.
 
+## boots
+Boots!
+
 ## censor
 Delete the bot's previous message(s).
 
-* times - Number of message to delete.
+* times - Number of message to delete. Defaults to 1.
 
 ## cflip
 ### Aliases: coinflip
@@ -38,6 +41,17 @@ Choose between one of various supplied things.
 Syntax:
 * choose x | y | z - Choose between x, y, and z.
 
+## cry
+Cry!
+
+## cuddle
+Cuddle a member!
+
+* member - The member to be cuddled.
+
+## dead
+Dead!
+
 ## didsay
 Checks if a user said a particular phrase.
 
@@ -49,6 +63,10 @@ Checks if a user said a particular phrase.
 Repeat the user's text back at them.
 
 * *text - A list of strings, which is concatenated into one string before being echoed.
+
+## fdesk
+### Aliases: facedesk
+Facedesk!
 
 ## foff
 ### Aliases: fuckoff
@@ -81,6 +99,11 @@ Halt the bot. Must be bot owner to execute.
 
 ## help
 Shows this message.
+
+## hug
+Hug a member!
+
+* member - The member to be hugged.
 
 ## iafoff
 ### Aliases: itemafoff, iafuckoff, ianonymousfuckoff, itemanonymousfoff, itemanonymousfuckoff
@@ -115,20 +138,51 @@ Works with Romaji, Hiragana, Kanji, and Katakana
 ## kick
 Kick all users mentioned by this command.
 
-## kys
-Ask the bot to kill itself.
+## kiss
+Kiss a member!
+
+* member - The member to be kissed.
+
+## lewd
+Lewd!
+
+## lick
+Lick a member!
+
+* member - The member to be licked.
 
 ## liste
 ### Aliases: list-extensions
 Display list of currently-enabled bot extensions.
 
+## lmly
+### Aliases: letmeloveyou
+Let me love you!
+
 ## loade
 ### Aliases: load-extension
 Enable the use of an extension.
 
+## nom
+Nom!
+
+## nyan
+Nyan!
+
+## owo
+owo
+
+## pat
+Pat a member!
+
+* member - The member to be patted.
+
 ## pokedex
 ### Aliases: dex
 This is the list of pokemon queries you can perform.
+
+## pout
+Pout!
 
 ## purge
 Purge a certain number of messages.
@@ -137,14 +191,6 @@ Purge a certain number of messages.
 Quote a user.
 
 * user - The user you wish to quote.
-
-## react
-### Aliases: r
-Various reaction image subcommands.
-
-## rem
-### Aliases: w
-Various weeb image subcommands.
 
 ## restart
 Restart the bot. Must be bot owner to execute.
@@ -167,11 +213,32 @@ Examples:
 * roll 5d6 - Roll five six sided dice.
 * roll 1d20 2d8 - Roll one twenty sided die, and two eight sided dice.
 
+## sandwich
+Sandwich!
+
 ## sh
 Execute a system command. Only the owner may run this.
 
+## slap
+Slap a member!
+
+* member - The member to be slapped.
+
+## smug
+Smug!
+
+## stare
+Stare at a member!
+
+member - The member to be stared at.
+
 ## sudo
 Fetch the sudo comic from xkcd.
+
+## tickle
+Tickle a member!
+
+member - The member to be tickled.
 
 ## to
 Convert text to a coded something.
@@ -186,9 +253,15 @@ Where:
 `to_lang` - The language you want to translate to. Use `langlist` for details.
 `text` - The text to be translated.
 
+## triggered
+Triggered!
+
 ## uloade
 ### Aliases: unload-extension
 Disable the use of an extension.
+
+## what
+What?
 
 ## whoplays
 Shows a list of all the people playing a game.
@@ -198,6 +271,10 @@ Shows a list of all the people playing a game.
 Search Wikipedia.
 
 * *query - A list of strings to be used in the search criteria.
+
+## wlol
+### Aliases: wakarimasenlol
+Wakarimasen, lol!
 
 ## xkcd
 ### Aliases: xk
