@@ -81,18 +81,15 @@ Generate a file listing commands that the bot is capable of.
 ## google
 ### Aliases: g
 Search the web with Google.
-Example: google A magical pug
 
-Special search options are available; Image, Images, Maps
-Example: google image You know, for kids! > Returns first image
-Another example: google maps New York
-Another example: google images cats > Returns a random image
-based on the query
-LEGACY EDITION! SEE HERE!
-https://twentysix26.github.io/Red-Docs/red_cog_approved_repos/#refactored-cogs
+Example usage:
+* google a cat - Google search for a cat.
+* google image a cat - Google image search for a cat.
+* google maps a cat - Google maps search for a cat.
 
-Originally made by Kowlin https://github.com/Kowlin/refactored-cogs
-edited by Aioxas
+Originally made by Kowlin https://github.com/Kowlin/refactored-cogs, edited by Aioxas.
+
+Modified to work with Kitsuchan-NG.
 
 ## halt
 Halt the bot. Must be bot owner to execute.
@@ -132,8 +129,8 @@ Displays a random fuck off message for items.
 Information subcommands, e.g. channel information.
 
 ## jisho
-Translates Japanese to English, and English to Japanese
-Works with Romaji, Hiragana, Kanji, and Katakana
+Translates Japanese to English, and English to Japanese.
+Works with Romaji, Hiragana, Kanji, and Katakana.
 
 ## kick
 Kick all users mentioned by this command.
@@ -259,6 +256,9 @@ Triggered!
 ## uloade
 ### Aliases: unload-extension
 Disable the use of an extension.
+
+## unban
+Unban all users mentioned by this command.
 
 ## what
 What?
