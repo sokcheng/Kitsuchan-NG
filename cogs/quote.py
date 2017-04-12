@@ -4,6 +4,7 @@
 
 # Standard modules
 import logging
+import random
 
 # Third party modules
 import discord
@@ -24,15 +25,19 @@ class Utilities:
         * user - The user you wish to quote.
         """
         logger.info("Quoting a user.")
+        messages = []
         async for message in ctx.channel.history():
             if message.author.id == user.id:
-                quote = f"{message.content}\n- {user.name}"
-                await ctx.send(quote)
-                if len(message.embeds) > 0:
-                    for embed in message.embeds:
-                        await ctx.send(embed=embed)
-                return
-        await ctx.send("Could not quote that user.")
+                messages.append(message)
+        if len(messages) == 0:
+            await ctx.send("Could not quote that user.")
+        else:
+            message = random.choice(messages)
+            quote = f"**{user.name} said:**\n{message.content}"
+            await ctx.send(quote)
+            if len(message.embeds) > 0:
+                for embed in message.embeds:
+                    await ctx.send(embed=embed)
 
     @commands.command()
     async def didsay(self, ctx, user:discord.Member, *phrase):
@@ -42,7 +47,7 @@ class Utilities:
         * *phrase - Command checks against this to see what was said.
         """
         quote = " ".join(phrase)
-        logger.info(f"Checking if someone said \"{phrase}\".")
+        logger.info(f"Checking if someone said \"{quote}\".")
         if len(quote) == 0:
             raise commands.UserInputError("A quote was not specified.")
         # Generate a list of quotes to append to the embed.
@@ -53,13 +58,13 @@ class Utilities:
                 quotes.append((message.created_at, message.content))
             length += 1
         if len(quotes) == 0:
-            await ctx.send((f"{user.name} did not say \"{quote}\" in the last {length} messages. "
+            await ctx.send((f"{user.name} did not say **{quote}** in the last {length} messages. "
                            "Or it was deleted."))
         else:
-            title = f"Yes, {user.name} did say {quote}."
+            title = f"Yes, {user.name} did say __{quote}__."
             embed = discord.Embed(title=title)
             times = 0
-            for message in quotes:
+            for message in reversed(quotes):
                 if times == 25:
                     break
                 embed.add_field(name=message[0].ctime(), value=message[1][:1024])
