@@ -11,6 +11,8 @@ import re
 import discord
 from discord.ext import commands
 
+logger = logging.getLogger(__name__)
+
 SIDES_COIN = (":fox: Heads!", ":comet: Tails!")
 
 REGEX_DND = "[0-9]+[dD][0-9]+"
@@ -21,9 +23,7 @@ MAX_ROLL_COUNT = 20
 MAX_DICE_PER_ROLL = 30
 MAX_DIE_SIZE = 2000
 
-logger = logging.getLogger(__name__)
-
-# Instantiate a SystemRandom object for cryptographically secure random number generation.
+# Instantiate a SystemRandom object to produce cryptographically secure random numbers.
 systemrandom = random.SystemRandom()
 
 class Utilities:

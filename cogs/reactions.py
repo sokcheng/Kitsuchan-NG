@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-"""Contains a cog for reaction image commands."""
+"""Contains a cog for various weeb reaction commands."""
 
 # Standard modules
 import logging
@@ -13,6 +13,12 @@ from discord.ext import commands
 # Bundled modules
 import helpers
 import utils
+
+logger = logging.getLogger(__name__)
+
+# Base URL strings for RRA API.
+BASE_URL_API = "https://rra.ram.moe/i/r?type=%s"
+BASE_URL_IMAGE = "https://rra.ram.moe/%s"
 
 # Single image links.
 IMAGE_DEAD = "https://s-media-cache-ak0.pinimg.com/736x/ec/61/ef/ec61ef110a5d2e01bf8ae48331b63723.jpg"
@@ -49,14 +55,38 @@ IMAGES_SANDWICHES = ("https://i.imgur.com/kyTDwIX.png",
                      "https://i.imgur.com/ppcHtKd.png",
                      "https://i.imgur.com/xy8iwN5.png")
 
-logger = logging.getLogger(__name__)
+class Reactions:
+    """Cog containing various weeb reaction commands."""
+    def __init__(self, bot):
+        self.bot = bot
 
-class Fun:
-    """discord.py cog containing reaction image functions of the bot."""
-    def __init__(self):
-        pass
+    async def _get(self, ctx, kind:str, member:discord.Member=None):
+        """A helper function that grabs an image and posts it in response to a member.
+        
+        * kind - The type of image to retrieve.
+        * member - The member to mention in the command."""
+        logger.info(f"Fetching {kind} image.")
+        hash_id_channel = utils.to_hash(str(ctx.channel.id))
+        url = BASE_URL_API % (kind)
+        async with self.bot.session.get(url) as response:
+            if response.status == 200:
+                data = await response.json()
+                embed = discord.Embed(color=utils.random_color())
+                url_image = BASE_URL_IMAGE % (data["path"],)
+                embed.set_image(url=url_image)
+                if not member:
+                    message=None
+                elif ctx.author.id != member.id:
+                    message=f"**{member.display_name}, you got a {kind} from {ctx.author.display_name}!**"
+                else:
+                    message=f"**{member.display_name}, I'm so sorry. Have a {kind} anyway.**"
+                await ctx.send(message, embed=embed)
+            else:
+                message = "Could not retrieve image. :("
+                await ctx.send(message)
+                logger.info(message)
 
-    async def send_image(self, ctx, url_image):
+    async def _send_image(self, ctx, url_image):
         """A helper function that creates an embed with an image and sends it off."""
         embed = discord.Embed(color=utils.random_color())
         if isinstance(url_image, tuple):
@@ -67,52 +97,141 @@ class Fun:
             embed.description = str(url_image)
         await ctx.send(embed=embed)
 
-    @commands.command(hidden=True)
-    async def kys(self, ctx):
-        """Ask the bot to kill itself."""
-        await ctx.send("That's mean. :<")
-
-    @commands.group(aliases=["r"], invoke_without_command=True)
-    async def react(self, ctx):
-        """Various reaction image subcommands."""
-        embed = await helpers.generate_help_embed(self.react)
-        await ctx.send(embed=embed)
-
-    @react.command()
+    @commands.command()
     async def dead(self, ctx):
         """Dead!"""
-        await self.send_image(ctx, IMAGE_DEAD)
+        await self._send_image(ctx, IMAGE_DEAD)
 
-    @react.command(aliases=["facedesk"])
+    @commands.command(aliases=["facedesk"])
     async def fdesk(self, ctx):
         """Facedesk!"""
-        await self.send_image(ctx, IMAGE_FACEDESK)
+        await self._send_image(ctx, IMAGE_FACEDESK)
 
-    @react.command(aliases=["letmeloveyou"])
+    @commands.command(aliases=["letmeloveyou"])
     async def lmly(self, ctx):
         """Let me love you!"""
-        await self.send_image(ctx, IMAGE_LMLY)
+        await self._send_image(ctx, IMAGE_LMLY)
 
-    @react.command()
+    @commands.command()
     async def what(self, ctx):
         """What?"""
-        await self.send_image(ctx, IMAGE_WHAT)
+        await self._send_image(ctx, IMAGE_WHAT)
 
-    @react.command(aliases=["wakarimasenlol"])
+    @commands.command(aliases=["wakarimasenlol"])
     async def wlol(self, ctx):
         """Wakarimasen, lol!"""
-        await self.send_image(ctx, IMAGE_WLOL)
+        await self._send_image(ctx, IMAGE_WLOL)
 
-    @react.command()
+    @commands.command()
     async def boots(self, ctx):
         """Boots!"""
-        await self.send_image(ctx, IMAGES_BOOTS)
+        await self._send_image(ctx, IMAGES_BOOTS)
 
-    @react.command()
+    @commands.command()
     async def sandwich(self, ctx):
         """Sandwich!"""
-        await self.send_image(ctx, IMAGES_SANDWICHES)
+        await self._send_image(ctx, IMAGES_SANDWICHES)
+
+    @commands.command()
+    async def cry(self, ctx):
+        """Cry!"""
+        await self._get(ctx, "cry")
+
+    @commands.command()
+    async def cuddle(self, ctx, member:discord.Member):
+        """Cuddle a member!
+        
+        * member - The member to be cuddled."""
+        await self._get(ctx, "cuddle", member)
+
+    @commands.command()
+    async def hug(self, ctx, member:discord.Member):
+        """Hug a member!
+        
+        * member - The member to be hugged."""
+        await self._get(ctx, "hug", member)
+        
+    @commands.command()
+    async def kiss(self, ctx, member:discord.Member):
+        """Kiss a member!
+        
+        * member - The member to be kissed."""
+        await self._get(ctx, "kiss", member)
+
+    @commands.command()
+    async def lewd(self, ctx):
+        """Lewd!"""
+        choice = bool(random.getrandbits(1))
+        if choice:
+            await self._get(ctx, "lewd")
+        else:
+            await ctx._send_image(ctx, IMAGES_LEWD)
+
+    @commands.command()
+    async def lick(self, ctx, member:discord.Member):
+        """Lick a member!
+        
+        * member - The member to be licked."""
+        await self._get(ctx, "lick", member)
+
+    @commands.command()
+    async def nom(self, ctx):
+        """Nom!"""
+        await self._get(ctx, "nom")
+
+    @commands.command()
+    async def nyan(self, ctx):
+        """Nyan!"""
+        await self._get(ctx, "nyan")
+
+    @commands.command()
+    async def owo(self, ctx):
+        """owo"""
+        await self._get(ctx, "owo")
+
+    @commands.command()
+    async def pat(self, ctx, member:discord.Member):
+        """Pat a member!
+        
+        * member - The member to be patted."""
+        await self._get(ctx, "pat", member)
+
+    @commands.command()
+    async def pout(self, ctx):
+        """Pout!"""
+        await self._get(ctx, "pout")
+
+    @commands.command()
+    async def slap(self, ctx, member:discord.Member):
+        """Slap a member!
+        
+        * member - The member to be slapped."""
+        await self._get(ctx, "slap", member)
+
+    @commands.command()
+    async def smug(self, ctx):
+        """Smug!"""
+        await self._get(ctx, "smug")
+
+    @commands.command()
+    async def stare(self, ctx, member:discord.Member):
+        """Stare at a member!
+        
+        member - The member to be stared at."""
+        await self._get(ctx, "stare", member)
+
+    @commands.command()
+    async def tickle(self, ctx, member:discord.Member):
+        """Tickle a member!
+        
+        member - The member to be tickled."""
+        await self._get(ctx, "tickle", member)
+
+    @commands.command()
+    async def triggered(self, ctx):
+        """Triggered!"""
+        await self._get(ctx, "triggered")
 
 def setup(bot):
-    """Setup function for Reactions."""
-    bot.add_cog(Fun())
+    """Setup function for reaction images."""
+    bot.add_cog(Reactions(bot))

@@ -72,6 +72,5 @@ class Utilities:
             await ctx.send(embed=embed)
 
 def setup(bot):
-    """Setup function for Utilities.
-    """
+    """Setup function for Utilities."""
     bot.add_cog(Utilities())

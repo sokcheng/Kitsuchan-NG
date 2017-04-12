@@ -10,18 +10,16 @@ import random
 import discord
 from discord.ext import commands
 
-# Constants
+logger = logging.getLogger(__name__)
 
+# Constants
 BASE_URL_XKCD = "https://xkcd.com/%s/"
 BASE_URL_XKCD_API = "https://xkcd.com/%s/info.0.json"
 BASE_URL_XKCD_EXPLAIN = "http://www.explainxkcd.com/wiki/index.php/%s"
 
-logger = logging.getLogger(__name__)
-
 class Web:
     """This cog contains some basic xkcd commands."""
     def __init__(self, bot):
-        self.name = "Web APIs"
         self.bot = bot
 
     async def _xkcd(self, ctx, comic_id=""):
@@ -79,5 +77,5 @@ class Web:
         await self._xkcd(ctx, "149")
 
 def setup(bot):
-    """Setup function for Web."""
+    """Setup function for xkcd."""
     bot.add_cog(Web(bot))

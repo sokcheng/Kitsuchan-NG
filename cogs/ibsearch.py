@@ -15,19 +15,17 @@ from discord.ext import commands
 import settings
 import errors
 
-# Constants
+logger = logging.getLogger(__name__)
 
+# Constants
 BASE_URL_IBSEARCH_API = "https://ibsear.ch/api/v1/images.json?%s"
 BASE_URL_IBSEARCH_IMAGE = "https://%s.ibsear.ch/%s"
 BASE_URL_IBSEARCH_XXX_API = "https://ibsearch.xxx/api/v1/images.json?%s"
 BASE_URL_IBSEARCH_XXX_IMAGE = "https://%s.ibsearch.xxx/%s"
 
-logger = logging.getLogger(__name__)
-
 class Web:
     """This cog handles IbSear.ch queries."""
     def __init__(self, bot):
-        self.name = "Web APIs"
         self.bot = bot
         self.key_ibsearch = settings.manager.get("API_KEY_IBSEARCH")
 

@@ -10,6 +10,8 @@ import random
 import discord
 from discord.ext import commands
 
+logger = logging.getLogger(__name__)
+
 ANSWERS = ["It it certain.",
            "It is decidedly so.",
            "Without a doubt.",
@@ -32,8 +34,6 @@ ANSWERS = ["It it certain.",
            "My sources say no.",
            "Outlook not so good.",
            "Very doubtful."]
-
-logger = logging.getLogger(__name__)
 
 class Fun:
     """discord.py cog containing Rem resource API commands."""

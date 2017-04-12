@@ -13,16 +13,14 @@ from discord.ext import commands
 # Bundled modules
 import errors
 
-# Constants
-
-BASE_URL_WIKIPEDIA_API = "https://en.wikipedia.org/w/api.php?%s"
-
 logger = logging.getLogger(__name__)
+
+# Constants
+BASE_URL_WIKIPEDIA_API = "https://en.wikipedia.org/w/api.php?%s"
 
 class Web:
     """This cog contains a Wikipedia query command."""
     def __init__(self, bot):
-        self.name = "Web APIs"
         self.bot = bot
 
     @commands.command(aliases=["wikipedia"])
@@ -56,5 +54,5 @@ class Web:
                 logger.info(message)
 
 def setup(bot):
-    """Setup function for Web."""
+    """Setup function for Wikipedia."""
     bot.add_cog(Web(bot))

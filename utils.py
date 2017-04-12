@@ -6,6 +6,9 @@ import hashlib
 import base64
 import random
 
+# Instantiate a SystemRandom object to produce cryptographically secure random numbers.
+systemrandom = random.SystemRandom()
+
 def to_hash(string):
     """Generate an SHA-512 hash for a string."""
     bytes = string.encode("utf-8")
@@ -16,4 +19,4 @@ def to_hash(string):
 
 def random_color():
     """Generate a random int representing a random color."""
-    return random.randint(0x000000, 0xFFFFFF)
+    return systemrandom.randint(0x000000, 0xFFFFFF)
