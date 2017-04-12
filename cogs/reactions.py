@@ -166,7 +166,7 @@ class Reactions:
         if choice:
             await self._get(ctx, "lewd")
         else:
-            await ctx._send_image(ctx, IMAGES_LEWD)
+            await self._send_image(ctx, IMAGES_LEWD)
 
     @commands.command()
     async def lick(self, ctx, member:discord.Member):
