@@ -16,7 +16,7 @@ from discord.ext import commands
 import app_info
 import settings
 
-assert (sys.version_info >= (3,5)), "This program requires Python 3.5 or higher."
+assert (sys.version_info >= (3,6)), "This program requires Python 3.6 or higher."
 assert (discord.version_info >= (1,0)), "This program requires Discord 1.0 or higher."
 
 # Initialization

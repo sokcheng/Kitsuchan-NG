@@ -4,7 +4,7 @@ A small, modular, extensible Discord bot written in Python 3. There's a lot of s
 improved, but it's easy to add functions to it.
 
 # How to run
-You'll need Python 3.5 or higher, as Kitsuchan-NG is not compatible with Python 3.4 and below.
+You'll need Python 3.6 or higher, as Kitsuchan-NG is not compatible with Python 3.5 and below.
 There are no plans to add support for older Python versions, as this would be a hassle for me.
 
 You'll need the `rewrite` branch of `discord.py`, as Kitsuchan-NG does not support the stable
