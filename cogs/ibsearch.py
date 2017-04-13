@@ -18,10 +18,10 @@ import errors
 logger = logging.getLogger(__name__)
 
 # Constants
-BASE_URL_IBSEARCH_API = "https://ibsear.ch/api/v1/images.json?%s"
-BASE_URL_IBSEARCH_IMAGE = "https://%s.ibsear.ch/%s"
-BASE_URL_IBSEARCH_XXX_API = "https://ibsearch.xxx/api/v1/images.json?%s"
-BASE_URL_IBSEARCH_XXX_IMAGE = "https://%s.ibsearch.xxx/%s"
+BASE_URL_IBSEARCH_API = "https://ibsear.ch/api/v1/images.json?{0}"
+BASE_URL_IBSEARCH_IMAGE = "https://{0[server]}.ibsear.ch/{0[path]}"
+BASE_URL_IBSEARCH_XXX_API = "https://ibsearch.xxx/api/v1/images.json?{0}"
+BASE_URL_IBSEARCH_XXX_IMAGE = "https://{0[server]}.ibsearch.xxx/{0[path]}"
 
 class Web:
     """This cog handles IbSear.ch queries."""
@@ -57,7 +57,7 @@ class Web:
             base_url_image = BASE_URL_IBSEARCH_IMAGE
         query_tags = " ".join(tags)
         params = urllib.parse.urlencode({"key": self.key_ibsearch, "q": query_tags})
-        url = base_url_api % params
+        url = base_url_api.format(*params)
         async with self.bot.session.get(url) as response:
             if response.status == 200:
                 data = await response.json()
@@ -67,7 +67,7 @@ class Web:
                 index = random.randint(1, len(data)) - 1
                 result = data[index]
                 embed = discord.Embed()
-                url_image = base_url_image % (data[index]["server"], data[index]["path"])
+                url_image = base_url_image.format(result)
                 embed.description = url_image
                 embed.set_image(url=url_image)
                 await ctx.send(embed=embed)

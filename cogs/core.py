@@ -44,7 +44,7 @@ class Core:
         embed.add_field(name="Version", value=app_info.VERSION_STRING)
         embed.add_field(name="Owner", value=owner)
         embed.add_field(name="Uptime", value=uptime)
-        embed.add_field(name="Python", value="%s.%s.%s" % sys.version_info[:3])
+        embed.add_field(name="Python", value="{0}.{1}.{2}".format(*sys.version_info))
         embed.add_field(name="discord.py", value=discord.__version__)
         try:
             cookies_eaten = sum(discord.version_info[:3]) * sum(app_info.VERSION[:3])

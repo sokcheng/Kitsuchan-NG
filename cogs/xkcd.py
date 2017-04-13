@@ -13,9 +13,9 @@ from discord.ext import commands
 logger = logging.getLogger(__name__)
 
 # Constants
-BASE_URL_XKCD = "https://xkcd.com/%s/"
-BASE_URL_XKCD_API = "https://xkcd.com/%s/info.0.json"
-BASE_URL_XKCD_EXPLAIN = "http://www.explainxkcd.com/wiki/index.php/%s"
+BASE_URL_XKCD = "https://xkcd.com/{0}/"
+BASE_URL_XKCD_API = "https://xkcd.com/{0}/info.0.json"
+BASE_URL_XKCD_EXPLAIN = "http://www.explainxkcd.com/wiki/index.php/{0}"
 
 class Web:
     """This cog contains some basic xkcd commands."""
@@ -26,7 +26,7 @@ class Web:
         """Helper function for xkcd comics."""
         logger.info(f"Retrieving xkcd comic with ID {comic_id}.")
         if comic_id.lower() in ("random", "r"):
-            url = BASE_URL_XKCD_API % ("",)
+            url = BASE_URL_XKCD_API.format("")
             async with self.bot.session.get(url) as response:
                 if response.status == 200:
                     data = await response.json()
@@ -36,15 +36,15 @@ class Web:
                     await ctx.send(message)
                     logger.info(message)
                     return
-        url = BASE_URL_XKCD_API % (comic_id,)
+        url = BASE_URL_XKCD_API.format(comic_id)
         async with self.bot.session.get(url) as response:
             if response.status == 200:
                 data = await response.json()
                 title = data["safe_title"]
                 embed = discord.Embed(title=f"{title} ({data['num']})")
-                url_explanation = BASE_URL_XKCD_EXPLAIN % (comic_id,)
+                url_explanation = BASE_URL_XKCD_EXPLAIN.format(comic_id)
                 embed.description = f"[Explanation]({url_explanation})"
-                embed.url = BASE_URL_XKCD % (comic_id,)
+                embed.url = BASE_URL_XKCD.format(comic_id)
                 if data.get('alt'):
                     embed.set_footer(text=data['alt'])
                 embed.set_image(url=data["img"])

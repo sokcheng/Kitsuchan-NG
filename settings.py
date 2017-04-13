@@ -14,7 +14,7 @@ for fname in os.listdir():
     if os.path.isdir(fname) and not fname.startswith("__") and not fname.startswith("."):
         for fname2 in os.listdir(fname):
             if os.path.isfile(os.path.join(fname, fname2)) and fname2.endswith(".py"):
-                DEFAULT_EXTENSIONS.append("%s.%s" % (fname, fname2.replace(".py", "")))
+                DEFAULT_EXTENSIONS.append("{0}.{1}".format(fname, fname2.replace('.py', '')))
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)

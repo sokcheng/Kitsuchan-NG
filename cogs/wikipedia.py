@@ -16,7 +16,7 @@ import errors
 logger = logging.getLogger(__name__)
 
 # Constants
-BASE_URL_WIKIPEDIA_API = "https://en.wikipedia.org/w/api.php?%s"
+BASE_URL_WIKIPEDIA_API = "https://en.wikipedia.org/w/api.php?{0}"
 
 class Web:
     """This cog contains a Wikipedia query command."""
@@ -35,7 +35,7 @@ class Web:
         logger.info(f"Searching Wikipedia with query {query}.")
         query_search = " ".join(query)
         params = urllib.parse.urlencode({"action": "opensearch", "search": query_search})
-        url = BASE_URL_WIKIPEDIA_API % params
+        url = BASE_URL_WIKIPEDIA_API.format(params)
         async with self.bot.session.get(url) as response:
             if response.status == 200:
                 data = await response.json()
