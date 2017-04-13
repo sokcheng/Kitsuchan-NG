@@ -33,7 +33,7 @@ async def generate_help_embed(thing):
     Accepts anything as an argument and returns a discord.Embed generating help for it.
     
     Currently, this only accepts discord.ext.commands.Group."""
-    if type(thing) is commands.Group:
+    if isinstance(thing, commands.Group):
         embed = discord.Embed(title=thing.name)
         try:
             embed.description = thing.help
