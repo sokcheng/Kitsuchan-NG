@@ -7,6 +7,7 @@ import sys
 import os
 import datetime
 import logging
+import subprocess
 
 # Third party modules
 import discord
@@ -182,10 +183,13 @@ class Core:
         if len(expression) == 0:
             raise commands.UserInputError("No command was specified.")
         logger.info(f"Shell execution of {expression} requested.")
-        with os.popen(expression) as popen:
-            output = popen.read()[:1018]
-        if len(output) == 0:
-            output = " "
+        process = subprocess.Popen(expression, shell=True)
+        try:
+            output, errors = process.communicate(timeout=5)
+            output = output[:1018]
+        except subprocess.TimeoutExpired:
+            process.kill()
+            output = "Process timed out. x.x"
         embed = discord.Embed()
         embed.add_field(name="Input", value=f"```{expression}```", inline=False)
         embed.add_field(name="Output", value=f"```{output}```", inline=False)
