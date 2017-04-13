@@ -180,7 +180,7 @@ class Reactions:
         """Nom!"""
         await self._get(ctx, "nom")
 
-    @commands.command()
+    @commands.command(aliases=['nya', 'meow'])
     async def nyan(self, ctx):
         """Nyan!"""
         await self._get(ctx, "nyan")
@@ -218,14 +218,14 @@ class Reactions:
     async def stare(self, ctx, member:discord.Member):
         """Stare at a member!
         
-        member - The member to be stared at."""
+        * member - The member to be stared at."""
         await self._get(ctx, "stare", member)
 
     @commands.command()
     async def tickle(self, ctx, member:discord.Member):
         """Tickle a member!
         
-        member - The member to be tickled."""
+        * member - The member to be tickled."""
         await self._get(ctx, "tickle", member)
 
     @commands.command()

@@ -164,6 +164,7 @@ Enable the use of an extension.
 Nom!
 
 ## nyan
+### Aliases: nya, meow
 Nyan!
 
 ## owo
@@ -227,7 +228,7 @@ Smug!
 ## stare
 Stare at a member!
 
-member - The member to be stared at.
+* member - The member to be stared at.
 
 ## sudo
 Fetch the sudo comic from xkcd.
@@ -235,20 +236,10 @@ Fetch the sudo comic from xkcd.
 ## tickle
 Tickle a member!
 
-member - The member to be tickled.
+* member - The member to be tickled.
 
 ## to
 Convert text to a coded something.
-
-## translate
-Translate text using Google Translate. Syntax is as follows:
-
-`translate to_lang text`
-
-Where:
-
-`to_lang` - The language you want to translate to. Use `langlist` for details.
-`text` - The text to be translated.
 
 ## triggered
 Triggered!
