@@ -54,6 +54,10 @@ IMAGES_SANDWICHES = ("https://i.imgur.com/kyTDwIX.png",
                      "https://i.imgur.com/ppcHtKd.png",
                      "https://i.imgur.com/xy8iwN5.png")
 
+IMAGES_KONKON = ("http://safebooru.org//images/1856/6e6b3319f2a0a3fe5e77567ebdc998b3c4cb3900.jpg",
+                 "http://safebooru.org//images/1832/25adf8a37226fa003a6a6d7b0f3171f5764bba7d.jpg",
+                 "http://safebooru.org//images/1270/a9c1744fb4676f743c4dbc7668a39e72decdde16.jpg")
+
 class Reactions:
     """Cog containing various weeb reaction commands."""
     def __init__(self, bot):
@@ -98,6 +102,7 @@ class Reactions:
             embed.description = str(url_image)
         await ctx.send(embed=embed)
 
+    # Commands based on _send_image()
     @commands.command()
     async def dead(self, ctx):
         """Dead!"""
@@ -107,6 +112,11 @@ class Reactions:
     async def fdesk(self, ctx):
         """Facedesk!"""
         await self._send_image(ctx, IMAGE_FACEDESK)
+
+    @commands.command(aliases=["konkon"])
+    async def kon(self, ctx):
+        """Kon, kon!"""
+        await self._send_image(ctx, IMAGES_KONKON)
 
     @commands.command(aliases=["letmeloveyou"])
     async def lmly(self, ctx):
@@ -133,6 +143,7 @@ class Reactions:
         """Sandwich!"""
         await self._send_image(ctx, IMAGES_SANDWICHES)
 
+    # Commands based on _get()
     @commands.command()
     async def cry(self, ctx):
         """Cry!"""
