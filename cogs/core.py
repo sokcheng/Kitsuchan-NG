@@ -113,7 +113,7 @@ class Core:
         await self.bot.logout()
         self.bot.session.close()
         settings.save()
-        os.execl(os.path.realpath(FILE_MAIN), *sys.argv)
+        os.execv(sys.executable, [sys.executable] + sys.argv)
 
     @commands.command(aliases=["load-extension"])
     @commands.is_owner()
