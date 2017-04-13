@@ -179,19 +179,23 @@ class Core:
     @commands.is_owner()
     async def sh(self, ctx, *expression):
         """Execute a system command. Only the owner may run this."""
-        expression = " ".join(expression)
         if len(expression) == 0:
             raise commands.UserInputError("No command was specified.")
         logger.info(f"Shell execution of {expression} requested.")
-        process = subprocess.Popen(expression, shell=True)
+        process = subprocess.Popen(expression,
+                                   universal_newlines=True,
+                                   stdout=subprocess.PIPE,
+                                   stderr=subprocess.PIPE)
         try:
-            output, errors = process.communicate(timeout=5)
+            output, errors = process.communicate(timeout=8)
             output = output[:1018]
+            process.terminate()
         except subprocess.TimeoutExpired:
             process.kill()
-            output = "Process timed out. x.x"
+            output = "Command timed out. x.x"
         embed = discord.Embed()
-        embed.add_field(name="Input", value=f"```{expression}```", inline=False)
+        string_expression = " ".join(expression)
+        embed.add_field(name="Input", value=f"```{string_expression}```", inline=False)
         embed.add_field(name="Output", value=f"```{output}```", inline=False)
         await ctx.send(embed=embed)
         logger.info(f"Execution of {expression} complete. Output:\n{output}")
