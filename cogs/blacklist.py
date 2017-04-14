@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 
+# Standard library
+import logging
+
 # Third-party modules
 import discord
 from discord.ext import commands
@@ -8,12 +11,15 @@ from discord.ext import commands
 import settings
 import helpers
 
+logger = logging.getLogger('discord')
+
 FILENAME_BLACKLIST = "blacklist.json"
 
 class Core:
     """This cog contains blacklisting functions."""
     def __init__(self, bot):
         self.bot = bot
+        self.bot.check(self.blacklist_user)
         self.bot.check(self.blacklist_guild)
         self.settings = {}
         self.load()
@@ -25,8 +31,14 @@ class Core:
             self.save()
     
     def save(self):
+        self.settings.setdefault("USERS", [])
         self.settings.setdefault("GUILDS", [])
         settings.save(FILENAME_BLACKLIST, self.settings)
+    
+    def blacklist_user(self, ctx):
+        if self.bot.is_owner(ctx.author)
+            return True
+        return ctx.author.id not in self.settings.get("USERS")
     
     def blacklist_guild(self, ctx):
         if ctx.guild:
@@ -40,31 +52,45 @@ class Core:
         embed = helpers.generate_help_embed(self.user)
         await ctx.send(embed=embed)
     
-    @user.command()
+    @user.command(name="block")
     @commands.is_owner()
-    async def block(self, ctx, user:discord.User):
-        """Unblock a user.
+    async def _blockuser(self, ctx, user:discord.User):
+        """Block a user.
         
         * user - The user to block.
         """
-        if not user.is_blocked():
-            await user.block()
-            await ctx.send(f"{user.name} ({user.id}) blocked.")
+        self.settings.setdefault("USERS", [])
+        if self.bot.is_owner(user):
+            message = "Can't block bot owner."
+            logger.warning(message)
+            raise commands.UserInputError(message)
+        if user.id not in self.settings["USERS"]:
+            self.settings["USERS"].append(user.id)
+            message = f"{user.name} ({user.id}) blocked."
+            logger.info(message)
+            await ctx.send(message)
         else:
-            await ctx.send(f"{user.name} is already blocked.")
+            message = f"{user.name} ({user.id}) already blocked."
+            logger.info(message)
+            await ctx.send(message)
+        self.save()
     
-    @user.command()
+    @user.command(name="unblock")
     @commands.is_owner()
-    async def unblock(self, ctx, user:discord.User):
+    async def _unblockuser(self, ctx, user:discord.User):
         """Unblock a user.
         
         * user - The user to unblock.
         """
-        if user.is_blocked():
-            await user.unblock()
-            await ctx.send(f"{user.name} ({user.id}) unblocked.")
+        self.settings.setdefault("USERS", [])
+        if user.id in self.settings["USERS"]:
+            self.settings["USERS"].remove(user.id)
+            message = f"{user.name} ({user.id}) unblocked."
+            logger.info(message)
+            await ctx.send(message)
         else:
-            await ctx.send(f"{user.name} is already unblocked.")
+            await ctx.send(f"{user.name} ({user.id}) already unblocked.")
+        self.save()
     
     @commands.group(invoke_without_command=True)
     @commands.is_owner()
@@ -73,9 +99,9 @@ class Core:
         embed = helpers.generate_help_embed(self.guild)
         await ctx.send(embed=embed)
     
-    @guild.command()
+    @guild.command(name="block")
     @commands.is_owner()
-    async def block(self, ctx, id_guild:int=None):
+    async def _blockguild(self, ctx, id_guild:int=None):
         """Block a guild.
         
         * id_guild - The ID of the guild to block. Defaults to current guild.
@@ -85,19 +111,25 @@ class Core:
         else:
             guild = self.bot.get_guild(id_guild)
         if not guild:
-            raise commands.UserInputError(f"Guild ID {id_guild} isn't valid.")
+            message = f"Guild ID {id_guild} isn't valid."
+            logger.warning(message)
+            raise commands.UserInputError(message)
         self.settings.setdefault("GUILDS", [])
         if guild.id not in self.settings["GUILDS"]:
             self.settings["GUILDS"].append(guild.id)
-            await ctx.send(f"{guild.name} blocked.")
+            message = f"{guild.name} blocked."
+            logger.info(message)
+            await ctx.send(message)
             await guild.leave()
         else:
-            await ctx.send(f"{guild.name} already blocked.")
+            message = f"{guild.name} already blocked."
+            logger.info(message)
+            await ctx.send(message)
         self.save()
     
-    @guild.command()
+    @guild.command(name="unblock")
     @commands.is_owner()
-    async def unblock(self, ctx, id_guild:int):
+    async def _unblockguild(self, ctx, id_guild:int):
         """Unblock a guild.
         
         * id_guild - The ID of the guild to unblock.
@@ -105,9 +137,13 @@ class Core:
         self.settings.setdefault("GUILDS", [])
         if id_guild in self.settings["GUILDS"]:
             self.settings["GUILDS"].remove(id_guild)
-            await ctx.send(f"{id_guild} unblocked.")
+            message = f"{id_guild} unblocked."
+            logger.info(message)
+            await ctx.send(message)
         else:
-            await ctx.send(f"{id_guild} already unblocked.")
+            message = f"{id_guild} already unblocked."
+            logger.info(message)
+            await ctx.send(message)
         self.save()
 
 def setup(bot):

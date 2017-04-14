@@ -39,6 +39,21 @@ class Utilities:
                 for embed in message.embeds:
                     await ctx.send(embed=embed)
 
+    def scan_embed_didsay(self, dict_embed:dict, quote:str):
+        """A recursive helper function that scans embeds for quote. Not case-sensitive."""
+        quotes = []
+        for value in dict_embed.values():
+            print(value)
+            if isinstance(value, str) and quote.lower() in value.lower():
+                quotes.append(value)
+            elif isinstance(value, dict):
+                quotes += self.scan_embed_didsay(value, quote)
+            elif isinstance(value, list):
+                for subvalue in value:
+                    if isinstance(subvalue, dict):
+                        quotes += self.scan_embed_didsay(subvalue, quote)
+        return quotes
+
     @commands.command()
     async def didsay(self, ctx, user:discord.Member, *phrase):
         """Checks if a user said a particular phrase.
@@ -56,20 +71,20 @@ class Utilities:
         async for message in ctx.channel.history():
             if message.author.id == user.id and quote.lower() in message.content.lower():
                 quotes.append((message.created_at, message.content))
+            for embed in message.embeds:
+                quotes_embed = self.scan_embed_didsay(embed.to_dict(), quote.lower())
+                for quote_embed in quotes_embed:
+                    quotes.append((message.created_at, quote_embed))
             length += 1
         if len(quotes) == 0:
             await ctx.send((f"{user.name} did not say **{quote}** in the last {length} messages. "
                            "Or it was deleted."))
         else:
-            title = f"Yes, {user.name} did say __{quote}__."
-            embed = discord.Embed(title=title)
-            times = 0
-            for message in reversed(quotes):
-                if times == 25:
-                    break
-                embed.add_field(name=message[0].ctime(), value=message[1][:1024])
-                times += 1
-            await ctx.send(embed=embed)
+            message = [f"{user.name} said **{quote}** in the last {length} messages. Instances:"]
+            for quote in reversed(quotes):
+                message.append(f"**{quote[0].ctime()}:** {quote[1][:1024]}")
+            message = "\n".join(message)
+            await ctx.send(message[:2000])
 
 def setup(bot):
     """Setup function for Utilities."""
