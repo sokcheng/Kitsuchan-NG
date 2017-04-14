@@ -44,15 +44,29 @@ class Core:
         owner = ainfo.owner.mention
         embed.add_field(name="Version", value=app_info.VERSION_STRING)
         embed.add_field(name="Owner", value=owner)
+        num_guilds = len(self.bot.guilds)
+        num_users = len([0 for member in self.bot.get_all_members()])
+        embed.add_field(name="Serving", value=f"{num_users} users in {num_guilds} guilds")
         embed.add_field(name="Uptime", value=uptime)
         embed.add_field(name="Python", value="{0}.{1}.{2}".format(*sys.version_info))
         embed.add_field(name="discord.py", value=discord.__version__)
         try:
             cookies_eaten = sum(discord.version_info[:3]) * sum(app_info.VERSION[:3])
+            embed.add_field(name="Cookies eaten", value=str(cookies_eaten))
         except Exception:
-            cookies_eaten = 4
-        embed.add_field(name="Cookies eaten", value=str(cookies_eaten))
+            pass
         await ctx.send(embed=embed)
+    
+    @commands.command(aliases=["listguilds"])
+    @commands.is_owner()
+    async def listg(self, ctx):
+        paginator = commands.Paginator()
+        for guild in self.bot.guilds:
+            paginator.add_line(f"{guild.name} ({guild.id})")
+        for page in paginator.pages:
+            await ctx.author.send(page)
+        if not isinstance(ctx.channel, discord.DMChannel):
+            await ctx.send("Sent to DM!")
     
     @commands.command()
     @commands.is_owner()

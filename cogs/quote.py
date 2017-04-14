@@ -43,7 +43,6 @@ class Utilities:
         """A recursive helper function that scans embeds for quote. Not case-sensitive."""
         quotes = []
         for value in dict_embed.values():
-            print(value)
             if isinstance(value, str) and quote.lower() in value.lower():
                 quotes.append(value)
             elif isinstance(value, dict):
