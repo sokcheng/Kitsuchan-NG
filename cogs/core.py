@@ -26,7 +26,6 @@ class Core:
     """discord.py cog containing core functions of the bot.
     
     bot - The parent discord.Client object for the cog.
-    logger - A logger to assign the cog.
     """
     
     def __init__(self, bot):
