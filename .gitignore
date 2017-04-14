@@ -91,6 +91,7 @@ ENV/
 # Config files
 config.json
 casino.json
+blacklist.json
 
 # Testing stuff
 staging/
