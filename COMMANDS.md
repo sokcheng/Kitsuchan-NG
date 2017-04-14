@@ -91,6 +91,9 @@ Originally made by Kowlin https://github.com/Kowlin/refactored-cogs, edited by A
 
 Modified to work with Kitsuchan-NG.
 
+## guild
+Guild blocking and unblocking commands.
+
 ## halt
 Halt the bot. Must be bot owner to execute.
 
@@ -140,6 +143,10 @@ Kiss a member!
 
 * member - The member to be kissed.
 
+## kon
+### Aliases: konkon
+Kon, kon!
+
 ## lewd
 Lewd!
 
@@ -151,6 +158,10 @@ Lick a member!
 ## liste
 ### Aliases: list-extensions
 Display list of currently-enabled bot extensions.
+
+## listg
+### Aliases: listguilds
+None
 
 ## lmly
 ### Aliases: letmeloveyou
@@ -250,6 +261,9 @@ Disable the use of an extension.
 
 ## unban
 Unban all users mentioned by this command.
+
+## user
+User blocking and unblocking commands.
 
 ## what
 What?
