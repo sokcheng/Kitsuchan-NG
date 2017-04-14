@@ -36,7 +36,7 @@ class Core:
         settings.save(FILENAME_BLACKLIST, self.settings)
     
     def blacklist_user(self, ctx):
-        if self.bot.is_owner(ctx.author)
+        if self.bot.is_owner(ctx.author):
             return True
         return ctx.author.id not in self.settings.get("USERS")
     
