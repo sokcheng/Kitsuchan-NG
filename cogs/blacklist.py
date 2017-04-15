@@ -51,7 +51,7 @@ class Core:
     @commands.group(invoke_without_command=True)
     @commands.is_owner()
     async def block(self, ctx):
-        """Blocking commands."""
+        """Blocking commands (e.g. block user)."""
         embed = await helpers.generate_help_embed(self.block)
         await ctx.send(embed=embed)
     
@@ -110,7 +110,7 @@ class Core:
     @commands.group(aliases=["ublock"], invoke_without_command=True)
     @commands.is_owner()
     async def unblock(self, ctx):
-        """Unblocking commands."""
+        """Unblocking commands. (e.g. unblock user)"""
         embed = await helpers.generate_help_embed(self.unblock)
         await ctx.send(embed=embed)
     

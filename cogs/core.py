@@ -58,15 +58,20 @@ class Core:
     
     @commands.command()
     async def ping(self, ctx):
+        """Ping the bot."""
         pingtime = int(round((datetime.datetime.utcnow() - ctx.message.created_at).total_seconds() * 1000, 0))
         await ctx.send(f":ping_pong: {pingtime} ms!")
     
     @commands.command(aliases=["listguilds"])
     @commands.is_owner()
     async def listg(self, ctx):
+        """List all guilds that the bot is in."""
         paginator = commands.Paginator()
+        paginator.add_line("Guilds this bot is in:")
         for guild in self.bot.guilds:
-            paginator.add_line(f"{guild.name} ({guild.id})")
+            num_humans = len([member for member in guild.members if not member.bot])
+            num_bots = len([member for member in guild.members if member.bot])
+            paginator.add_line(f"{guild.id}: {num_humans} humans, {num_bots} bots | {guild.name}")
         for page in paginator.pages:
             await ctx.author.send(page)
         if not isinstance(ctx.channel, discord.DMChannel):
