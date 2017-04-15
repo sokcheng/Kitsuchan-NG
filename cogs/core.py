@@ -58,7 +58,7 @@ class Core:
     
     @commands.command()
     async def ping(self, ctx):
-        pingtime = (datetime.datetime.utcnow() - ctx.message.created_at).total_seconds() * 1000
+        pingtime = int(round((datetime.datetime.utcnow() - ctx.message.created_at).total_seconds() * 1000, 0))
         await ctx.send(f":ping_pong: {pingtime} ms!")
     
     @commands.command(aliases=["listguilds"])
