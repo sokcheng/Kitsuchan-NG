@@ -41,8 +41,6 @@ class Core:
         settings.save(FILENAME_BLACKLIST, self.settings)
     
     def blacklist_user(self, ctx):
-        if self.bot.is_owner(ctx.author):
-            return True
         return ctx.author.id not in self.settings.get("USERS")
     
     def blacklist_guild(self, ctx):
@@ -65,7 +63,8 @@ class Core:
         * user - The user to block.
         """
         self.settings.setdefault("USERS", [])
-        if self.bot.is_owner(user):
+        is_owner = await self.bot.is_owner(user)
+        if is_owner:
             message = "Can't block bot owner."
             logger.warning(message)
             raise commands.UserInputError(message)
