@@ -68,12 +68,13 @@ class Utilities:
         quotes = []
         length = 0
         async for message in ctx.channel.history():
-            if message.author.id == user.id and quote.lower() in message.content.lower():
-                quotes.append((message.created_at, message.content))
-            for embed in message.embeds:
-                quotes_embed = self.scan_embed_didsay(embed.to_dict(), quote.lower())
-                for quote_embed in quotes_embed:
-                    quotes.append((message.created_at, quote_embed))
+            if message.author.id == user.id:
+                if quote.lower() in message.content.lower():
+                    quotes.append((message.created_at, message.content))
+                for embed in message.embeds:
+                    quotes_embed = self.scan_embed_didsay(embed.to_dict(), quote.lower())
+                    for quote_embed in quotes_embed:
+                        quotes.append((message.created_at, quote_embed))
             length += 1
         if len(quotes) == 0:
             await ctx.send((f"{user.name} did not say **{quote}** in the last {length} messages. "
