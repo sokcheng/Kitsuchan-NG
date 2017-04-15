@@ -65,26 +65,24 @@ class Utilities:
         if len(quote) == 0:
             raise commands.UserInputError("A quote was not specified.")
         # Generate a list of quotes to append to the embed.
-        quotes = []
+        paginator = commands.Paginator()
         length = 0
         async for message in ctx.channel.history():
             if message.author.id == user.id:
                 if quote.lower() in message.content.lower():
-                    quotes.append((message.created_at, message.content))
+                    paginator.add_line(f"{message.created_at.ctime()}: {message.content}")
                 for embed in message.embeds:
                     quotes_embed = self.scan_embed_didsay(embed.to_dict(), quote.lower())
                     for quote_embed in quotes_embed:
-                        quotes.append((message.created_at, quote_embed))
+                        paginator.add_line(f"{message.created_at.ctime()}: {quote_embed}")
             length += 1
-        if len(quotes) == 0:
+        if len(paginator.pages) == 0:
             await ctx.send((f"{user.name} did not say **{quote}** in the last {length} messages. "
                            "Or it was deleted."))
         else:
-            message = [f"{user.name} said **{quote}** in the last {length} messages. Instances:"]
-            for quote in reversed(quotes):
-                message.append(f"**{quote[0].ctime()}:** {quote[1][:1024]}")
-            message = "\n".join(message)
-            await ctx.send(message[:2000])
+            await ctx.send(f"Times where {user.name} said **{quote}** in the last {length} messages:")
+            for page in paginator.pages:
+                await ctx.send(page)
 
 def setup(bot):
     """Setup function for Utilities."""
