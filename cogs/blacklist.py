@@ -30,7 +30,7 @@ class Core:
                 await guild.leave()
             num_humans = len([member for member in guild.members if not member.bot])
             num_bots = len([member for member in guild.members if member.bot])
-            if num_bots > num_humans:
+            if num_bots > (num_humans + 3):
                 await guild.leave()
     
     def load(self):
