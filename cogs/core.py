@@ -56,6 +56,11 @@ class Core:
             pass
         await ctx.send(embed=embed)
     
+    @commands.command()
+    async def ping(self, ctx):
+        pingtime = (datetime.datetime.utcnow() - ctx.message.created_at).total_seconds() * 1000
+        await ctx.send(f":ping_pong: {pingtime} ms!")
+    
     @commands.command(aliases=["listguilds"])
     @commands.is_owner()
     async def listg(self, ctx):
