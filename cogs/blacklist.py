@@ -32,7 +32,7 @@ class Core:
                 return
             num_humans = len([member for member in guild.members if not member.bot])
             num_bots = len([member for member in guild.members if member.bot])
-            if num_bots > (num_humans + 3):
+            if num_bots > num_humans and num_bots > 6:
                 await guild.leave()
                 logger.info(f"Automatically left guild {guild.name} ({guild.id})")
                 return
