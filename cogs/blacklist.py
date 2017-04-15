@@ -29,11 +29,19 @@ class Core:
             if guild.id in self.settings.get("GUILDS"):
                 await guild.leave()
                 logger.info(f"Automatically left guild {guild.name} ({guild.id})")
+                return
             num_humans = len([member for member in guild.members if not member.bot])
             num_bots = len([member for member in guild.members if member.bot])
             if num_bots > (num_humans + 3):
                 await guild.leave()
                 logger.info(f"Automatically left guild {guild.name} ({guild.id})")
+                return
+            app_info = await self.bot.application_info()
+            await app_info.owner.send((f"Joined new guild **{guild.name}** ({guild.id})\n"
+                                       f"**Owner:** {guild.owner.name}\n"
+                                       f"**Humans:** {num_humans}\n"
+                                       f"**Bots:** {num_bots}\n"
+                                       f"**Region:** {guild.region}"))
     
     def load(self):
         try:
