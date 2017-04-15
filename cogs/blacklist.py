@@ -52,12 +52,12 @@ class Core:
     
     @commands.group(invoke_without_command=True)
     @commands.is_owner()
-    async def user(self, ctx):
-        """User blocking and unblocking commands."""
-        embed = helpers.generate_help_embed(self.user)
+    async def block(self, ctx):
+        """Blocking commands."""
+        embed = await helpers.generate_help_embed(self.block)
         await ctx.send(embed=embed)
     
-    @user.command(name="block")
+    @block.command(name="user")
     @commands.is_owner()
     async def _blockuser(self, ctx, user:discord.User):
         """Block a user.
@@ -80,31 +80,7 @@ class Core:
             await ctx.send(message)
         self.save()
     
-    @user.command(name="unblock")
-    @commands.is_owner()
-    async def _unblockuser(self, ctx, user:discord.User):
-        """Unblock a user.
-        
-        * user - The user to unblock.
-        """
-        self.settings.setdefault("USERS", [])
-        if user.id in self.settings["USERS"]:
-            self.settings["USERS"].remove(user.id)
-            message = f"{user.name} ({user.id}) unblocked."
-            logger.info(message)
-            await ctx.send(message)
-        else:
-            await ctx.send(f"{user.name} ({user.id}) already unblocked.")
-        self.save()
-    
-    @commands.group(invoke_without_command=True)
-    @commands.is_owner()
-    async def guild(self, ctx):
-        """Guild blocking and unblocking commands."""
-        embed = helpers.generate_help_embed(self.guild)
-        await ctx.send(embed=embed)
-    
-    @guild.command(name="block")
+    @block.command(name="guild", aliases=["server"])
     @commands.is_owner()
     async def _blockguild(self, ctx, id_guild:int=None):
         """Block a guild.
@@ -132,7 +108,31 @@ class Core:
             await ctx.send(message)
         self.save()
     
-    @guild.command(name="unblock")
+    @commands.group(aliases=["ublock"], invoke_without_command=True)
+    @commands.is_owner()
+    async def unblock(self, ctx):
+        """Unblocking commands."""
+        embed = await helpers.generate_help_embed(self.unblock)
+        await ctx.send(embed=embed)
+    
+    @unblock.command(name="user")
+    @commands.is_owner()
+    async def _unblockuser(self, ctx, user:discord.User):
+        """Unblock a user.
+        
+        * user - The user to unblock.
+        """
+        self.settings.setdefault("USERS", [])
+        if user.id in self.settings["USERS"]:
+            self.settings["USERS"].remove(user.id)
+            message = f"{user.name} ({user.id}) unblocked."
+            logger.info(message)
+            await ctx.send(message)
+        else:
+            await ctx.send(f"{user.name} ({user.id}) already unblocked.")
+        self.save()
+    
+    @unblock.command(name="guild", aliases=["server"])
     @commands.is_owner()
     async def _unblockguild(self, ctx, id_guild:int):
         """Unblock a guild.
