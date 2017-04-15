@@ -28,6 +28,10 @@ class Core:
         async def on_guild_join(guild):
             if guild.id in self.settings.get("GUILDS"):
                 await guild.leave()
+            num_humans = len([member for member in guild.members if not member.bot])
+            num_bots = len([member for member in guild.members if member.bot])
+            if num_bots > num_humans:
+                await guild.leave()
     
     def load(self):
         try:
