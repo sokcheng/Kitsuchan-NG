@@ -20,9 +20,14 @@ class Core:
     def __init__(self, bot):
         self.bot = bot
         self.bot.check(self.blacklist_user)
-        self.bot.check(self.blacklist_guild)
+        self.bot.check(self.blacklist_guild)        
         self.settings = {}
         self.load()
+        
+        @self.bot.event
+        async def on_guild_join(guild):
+            if guild.id in self.settings.get("GUILDS"):
+                await guild.leave()
     
     def load(self):
         try:
