@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 # Standard library
+import asyncio
 import logging
 
 # Third-party modules
@@ -20,7 +21,8 @@ class Core:
     def __init__(self, bot):
         self.bot = bot
         self.bot.check(self.blacklist_user)
-        self.bot.check(self.blacklist_guild)        
+        self.bot.check(self.blacklist_guild)     
+        self.bot.loop.create_task(self.prune_guilds_auto())
         self.settings = {}
         self.load()
         
@@ -30,18 +32,37 @@ class Core:
                 await guild.leave()
                 logger.info(f"Automatically left guild {guild.name} ({guild.id})")
                 return
-            num_humans = len([member for member in guild.members if not member.bot])
-            num_bots = len([member for member in guild.members if member.bot])
-            if num_bots > num_humans and num_bots > 6:
-                await guild.leave()
-                logger.info(f"Automatically left guild {guild.name} ({guild.id})")
-                return
+            await self.prune_guilds()
+            num_humans, num_bots = self.humans_vs_bots(guild)
             app_info = await self.bot.application_info()
             await app_info.owner.send((f"Joined new guild **{guild.name}** ({guild.id})\n"
                                        f"**Owner:** {guild.owner.name}\n"
                                        f"**Humans:** {num_humans}\n"
                                        f"**Bots:** {num_bots}\n"
                                        f"**Region:** {guild.region}"))
+    
+    def humans_vs_bots(self, guild):
+        num_humans = len([member for member in guild.members if not member.bot])
+        num_bots = len([member for member in guild.members if member.bot])
+        return num_humans, num_bots
+    
+    async def prune_guilds(self):
+        """Automatically leave guilds if they're found to be too bot-heavy."""
+        logger.info("Pruning guilds.")
+        number = 0
+        for guild in self.bot.guilds:
+            num_humans, num_bots = self.humans_vs_bots(guild)
+            if num_bots > num_humans and num_bots > 6:
+                await guild.leave()
+                logger.info(f"Automatically left guild {guild.name} ({guild.id})")
+                number += 1
+        logger.info(f"{number} guilds were pruned.")
+                
+    async def prune_guilds_auto(self):
+        await self.bot.wait_until_ready()
+        while not self.bot.is_closed():
+            await self.prune_guilds()
+            await asyncio.sleep(30)
     
     def load(self):
         try:
