@@ -107,7 +107,7 @@ async def on_command_error(exception, ctx):
 async def _eval(ctx, *expression):
     """Execute a system command. Only the owner may run this."""
     if len(expression) == 0:
-        raise commands.UserInputError("No command was specified.")
+        raise commands.UserInputError("No expression was specified.")
     expression = " ".join(expression)
     logger.info(f"Evaluation of {expression} requested.")
     try:
