@@ -102,6 +102,25 @@ async def on_command_error(exception, ctx):
     else:
         logger.warning(f"{exception.__class__.__name__}:{exception}")
 
+@bot.command(name="eval")
+@commands.is_owner()
+async def _eval(ctx, *expression):
+    """Execute a system command. Only the owner may run this."""
+    if len(expression) == 0:
+        raise commands.UserInputError("No command was specified.")
+    expression = " ".join(expression)
+    logger.info(f"Evaluation of {expression} requested.")
+    try:
+        output = eval(expression)
+        output = str(output)[:1024]
+    except Exception as error:
+        output = f"x.x An error has occurred: {error}"
+    embed = discord.Embed()
+    embed.add_field(name="Input", value=f"```{expression}```", inline=False)
+    embed.add_field(name="Output", value=f"```{output}```", inline=False)
+    await ctx.send(embed=embed)
+    logger.info(f"Execution of {expression} complete. Output:\n{output}")
+
 def main():
     """It's the main function. You call this to start the bot."""
     try:
