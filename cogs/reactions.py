@@ -11,6 +11,7 @@ import discord
 from discord.ext import commands
 
 # Bundled modules
+import checks
 import utils
 
 logger = logging.getLogger(__name__)
@@ -180,6 +181,7 @@ class Reactions:
             await self._send_image(ctx, IMAGES_LEWD)
 
     @commands.command()
+    @commands.check(checks.is_nsfw)
     async def lick(self, ctx, member:discord.Member):
         """Lick a member!
         
