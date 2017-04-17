@@ -65,12 +65,14 @@ class Web:
                     raise errors.ZeroDataLengthError()
                 index = random.randint(1, len(data)) - 1
                 result = data[index]
-                embed = discord.Embed()
                 url_image = base_url_image.format(result)
-                embed.description = url_image
-                embed.set_image(url=url_image)
-                await ctx.send(embed=embed)
-                logger.info("Image retrieved!")
+                if ctx.guild and ctx.guild.explicit_content_filter.name == "disabled":
+                    embed = discord.Embed()
+                    embed.set_image(url=url_image)
+                    await ctx.send(embed=embed)
+                else:
+                    await ctx.send(url_image)
+                    logger.info("Image retrieved!")
             else:
                 message = "Could not reach IbSear.ch. x.x"
                 await ctx.send(message)

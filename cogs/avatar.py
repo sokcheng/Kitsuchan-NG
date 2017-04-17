@@ -26,11 +26,14 @@ class Utilities:
         logger.info("Displaying user avatar.")
         if not user:
             user = ctx.author
-        embed = discord.Embed()
-        embed.url = user.avatar_url
-        embed.set_image(url=user.avatar_url)
-        embed.set_footer(text=f"Avatar for {user.name}")
-        await ctx.send(embed=embed)
+        if ctx.guild and ctx.guild.explicit_content_filter.name == "disabled":
+            embed = discord.Embed()
+            embed.url = user.avatar_url
+            embed.set_image(url=user.avatar_url)
+            embed.set_footer(text=f"Avatar for {user.name}")
+            await ctx.send(embed=embed)
+        else:
+            await ctx.send(user.avatar_url)
 
 def setup(bot):
     """Setup function for Utilities."""

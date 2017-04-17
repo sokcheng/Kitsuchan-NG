@@ -36,7 +36,8 @@ class Utilities:
         guild = ctx.guild
         embed = discord.Embed(title=guild.name)
         embed.description = str(guild.id)
-        embed.set_thumbnail(url=guild.icon_url)
+        if ctx.guild.explicit_content_filter.name == "disabled":
+            embed.set_thumbnail(url=guild.icon_url)
         embed.add_field(name="Owner", value=guild.owner.name)
         embed.add_field(name="Members", value=str(guild.member_count))
         count_channels = str(len(tuple(0 for x in guild.channels if isinstance(x, discord.TextChannel))))
@@ -87,7 +88,8 @@ class Utilities:
         embed = discord.Embed(title=user.display_name)
         if user.display_name != user.name:
             embed.description = user.name
-        embed.set_thumbnail(url=user.avatar_url)
+        if ctx.guild and ctx.guild.explicit_content_filter.name == "disabled":
+            embed.set_thumbnail(url=user.avatar_url)
         embed.add_field(name="User ID", value=str(user.id))
         if user.bot:
             embed.add_field(name="Bot?", value="Yes")

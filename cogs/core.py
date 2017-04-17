@@ -38,7 +38,8 @@ class Core:
         uptime = str(datetime.datetime.now() - self.bot.time_started).split(".")[0]
         embed = discord.Embed()
         embed.description = self.bot.description
-        embed.set_thumbnail(url=self.bot.user.avatar_url)
+        if ctx.guild and ctx.guild.explicit_content_filter.name == "disabled":
+            embed.set_thumbnail(url=self.bot.user.avatar_url)
         ainfo = await self.bot.application_info()
         owner = ainfo.owner.mention
         embed.add_field(name="Version", value=app_info.VERSION_STRING)

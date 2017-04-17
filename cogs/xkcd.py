@@ -48,7 +48,11 @@ class Web:
                 if data.get('alt'):
                     embed.set_footer(text=data['alt'])
                 embed.set_image(url=data["img"])
+                if ctx.guild and not ctx.guild.explicit_content_filter.name == "disabled":
+                    message_fetching = await ctx.send("Fetching image.")
                 await ctx.send(embed=embed)
+                if ctx.guild and not ctx.guild.explicit_content_filter.name == "disabled":
+                    await message_fetching.delete()
             elif response.status == 404:
                 message = "That comic doesn't exist. :<"
                 await ctx.send(message)

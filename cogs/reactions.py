@@ -75,18 +75,22 @@ class Reactions:
         async with self.bot.session.get(url) as response:
             if response.status == 200:
                 data = await response.json()
-                embed = discord.Embed(color=utils.random_color())
                 url_image = BASE_URL_IMAGE.format(data)
-                embed.set_image(url=url_image)
                 if not member:
-                    message=None
+                    message=""
                 elif self.bot.user.id == member.id:
                     message=f"Aw, thank you. Here, have one back. :3"
                 elif ctx.author.id != member.id:
                     message=f"**{member.display_name}**, you got a {kind} from **{ctx.author.display_name}!**"
                 else:
                     message=f"**{member.display_name}**, I'm so sorry. Have a {kind} anyway."
-                await ctx.send(message, embed=embed)
+                if ctx.guild and ctx.guild.explicit_content_filter.name == "disabled":
+                    embed = discord.Embed(color=utils.random_color())
+                    embed.set_image(url=url_image)
+                    await ctx.send(message, embed=embed)
+                else:
+                    message = "\n".join([str(message), url_image])
+                    await ctx.send(message)
             else:
                 message = "Could not retrieve image. :("
                 await ctx.send(message)
@@ -94,14 +98,14 @@ class Reactions:
 
     async def _send_image(self, ctx, url_image):
         """A helper function that creates an embed with an image and sends it off."""
-        embed = discord.Embed(color=utils.random_color())
-        if isinstance(url_image, tuple):
-            embed.set_image(url=random.choice(url_image))
-        elif isinstance(url_image, str):
+        if isinstance(url_image, (tuple, list)):
+            url_image = random.choice(url_image)
+        if ctx.guild and ctx.guild.explicit_content_filter.name == "disabled":
+            embed = discord.Embed(color=utils.random_color())
             embed.set_image(url=url_image)
+            await ctx.send(embed=embed)
         else:
-            embed.description = str(url_image)
-        await ctx.send(embed=embed)
+            await ctx.send(url_image)
 
     # Commands based on _send_image()
     @commands.command()
