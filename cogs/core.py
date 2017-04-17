@@ -204,6 +204,7 @@ class Core:
         if len(expression) == 0:
             raise commands.UserInputError("No command was specified.")
         logger.info(f"Shell execution of {expression} requested.")
+        expression = expression.split(" ")
         process = subprocess.Popen(expression,
                                    universal_newlines=True,
                                    stdout=subprocess.PIPE,
