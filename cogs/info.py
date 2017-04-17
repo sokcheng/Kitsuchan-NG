@@ -62,7 +62,7 @@ class Utilities:
         logger.info("Displaying info about channel.")
         if not channel:
             channel = ctx.channel
-        embed = discord.Embed(title=f"{channel.mention}")
+        embed = discord.Embed(title=f"{channel.name}")
         try:
             embed.description = channel.topic
         except AttributeError:
