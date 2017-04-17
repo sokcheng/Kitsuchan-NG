@@ -63,7 +63,7 @@ class Utilities:
         logger.info(f"Checking if someone said \"{quote}\".")
         paginator = commands.Paginator()
         length = 0
-        async for message in ctx.channel.history():
+        async for message in ctx.channel.history(reverse=True):
             if message.author.id == user.id:
                 if quote.lower() in message.content.lower():
                     paginator.add_line(f"{message.created_at.ctime()}: {message.content}")
