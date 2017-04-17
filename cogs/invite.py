@@ -15,10 +15,10 @@ class Core:
     
     * bot - The parent discord.Client object for the cog.
     """
-    
+
     def __init__(self, bot):
         self.bot = bot
-    
+
     @commands.command()
     async def invite(self, ctx):
         """Generate an invite link for this bot."""

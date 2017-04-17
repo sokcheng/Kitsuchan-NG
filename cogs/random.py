@@ -30,13 +30,13 @@ class Utilities:
     """A dice roller module for the Utilities category."""
     def __init__(self):
         pass
-    
+
     @commands.command(aliases=["coinflip"])
     async def cflip(self, ctx):
         """Flip a coin."""
         choice = systemrandom.choice(SIDES_COIN)
         await ctx.send(choice)
-    
+
     @commands.command(aliases=["randint"])
     async def rng(self, ctx, start:int=1, end:int=100):
         """Randomly generate a number. Default range 1-100.
@@ -49,7 +49,7 @@ class Utilities:
         message = f"Random number from {start} to {end}: {number}"
         logger.info(message)
         await ctx.send(message)
-    
+
     @commands.command()
     async def roll(self, ctx, *expressions):
         """Roll some dice, using D&D syntax.

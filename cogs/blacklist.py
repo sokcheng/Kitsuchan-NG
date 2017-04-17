@@ -40,7 +40,7 @@ class Core:
             else:
                 await app_info.owner.send((f"Rejected joining **{guild.name}** ({guild.id}) "
                                            f"(reason: {reason})"))
-    
+
     def humans_vs_bots(self, guild):
         num_humans = len([member for member in guild.members if not member.bot])
         num_bots = len([member for member in guild.members if member.bot])
@@ -56,7 +56,7 @@ class Core:
             await guild.leave()
             logger.info(f"Automatically left guild {guild.name} ({guild.id})")
             return "bot collection"
-    
+
     async def prune_guilds(self):
         """Automatically leave guilds if they're found to be too bot-heavy."""
         logger.info("Pruning guilds.")
@@ -67,39 +67,39 @@ class Core:
                 number += 1
         logger.info(f"{number} guilds were pruned.")
         return number
-                
+
     async def prune_guilds_auto(self):
         await self.bot.wait_until_ready()
         while not self.bot.is_closed():
             await self.prune_guilds()
             await asyncio.sleep(30)
-    
+
     def load(self):
         try:
             self.settings = settings.load(FILENAME_BLACKLIST)
         except Exception:
             self.save()
-    
+
     def save(self):
         self.settings.setdefault("USERS", [])
         self.settings.setdefault("GUILDS", [])
         settings.save(FILENAME_BLACKLIST, self.settings)
-    
+
     def blacklist_user(self, ctx):
         return ctx.author.id not in self.settings.get("USERS")
-    
+
     def blacklist_guild(self, ctx):
         if ctx.guild:
             return ctx.guild.id not in self.settings.get("GUILDS")
         return True
-    
+
     @commands.group(invoke_without_command=True)
     @commands.is_owner()
     async def block(self, ctx):
         """Blocking commands (e.g. block user)."""
         embed = await helpers.generate_help_embed(self.block)
         await ctx.send(embed=embed)
-    
+
     @block.command(name="user")
     @commands.is_owner()
     async def _blockuser(self, ctx, user:discord.User):
@@ -123,7 +123,7 @@ class Core:
             logger.info(message)
             await ctx.send(message)
         self.save()
-    
+
     @block.command(name="guild", aliases=["server"])
     @commands.is_owner()
     async def _blockguild(self, ctx, id_guild:int=None):
@@ -151,14 +151,14 @@ class Core:
             logger.info(message)
             await ctx.send(message)
         self.save()
-    
+
     @commands.group(aliases=["ublock"], invoke_without_command=True)
     @commands.is_owner()
     async def unblock(self, ctx):
         """Unblocking commands. (e.g. unblock user)"""
         embed = await helpers.generate_help_embed(self.unblock)
         await ctx.send(embed=embed)
-    
+
     @unblock.command(name="user")
     @commands.is_owner()
     async def _unblockuser(self, ctx, user:discord.User):
@@ -175,7 +175,7 @@ class Core:
         else:
             await ctx.send(f"{user.name} ({user.id}) already unblocked.")
         self.save()
-    
+
     @unblock.command(name="guild", aliases=["server"])
     @commands.is_owner()
     async def _unblockguild(self, ctx, id_guild:int):

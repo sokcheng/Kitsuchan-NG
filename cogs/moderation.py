@@ -34,14 +34,14 @@ class Moderation:
     async def ban(self, ctx):
         """Ban all users mentioned by this command."""
         await helpers.function_by_mentions(ctx, ctx.guild.ban)
-    
+
     @commands.command()
     @commands.has_permissions(ban_members=True)
     @commands.bot_has_permissions(ban_members=True)
     async def unban(self, ctx):
         """Unban all users mentioned by this command."""
         await helpers.function_by_mentions(ctx, ctx.guild.unban)
-    
+
     @commands.command()
     @commands.has_permissions(manage_messages=True)
     @commands.bot_has_permissions(manage_messages=True)

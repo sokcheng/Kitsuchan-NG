@@ -17,7 +17,7 @@ class Utilities:
     
     def __init__(self):
         pass
-        
+
     @commands.command()
     async def quote(self, ctx, user:discord.Member):
         """Quote a user.

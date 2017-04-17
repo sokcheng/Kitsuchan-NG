@@ -12,8 +12,9 @@ import discord
 from discord.ext import commands
 
 # Bundled modules
-import settings
+import checks
 import errors
+import settings
 
 logger = logging.getLogger(__name__)
 
@@ -31,23 +32,24 @@ class Web:
 
     @commands.command(aliases=["ib"])
     async def ibsearch(self, ctx, *, tags=""):
-        """Fetch a randomized anime image from IbSear.ch.
+        """Fetch a randomized anime image from IbSear.ch, optional tags.
         
         * *tags - A list of tag strings to be used in the search criteria.
         
         This command accepts common imageboard tags and keywords. Here are a few examples:
         
-        * ib red_hair armor - Search for images tagged with either red_hair or armor.
-        * ib +animal_ears +armor - Search for images tagged with both animal_hair and armor.
+        * ib red_hair armor - Search for images tagged with `red_hair` and `armor`.
+        * ib red_hair -armor - Search for images tagged with `red_hair` and not `armor`.
         * ib 1280x1024 - Search for images that are 1920x1080.
         * ib 5:4 - Search for images in 5:4 aspect ratio.
-        * ib random: - You don't care about what you get."""
+        * ib random: - You don't care about what you get.
+        """
         if not self.key_ibsearch:
             message = "API key required for this command, but none found. Contact the bot owner?"
             await ctx.send(message)
             raise errors.KeyError(message)
         logger.info(f"Fetching image with tags {tags}.")
-        if "nsfw" in ctx.channel.name.lower():
+        if checks.is_nsfw(ctx):
             logger.info(f"NSFW allowed for channel {ctx.channel.id}.")
             base_url_api = BASE_URL_IBSEARCH_XXX_API
             base_url_image = BASE_URL_IBSEARCH_XXX_IMAGE

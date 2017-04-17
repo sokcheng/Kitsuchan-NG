@@ -36,7 +36,7 @@ ANSWERS = ["It it certain.",
            "Very doubtful."]
 
 class Fun:
-    """discord.py cog containing Rem resource API commands."""
+    """Cog containing 8ball command."""
     def __init__(self, bot):
         self.bot = bot
 
