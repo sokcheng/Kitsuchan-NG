@@ -30,6 +30,7 @@ class Utilities:
         await ctx.send(embed=embed)
 
     @info.command(name="bot")
+    @commands.cooldown(1, 1, commands.BucketType.channel)
     async def _infobot(self, ctx):
         """Display information about this bot, such as library versions."""
         logger.info("Displaying info about the bot.")
@@ -59,6 +60,7 @@ class Utilities:
 
     @info.command(brief="Display guild info.", aliases=["g", "server", "s"])
     @commands.guild_only()
+    @commands.cooldown(1, 1, commands.BucketType.channel)
     async def guild(self, ctx):
         """Display information about the current guild, such as owner, region, emojis, and roles."""
         logger.info("Displaying info about guild.")
@@ -86,6 +88,7 @@ class Utilities:
         await ctx.send(embed=embed)
 
     @info.command(brief="Display channel info.", aliases=["c"])
+    @commands.cooldown(1, 1, commands.BucketType.user)
     async def channel(self, ctx, channel:discord.TextChannel=None):
         """Display information about a channel channel.
         Defaults to the current channel.
@@ -108,6 +111,7 @@ class Utilities:
         await ctx.send(embed=embed)
 
     @info.command(brief="Display user info.", aliases=["u"])
+    @commands.cooldown(1, 1, commands.BucketType.user)
     async def user(self, ctx, user:discord.Member=None):
         """Display information about a user, such as status and roles.
         Defaults to the user who invoked the command.

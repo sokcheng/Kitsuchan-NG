@@ -18,6 +18,7 @@ class Utilities:
         pass
     
     @commands.command()
+    @commands.cooldown(1, 1, commands.BucketType.user)
     async def avatar(self, ctx, user:discord.Member=None):
         """Display a user's avatar.
         Defaults to displaying the avatar of the user who invoked the command.

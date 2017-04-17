@@ -24,6 +24,7 @@ class Web:
         self.bot = bot
 
     @commands.command(aliases=["wikipedia"])
+    @commands.cooldown(1, 1, commands.BucketType.user)
     async def wiki(self, ctx, *, query=""):
         """Search Wikipedia.
         

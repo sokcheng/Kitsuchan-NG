@@ -93,7 +93,8 @@ async def on_command_error(exception, ctx):
         logger.warning((f"{ctx.author.name} ({ctx.author.id}) tried to issue a command but "
                         "was denied."))
     elif isinstance(exception, commands.CommandOnCooldown):
-        await ctx.send("That command is being used too much; try again later. x.x")
+        await ctx.send(("Command on cooldown; "
+                        f"try again after {exception.retry_after:.2f} seconds. :<"))
         logger.warning("A command is being spammed too much.")
     elif isinstance(exception, commands.CheckFailure):
         await ctx.send("No. Now move your hands away from that command. :<")
