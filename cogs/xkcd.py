@@ -49,7 +49,7 @@ class Web:
                     embed.set_footer(text=data['alt'])
                 embed.set_image(url=data["img"])
                 if ctx.guild and not ctx.guild.explicit_content_filter.name == "disabled":
-                    message_fetching = await ctx.send("Fetching image.")
+                    message_fetching = await ctx.send("Fetching image; please wait. :3")
                 await ctx.send(embed=embed)
                 if ctx.guild and not ctx.guild.explicit_content_filter.name == "disabled":
                     await message_fetching.delete()
