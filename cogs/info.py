@@ -54,7 +54,7 @@ class Utilities:
         await ctx.send(embed=embed)
 
     @info.command(brief="Display channel info.", aliases=["c"])
-    async def channel(self, ctx, *, channel:discord.TextChannel=None):
+    async def channel(self, ctx, channel:discord.TextChannel=None):
         """Display information about a channel channel.
         Defaults to the current channel.
         
@@ -76,7 +76,7 @@ class Utilities:
         await ctx.send(embed=embed)
 
     @info.command(brief="Display user info.", aliases=["u"])
-    async def user(self, ctx, *, user:discord.Member=None):
+    async def user(self, ctx, user:discord.Member=None):
         """Display information about a user, such as status and roles.
         Defaults to the user who invoked the command.
         

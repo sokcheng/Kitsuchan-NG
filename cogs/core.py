@@ -96,18 +96,17 @@ class Core:
     
     @commands.command(aliases=["say"])
     @commands.is_owner()
-    async def echo(self, ctx, *text):
+    async def echo(self, ctx, *, text=""):
         """Repeat the user's text back at them.
         
         * *text - A list of strings, which is concatenated into one string before being echoed.
         """
-        message = " ".join(text)
-        logger.info(f"ctx.author.display_name {ctx.author.id} requested echo of {message}")
-        if len(message) == 0:
-            message = "Echo?"
+        logger.info(f"ctx.author.display_name {ctx.author.id} requested echo of {text}")
+        if len(text) == 0:
+            text = "Echo?"
         # Split the message up by zero-width spaces so the bot doesn't trigger other bots.
-        message = "\u200B"*8 + message
-        await ctx.send(message)
+        text = "\u200B"*8 + text
+        await ctx.send(text)
     
     @commands.command()
     @commands.is_owner()
@@ -200,7 +199,7 @@ class Core:
 
     @commands.command()
     @commands.is_owner()
-    async def sh(self, ctx, *expression):
+    async def sh(self, ctx, *, expression=""):
         """Execute a system command. Only the owner may run this."""
         if len(expression) == 0:
             raise commands.UserInputError("No command was specified.")

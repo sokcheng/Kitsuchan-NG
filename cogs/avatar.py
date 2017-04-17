@@ -18,7 +18,7 @@ class Utilities:
         pass
     
     @commands.command()
-    async def avatar(self, ctx, *, user:discord.Member=None):
+    async def avatar(self, ctx, user:discord.Member=None):
         """Display a user's avatar.
         Defaults to displaying the avatar of the user who invoked the command.
         

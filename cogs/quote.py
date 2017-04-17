@@ -54,13 +54,12 @@ class Utilities:
         return quotes
 
     @commands.command()
-    async def didsay(self, ctx, user:discord.Member, *phrase):
+    async def didsay(self, ctx, user:discord.Member, *, quote):
         """Checks if a user said a particular phrase.
         
         * user - A member to mention.
         * *phrase - Command checks against this to see what was said.
         """
-        quote = " ".join(phrase)
         logger.info(f"Checking if someone said \"{quote}\".")
         if len(quote) == 0:
             raise commands.UserInputError("A quote was not specified.")

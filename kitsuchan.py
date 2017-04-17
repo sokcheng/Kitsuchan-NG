@@ -104,11 +104,10 @@ async def on_command_error(exception, ctx):
 
 @bot.command(name="eval")
 @commands.is_owner()
-async def _eval(ctx, *expression):
+async def _eval(ctx, *, expression=""):
     """Execute a system command. Only the owner may run this."""
     if len(expression) == 0:
         raise commands.UserInputError("No expression was specified.")
-    expression = " ".join(expression)
     logger.info(f"Evaluation of {expression} requested.")
     try:
         output = eval(expression)

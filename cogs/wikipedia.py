@@ -24,7 +24,7 @@ class Web:
         self.bot = bot
 
     @commands.command(aliases=["wikipedia"])
-    async def wiki(self, ctx, *query):
+    async def wiki(self, ctx, *, query=""):
         """Search Wikipedia.
         
         * *query - A list of strings to be used in the search criteria.
@@ -33,8 +33,7 @@ class Web:
             message = "Query not specified."
             raise commands.UserInputError(message)
         logger.info(f"Searching Wikipedia with query {query}.")
-        query_search = " ".join(query)
-        params = urllib.parse.urlencode({"action": "opensearch", "search": query_search})
+        params = urllib.parse.urlencode({"action": "opensearch", "search": query})
         url = BASE_URL_WIKIPEDIA_API.format(params)
         async with self.bot.session.get(url) as response:
             if response.status == 200:

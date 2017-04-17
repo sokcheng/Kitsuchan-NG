@@ -30,7 +30,7 @@ class Web:
         self.key_ibsearch = settings.manager.get("API_KEY_IBSEARCH")
 
     @commands.command(aliases=["ib"])
-    async def ibsearch(self, ctx, *tags):
+    async def ibsearch(self, ctx, *, tags=""):
         """Fetch a randomized anime image from IbSear.ch.
         
         * *tags - A list of tag strings to be used in the search criteria.
@@ -55,8 +55,7 @@ class Web:
             logger.info(f"NSFW disallowed for channel {ctx.channel.id}.")
             base_url_api = BASE_URL_IBSEARCH_API
             base_url_image = BASE_URL_IBSEARCH_IMAGE
-        query_tags = " ".join(tags)
-        params = urllib.parse.urlencode({"key": self.key_ibsearch, "q": query_tags})
+        params = urllib.parse.urlencode({"key": self.key_ibsearch, "q": tags})
         url = base_url_api.format(*params)
         async with self.bot.session.get(url) as response:
             if response.status == 200:
