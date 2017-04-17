@@ -28,37 +28,41 @@ class Core:
         
         @self.bot.event
         async def on_guild_join(guild):
-            left = await self.prune_guilds()
-            num_humans, num_bots = self.humans_vs_bots(guild)
+            reason = await self.prune_guild(guild)
             app_info = await self.bot.application_info()
-            if left == 0:
+            if not reason:
                 await app_info.owner.send((f"Joined new guild **{guild.name}** ({guild.id})\n"
                                            f"**Owner:** {guild.owner.name}\n"
                                            f"**Humans:** {num_humans}\n"
                                            f"**Bots:** {num_bots}\n"
                                            f"**Region:** {guild.region}"))
             else:
-                await app_info.owner.send((f"Rejected joining **{guild.name}** ({guild.id}).\n"
-                                           "Either it is blacklisted or there are too many bots."))
+                await app_info.owner.send((f"Rejected joining **{guild.name}** ({guild.id}) "
+                                           f"(reason: {reason})"))
     
     def humans_vs_bots(self, guild):
         num_humans = len([member for member in guild.members if not member.bot])
         num_bots = len([member for member in guild.members if member.bot])
         return num_humans, num_bots
+
+    async def prune_guild(self, guild:discord.Guild):
+        num_humans, num_bots = self.humans_vs_bots(guild)
+        if guild.id in self.settings.get("GUILDS"):
+            await guild.leave()
+            logger.info(f"Automatically left guild {guild.name} ({guild.id})")
+            return "blacklisted"
+        elif num_bots > num_humans and num_bots > 6:
+            await guild.leave()
+            logger.info(f"Automatically left guild {guild.name} ({guild.id})")
+            return "bot collection"
     
     async def prune_guilds(self):
         """Automatically leave guilds if they're found to be too bot-heavy."""
         logger.info("Pruning guilds.")
         number = 0
         for guild in self.bot.guilds:
-            num_humans, num_bots = self.humans_vs_bots(guild)
-            if guild.id in self.settings.get("GUILDS"):
-                await guild.leave()
-                logger.info(f"Automatically left guild {guild.name} ({guild.id})")
-                number += 1
-            elif num_bots > num_humans and num_bots > 6:
-                await guild.leave()
-                logger.info(f"Automatically left guild {guild.name} ({guild.id})")
+            status = await self.prune_guild(guild)
+            if status:
                 number += 1
         logger.info(f"{number} guilds were pruned.")
         return number
