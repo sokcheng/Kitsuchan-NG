@@ -31,6 +31,7 @@ class Core:
             reason = await self.prune_guild(guild)
             app_info = await self.bot.application_info()
             if not reason:
+                num_humans, num_bots = self.humans_vs_bots(guild)
                 await app_info.owner.send((f"Joined new guild **{guild.name}** ({guild.id})\n"
                                            f"**Owner:** {guild.owner.name}\n"
                                            f"**Humans:** {num_humans}\n"

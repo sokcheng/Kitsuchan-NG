@@ -18,13 +18,13 @@ class Fun:
         self.bot = bot
 
     @commands.command()
-    async def choose(self, ctx, *choices):
+    async def choose(self, ctx, *, choices):
         """Choose between one of various supplied things.
         
         Syntax:
         * choose x | y | z - Choose between x, y, and z.
         """
-        choices = " ".join(choices).split("|")
+        choices = choices.split("|")
         if len(choices) <= 1:
             raise commands.UserInputError("Not enough choices specified. Separate choices with |")
         # Eliminate leading and trailing whitespace.
