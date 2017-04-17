@@ -67,7 +67,8 @@ class Web:
                 result = data[index]
                 url_image = base_url_image.format(result)
                 if ctx.guild and ctx.guild.explicit_content_filter.name == "disabled":
-                    embed = discord.Embed()
+                    embed = discord.Embed(title="Click here for full image")
+                    embed.url = url_image
                     embed.set_image(url=url_image)
                     await ctx.send(embed=embed)
                 else:
