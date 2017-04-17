@@ -41,17 +41,27 @@ class Web:
             if response.status == 200:
                 data = await response.json()
                 title = data["safe_title"]
-                embed = discord.Embed(title=f"{title} ({data['num']})")
-                url_explanation = BASE_URL_XKCD_EXPLAIN.format(comic_id)
-                embed.description = f"[Explanation]({url_explanation})"
-                embed.url = BASE_URL_XKCD.format(comic_id)
-                if data.get('alt'):
-                    embed.set_footer(text=data['alt'])
-                embed.set_image(url=data["img"])
-                if ctx.guild and not ctx.guild.explicit_content_filter.name == "disabled":
+                url = BASE_URL_XKCD.format(data["num"])
+                url_explanation = BASE_URL_XKCD_EXPLAIN.format(data["num"])
+                url_image = data["img"]
+                alt = data.get('alt')
+                if ctx.guild and ctx.guild.explicit_content_filter.name == "disabled":
+                    embed = discord.Embed(title=f'{title} ({data["num"]})')
+                    embed.description = f"[Explanation]({url_explanation})"
+                    embed.url = url
+                    embed.set_image(url=url_image)
+                    if alt:
+                        embed.set_footer(text=alt)
+                    await ctx.send(embed=embed)
+                else:
                     message_fetching = await ctx.send("Fetching image; please wait. :3")
-                await ctx.send(embed=embed)
-                if ctx.guild and not ctx.guild.explicit_content_filter.name == "disabled":
+                    message = [f"**{title}**",
+                               f"**URL:** <{url}>",
+                               f"**Explanation:** <{url_explanation}>",
+                               f"**Image URL:** {url_image}",
+                               alt]
+                    message = "\n".join(message)
+                    await ctx.send(message)
                     await message_fetching.delete()
             elif response.status == 404:
                 message = "That comic doesn't exist. :<"
