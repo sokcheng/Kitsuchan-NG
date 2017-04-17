@@ -112,13 +112,15 @@ async def _eval(ctx, *expression):
     logger.info(f"Evaluation of {expression} requested.")
     try:
         output = eval(expression)
-        output = str(output)[:1024]
+        output = str(output).split("\n")
     except Exception as error:
-        output = f"x.x An error has occurred: {error}"
-    embed = discord.Embed()
-    embed.add_field(name="Input", value=f"```{expression}```", inline=False)
-    embed.add_field(name="Output", value=f"```{output}```", inline=False)
-    await ctx.send(embed=embed)
+        output = [f"x.x An error has occurred: {error}"]
+    await ctx.send("Output:")
+    paginator = commands.Paginator()
+    for line in output:
+        paginator.add_line(line)
+    for page in paginator.pages:
+        await ctx.send(page)
     logger.info(f"Execution of {expression} complete. Output:\n{output}")
 
 def main():

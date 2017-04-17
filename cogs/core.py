@@ -211,16 +211,17 @@ class Core:
                                    stderr=subprocess.PIPE)
         try:
             output, errors = process.communicate(timeout=8)
-            output = output[:1018]
+            output = output.split("\n")
             process.terminate()
         except subprocess.TimeoutExpired:
             process.kill()
-            output = "Command timed out. x.x"
-        embed = discord.Embed()
-        string_expression = " ".join(expression)
-        embed.add_field(name="Input", value=f"```{string_expression}```", inline=False)
-        embed.add_field(name="Output", value=f"```{output}```", inline=False)
-        await ctx.send(embed=embed)
+            output = ["Command timed out. x.x"]
+        await ctx.send("Output:")
+        paginator = commands.Paginator()
+        for line in output:
+            paginator.add_line(line)
+        for page in paginator.pages:
+            await ctx.send(page)
         logger.info(f"Execution of {expression} complete. Output:\n{output}")
 
     @commands.command(hidden=True)
