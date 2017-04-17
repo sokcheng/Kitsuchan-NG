@@ -105,7 +105,7 @@ async def on_command_error(exception, ctx):
 @bot.command(name="eval")
 @commands.is_owner()
 async def _eval(ctx, *, expression=""):
-    """Execute a system command. Only the owner may run this."""
+    """Evaluate a Python expression. Only the owner may run this."""
     if len(expression) == 0:
         raise commands.UserInputError("No expression was specified.")
     logger.info(f"Evaluation of {expression} requested.")
@@ -120,7 +120,7 @@ async def _eval(ctx, *, expression=""):
         paginator.add_line(line)
     for page in paginator.pages:
         await ctx.send(page)
-    logger.info(f"Execution of {expression} complete. Output:\n{output}")
+    logger.info(f"Evaluation of {expression} complete. Output:\n{output}")
 
 def main():
     """It's the main function. You call this to start the bot."""
