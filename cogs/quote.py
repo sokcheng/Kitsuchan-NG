@@ -65,7 +65,7 @@ class Utilities:
         logger.info(f"Checking if someone said \"{quote}\".")
         paginator = commands.Paginator()
         length = 0
-        async for message in ctx.channel.history(reverse=True):
+        async for message in ctx.channel.history():
             if message.author.id == user.id:
                 if quote.lower() in message.content.lower():
                     line = f"{message.created_at.ctime()}: {message.content}"
@@ -90,7 +90,7 @@ class Utilities:
                 for page in paginator.pages:
                     await ctx.send(page)
             else:
-                await ctx.send(paginator.pages[-1])
+                await ctx.send(paginator.pages[0])
                 await ctx.send("To see more, you need to have the `manage_messages` permission.")
 
 def setup(bot):
