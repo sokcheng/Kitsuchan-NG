@@ -18,7 +18,7 @@ logger = logging.getLogger(__name__)
 
 # Base URL strings for RRA API.
 BASE_URL_API = "https://rra.ram.moe/i/r?type={0}"
-BASE_URL_IMAGE = "https://rra.ram.moe/{0[path]}"
+BASE_URL_IMAGE = "https://wia.ram.moe{0[path]}"
 
 # Single image links.
 IMAGE_DEAD = "https://s-media-cache-ak0.pinimg.com/736x/ec/61/ef/ec61ef110a5d2e01bf8ae48331b63723.jpg"
@@ -75,7 +75,7 @@ class Reactions:
         async with self.bot.session.get(url) as response:
             if response.status == 200:
                 data = await response.json()
-                url_image = BASE_URL_IMAGE.format(data)
+                url_image = BASE_URL_IMAGE.format(data).replace("/i", "")
                 if not member:
                     message=""
                 elif self.bot.user.id == member.id:
