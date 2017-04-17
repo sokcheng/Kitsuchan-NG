@@ -81,8 +81,13 @@ class Utilities:
             else:
                 quote = f"**{quote}**"
             await ctx.send(f"Times where {user.name} said {quote} in the last {length} messages:")
-            for page in paginator.pages:
-                await ctx.send(page)
+            # We don't want this to be abusable, so we do a cutoff if the person lacks manage_messages.
+            if ctx.guild and ctx.channel.permissions_for(ctx.author).manage_messages:
+                for page in paginator.pages:
+                    await ctx.send(page)
+            else:
+                await ctx.send(paginator.pages[-1])
+                await ctx.send("To see more, you need to have the `manage_messages` permission.")
 
 def setup(bot):
     """Setup function for Utilities."""
