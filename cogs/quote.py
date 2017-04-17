@@ -76,7 +76,11 @@ class Utilities:
             await ctx.send((f"{user.name} did not say **{quote}** in the last {length} messages. "
                            "Or it was deleted."))
         else:
-            await ctx.send(f"Times where {user.name} said **{quote}** in the last {length} messages:")
+            if len(quote) == 0:
+                quote = "something"
+            else:
+                quote = f"**{quote}**"
+            await ctx.send(f"Times where {user.name} said {quote} in the last {length} messages:")
             for page in paginator.pages:
                 await ctx.send(page)
 
