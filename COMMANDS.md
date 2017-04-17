@@ -5,9 +5,6 @@
 ## 8ball
 Ask the Magic 8-Ball a question.
 
-## about
-Display information about this bot, such as library versions.
-
 ## antigravity
 Fetch the antigravity comic from xkcd.
 
@@ -19,6 +16,9 @@ Defaults to displaying the avatar of the user who invoked the command.
 
 ## ban
 Ban all users mentioned by this command.
+
+## block
+Blocking commands (e.g. block user).
 
 ## boots
 Boots!
@@ -64,6 +64,9 @@ Repeat the user's text back at them.
 
 * *text - A list of strings, which is concatenated into one string before being echoed.
 
+## eval
+Evaluate a Python expression. Only the owner may run this.
+
 ## fdesk
 ### Aliases: facedesk
 Facedesk!
@@ -73,7 +76,7 @@ Facedesk!
 Displays a random fuck off message.
 
 ## from
-Convert a coded something to text.
+Subcommands that decode plaintext. (e.g. from binary)
 
 ## ghelp
 Generate a file listing commands that the bot is capable of.
@@ -90,9 +93,6 @@ Example usage:
 Originally made by Kowlin https://github.com/Kowlin/refactored-cogs, edited by Aioxas.
 
 Modified to work with Kitsuchan-NG.
-
-## guild
-Guild blocking and unblocking commands.
 
 ## halt
 Halt the bot. Must be bot owner to execute.
@@ -111,14 +111,14 @@ Displays an anonymous random fuck off message.
 
 ## ibsearch
 ### Aliases: ib
-Fetch a randomized anime image from IbSear.ch.
+Fetch a randomized anime image from IbSear.ch, optional tags.
 
 * *tags - A list of tag strings to be used in the search criteria.
 
 This command accepts common imageboard tags and keywords. Here are a few examples:
 
-* ib red_hair armor - Search for images tagged with either red_hair or armor.
-* ib +animal_ears +armor - Search for images tagged with both animal_hair and armor.
+* ib red_hair armor - Search for images tagged with `red_hair` and `armor`.
+* ib red_hair -armor - Search for images tagged with `red_hair` and not `armor`.
 * ib 1280x1024 - Search for images that are 1920x1080.
 * ib 5:4 - Search for images in 5:4 aspect ratio.
 * ib random: - You don't care about what you get.
@@ -130,6 +130,9 @@ Displays a random fuck off message for items.
 ## info
 ### Aliases: i
 Information subcommands, e.g. channel information.
+
+## invite
+Generate an invite link for this bot.
 
 ## jisho
 Translates Japanese to English, and English to Japanese.
@@ -161,7 +164,7 @@ Display list of currently-enabled bot extensions.
 
 ## listg
 ### Aliases: listguilds
-None
+List all guilds that the bot is in.
 
 ## lmly
 ### Aliases: letmeloveyou
@@ -186,6 +189,9 @@ Pat a member!
 
 * member - The member to be patted.
 
+## ping
+Ping the bot.
+
 ## pokedex
 ### Aliases: dex
 This is the list of pokemon queries you can perform.
@@ -203,6 +209,9 @@ Quote a user.
 
 ## restart
 Restart the bot. Must be bot owner to execute.
+
+## reverse
+Reverse input text.
 
 ## rloade
 ### Aliases: reload-extension
@@ -250,7 +259,7 @@ Tickle a member!
 * member - The member to be tickled.
 
 ## to
-Convert text to a coded something.
+Subcommands that encode plaintext. (e.g. to binary)
 
 ## triggered
 Triggered!
@@ -262,8 +271,9 @@ Disable the use of an extension.
 ## unban
 Unban all users mentioned by this command.
 
-## user
-User blocking and unblocking commands.
+## unblock
+### Aliases: ublock
+Unblocking commands. (e.g. unblock user)
 
 ## what
 What?

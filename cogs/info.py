@@ -1,31 +1,60 @@
 #!/usr/bin/env python3
 
-"""Contains a cog with the bot's info commands."""
-
 # Standard modules
+import datetime
 import logging
+import sys
 
 # Third party modules
 import discord
 from discord.ext import commands
 
 # Bundled modules
-import settings
+import app_info
 import errors
 import helpers
+import settings
 
 logger = logging.getLogger(__name__)
 
 class Utilities:
     """discord.py cog containing info commands, such as server and user info."""
     
-    def __init__(self):
-        pass
+    def __init__(self, bot):
+        self.bot = bot
 
     @commands.group(aliases=["i"], invoke_without_command=True)
     async def info(self, ctx):
         """Information subcommands, e.g. channel information."""
         embed = await helpers.generate_help_embed(self.info)
+        await ctx.send(embed=embed)
+
+    @info.command(name="bot")
+    async def _infobot(self, ctx):
+        """Display information about this bot, such as library versions."""
+        logger.info("Displaying info about the bot.")
+        uptime = str(datetime.datetime.now() - self.bot.time_started).split(".")[0]
+        embed = discord.Embed()
+        embed.description = self.bot.description
+        if ctx.guild and ctx.guild.explicit_content_filter.name == "disabled":
+            embed.set_thumbnail(url=self.bot.user.avatar_url)
+        else:
+            embed.set_footer(text="Thumbnail omitted on this guild due to image scanning.")
+        ainfo = await self.bot.application_info()
+        owner = ainfo.owner.mention
+        embed.add_field(name="Version", value=app_info.VERSION_STRING)
+        embed.add_field(name="Owner", value=owner)
+        num_guilds = len(self.bot.guilds)
+        num_users = len([0 for member in self.bot.get_all_members()])
+        embed.add_field(name="Serving", value=f"{num_users} users in {num_guilds} guilds")
+        embed.add_field(name="Uptime", value=uptime)
+        embed.add_field(name="Python", value="{0}.{1}.{2}".format(*sys.version_info))
+        embed.add_field(name="discord.py", value=discord.__version__)
+        try:
+            cookies_eaten = sum(discord.version_info[:3]) * sum(app_info.VERSION[:3])
+            embed.add_field(name="Cookies eaten", value=str(cookies_eaten))
+        except Exception:
+            pass
         await ctx.send(embed=embed)
 
     @info.command(brief="Display guild info.", aliases=["g", "server", "s"])
@@ -38,6 +67,8 @@ class Utilities:
         embed.description = str(guild.id)
         if ctx.guild.explicit_content_filter.name == "disabled":
             embed.set_thumbnail(url=guild.icon_url)
+        else:
+            embed.set_footer(text="Thumbnail omitted on this guild due to image scanning.")
         embed.add_field(name="Owner", value=guild.owner.name)
         embed.add_field(name="Members", value=str(guild.member_count))
         count_channels = str(len(tuple(0 for x in guild.channels if isinstance(x, discord.TextChannel))))
@@ -90,6 +121,8 @@ class Utilities:
             embed.description = user.name
         if ctx.guild and ctx.guild.explicit_content_filter.name == "disabled":
             embed.set_thumbnail(url=user.avatar_url)
+        else:
+            embed.set_footer(text="Thumbnail omitted on this guild due to image scanning.")
         embed.add_field(name="User ID", value=str(user.id))
         if user.bot:
             embed.add_field(name="Bot?", value="Yes")
@@ -107,4 +140,4 @@ class Utilities:
 
 def setup(bot):
     """Setup function for Utilities."""
-    bot.add_cog(Utilities())
+    bot.add_cog(Utilities(bot))
