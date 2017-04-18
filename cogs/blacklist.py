@@ -56,10 +56,11 @@ class Core:
             logger.info(f"Automatically left guild {guild.name} ({guild.id})")
             reason = "user blacklisted"
         elif num_bots > num_humans and num_bots > 6:
-            logger.info(f"Automatically left guild {guild.name} ({guild.id})")
             reason = "bot collection"
         if reason:
             await guild.leave()
+            logger.info((f"Automatically left guild {guild.name} ({guild.id}) ",
+                         f"(reason: {reason})"))
             return reason
 
     async def prune_guilds(self):
