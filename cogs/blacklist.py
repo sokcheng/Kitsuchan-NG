@@ -34,7 +34,7 @@ class Core:
                 num_humans, num_bots = self.humans_vs_bots(guild)
                 logger.info(f"Joined guild {guild.name} ({guild.id})")
                 await app_info.owner.send((f"Joined new guild **{guild.name}** ({guild.id})\n"
-                                           f"**Owner:** {guild.owner.name}\n"
+                                           f"**Owner:** {guild.owner.name} ({guild.owner.id})\n"
                                            f"**Humans:** {num_humans}\n"
                                            f"**Bots:** {num_bots}\n"
                                            f"**Region:** {guild.region}"))
