@@ -31,7 +31,11 @@ class Utilities:
             await ctx.send("Could not quote that user.")
         else:
             message = random.choice(quotes)
-            quote = f"**{user.name} said:**\n{message.content}"
+            if ctx.bot.user.id == user.id:
+                person = "I"
+            else:
+                person = user.name
+            quote = f"**Well, {person} once said:**\n{message.content}"
             await ctx.send(quote)
             if len(message.embeds) > 0:
                 for embed in message.embeds:
@@ -81,7 +85,11 @@ class Utilities:
                 quote = "something"
             else:
                 quote = f"**{quote}**"
-            await ctx.send(f"Times where {user.name} said {quote} in the last {length} messages:")
+            if ctx.bot.user.id == user.id:
+                person = "I"
+            else:
+                person = user.name
+            await ctx.send(f"Times where {person} said {quote} in the last {length} messages:")
             # We don't want this to be abusable, so we do a cutoff if the person lacks manage_messages.
             if ctx.guild and ctx.channel.permissions_for(ctx.author).manage_messages:
                 for page in paginator.pages:
