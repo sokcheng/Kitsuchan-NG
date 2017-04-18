@@ -51,19 +51,18 @@ class Core:
 
     async def prune_guild(self, guild:discord.Guild):
         num_humans, num_bots = self.humans_vs_bots(guild)
+        collection = num_bots > num_humans * 0.8 and num_bots + num_humans > 10
         reason = None
-        logger.debug(f"Checking guild {guild.name} ({guild.id})...")
-        if self.bot.is_owner(guild.owner):
-            pass
+        logger.debug(f"Checking guild {guild.name} ({guild.id}) (collection: {collection})...")
+        if collection:
+            await guild.leave()
+            return "bot collection"
         elif guild.id in self.settings.get("GUILDS"):
             await guild.leave()
             return "guild blacklisted"
         elif guild.owner.id in self.settings.get("USERS"):
             await guild.leave()
             return "user blacklisted"
-        elif num_bots >= num_humans * 0.8 and num_bots + num_humans > 10:
-            await guild.leave()
-            return "bot collection"
 
     async def prune_guilds(self):
         """Automatically leave guilds if they're found to be too bot-heavy."""
