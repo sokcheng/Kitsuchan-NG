@@ -48,7 +48,7 @@ class Core:
 
     async def prune_guild(self, guild:discord.Guild):
         num_humans, num_bots = self.humans_vs_bots(guild)
-        reason = None
+        reason = ""
         logger.info(f"Checking guild {guild.name} ({guild.id})...")
         if self.bot.is_owner(guild.owner):
             pass
@@ -58,7 +58,7 @@ class Core:
             reason = "user blacklisted"
         elif num_bots >= num_humans * 0.8:
             reason = "bot collection"
-        if reason:
+        if len(reason) > 0:
             await guild.leave()
             logger.info((f"Automatically left guild {guild.name} ({guild.id}) ",
                          f"(reason: {reason})"))
