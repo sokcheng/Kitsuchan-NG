@@ -48,17 +48,15 @@ class Core:
 
     async def prune_guild(self, guild:discord.Guild):
         num_humans, num_bots = self.humans_vs_bots(guild)
-        percentage = (num_bots / (num_bots + num_humans)) * 100
-        logger.info(f"Checking guild {guild.name} ({guild.id}) ({percentage}% bots)")
         reason = None
+        logger.info(f"Checking guild {guild.name} ({guild.id})...")
         if self.bot.is_owner(guild.owner):
-            logger.info("Bot owner; guild gets a pass.")
             pass
         elif guild.id in self.settings.get("GUILDS"):
             reason = "guild blacklisted"
         elif guild.owner.id in self.settings.get("USERS"):
             reason = "user blacklisted"
-        elif (num_bots / (num_bots + num_humans)) >= 40:
+        elif num_bots >= num_humans * 0.8:
             reason = "bot collection"
         if reason:
             await guild.leave()
@@ -81,7 +79,7 @@ class Core:
         await self.bot.wait_until_ready()
         while not self.bot.is_closed():
             await self.prune_guilds()
-            await asyncio.sleep(60)
+            await asyncio.sleep(30)
 
     def load(self):
         try:
