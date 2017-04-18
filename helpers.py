@@ -27,7 +27,7 @@ async def function_by_mentions(ctx, func, pass_member_id:bool=False, *args, **kw
         else:
             await func(member, *args, **kwargs)
 
-async def generate_help_embed(thing):
+def generate_help_embed(thing):
     """A helper function to generate help for an object.
     
     Accepts anything as an argument and returns a discord.Embed generating help for it.

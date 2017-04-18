@@ -47,6 +47,9 @@ IMAGES_LEWD = ("https://i.imgur.com/5JZH78a.jpg",
                "https://i.imgur.com/GTfWFm6.jpg",
                "https://i.imgur.com/Iz315vJ.jpg",
                "https://i.imgur.com/rWLoIzf.png")
+IMAGES_POKE = ("http://safebooru.org//images/1880/e3b020472d86b0a04ffec8cdf41049ef66cf3a68.gif",
+               "http://safebooru.org//images/2051/031566980728255e6d7e2fba8c12a3c38ea7598a.gif",
+               "http://safebooru.org//images/1169/3edae332d38c887a8723207d1bc0dffac8244591.gif")
 IMAGES_SANDWICHES = ("https://i.imgur.com/kyTDwIX.png",
                      "https://i.imgur.com/ULKlVhU.png",
                      "https://i.imgur.com/Z2RvlBx.png",
@@ -64,7 +67,7 @@ class Reactions:
     def __init__(self, bot):
         self.bot = bot
 
-    async def _get(self, ctx, kind:str, member:discord.Member=None):
+    async def _rra(self, ctx, kind:str, member:discord.Member=None):
         """A helper function that grabs an image and posts it in response to a member.
         
         * kind - The type of image to retrieve.
@@ -134,6 +137,12 @@ class Reactions:
 
     @commands.command()
     @commands.cooldown(1, 1, commands.BucketType.user)
+    async def poke(self, ctx):
+        """Poke!"""
+        await self._send_image(ctx, IMAGES_POKE)
+
+    @commands.command()
+    @commands.cooldown(1, 1, commands.BucketType.user)
     async def what(self, ctx):
         """What?"""
         await self._send_image(ctx, IMAGE_WHAT)
@@ -156,12 +165,12 @@ class Reactions:
         """Sandwich!"""
         await self._send_image(ctx, IMAGES_SANDWICHES)
 
-    # Commands based on _get()
+    # Commands based on _rra()
     @commands.command()
     @commands.cooldown(1, 1, commands.BucketType.user)
     async def cry(self, ctx):
         """Cry!"""
-        await self._get(ctx, "cry")
+        await self._rra(ctx, "cry")
 
     @commands.command()
     @commands.cooldown(1, 1, commands.BucketType.user)
@@ -169,7 +178,7 @@ class Reactions:
         """Cuddle a member!
         
         * member - The member to be cuddled."""
-        await self._get(ctx, "cuddle", member)
+        await self._rra(ctx, "cuddle", member)
 
     @commands.command()
     @commands.cooldown(1, 1, commands.BucketType.user)
@@ -177,7 +186,7 @@ class Reactions:
         """Hug a member!
         
         * member - The member to be hugged."""
-        await self._get(ctx, "hug", member)
+        await self._rra(ctx, "hug", member)
         
     @commands.command()
     @commands.cooldown(1, 1, commands.BucketType.user)
@@ -185,7 +194,7 @@ class Reactions:
         """Kiss a member!
         
         * member - The member to be kissed."""
-        await self._get(ctx, "kiss", member)
+        await self._rra(ctx, "kiss", member)
 
     @commands.command()
     @commands.cooldown(1, 1, commands.BucketType.user)
@@ -193,7 +202,7 @@ class Reactions:
         """Lewd!"""
         choice = bool(random.getrandbits(1))
         if choice:
-            await self._get(ctx, "lewd")
+            await self._rra(ctx, "lewd")
         else:
             await self._send_image(ctx, IMAGES_LEWD)
 
@@ -204,25 +213,25 @@ class Reactions:
         """Lick a member!
         
         * member - The member to be licked."""
-        await self._get(ctx, "lick", member)
+        await self._rra(ctx, "lick", member)
 
     @commands.command()
     @commands.cooldown(1, 1, commands.BucketType.user)
     async def nom(self, ctx):
         """Nom!"""
-        await self._get(ctx, "nom")
+        await self._rra(ctx, "nom")
 
     @commands.command(aliases=['nya', 'meow'])
     @commands.cooldown(1, 1, commands.BucketType.user)
     async def nyan(self, ctx):
         """Nyan!"""
-        await self._get(ctx, "nyan")
+        await self._rra(ctx, "nyan")
 
     @commands.command()
     @commands.cooldown(1, 1, commands.BucketType.user)
     async def owo(self, ctx):
         """owo"""
-        await self._get(ctx, "owo")
+        await self._rra(ctx, "owo")
 
     @commands.command()
     @commands.cooldown(1, 1, commands.BucketType.user)
@@ -230,13 +239,13 @@ class Reactions:
         """Pat a member!
         
         * member - The member to be patted."""
-        await self._get(ctx, "pat", member)
+        await self._rra(ctx, "pat", member)
 
     @commands.command()
     @commands.cooldown(1, 1, commands.BucketType.user)
     async def pout(self, ctx):
         """Pout!"""
-        await self._get(ctx, "pout")
+        await self._rra(ctx, "pout")
 
     @commands.command()
     @commands.cooldown(1, 1, commands.BucketType.user)
@@ -244,13 +253,13 @@ class Reactions:
         """Slap a member!
         
         * member - The member to be slapped."""
-        await self._get(ctx, "slap", member)
+        await self._rra(ctx, "slap", member)
 
     @commands.command()
     @commands.cooldown(1, 1, commands.BucketType.user)
     async def smug(self, ctx):
         """Smug!"""
-        await self._get(ctx, "smug")
+        await self._rra(ctx, "smug")
 
     @commands.command()
     @commands.cooldown(1, 1, commands.BucketType.user)
@@ -258,7 +267,7 @@ class Reactions:
         """Stare at a member!
         
         * member - The member to be stared at."""
-        await self._get(ctx, "stare", member)
+        await self._rra(ctx, "stare", member)
 
     @commands.command()
     @commands.cooldown(1, 1, commands.BucketType.user)
@@ -266,13 +275,13 @@ class Reactions:
         """Tickle a member!
         
         * member - The member to be tickled."""
-        await self._get(ctx, "tickle", member)
+        await self._rra(ctx, "tickle", member)
 
     @commands.command()
     @commands.cooldown(1, 1, commands.BucketType.user)
     async def triggered(self, ctx):
         """Triggered!"""
-        await self._get(ctx, "triggered")
+        await self._rra(ctx, "triggered")
 
 def setup(bot):
     """Setup function for reaction images."""

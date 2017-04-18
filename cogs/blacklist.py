@@ -97,7 +97,7 @@ class Core:
     @commands.is_owner()
     async def block(self, ctx):
         """Blocking commands (e.g. block user)."""
-        embed = await helpers.generate_help_embed(self.block)
+        embed = helpers.generate_help_embed(self.block)
         await ctx.send(embed=embed)
 
     @block.command(name="user")
@@ -156,7 +156,7 @@ class Core:
     @commands.is_owner()
     async def unblock(self, ctx):
         """Unblocking commands. (e.g. unblock user)"""
-        embed = await helpers.generate_help_embed(self.unblock)
+        embed = helpers.generate_help_embed(self.unblock)
         await ctx.send(embed=embed)
 
     @unblock.command(name="user")

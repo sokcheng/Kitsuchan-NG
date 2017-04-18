@@ -21,7 +21,7 @@ class Utilities:
     @commands.group(invoke_without_command=True)
     async def to(self, ctx):
         """Subcommands that encode plaintext. (e.g. to binary)"""
-        embed = await helpers.generate_help_embed(self._to)
+        embed = helpers.generate_help_embed(self._to)
         await ctx.send(embed=embed)
     
     @to.command(name="binary")
@@ -38,7 +38,7 @@ class Utilities:
     @commands.group(name="from", invoke_without_command=True)
     async def from_(self, ctx):
         """Subcommands that decode plaintext. (e.g. from binary)"""
-        embed = await helpers.generate_help_embed(self._from)
+        embed = helpers.generate_help_embed(self._from)
         await ctx.send(embed=embed)
     
     @from_.command(name="binary")
