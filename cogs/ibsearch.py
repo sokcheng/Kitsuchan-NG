@@ -26,8 +26,7 @@ BASE_URL_IBSEARCH_XXX_IMAGE = "https://{0[server]}.ibsearch.xxx/{0[path]}"
 
 class Web:
     """This cog handles IbSear.ch queries."""
-    def __init__(self, bot):
-        self.bot = bot
+    def __init__(self):
         self.key_ibsearch = settings.manager.get("API_KEY_IBSEARCH")
 
     @commands.command(aliases=["ib"])
@@ -60,7 +59,7 @@ class Web:
             base_url_image = BASE_URL_IBSEARCH_IMAGE
         params = urllib.parse.urlencode({"key": self.key_ibsearch, "q": tags})
         url = base_url_api.format(*params)
-        async with self.bot.session.get(url) as response:
+        async with ctx.bot.session.get(url) as response:
             if response.status == 200:
                 data = await response.json()
                 if len(data) == 0:
@@ -84,4 +83,4 @@ class Web:
 
 def setup(bot):
     """Setup function for Web."""
-    bot.add_cog(Web(bot))
+    bot.add_cog(Web())

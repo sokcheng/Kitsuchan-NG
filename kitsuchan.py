@@ -61,7 +61,7 @@ async def on_ready():
 async def on_command_completion(ctx):
     """Trigger when a command completes successfully."""
     if not isinstance(ctx.channel, discord.DMChannel):
-        if ctx.invoked_with == "help":
+        if ctx.command.name == "help":
             await ctx.send("Help sent to DM.")
 
 @bot.event

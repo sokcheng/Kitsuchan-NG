@@ -19,9 +19,6 @@ logger = logging.getLogger(__name__)
 
 class Utilities:
     """discord.py cog containing info commands, such as server and user info."""
-    
-    def __init__(self, bot):
-        self.bot = bot
 
     @commands.group(aliases=["i"], invoke_without_command=True)
     async def info(self, ctx):
@@ -32,21 +29,21 @@ class Utilities:
     @info.command(name="bot")
     @commands.cooldown(1, 1, commands.BucketType.channel)
     async def _infobot(self, ctx):
-        """Display information about this bot, such as library versions."""
+        """Display bot info, e.g. library versions."""
         logger.info("Displaying info about the bot.")
-        uptime = str(datetime.datetime.now() - self.bot.time_started).split(".")[0]
+        uptime = str(datetime.datetime.now() - ctx.bot.time_started).split(".")[0]
         embed = discord.Embed()
-        embed.description = self.bot.description
+        embed.description = ctx.bot.description
         if ctx.guild and ctx.guild.explicit_content_filter.name == "disabled":
-            embed.set_thumbnail(url=self.bot.user.avatar_url)
+            embed.set_thumbnail(url=ctx.bot.user.avatar_url)
         else:
             embed.set_footer(text="Thumbnail omitted on this guild due to image scanning.")
-        ainfo = await self.bot.application_info()
+        ainfo = await ctx.bot.application_info()
         owner = ainfo.owner.mention
         embed.add_field(name="Version", value=app_info.VERSION_STRING)
         embed.add_field(name="Owner", value=owner)
-        num_guilds = len(self.bot.guilds)
-        num_users = len([0 for member in self.bot.get_all_members()])
+        num_guilds = len(ctx.bot.guilds)
+        num_users = len([0 for member in ctx.bot.get_all_members()])
         embed.add_field(name="Serving", value=f"{num_users} users in {num_guilds} guilds")
         embed.add_field(name="Uptime", value=uptime)
         embed.add_field(name="Python", value="{0}.{1}.{2}".format(*sys.version_info))
@@ -144,4 +141,4 @@ class Utilities:
 
 def setup(bot):
     """Setup function for Utilities."""
-    bot.add_cog(Utilities(bot))
+    bot.add_cog(Utilities())

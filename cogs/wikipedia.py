@@ -20,8 +20,6 @@ BASE_URL_WIKIPEDIA_API = "https://en.wikipedia.org/w/api.php?{0}"
 
 class Web:
     """This cog contains a Wikipedia query command."""
-    def __init__(self, bot):
-        self.bot = bot
 
     @commands.command(aliases=["wikipedia"])
     @commands.cooldown(1, 1, commands.BucketType.user)
@@ -36,7 +34,7 @@ class Web:
         logger.info(f"Searching Wikipedia with query {query}.")
         params = urllib.parse.urlencode({"action": "opensearch", "search": query})
         url = BASE_URL_WIKIPEDIA_API.format(params)
-        async with self.bot.session.get(url) as response:
+        async with ctx.bot.session.get(url) as response:
             if response.status == 200:
                 data = await response.json()
                 embed = discord.Embed()
@@ -55,4 +53,4 @@ class Web:
 
 def setup(bot):
     """Setup function for Wikipedia."""
-    bot.add_cog(Web(bot))
+    bot.add_cog(Web())

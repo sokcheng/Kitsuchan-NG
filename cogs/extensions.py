@@ -20,16 +20,13 @@ class Core:
     
     bot - The parent discord.Client object for the cog.
     """
-    
-    def __init__(self, bot):
-        self.bot = bot
 
     @commands.command(aliases=["load-extension"])
     @commands.is_owner()
     async def loade(self, ctx, extension_name:str):
         """Enable the use of an extension."""
         logger.info(f"Loading extension {extension_name}...")
-        self.bot.load_extension(extension_name)
+        ctx.bot.load_extension(extension_name)
         settings.manager.setdefault("EXTENSIONS", settings.DEFAULT_EXTENSIONS)
         if extension_name not in settings.manager["EXTENSIONS"]:
             settings.manager["EXTENSIONS"].append(extension_name)
@@ -46,8 +43,8 @@ class Core:
         logger.info(f"Reloading extension {extension_name}...")
         settings.manager.setdefault("EXTENSIONS", settings.DEFAULT_EXTENSIONS)
         if extension_name in settings.manager["EXTENSIONS"]:
-            self.bot.unload_extension(extension_name)
-            self.bot.load_extension(extension_name)
+            ctx.bot.unload_extension(extension_name)
+            ctx.bot.load_extension(extension_name)
             message = f"Extension {extension_name} reloaded."
         else:
             message = f"Extension {extension_name} not currently loaded; please load it. :<"
@@ -58,11 +55,11 @@ class Core:
     @commands.is_owner()
     async def uloade(self, ctx, extension_name:str):
         """Disable the use of an extension."""
-        prompt = await helpers.yes_no(ctx, self.bot)
+        prompt = await helpers.yes_no(ctx, ctx.bot)
         if not prompt:
             return
         logger.info(f"Unloading extension {extension_name}...")
-        self.bot.unload_extension(extension_name)
+        ctx.bot.unload_extension(extension_name)
         settings.manager.setdefault("EXTENSIONS", settings.DEFAULT_EXTENSIONS)
         try:
             settings.manager["EXTENSIONS"].remove(extension_name)
@@ -78,7 +75,7 @@ class Core:
     async def liste(self, ctx):
         """Display list of currently-enabled bot extensions."""
         logger.info("Extension list requested.")
-        extensions = "\n".join(self.bot.extensions)
+        extensions = "\n".join(ctx.bot.extensions)
         message = f"```Loaded extensions:\n{extensions}```"
         await ctx.author.send(message)
         if not isinstance(ctx.channel, discord.DMChannel):
@@ -86,4 +83,4 @@ class Core:
 
 def setup(bot):
     """Setup function for Core."""
-    bot.add_cog(Core(bot))
+    bot.add_cog(Core())

@@ -37,9 +37,6 @@ ANSWERS = ["It it certain.",
 
 class Fun:
     """Cog containing 8ball command."""
-    def __init__(self, bot):
-        self.bot = bot
-
     @commands.command(name="8ball")
     async def _eightball(self, ctx, *, question=""):
         """Ask the Magic 8-Ball a question."""
@@ -53,4 +50,4 @@ class Fun:
 
 def setup(bot):
     """Setup function for 8ball."""
-    bot.add_cog(Fun(bot))
+    bot.add_cog(Fun())

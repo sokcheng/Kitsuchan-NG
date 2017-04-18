@@ -28,8 +28,6 @@ systemrandom = random.SystemRandom()
 
 class Utilities:
     """A dice roller module for the Utilities category."""
-    def __init__(self):
-        pass
 
     @commands.command(aliases=["coinflip"])
     async def cflip(self, ctx):

@@ -21,39 +21,36 @@ class Core:
     
     bot - The parent discord.Client object for the cog.
     """
-    
-    def __init__(self, bot):
-        self.bot = bot
-    
+
     @commands.command()
     @commands.is_owner()
     async def halt(self, ctx):
         """Halt the bot. Must be bot owner to execute."""
-        confirm = await helpers.yes_no(ctx, self.bot)
+        confirm = await helpers.yes_no(ctx, ctx.bot)
         if not confirm:
             return
         message = "Bot is going for halt NOW!"
         logger.warning(message)
         await ctx.send(message)
-        await self.bot.logout()
+        await ctx.bot.logout()
         settings.save()
-        self.bot.session.close()
+        ctx.bot.session.close()
 
     @commands.command()
     @commands.is_owner()
     async def restart(self, ctx):
         """Restart the bot. Must be bot owner to execute."""
-        confirm = await helpers.yes_no(ctx, self.bot)
+        confirm = await helpers.yes_no(ctx, ctx.bot)
         if not confirm:
             return
         message = "Bot is going for restart NOW!"
         logger.warning(message)
         await ctx.send(message)
-        await self.bot.logout()
-        self.bot.session.close()
+        await ctx.bot.logout()
+        ctx.bot.session.close()
         settings.save()
         os.execv(sys.executable, [sys.executable] + sys.argv)
 
 def setup(bot):
     """Setup function for process."""
-    bot.add_cog(Core(bot))
+    bot.add_cog(Core())

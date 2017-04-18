@@ -64,8 +64,6 @@ IMAGES_KONKON = ("http://safebooru.org//images/1856/6e6b3319f2a0a3fe5e77567ebdc9
 
 class Reactions:
     """Cog containing various weeb reaction commands."""
-    def __init__(self, bot):
-        self.bot = bot
 
     async def _rra(self, ctx, kind:str, member:discord.Member=None):
         """A helper function that grabs an image and posts it in response to a member.
@@ -75,13 +73,13 @@ class Reactions:
         logger.info(f"Fetching {kind} image.")
         hash_id_channel = utils.to_hash(str(ctx.channel.id))
         url = BASE_URL_API.format(kind)
-        async with self.bot.session.get(url) as response:
+        async with ctx.bot.session.get(url) as response:
             if response.status == 200:
                 data = await response.json()
                 url_image = BASE_URL_IMAGE.format(data).replace("/i", "")
                 if not member:
                     message=""
-                elif self.bot.user.id == member.id:
+                elif ctx.bot.user.id == member.id:
                     message=f"Aw, thank you. Here, have one back. :3"
                 elif ctx.author.id != member.id:
                     message=f"**{member.display_name}**, you got a {kind} from **{ctx.author.display_name}!**"
@@ -285,4 +283,4 @@ class Reactions:
 
 def setup(bot):
     """Setup function for reaction images."""
-    bot.add_cog(Reactions(bot))
+    bot.add_cog(Reactions())

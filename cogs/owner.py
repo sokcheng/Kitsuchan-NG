@@ -16,16 +16,13 @@ class Core:
     bot - The parent discord.Client object for the cog.
     """
     
-    def __init__(self, bot):
-        self.bot = bot
-    
     @commands.command(aliases=["listguilds"])
     @commands.is_owner()
     async def listg(self, ctx):
         """List all guilds that the bot is in."""
         paginator = commands.Paginator()
         paginator.add_line("Guilds this bot is in:")
-        for guild in self.bot.guilds:
+        for guild in ctx.bot.guilds:
             num_humans = len([member for member in guild.members if not member.bot])
             num_bots = len([member for member in guild.members if member.bot])
             paginator.add_line(f"{guild.id}: {num_humans} humans, {num_bots} bots | {guild.name}")
@@ -47,7 +44,7 @@ class Core:
         async for message in ctx.channel.history():
             if times_executed == times:
                 break
-            if message.author.id == self.bot.user.id:
+            if message.author.id == ctx.bot.user.id:
                 await message.delete()
                 times_executed += 1
     
@@ -118,7 +115,7 @@ class Core:
                 ("* Note 1: Some of these commands are in the [Kitsuchan-NG-cogs]"
                  "(https://github.com/n303p4/Kitsuchan-NG-cogs) repo."),
                 "* Note 2: This file was automatically generated and may look bad."]
-        for command in sorted(list(self.bot.commands), key=lambda x: x.name):
+        for command in sorted(list(ctx.bot.commands), key=lambda x: x.name):
             data.append("")
             data.append(f"## {command.name}")
             if len(command.aliases) > 0:
@@ -131,4 +128,4 @@ class Core:
 
 def setup(bot):
     """Setup function for owner."""
-    bot.add_cog(Core(bot))
+    bot.add_cog(Core())

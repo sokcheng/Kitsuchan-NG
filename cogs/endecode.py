@@ -10,9 +10,6 @@ import helpers
 class Utilities:
     """A cog containing commands that encode/decode text in some form or another."""
     
-    def __init__(self, bot):
-        self.bot = bot
-    
     @commands.command()
     async def reverse(self, ctx, *, message):
         """Reverse input text."""
@@ -21,7 +18,7 @@ class Utilities:
     @commands.group(invoke_without_command=True)
     async def to(self, ctx):
         """Subcommands that encode plaintext. (e.g. to binary)"""
-        embed = helpers.generate_help_embed(self._to)
+        embed = helpers.generate_help_embed(self.to)
         await ctx.send(embed=embed)
     
     @to.command(name="binary")
@@ -38,12 +35,12 @@ class Utilities:
     @commands.group(name="from", invoke_without_command=True)
     async def from_(self, ctx):
         """Subcommands that decode plaintext. (e.g. from binary)"""
-        embed = helpers.generate_help_embed(self._from)
+        embed = helpers.generate_help_embed(self.from_)
         await ctx.send(embed=embed)
     
     @from_.command(name="binary")
     async def from_binary(self, ctx, *, message):
-        """Decode binary to plaintext.
+        """Decode plaintext from binary.
         
         Note, the behavior of this command isn't 100% correct as it may slip on Unicode."""
         message = message.split()
@@ -56,4 +53,4 @@ class Utilities:
         await ctx.send(message)
     
 def setup(bot):
-    bot.add_cog(Utilities(bot))
+    bot.add_cog(Utilities())

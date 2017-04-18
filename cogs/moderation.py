@@ -18,9 +18,7 @@ logger = logging.getLogger(__name__)
 
 class Moderation:
     """discord.py cog containing moderation functions of the bot."""
-    def __init__(self):
-        pass
-
+    
     @commands.command()
     @commands.has_permissions(kick_members=True)
     @commands.bot_has_permissions(kick_members=True)

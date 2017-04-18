@@ -14,8 +14,6 @@ logger = logging.getLogger(__name__)
 
 class Fun:
     """discord.py cog containing functions that give the bot's opinion on something."""
-    def __init__(self, bot):
-        self.bot = bot
 
     @commands.command()
     async def choose(self, ctx, *, choices):
@@ -48,4 +46,4 @@ class Fun:
 
 def setup(bot):
     """Setup function for Reactions."""
-    bot.add_cog(Fun(bot))
+    bot.add_cog(Fun())

@@ -14,9 +14,6 @@ logger = logging.getLogger(__name__)
 class Utilities:
     """discord.py cog containing avatar fetcher."""
     
-    def __init__(self):
-        pass
-    
     @commands.command()
     @commands.cooldown(1, 1, commands.BucketType.user)
     async def avatar(self, ctx, user:discord.Member=None):

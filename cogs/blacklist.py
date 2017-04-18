@@ -9,8 +9,8 @@ import discord
 from discord.ext import commands
 
 # Bundled modules
-import settings
 import helpers
+import settings
 
 logger = logging.getLogger(__name__)
 
@@ -108,7 +108,7 @@ class Core:
         * user - The user to block.
         """
         self.settings.setdefault("USERS", [])
-        is_owner = await self.bot.is_owner(user)
+        is_owner = await ctx.bot.is_owner(user)
         if is_owner:
             message = "Can't block bot owner."
             logger.warning(message)
@@ -134,7 +134,7 @@ class Core:
         if not id_guild and ctx.guild:
             guild = ctx.guild
         else:
-            guild = self.bot.get_guild(id_guild)
+            guild = ctx.bot.get_guild(id_guild)
         if not guild:
             message = f"Guild ID {id_guild} isn't valid."
             logger.warning(message)

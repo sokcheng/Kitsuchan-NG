@@ -19,15 +19,13 @@ BASE_URL_XKCD_EXPLAIN = "http://www.explainxkcd.com/wiki/index.php/{0}"
 
 class Web:
     """This cog contains some basic xkcd commands."""
-    def __init__(self, bot):
-        self.bot = bot
 
     async def _xkcd(self, ctx, comic_id=""):
         """Helper function for xkcd comics."""
         logger.info(f"Retrieving xkcd comic with ID {comic_id}.")
         if comic_id.lower() in ("random", "r"):
             url = BASE_URL_XKCD_API.format("")
-            async with self.bot.session.get(url) as response:
+            async with ctx.bot.session.get(url) as response:
                 if response.status == 200:
                     data = await response.json()
                     comic_id = random.randint(1, data["num"])
@@ -37,7 +35,7 @@ class Web:
                     logger.info(message)
                     return
         url = BASE_URL_XKCD_API.format(comic_id)
-        async with self.bot.session.get(url) as response:
+        async with ctx.bot.session.get(url) as response:
             if response.status == 200:
                 data = await response.json()
                 title = data["safe_title"]
@@ -95,4 +93,4 @@ class Web:
 
 def setup(bot):
     """Setup function for xkcd."""
-    bot.add_cog(Web(bot))
+    bot.add_cog(Web())

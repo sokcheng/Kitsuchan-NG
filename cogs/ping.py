@@ -12,9 +12,6 @@ logger = logging.getLogger(__name__)
 class Core:
     """discord.py cog containing a ping command."""
     
-    def __init__(self):
-        pass
-    
     @commands.command()
     async def ping(self, ctx):
         """Ping the bot."""
