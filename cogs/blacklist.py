@@ -55,7 +55,7 @@ class Core:
             reason = "guild blacklisted"
         elif guild.owner.id in self.settings.get("USERS"):
             reason = "user blacklisted"
-        elif num_bots / (num_bots + num_humans) > 0.4:
+        elif (num_bots / (num_bots + num_humans)) > 0.4:
             reason = "bot collection"
         if reason:
             await guild.leave()
