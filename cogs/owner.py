@@ -84,7 +84,6 @@ class Core:
         except subprocess.TimeoutExpired:
             process.kill()
             output = ["Command timed out. x.x"]
-        await ctx.send("Output:")
         paginator = commands.Paginator()
         for line in output:
             paginator.add_line(line)
@@ -104,7 +103,6 @@ class Core:
             output = str(output).split("\n")
         except Exception as error:
             output = [f"x.x An error has occurred: {error}"]
-        await ctx.send("Output:")
         paginator = commands.Paginator()
         for line in output:
             paginator.add_line(line)
