@@ -61,7 +61,7 @@ class Core:
         elif guild.owner.id in self.settings.get("USERS"):
             await guild.leave()
             return "user blacklisted"
-        elif num_bots >= num_humans * 0.8:
+        elif num_bots >= num_humans * 0.8 and num_bots + num_humans > 10:
             await guild.leave()
             return "bot collection"
 
