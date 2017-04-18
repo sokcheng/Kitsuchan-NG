@@ -32,12 +32,15 @@ class Core:
             app_info = await self.bot.application_info()
             if not reason:
                 num_humans, num_bots = self.humans_vs_bots(guild)
+                logger.info(f"Joined guild {guild.name} ({guild.id})")
                 await app_info.owner.send((f"Joined new guild **{guild.name}** ({guild.id})\n"
                                            f"**Owner:** {guild.owner.name}\n"
                                            f"**Humans:** {num_humans}\n"
                                            f"**Bots:** {num_bots}\n"
                                            f"**Region:** {guild.region}"))
             else:
+                logger.info((f"Automatically left guild {guild.name} ({guild.id}) ",
+                             f"(reason: {reason})"))
                 await app_info.owner.send((f"Rejected joining **{guild.name}** ({guild.id}) "
                                            f"(reason: {reason})"))
 
@@ -48,29 +51,29 @@ class Core:
 
     async def prune_guild(self, guild:discord.Guild):
         num_humans, num_bots = self.humans_vs_bots(guild)
-        reason = ""
+        reason = None
         logger.info(f"Checking guild {guild.name} ({guild.id})...")
         if self.bot.is_owner(guild.owner):
             pass
         elif guild.id in self.settings.get("GUILDS"):
-            reason = "guild blacklisted"
-        elif guild.owner.id in self.settings.get("USERS"):
-            reason = "user blacklisted"
-        elif num_bots >= num_humans * 0.8:
-            reason = "bot collection"
-        if len(reason) > 0:
             await guild.leave()
-            logger.info((f"Automatically left guild {guild.name} ({guild.id}) ",
-                         f"(reason: {reason})"))
-            return reason
+            return "guild blacklisted"
+        elif guild.owner.id in self.settings.get("USERS"):
+            await guild.leave()
+            return "user blacklisted"
+        elif num_bots >= num_humans * 0.8:
+            await guild.leave()
+            return "bot collection"
 
     async def prune_guilds(self):
         """Automatically leave guilds if they're found to be too bot-heavy."""
         logger.info("Pruning guilds.")
         number = 0
         for guild in self.bot.guilds:
-            status = await self.prune_guild(guild)
-            if status:
+            reason = await self.prune_guild(guild)
+            if reason:
+                logger.info((f"Automatically left guild {guild.name} ({guild.id}) ",
+                             f"(reason: {reason})"))
                 number += 1
         logger.info(f"{number} guilds were pruned.")
         return number
