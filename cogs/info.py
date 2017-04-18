@@ -20,13 +20,13 @@ logger = logging.getLogger(__name__)
 class Utilities:
     """discord.py cog containing info commands, such as server and user info."""
 
-    @commands.group(aliases=["i"], invoke_without_command=True)
-    async def info(self, ctx):
+    @commands.group(aliases=["a", "info", "i"], invoke_without_command=True)
+    async def about(self, ctx):
         """Information subcommands, e.g. channel information."""
         embed = helpers.generate_help_embed(self.info)
         await ctx.send(embed=embed)
 
-    @info.command(name="bot")
+    @about.command(name="bot")
     @commands.cooldown(4, 12, commands.BucketType.channel)
     async def _infobot(self, ctx):
         """Display bot info, e.g. library versions."""
@@ -55,7 +55,7 @@ class Utilities:
             pass
         await ctx.send(embed=embed)
 
-    @info.command(brief="Display guild info.", aliases=["g", "server", "s"])
+    @about.command(brief="Display guild info.", aliases=["g", "server", "s"])
     @commands.guild_only()
     @commands.cooldown(4, 12, commands.BucketType.channel)
     async def guild(self, ctx):
@@ -84,7 +84,7 @@ class Utilities:
         embed.add_field(name="Roles", value=roles, inline=False)
         await ctx.send(embed=embed)
 
-    @info.command(brief="Display channel info.", aliases=["c"])
+    @about.command(brief="Display channel info.", aliases=["c"])
     @commands.cooldown(4, 12, commands.BucketType.channel)
     async def channel(self, ctx, channel:discord.TextChannel=None):
         """Display information about a channel channel.
@@ -107,7 +107,7 @@ class Utilities:
         embed.add_field(name="Created at", value=channel.created_at.ctime())
         await ctx.send(embed=embed)
 
-    @info.command(brief="Display user info.", aliases=["u"])
+    @about.command(brief="Display user info.", aliases=["u"])
     @commands.cooldown(4, 12, commands.BucketType.channel)
     async def user(self, ctx, user:discord.Member=None):
         """Display information about a user, such as status and roles.
