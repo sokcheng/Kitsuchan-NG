@@ -52,7 +52,7 @@ class Core:
     async def prune_guild(self, guild:discord.Guild):
         num_humans, num_bots = self.humans_vs_bots(guild)
         reason = None
-        logger.info(f"Checking guild {guild.name} ({guild.id})...")
+        logger.debug(f"Checking guild {guild.name} ({guild.id})...")
         if self.bot.is_owner(guild.owner):
             pass
         elif guild.id in self.settings.get("GUILDS"):
