@@ -16,7 +16,7 @@ class Utilities:
     """discord.py cog containing commands that quote people."""
 
     @commands.command()
-    @commands.cooldown(1, 1, commands.BucketType.channel)
+    @commands.cooldown(4, 12, commands.BucketType.channel)
     async def quote(self, ctx, user:discord.Member):
         """Quote a user.
         

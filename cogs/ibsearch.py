@@ -30,7 +30,7 @@ class Web:
         self.key_ibsearch = settings.manager.get("API_KEY_IBSEARCH")
 
     @commands.command(aliases=["ib"])
-    @commands.cooldown(1, 1, commands.BucketType.user)
+    @commands.cooldown(4, 12, commands.BucketType.channel)
     async def ibsearch(self, ctx, *, tags=""):
         """Fetch a randomized anime image from IbSear.ch, optional tags.
         

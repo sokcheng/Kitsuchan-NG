@@ -110,68 +110,68 @@ class Reactions:
 
     # Commands based on _send_image()
     @commands.command()
-    @commands.cooldown(1, 1, commands.BucketType.user)
+    @commands.cooldown(4, 12, commands.BucketType.channel)
     async def dead(self, ctx):
         """Dead!"""
         await self._send_image(ctx, IMAGE_DEAD)
 
     @commands.command(aliases=["facedesk"])
-    @commands.cooldown(1, 1, commands.BucketType.user)
+    @commands.cooldown(4, 12, commands.BucketType.channel)
     async def fdesk(self, ctx):
         """Facedesk!"""
         await self._send_image(ctx, IMAGE_FACEDESK)
 
     @commands.command(aliases=["konkon"])
-    @commands.cooldown(1, 1, commands.BucketType.user)
+    @commands.cooldown(4, 12, commands.BucketType.channel)
     async def kon(self, ctx):
         """Kon, kon!"""
         await self._send_image(ctx, IMAGES_KONKON)
 
     @commands.command(aliases=["letmeloveyou"])
-    @commands.cooldown(1, 1, commands.BucketType.user)
+    @commands.cooldown(4, 12, commands.BucketType.channel)
     async def lmly(self, ctx):
         """Let me love you!"""
         await self._send_image(ctx, IMAGE_LMLY)
 
     @commands.command()
-    @commands.cooldown(1, 1, commands.BucketType.user)
+    @commands.cooldown(4, 12, commands.BucketType.channel)
     async def poke(self, ctx):
         """Poke!"""
         await self._send_image(ctx, IMAGES_POKE)
 
     @commands.command()
-    @commands.cooldown(1, 1, commands.BucketType.user)
+    @commands.cooldown(4, 12, commands.BucketType.channel)
     async def what(self, ctx):
         """What?"""
         await self._send_image(ctx, IMAGE_WHAT)
 
     @commands.command(aliases=["wakarimasenlol"])
-    @commands.cooldown(1, 1, commands.BucketType.user)
+    @commands.cooldown(4, 12, commands.BucketType.channel)
     async def wlol(self, ctx):
         """Wakarimasen, lol!"""
         await self._send_image(ctx, IMAGE_WLOL)
 
     @commands.command()
-    @commands.cooldown(1, 1, commands.BucketType.user)
+    @commands.cooldown(4, 12, commands.BucketType.channel)
     async def boots(self, ctx):
         """Boots!"""
         await self._send_image(ctx, IMAGES_BOOTS)
 
     @commands.command()
-    @commands.cooldown(1, 1, commands.BucketType.user)
+    @commands.cooldown(4, 12, commands.BucketType.channel)
     async def sandwich(self, ctx):
         """Sandwich!"""
         await self._send_image(ctx, IMAGES_SANDWICHES)
 
     # Commands based on _rra()
     @commands.command()
-    @commands.cooldown(1, 1, commands.BucketType.user)
+    @commands.cooldown(4, 12, commands.BucketType.channel)
     async def cry(self, ctx):
         """Cry!"""
         await self._rra(ctx, "cry")
 
     @commands.command()
-    @commands.cooldown(1, 1, commands.BucketType.user)
+    @commands.cooldown(4, 12, commands.BucketType.channel)
     async def cuddle(self, ctx, member:discord.Member):
         """Cuddle a member!
         
@@ -179,7 +179,7 @@ class Reactions:
         await self._rra(ctx, "cuddle", member)
 
     @commands.command()
-    @commands.cooldown(1, 1, commands.BucketType.user)
+    @commands.cooldown(4, 12, commands.BucketType.channel)
     async def hug(self, ctx, member:discord.Member):
         """Hug a member!
         
@@ -187,7 +187,7 @@ class Reactions:
         await self._rra(ctx, "hug", member)
         
     @commands.command()
-    @commands.cooldown(1, 1, commands.BucketType.user)
+    @commands.cooldown(4, 12, commands.BucketType.channel)
     async def kiss(self, ctx, member:discord.Member):
         """Kiss a member!
         
@@ -195,7 +195,7 @@ class Reactions:
         await self._rra(ctx, "kiss", member)
 
     @commands.command()
-    @commands.cooldown(1, 1, commands.BucketType.user)
+    @commands.cooldown(4, 12, commands.BucketType.channel)
     async def lewd(self, ctx):
         """Lewd!"""
         choice = bool(random.getrandbits(1))
@@ -206,7 +206,7 @@ class Reactions:
 
     @commands.command()
     @commands.check(checks.is_nsfw)
-    @commands.cooldown(1, 1, commands.BucketType.user)
+    @commands.cooldown(4, 12, commands.BucketType.channel)
     async def lick(self, ctx, member:discord.Member):
         """Lick a member!
         
@@ -214,25 +214,25 @@ class Reactions:
         await self._rra(ctx, "lick", member)
 
     @commands.command()
-    @commands.cooldown(1, 1, commands.BucketType.user)
+    @commands.cooldown(4, 12, commands.BucketType.channel)
     async def nom(self, ctx):
         """Nom!"""
         await self._rra(ctx, "nom")
 
     @commands.command(aliases=['nya', 'meow'])
-    @commands.cooldown(1, 1, commands.BucketType.user)
+    @commands.cooldown(4, 12, commands.BucketType.channel)
     async def nyan(self, ctx):
         """Nyan!"""
         await self._rra(ctx, "nyan")
 
     @commands.command()
-    @commands.cooldown(1, 1, commands.BucketType.user)
+    @commands.cooldown(4, 12, commands.BucketType.channel)
     async def owo(self, ctx):
         """owo"""
         await self._rra(ctx, "owo")
 
     @commands.command()
-    @commands.cooldown(1, 1, commands.BucketType.user)
+    @commands.cooldown(4, 12, commands.BucketType.channel)
     async def pat(self, ctx, member:discord.Member):
         """Pat a member!
         
@@ -240,13 +240,13 @@ class Reactions:
         await self._rra(ctx, "pat", member)
 
     @commands.command()
-    @commands.cooldown(1, 1, commands.BucketType.user)
+    @commands.cooldown(4, 12, commands.BucketType.channel)
     async def pout(self, ctx):
         """Pout!"""
         await self._rra(ctx, "pout")
 
     @commands.command()
-    @commands.cooldown(1, 1, commands.BucketType.user)
+    @commands.cooldown(4, 12, commands.BucketType.channel)
     async def slap(self, ctx, member:discord.Member):
         """Slap a member!
         
@@ -254,13 +254,13 @@ class Reactions:
         await self._rra(ctx, "slap", member)
 
     @commands.command()
-    @commands.cooldown(1, 1, commands.BucketType.user)
+    @commands.cooldown(4, 12, commands.BucketType.channel)
     async def smug(self, ctx):
         """Smug!"""
         await self._rra(ctx, "smug")
 
     @commands.command()
-    @commands.cooldown(1, 1, commands.BucketType.user)
+    @commands.cooldown(4, 12, commands.BucketType.channel)
     async def stare(self, ctx, member:discord.Member):
         """Stare at a member!
         
@@ -268,7 +268,7 @@ class Reactions:
         await self._rra(ctx, "stare", member)
 
     @commands.command()
-    @commands.cooldown(1, 1, commands.BucketType.user)
+    @commands.cooldown(4, 12, commands.BucketType.channel)
     async def tickle(self, ctx, member:discord.Member):
         """Tickle a member!
         
@@ -276,7 +276,7 @@ class Reactions:
         await self._rra(ctx, "tickle", member)
 
     @commands.command()
-    @commands.cooldown(1, 1, commands.BucketType.user)
+    @commands.cooldown(4, 12, commands.BucketType.channel)
     async def triggered(self, ctx):
         """Triggered!"""
         await self._rra(ctx, "triggered")

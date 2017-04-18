@@ -13,6 +13,7 @@ class Core:
     """discord.py cog containing a ping command."""
     
     @commands.command()
+    @commands.is_owner()
     async def ping(self, ctx):
         """Ping the bot."""
         pingtime = int(round((datetime.datetime.utcnow() - ctx.message.created_at).total_seconds() * 1000, 0))

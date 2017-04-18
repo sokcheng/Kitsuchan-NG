@@ -22,20 +22,21 @@ class Moderation:
     @commands.command()
     @commands.has_permissions(kick_members=True)
     @commands.bot_has_permissions(kick_members=True)
+    @commands.cooldown(1, 4, commands.BucketType.channel)
     async def kick(self, ctx):
         """Kick all users mentioned by this command."""
         await helpers.function_by_mentions(ctx, ctx.guild.kick)
 
     @commands.command()
     @commands.has_permissions(ban_members=True)
-    @commands.bot_has_permissions(ban_members=True)
+    @commands.cooldown(1, 4, commands.BucketType.channel)
     async def ban(self, ctx):
         """Ban all users mentioned by this command."""
         await helpers.function_by_mentions(ctx, ctx.guild.ban)
 
     @commands.command()
     @commands.has_permissions(ban_members=True)
-    @commands.bot_has_permissions(ban_members=True)
+    @commands.cooldown(1, 4, commands.BucketType.channel)
     async def unban(self, ctx):
         """Unban all users mentioned by this command."""
         await helpers.function_by_mentions(ctx, ctx.guild.unban)
@@ -43,6 +44,7 @@ class Moderation:
     @commands.command()
     @commands.has_permissions(manage_messages=True)
     @commands.bot_has_permissions(manage_messages=True)
+    @commands.cooldown(1, 4, commands.BucketType.channel)
     async def purge(self, ctx, limit:int):
         """Purge a certain number of messages."""
         await ctx.channel.purge(limit=limit)

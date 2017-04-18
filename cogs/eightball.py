@@ -38,6 +38,7 @@ ANSWERS = ["It it certain.",
 class Fun:
     """Cog containing 8ball command."""
     @commands.command(name="8ball")
+    @commands.cooldown(4, 12, commands.BucketType.channel)
     async def _eightball(self, ctx, *, question=""):
         """Ask the Magic 8-Ball a question."""
         if len(question) == 0 or not question.endswith("?"):
