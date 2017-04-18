@@ -35,7 +35,7 @@ class Utilities:
                 person = "I"
             else:
                 person = user.name
-            quote = f"**Well, {person} once said:**\n{message.content}"
+            quote = f"**{person} said:**\n{message.content}"
             await ctx.send(quote)
             if len(message.embeds) > 0:
                 for embed in message.embeds:
