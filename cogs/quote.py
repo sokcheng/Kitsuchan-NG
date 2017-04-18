@@ -55,7 +55,7 @@ class Utilities:
         return quotes
 
     @commands.command()
-    @commands.cooldown(1, 4, commands.BucketType.channel)
+    @commands.cooldown(1, 10, commands.BucketType.channel)
     async def didsay(self, ctx, user:discord.Member, *, quote=""):
         """Checks if a user said a particular phrase.
         
