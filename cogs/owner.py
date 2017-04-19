@@ -81,7 +81,7 @@ class Core:
         except subprocess.TimeoutExpired:
             process.kill()
             output = ["Command timed out. x.x"]
-        paginator = commands.Paginator()
+        paginator = commands.Paginator(prefix="```bash")
         for line in output:
             paginator.add_line(line)
         for page in paginator.pages:
@@ -100,7 +100,7 @@ class Core:
             output = str(output).split("\n")
         except Exception as error:
             output = [f"x.x An error has occurred: {error}"]
-        paginator = commands.Paginator()
+        paginator = commands.Paginator(prefix="```py")
         for line in output:
             paginator.add_line(line)
         for page in paginator.pages:
