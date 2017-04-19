@@ -70,7 +70,6 @@ class Core:
 
     async def prune_guilds(self):
         """Automatically leave guilds if they're found to be too bot-heavy."""
-        logger.info("Pruning guilds.")
         number = 0
         for guild in self.bot.guilds:
             reason = await self.prune_guild(guild)
@@ -78,14 +77,15 @@ class Core:
                 logger.info((f"Automatically left guild {guild.name} ({guild.id}) "
                              f"(reason: {reason})"))
                 number += 1
-        logger.info(f"{number} guilds were pruned.")
+        if number > 0:
+            logger.info(f"{number} guilds were pruned.")
         return number
 
     async def prune_guilds_auto(self):
         await self.bot.wait_until_ready()
         while not self.bot.is_closed():
             await self.prune_guilds()
-            await asyncio.sleep(30)
+            await asyncio.sleep(60)
 
     def load(self):
         try:
