@@ -41,7 +41,7 @@ class Core:
             else:
                 logger.info((f"Automatically left guild {guild.name} ({guild.id}) ",
                              f"(reason: {reason})"))
-                await app_info.owner.send((f"Rejected new guild **{guild.name}** ({guild.id})"
+                await app_info.owner.send((f"Rejected new guild **{guild.name}** ({guild.id}) "
                                            f"(reason: {reason})\n"
                                            f"**Owner:** {guild.owner.name} ({guild.owner.id})\n"
                                            f"**Humans:** {num_humans}\n"
