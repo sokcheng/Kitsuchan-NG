@@ -30,8 +30,8 @@ class Core:
         async def on_guild_join(guild):
             reason = await self.prune_guild(guild)
             app_info = await self.bot.application_info()
+            num_humans, num_bots = self.humans_vs_bots(guild)
             if not reason:
-                num_humans, num_bots = self.humans_vs_bots(guild)
                 logger.info(f"Joined guild {guild.name} ({guild.id})")
                 await app_info.owner.send((f"Joined new guild **{guild.name}** ({guild.id})\n"
                                            f"**Owner:** {guild.owner.name} ({guild.owner.id})\n"
@@ -41,8 +41,12 @@ class Core:
             else:
                 logger.info((f"Automatically left guild {guild.name} ({guild.id}) ",
                              f"(reason: {reason})"))
-                await app_info.owner.send((f"Rejected joining **{guild.name}** ({guild.id}) "
-                                           f"(reason: {reason})"))
+                await app_info.owner.send((f"Rejected new guild **{guild.name}** ({guild.id}) ""
+                                           f"(reason: {reason})\n"
+                                           f"**Owner:** {guild.owner.name} ({guild.owner.id})\n"
+                                           f"**Humans:** {num_humans}\n"
+                                           f"**Bots:** {num_bots}\n"
+                                           f"**Region:** {guild.region}"))
 
     def humans_vs_bots(self, guild):
         num_humans = len([member for member in guild.members if not member.bot])
