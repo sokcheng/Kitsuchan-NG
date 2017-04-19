@@ -16,6 +16,11 @@ import utils
 
 logger = logging.getLogger(__name__)
 
+STATUS_INDICATORS = {"online": ":green_heart:",
+                     "idle": ":yellow_heart:",
+                     "dnd": ":heart:",
+                     "offline": ":black_heart:"}
+
 class Moderation:
     """discord.py cog containing moderation functions of the bot."""
     
@@ -48,6 +53,26 @@ class Moderation:
     async def purge(self, ctx, limit:int):
         """Purge a certain number of messages."""
         await ctx.channel.purge(limit=limit)
+
+    @commands.command(aliases=["moderators"])
+    @commands.cooldown(1, 12, commands.BucketType.channel)
+    async def mods(self, ctx):
+        the_mods = []
+        for member in ctx.guild.members:
+            if ctx.channel.permissions_for(member).manage_messages \
+            and ctx.channel.permissions_for(member).kick_members \
+            and ctx.channel.permissions_for(member).ban_members \
+            and not member.bot:
+                the_mods.append(member)
+        message = ["**__Moderators__**"]
+        for mod in the_mods:
+            try:
+                status = STATUS_INDICATORS[mod.status.name]
+            except KeyError:
+                status = STATUS_INDICATORS["offline"]
+            message.append(f"{status} **{mod.name}**#{mod.discriminator}")
+        message = "\n".join(message)
+        await ctx.send(message)
 
 def setup(bot):
     """Setup function for Moderation."""
