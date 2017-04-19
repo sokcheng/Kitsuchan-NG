@@ -10,7 +10,7 @@ from discord.ext import commands
 
 logger = logging.getLogger(__name__)
 
-class Core:
+class Owner:
     """discord.py cog containing commands that only the owner should use.
     
     bot - The parent discord.Client object for the cog.
@@ -128,4 +128,4 @@ class Core:
 
 def setup(bot):
     """Setup function for owner."""
-    bot.add_cog(Core())
+    bot.add_cog(Owner())

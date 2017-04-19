@@ -12,7 +12,7 @@ from discord.ext import commands
 
 logger = logging.getLogger(__name__)
 
-class Utilities:
+class Quoting:
     """discord.py cog containing commands that quote people."""
 
     @commands.command()
@@ -99,5 +99,5 @@ class Utilities:
                 await ctx.send("To see more, you need to have the `manage_messages` permission.")
 
 def setup(bot):
-    """Setup function for Utilities."""
-    bot.add_cog(Utilities())
+    """Setup function for Quoting."""
+    bot.add_cog(Quoting())

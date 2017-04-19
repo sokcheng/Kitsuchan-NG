@@ -17,7 +17,7 @@ BASE_URL_XKCD = "https://xkcd.com/{0}/"
 BASE_URL_XKCD_API = "https://xkcd.com/{0}/info.0.json"
 BASE_URL_XKCD_EXPLAIN = "http://www.explainxkcd.com/wiki/index.php/{0}"
 
-class Web:
+class xkcd:
     """This cog contains some basic xkcd commands."""
 
     async def _xkcd(self, ctx, comic_id=""):
@@ -93,4 +93,4 @@ class Web:
 
 def setup(bot):
     """Setup function for xkcd."""
-    bot.add_cog(Web())
+    bot.add_cog(xkcd())

@@ -7,7 +7,7 @@ from discord.ext import commands
 # Bundled modules
 import helpers
 
-class Utilities:
+class Encoding:
     """A cog containing commands that encode/decode text in some form or another."""
     
     @commands.command()
@@ -56,4 +56,4 @@ class Utilities:
         await ctx.send(message)
     
 def setup(bot):
-    bot.add_cog(Utilities())
+    bot.add_cog(Encoding())

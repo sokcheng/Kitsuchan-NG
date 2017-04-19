@@ -16,7 +16,7 @@ logger = logging.getLogger(__name__)
 
 FILENAME_BLACKLIST = "blacklist.json"
 
-class Core:
+class Blacklisting:
     """This cog contains blacklisting functions."""
     def __init__(self, bot):
         self.bot = bot
@@ -213,4 +213,4 @@ class Core:
         self.save()
 
 def setup(bot):
-    bot.add_cog(Core(bot))
+    bot.add_cog(Blacklisting(bot))

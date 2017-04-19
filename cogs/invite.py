@@ -10,7 +10,7 @@ from discord.ext import commands
 
 logger = logging.getLogger(__name__)
 
-class Core:
+class Invite:
     """discord.py cog containing core functions of the bot.
     
     * bot - The parent discord.Client object for the cog.
@@ -26,4 +26,4 @@ class Core:
 
 def setup(bot):
     """Setup function for Invite."""
-    bot.add_cog(Core())
+    bot.add_cog(Invite())

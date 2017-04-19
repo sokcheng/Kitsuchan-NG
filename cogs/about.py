@@ -17,7 +17,7 @@ import settings
 
 logger = logging.getLogger(__name__)
 
-class Utilities:
+class About:
     """discord.py cog containing info commands, such as server and user info."""
 
     @commands.group(aliases=["a", "info", "i"], invoke_without_command=True)
@@ -140,5 +140,5 @@ class Utilities:
         await ctx.send(embed=embed)
 
 def setup(bot):
-    """Setup function for Utilities."""
-    bot.add_cog(Utilities())
+    """Setup function for About."""
+    bot.add_cog(About())

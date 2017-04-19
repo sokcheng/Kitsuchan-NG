@@ -16,7 +16,7 @@ import settings
 
 logger = logging.getLogger(__name__)
 
-class Core:
+class Process:
     """discord.py cog containing functions that halt/restart the bot.
     
     bot - The parent discord.Client object for the cog.
@@ -53,4 +53,4 @@ class Core:
 
 def setup(bot):
     """Setup function for process."""
-    bot.add_cog(Core())
+    bot.add_cog(Process())

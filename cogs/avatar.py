@@ -11,7 +11,7 @@ from discord.ext import commands
 
 logger = logging.getLogger(__name__)
 
-class Utilities:
+class Avatar:
     """discord.py cog containing avatar fetcher."""
     
     @commands.command()
@@ -35,4 +35,4 @@ class Utilities:
 
 def setup(bot):
     """Setup function for Utilities."""
-    bot.add_cog(Utilities())
+    bot.add_cog(Avatar())

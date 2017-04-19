@@ -9,7 +9,7 @@ from discord.ext import commands
 
 logger = logging.getLogger(__name__)
 
-class Core:
+class Ping:
     """discord.py cog containing a ping command."""
     
     @commands.command()
@@ -21,4 +21,4 @@ class Core:
 
 def setup(bot):
     """Setup function for ping."""
-    bot.add_cog(Core())
+    bot.add_cog(Ping())

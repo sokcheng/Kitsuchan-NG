@@ -24,7 +24,7 @@ BASE_URL_IBSEARCH_IMAGE = "https://{0[server]}.ibsear.ch/{0[path]}"
 BASE_URL_IBSEARCH_XXX_API = "https://ibsearch.xxx/api/v1/images.json?{0}"
 BASE_URL_IBSEARCH_XXX_IMAGE = "https://{0[server]}.ibsearch.xxx/{0[path]}"
 
-class Web:
+class IbSearch:
     """This cog handles IbSear.ch queries."""
     def __init__(self):
         self.key_ibsearch = settings.manager.get("API_KEY_IBSEARCH")
@@ -83,4 +83,4 @@ class Web:
 
 def setup(bot):
     """Setup function for Web."""
-    bot.add_cog(Web())
+    bot.add_cog(IbSearch())

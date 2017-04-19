@@ -26,7 +26,7 @@ MAX_DIE_SIZE = 2000
 # Instantiate a SystemRandom object to produce cryptographically secure random numbers.
 systemrandom = random.SystemRandom()
 
-class Utilities:
+class Random:
     """A dice roller module for the Utilities category."""
 
     @commands.command(aliases=["coinflip"])
@@ -118,4 +118,4 @@ class Utilities:
 
 def setup(bot):
     """Setup function for random."""
-    bot.add_cog(Utilities())
+    bot.add_cog(Random())

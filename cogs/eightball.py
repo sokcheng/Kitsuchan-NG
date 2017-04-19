@@ -35,7 +35,7 @@ ANSWERS = ["It it certain.",
            "Outlook not so good.",
            "Very doubtful."]
 
-class Fun:
+class Eightball:
     """Cog containing 8ball command."""
     @commands.command(name="8ball")
     @commands.cooldown(4, 12, commands.BucketType.channel)
@@ -53,4 +53,4 @@ class Fun:
 
 def setup(bot):
     """Setup function for 8ball."""
-    bot.add_cog(Fun())
+    bot.add_cog(Eightball())

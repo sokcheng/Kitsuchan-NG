@@ -18,7 +18,7 @@ logger = logging.getLogger(__name__)
 # Constants
 BASE_URL_WIKIPEDIA_API = "https://en.wikipedia.org/w/api.php?{0}"
 
-class Web:
+class Wikipedia:
     """This cog contains a Wikipedia query command."""
 
     @commands.command(aliases=["wikipedia"])
@@ -53,4 +53,4 @@ class Web:
 
 def setup(bot):
     """Setup function for Wikipedia."""
-    bot.add_cog(Web())
+    bot.add_cog(Wikipedia())

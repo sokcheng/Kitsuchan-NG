@@ -12,7 +12,7 @@ from discord.ext import commands
 
 logger = logging.getLogger(__name__)
 
-class Fun:
+class Opinions:
     """discord.py cog containing functions that give the bot's opinion on something."""
 
     @commands.command()
@@ -48,4 +48,4 @@ class Fun:
 
 def setup(bot):
     """Setup function for Reactions."""
-    bot.add_cog(Fun())
+    bot.add_cog(Opinions())
