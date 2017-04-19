@@ -75,7 +75,7 @@ class Core:
         for guild in self.bot.guilds:
             reason = await self.prune_guild(guild)
             if reason:
-                logger.info((f"Automatically left guild {guild.name} ({guild.id}) ",
+                logger.info((f"Automatically left guild {guild.name} ({guild.id}) "
                              f"(reason: {reason})"))
                 number += 1
         logger.info(f"{number} guilds were pruned.")
