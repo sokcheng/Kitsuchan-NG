@@ -75,10 +75,6 @@ Evaluate a Python expression. Only the owner may run this.
 ### Aliases: facedesk
 Facedesk!
 
-## foff
-### Aliases: fuckoff
-Displays a random fuck off message.
-
 ## from
 Subcommands that decode plaintext. (e.g. from binary)
 
@@ -109,10 +105,6 @@ Hug a member!
 
 * member - The member to be hugged.
 
-## iafoff
-### Aliases: itemafoff, iafuckoff, ianonymousfuckoff, itemanonymousfoff, itemanonymousfuckoff
-Displays an anonymous random fuck off message.
-
 ## ibsearch
 ### Aliases: ib
 Fetch a randomized anime image from IbSear.ch, optional tags.
@@ -126,10 +118,6 @@ This command accepts common imageboard tags and keywords. Here are a few example
 * ib 1280x1024 - Search for images that are 1920x1080.
 * ib 5:4 - Search for images in 5:4 aspect ratio.
 * ib random: - You don't care about what you get.
-
-## ifoff
-### Aliases: itemfoff, ifuckoff, itemfuckoff
-Displays a random fuck off message for items.
 
 ## invite
 Generate an invite link for this bot.
@@ -173,6 +161,9 @@ Let me love you!
 ## loade
 ### Aliases: load-extension
 Enable the use of an extension.
+
+## mods
+None
 
 ## nom
 Nom!
