@@ -55,7 +55,7 @@ class Moderation:
         """
         await helpers.function_by_mentions(ctx, ctx.guild.unban)
 
-    @commands.command()
+    @commands.command(aliases=["prune"])
     @commands.has_permissions(manage_messages=True)
     @commands.bot_has_permissions(manage_messages=True)
     @commands.cooldown(1, 4, commands.BucketType.channel)

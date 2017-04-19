@@ -31,7 +31,7 @@ class Core:
         if not isinstance(ctx.channel, discord.DMChannel):
             await ctx.send("Sent to DM!")
     
-    @commands.command()
+    @commands.command(aliases=["clean"])
     @commands.is_owner()
     async def censor(self, ctx, times:int=1):
         """Delete the bot's previous message(s).
