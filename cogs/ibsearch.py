@@ -34,7 +34,7 @@ class Web:
     async def ibsearch(self, ctx, *, tags=""):
         """Fetch a randomized anime image from IbSear.ch, optional tags.
         
-        * *tags - A list of tag strings to be used in the search criteria.
+        * tags - A list of tags to be used in the search criteria.
         
         This command accepts common imageboard tags and keywords. Here are a few examples:
         

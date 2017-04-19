@@ -109,14 +109,16 @@ class Core:
     @commands.group(invoke_without_command=True)
     @commands.is_owner()
     async def block(self, ctx):
-        """Blocking commands (e.g. block user)."""
+        """Blocking commands (e.g. block user).
+        
+        Only the bot owner can use this."""
         embed = helpers.generate_help_embed(self.block)
         await ctx.send(embed=embed)
 
     @block.command(name="user")
     @commands.is_owner()
     async def _blockuser(self, ctx, user:discord.User):
-        """Block a user.
+        """Block a user. Only the bot owner can use this.
         
         * user - The user to block.
         """
@@ -140,7 +142,7 @@ class Core:
     @block.command(name="guild", aliases=["server"])
     @commands.is_owner()
     async def _blockguild(self, ctx, id_guild:int=None):
-        """Block a guild.
+        """Block a guild. Only the bot owner can use this.
         
         * id_guild - The ID of the guild to block. Defaults to current guild.
         """
@@ -168,14 +170,16 @@ class Core:
     @commands.group(aliases=["ublock"], invoke_without_command=True)
     @commands.is_owner()
     async def unblock(self, ctx):
-        """Unblocking commands. (e.g. unblock user)"""
+        """Unblocking commands (e.g. unblock user).
+        
+        Only the bot owner can use this."""
         embed = helpers.generate_help_embed(self.unblock)
         await ctx.send(embed=embed)
 
     @unblock.command(name="user")
     @commands.is_owner()
     async def _unblockuser(self, ctx, user:discord.User):
-        """Unblock a user.
+        """Unblock a user. Only the bot owner can use this.
         
         * user - The user to unblock.
         """
@@ -192,7 +196,7 @@ class Core:
     @unblock.command(name="guild", aliases=["server"])
     @commands.is_owner()
     async def _unblockguild(self, ctx, id_guild:int):
-        """Unblock a guild.
+        """Unblock a guild. Only the bot owner can use this.
         
         * id_guild - The ID of the guild to unblock.
         """

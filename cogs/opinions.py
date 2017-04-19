@@ -21,6 +21,7 @@ class Fun:
         """Choose between one of various supplied things.
         
         Syntax:
+        
         * choose x | y | z - Choose between x, y, and z.
         """
         choices = choices.split("|")

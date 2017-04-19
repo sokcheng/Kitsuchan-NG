@@ -29,21 +29,30 @@ class Moderation:
     @commands.bot_has_permissions(kick_members=True)
     @commands.cooldown(1, 4, commands.BucketType.channel)
     async def kick(self, ctx):
-        """Kick all users mentioned by this command."""
+        """Kick all users mentioned by this command.
+        
+        Requires both the user and bot to have `kick_members` to execute.
+        """
         await helpers.function_by_mentions(ctx, ctx.guild.kick)
 
     @commands.command()
     @commands.has_permissions(ban_members=True)
     @commands.cooldown(1, 4, commands.BucketType.channel)
     async def ban(self, ctx):
-        """Ban all users mentioned by this command."""
+        """Ban all users mentioned by this command.
+        
+        Requires both the user and bot to have `ban_members` to execute.
+        """
         await helpers.function_by_mentions(ctx, ctx.guild.ban)
 
     @commands.command()
     @commands.has_permissions(ban_members=True)
     @commands.cooldown(1, 4, commands.BucketType.channel)
     async def unban(self, ctx):
-        """Unban all users mentioned by this command."""
+        """Unban all users mentioned by this command.
+        
+        Requires both the user and bot to have `ban_members` to execute.
+        """
         await helpers.function_by_mentions(ctx, ctx.guild.unban)
 
     @commands.command()
@@ -51,12 +60,19 @@ class Moderation:
     @commands.bot_has_permissions(manage_messages=True)
     @commands.cooldown(1, 4, commands.BucketType.channel)
     async def purge(self, ctx, limit:int):
-        """Purge a certain number of messages."""
+        """Purge a certain number of messages from the channel.
+        
+        Requires both the user and bot to have `manage_messages` to execute.
+        """
         await ctx.channel.purge(limit=limit)
 
     @commands.command(aliases=["moderators"])
     @commands.cooldown(1, 12, commands.BucketType.channel)
     async def mods(self, ctx):
+        """Display moderators for the given channel.
+        
+        Assumes that members with `manage_messages`, `kick_members`, and `ban_members` are mods.
+        """
         the_mods = []
         for member in ctx.guild.members:
             if ctx.channel.permissions_for(member).manage_messages \

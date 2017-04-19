@@ -24,7 +24,9 @@ class Core:
     @commands.command(aliases=["load-extension"])
     @commands.is_owner()
     async def loade(self, ctx, extension_name:str):
-        """Enable the use of an extension."""
+        """Enable the use of an extension.
+        
+        Only the bot owner can use this."""
         logger.info(f"Loading extension {extension_name}...")
         ctx.bot.load_extension(extension_name)
         settings.manager.setdefault("EXTENSIONS", settings.DEFAULT_EXTENSIONS)
@@ -39,7 +41,9 @@ class Core:
     @commands.command(aliases=["reload-extension"])
     @commands.is_owner()
     async def rloade(self, ctx, extension_name:str):
-        """Reload an already-loaded extension."""
+        """Reload an already-loaded extension.
+        
+        Only the bot owner can use this."""
         logger.info(f"Reloading extension {extension_name}...")
         settings.manager.setdefault("EXTENSIONS", settings.DEFAULT_EXTENSIONS)
         if extension_name in settings.manager["EXTENSIONS"]:
@@ -54,7 +58,9 @@ class Core:
     @commands.command(aliases=["unload-extension"])
     @commands.is_owner()
     async def uloade(self, ctx, extension_name:str):
-        """Disable the use of an extension."""
+        """Disable the use of an extension.
+        
+        Only the bot owner can use this."""
         prompt = await helpers.yes_no(ctx, ctx.bot)
         if not prompt:
             return
@@ -73,7 +79,9 @@ class Core:
     @commands.command(aliases=["list-extensions"])
     @commands.is_owner()
     async def liste(self, ctx):
-        """Display list of currently-enabled bot extensions."""
+        """Display list of currently-enabled bot extensions.
+        
+        Only the bot owner can use this."""
         logger.info("Extension list requested.")
         extensions = "\n".join(ctx.bot.extensions)
         message = f"```Loaded extensions:\n{extensions}```"

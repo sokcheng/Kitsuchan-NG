@@ -61,7 +61,7 @@ class Utilities:
         """Checks if a user said a particular phrase.
         
         * user - A member to mention.
-        * *phrase - Command checks against this to see what was said.
+        * phrase - A phrase to check against. Leave blank to show all instances.
         """
         logger.info(f"Checking if someone said \"{quote}\".")
         paginator = commands.Paginator()

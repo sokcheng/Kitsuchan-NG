@@ -25,7 +25,7 @@ class Core:
     @commands.command()
     @commands.is_owner()
     async def halt(self, ctx):
-        """Halt the bot. Must be bot owner to execute."""
+        """Halt the bot. Only the bot owner can use this."""
         confirm = await helpers.yes_no(ctx, ctx.bot)
         if not confirm:
             return
@@ -39,7 +39,7 @@ class Core:
     @commands.command()
     @commands.is_owner()
     async def restart(self, ctx):
-        """Restart the bot. Must be bot owner to execute."""
+        """Restart the bot. Only the bot owner can use this."""
         confirm = await helpers.yes_no(ctx, ctx.bot)
         if not confirm:
             return
