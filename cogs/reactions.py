@@ -16,12 +16,13 @@ import utils
 
 logger = logging.getLogger(__name__)
 
+systemrandom = random.SystemRandom()
+
 # Base URL strings for RRA API.
 BASE_URL_API = "https://rra.ram.moe/i/r?type={0}"
 BASE_URL_IMAGE = "https://wia.ram.moe{0[path]}"
 
 # Single image links.
-IMAGE_DEAD = "https://s-media-cache-ak0.pinimg.com/736x/ec/61/ef/ec61ef110a5d2e01bf8ae48331b63723.jpg"
 IMAGE_FACEDESK = "https://media.tumblr.com/tumblr_lqegp8wjxZ1qktqch.gif"
 IMAGE_LMLY = "https://68.media.tumblr.com/tumblr_mej070O7Lj1qktqch.gif"
 IMAGE_WHAT = "https://media.tumblr.com/tumblr_lnvtzjiY4J1qktqch.png"
@@ -34,6 +35,9 @@ IMAGES_BOOTS = (("https://media-cache-ak0.pinimg.com/736x/db/b9/a3/"
                  "https://i.imgur.com/3Y4r38i.jpg",
                  "https://i.imgur.com/Jj0eZTh.png",
                  "https://i.imgur.com/EC4UXCI.jpg")
+IMAGES_DEAD = (("https://s-media-cache-ak0.pinimg.com/736x/ec/61/ef/"
+                "ec61ef110a5d2e01bf8ae48331b63723.jpg"),
+               "http://safebooru.org//images/2048/60ce6f6888ba2fce6393638223dcc8d7c67f0655.jpg")
 IMAGES_LEWD = ("https://i.imgur.com/5JZH78a.jpg",
                "https://i.imgur.com/RdQ3FFA.jpg",
                "https://i.imgur.com/98tad3K.gif",
@@ -100,7 +104,7 @@ class Reactions:
     async def _send_image(self, ctx, url_image):
         """A helper function that creates an embed with an image and sends it off."""
         if isinstance(url_image, (tuple, list)):
-            url_image = random.choice(url_image)
+            url_image = systemrandom.choice(url_image)
         if ctx.guild and ctx.guild.explicit_content_filter.name == "disabled":
             embed = discord.Embed(color=utils.random_color())
             embed.set_image(url=url_image)
@@ -113,7 +117,7 @@ class Reactions:
     @commands.cooldown(4, 12, commands.BucketType.channel)
     async def dead(self, ctx):
         """Dead!"""
-        await self._send_image(ctx, IMAGE_DEAD)
+        await self._send_image(ctx, IMAGES_DEAD)
 
     @commands.command(aliases=["facedesk"])
     @commands.cooldown(4, 12, commands.BucketType.channel)
