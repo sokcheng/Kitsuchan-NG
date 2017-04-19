@@ -5,6 +5,10 @@
 ## 8ball
 Ask the Magic 8-Ball a question.
 
+## about
+### Aliases: a, info, i
+Information subcommands, e.g. channel information.
+
 ## antigravity
 Fetch the antigravity comic from xkcd.
 
@@ -127,10 +131,6 @@ This command accepts common imageboard tags and keywords. Here are a few example
 ### Aliases: itemfoff, ifuckoff, itemfuckoff
 Displays a random fuck off message for items.
 
-## info
-### Aliases: i
-Information subcommands, e.g. channel information.
-
 ## invite
 Generate an invite link for this bot.
 
@@ -191,6 +191,9 @@ Pat a member!
 
 ## ping
 Ping the bot.
+
+## poke
+Poke!
 
 ## pokedex
 ### Aliases: dex
