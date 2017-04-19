@@ -27,7 +27,7 @@ class Moderation:
     @commands.command()
     @commands.has_permissions(kick_members=True)
     @commands.bot_has_permissions(kick_members=True)
-    @commands.cooldown(1, 4, commands.BucketType.channel)
+    @commands.cooldown(1, 8, commands.BucketType.user)
     async def kick(self, ctx):
         """Kick all users mentioned by this command.
         
@@ -37,7 +37,7 @@ class Moderation:
 
     @commands.command()
     @commands.has_permissions(ban_members=True)
-    @commands.cooldown(1, 4, commands.BucketType.channel)
+    @commands.cooldown(1, 8, commands.BucketType.user)
     async def ban(self, ctx):
         """Ban all users mentioned by this command.
         
@@ -47,7 +47,7 @@ class Moderation:
 
     @commands.command()
     @commands.has_permissions(ban_members=True)
-    @commands.cooldown(1, 4, commands.BucketType.channel)
+    @commands.cooldown(1, 8, commands.BucketType.user)
     async def unban(self, ctx):
         """Unban all users mentioned by this command.
         
@@ -58,7 +58,7 @@ class Moderation:
     @commands.command(aliases=["prune"])
     @commands.has_permissions(manage_messages=True)
     @commands.bot_has_permissions(manage_messages=True)
-    @commands.cooldown(1, 4, commands.BucketType.channel)
+    @commands.cooldown(1, 8, commands.BucketType.user)
     async def purge(self, ctx, limit:int):
         """Purge a certain number of messages from the channel.
         
