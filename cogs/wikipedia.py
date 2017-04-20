@@ -38,7 +38,7 @@ class Wikipedia:
             if response.status == 200:
                 data = await response.json()
                 embed = discord.Embed()
-                if len(data) == 0:
+                if len(data[1]) == 0:
                     await ctx.send("Could not find any results. :<")
                     raise errors.ZeroDataLengthError()
                 for index in range(0, min(3, len(data[1]))):
