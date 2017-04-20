@@ -23,4 +23,5 @@ def random_color():
 
 # https://stackoverflow.com/questions/2189800/length-of-an-integer-in-python/2189827#2189827
 def digits(number:int):
+    """Compute the number of digits in a number."""
     return int(math.log10(number))+1
