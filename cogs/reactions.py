@@ -202,7 +202,7 @@ class Reactions:
     @commands.cooldown(4, 12, commands.BucketType.channel)
     async def lewd(self, ctx):
         """Lewd!"""
-        choice = bool(random.getrandbits(1))
+        choice = bool(systemrandom.getrandbits(1))
         if choice:
             await self._rra(ctx, "lewd")
         else:
