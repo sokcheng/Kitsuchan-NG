@@ -49,17 +49,21 @@ def is_public(ctx):
 async def on_ready():
     """Conduct preparations once the bot is ready to go."""
     bot.time_started = datetime.datetime.now()
-    command_prefix = settings.manager.get("COMMAND_PREFIX")
+    
     command_prefix_firstletter = f"{bot.user.name[:3].lower()}"
     additional_prefixes = [command_prefix_firstletter]
-    if isinstance(command_prefix, str):
-        additional_prefixes.append(command_prefix)
+    
+    command_prefix_custom = settings.manager.get("COMMAND_PREFIX")
+    if isinstance(command_prefix_custom, str):
+        additional_prefixes.append(command_prefix_custom)
     bot.command_prefix = commands.when_mentioned_or(*additional_prefixes)
+    
     game = discord.Game()
-    if callable(bot.command_prefix):
-        game.name = f"@{bot.user.name} help"
-    else:
+    if isinstance(command_prefix_custom, str):
         game.name = f"{bot.command_prefix}help"
+    else:
+        game.name = f"{command_prefix_firstletter}help or @{bot.user.name} help"
+    
     await bot.change_presence(game=game)
     logger.info(f"Bot is ONLINE! Username: {bot.user.name}, User ID: {bot.user.id}")
 
