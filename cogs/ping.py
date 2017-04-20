@@ -9,15 +9,22 @@ from discord.ext import commands
 
 logger = logging.getLogger(__name__)
 
+VARIANTS = {"bang": ":gun: **BANG!**",
+            "bang!": ":gun: **BANG!**"}
+
 class Ping:
     """discord.py cog containing a ping command."""
     
-    @commands.command()
+    @commands.command(aliases=["bang", "bang!", "pong"])
     @commands.cooldown(1, 10, commands.BucketType.guild)
     async def ping(self, ctx):
         """Ping the bot."""
         pingtime = int(round((datetime.datetime.utcnow() - ctx.message.created_at).total_seconds() * 1000, 0))
-        await ctx.send(f":ping_pong: {pingtime} ms!")
+        if ctx.invoked_with in VARIANTS:
+            variant = VARIANTS[ctx.invoked_with]
+        else:
+            variant = ":ping_pong:"
+        await ctx.send(f"{variant} {pingtime} ms!")
 
 def setup(bot):
     """Setup function for ping."""

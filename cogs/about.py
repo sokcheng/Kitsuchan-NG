@@ -35,7 +35,7 @@ class About:
         embed = discord.Embed()
         embed.description = ctx.bot.description
         if ctx.guild and ctx.guild.explicit_content_filter.name == "disabled":
-            embed.set_thumbnail(url=ctx.bot.user.avatar_url)
+            embed.set_thumbnail(url=ctx.bot.user.avatar_url_as("png", 128))
         else:
             embed.set_footer(text="Thumbnail omitted on this guild due to image scanning.")
         ainfo = await ctx.bot.application_info()
@@ -85,6 +85,7 @@ class About:
         await ctx.send(embed=embed)
 
     @about.command(brief="Display channel info.", aliases=["c"])
+    @commands.guild_only()
     @commands.cooldown(4, 12, commands.BucketType.channel)
     async def channel(self, ctx, channel:discord.TextChannel=None):
         """Display information about a channel channel.
@@ -108,6 +109,7 @@ class About:
         await ctx.send(embed=embed)
 
     @about.command(brief="Display user info.", aliases=["u"])
+    @commands.guild_only()
     @commands.cooldown(4, 12, commands.BucketType.channel)
     async def user(self, ctx, user:discord.Member=None):
         """Display information about a user, such as status and roles.
@@ -118,6 +120,7 @@ class About:
         if not user:
             user = ctx.author
         embed = discord.Embed(title=user.display_name)
+        embed.color = user.color
         if user.display_name != user.name:
             embed.description = user.name
         if ctx.guild and ctx.guild.explicit_content_filter.name == "disabled":
