@@ -36,7 +36,7 @@ Boots!
 
 ## censor
 ### Aliases: clean
-Delete the bot's previous message(s).
+Delete the bot's previous message(s). Bot owner only.
 
 * times - Number of message to delete. Defaults to 1.
 
@@ -73,12 +73,12 @@ Checks if a user said a particular phrase.
 
 ## echo
 ### Aliases: say
-Repeat the user's text back at them.
+Repeat the user's text back at them. Bot owner only.
 
-* *text - A list of strings, which is concatenated into one string before being echoed.
+* text - A string to be echoed back.
 
 ## eval
-Evaluate a Python expression. Only the owner may run this.
+Evaluate a Python expression. Bot owner only.
 
 ## fdesk
 ### Aliases: facedesk
@@ -88,7 +88,7 @@ Facedesk!
 Subcommands that decode plaintext. (e.g. from binary)
 
 ## ghelp
-Generate a file listing commands that the bot is capable of.
+Generate a file listing currently loaded commands. Bot owner only.
 
 ## google
 ### Aliases: g
@@ -165,7 +165,7 @@ Only the bot owner can use this.
 
 ## listg
 ### Aliases: listguilds
-List all guilds that the bot is in.
+List all guilds that the bot is in. Bot owner only.
 
 ## lmly
 ### Aliases: letmeloveyou
@@ -223,7 +223,7 @@ Quote a user.
 * user - The user you wish to quote.
 
 ## rename
-None
+Change the bot's username. Bot owner only.
 
 ## restart
 Restart the bot. Only the bot owner can use this.
@@ -255,7 +255,7 @@ Examples:
 Sandwich!
 
 ## sh
-Execute a system command. Only the owner may run this.
+Execute a system command. Bot owner only.
 
 ## slap
 Slap a member!
