@@ -50,8 +50,11 @@ async def on_ready():
     """Conduct preparations once the bot is ready to go."""
     bot.time_started = datetime.datetime.now()
     command_prefix = settings.manager.get("COMMAND_PREFIX")
+    command_prefix_firstletter = f"{bot.user.name[:3].lower()}"
+    additional_prefixes = [command_prefix_firstletter]
     if isinstance(command_prefix, str):
-        bot.command_prefix = command_prefix
+        additional_prefixes.append(command_prefix)
+    bot.command_prefix = commands.when_mentioned_or(*additional_prefixes)
     game = discord.Game()
     if callable(bot.command_prefix):
         game.name = f"@{bot.user.name} help"
