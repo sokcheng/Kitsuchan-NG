@@ -40,7 +40,7 @@ def is_public(ctx):
     """Prevent the bot from responding to DMs, unless it's the bot owner sending the DM."""
     if bot.is_owner(ctx.author):
         return True
-    elif isinstance(ctx.channel, discord.DMChannel)
+    elif isinstance(ctx.channel, discord.DMChannel):
         raise commands.NoPrivateMessage()
     return True
 
