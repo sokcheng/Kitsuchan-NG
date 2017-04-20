@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-"""Helper functions for kitsuchan-ng."""
+"""Helper functions for kitsuchan-ng. These DO have discord.py dependencies."""
 
 # Standard modules
 import asyncio

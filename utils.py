@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 
-"""Contains small helper functions."""
+"""Contains small helper functions. These DO NOT have discord.py dependencies."""
 
 import hashlib
-import base64
+import math
 import random
 
 # Instantiate a SystemRandom object to produce cryptographically secure random numbers.
@@ -20,3 +20,7 @@ def to_hash(string):
 def random_color():
     """Generate a random int representing a random color."""
     return systemrandom.randint(0x000000, 0xFFFFFF)
+
+# https://stackoverflow.com/questions/2189800/length-of-an-integer-in-python/2189827#2189827
+def digits(number:int):
+    return int(math.log10(number))+1

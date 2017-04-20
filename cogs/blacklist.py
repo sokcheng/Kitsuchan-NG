@@ -11,6 +11,7 @@ from discord.ext import commands
 # Bundled modules
 import helpers
 import settings
+import utils
 
 logger = logging.getLogger(__name__)
 
@@ -117,24 +118,25 @@ class Blacklisting:
 
     @block.command(name="user")
     @commands.is_owner()
-    async def _blockuser(self, ctx, user:discord.User):
+    async def _blockuser(self, ctx, id_user:int):
         """Block a user. Only the bot owner can use this.
         
-        * user - The user to block.
+        * id_user - The ID of the user to block.
         """
         self.settings.setdefault("USERS", [])
-        is_owner = await ctx.bot.is_owner(user)
+        app_info = await ctx.bot.application_info()
+        is_owner = id_user == app_info.owner.id
         if is_owner:
             message = "Can't block bot owner."
             logger.warning(message)
             raise commands.UserInputError(message)
-        if user.id not in self.settings["USERS"]:
-            self.settings["USERS"].append(user.id)
-            message = f"{user.name} ({user.id}) blocked."
+        if id_user not in self.settings["USERS"]:
+            self.settings["USERS"].append(id_user)
+            message = f"{id_user} blocked."
             logger.info(message)
             await ctx.send(message)
         else:
-            message = f"{user.name} ({user.id}) already blocked."
+            message = f"{id_user} already blocked."
             logger.info(message)
             await ctx.send(message)
         self.save()
@@ -178,19 +180,19 @@ class Blacklisting:
 
     @unblock.command(name="user")
     @commands.is_owner()
-    async def _unblockuser(self, ctx, user:discord.User):
+    async def _unblockuser(self, ctx, id_user:int):
         """Unblock a user. Only the bot owner can use this.
         
-        * user - The user to unblock.
+        * id_user - The user ID to unblock.
         """
         self.settings.setdefault("USERS", [])
-        if user.id in self.settings["USERS"]:
-            self.settings["USERS"].remove(user.id)
-            message = f"{user.name} ({user.id}) unblocked."
+        if id_user in self.settings["USERS"]:
+            self.settings["USERS"].remove(id_user)
+            message = f"{id_user} unblocked."
             logger.info(message)
             await ctx.send(message)
         else:
-            await ctx.send(f"{user.name} ({user.id}) already unblocked.")
+            await ctx.send(f"{id_user} already unblocked.")
         self.save()
 
     @unblock.command(name="guild", aliases=["server"])
