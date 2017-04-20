@@ -69,24 +69,23 @@ class Quoting:
         async for message in ctx.channel.history():
             if message.author.id == user.id:
                 if quote.lower() in message.content.lower():
-                    lines = message.content.split("\n")
-                    if len(lines) == 1:
+                    if message.content.count("\n") == 0:
                         line = message.content.replace("```", "'''")
                         paginator.add_line(f"{message.created_at.ctime()}: {line}")
                     else:
                         paginator.add_line(f"{message.created_at.ctime()}:")
+                        lines = message.content.split("\n")
                         for line in lines:
                             line = line.replace("```", "'''")
                             paginator.add_line(line)
                 for embed in message.embeds:
                     quotes_embed = self.scan_embed_didsay(embed.to_dict(), quote.lower())
                     for quote_embed in quotes_embed:
-                        paginator.add_line(f"{message.created_at.ctime()}:")
-                        lines = quote_embed.split("\n")
-                        if len(lines) == 1:
+                        if message.content.count("\n") == 0:
                             line = message.content.replace("```", "'''")
                             paginator.add_line(f"{message.created_at.ctime()}: {line}")
                         else:
+                            lines = quote_embed.split("\n")
                             paginator.add_line(f"{message.created_at.ctime()}:")
                             for line in lines:
                                 line = line.replace("```", "'''")
