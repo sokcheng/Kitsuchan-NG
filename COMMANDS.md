@@ -221,6 +221,9 @@ Quote a user.
 
 * user - The user you wish to quote.
 
+## rename
+None
+
 ## restart
 Restart the bot. Only the bot owner can use this.
 

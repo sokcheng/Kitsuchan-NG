@@ -11,10 +11,13 @@ from discord.ext import commands
 logger = logging.getLogger(__name__)
 
 class Owner:
-    """discord.py cog containing commands that only the owner should use.
+    """discord.py cog containing commands that only the owner should use."""
     
-    bot - The parent discord.Client object for the cog.
-    """
+    @commands.command()
+    @commands.is_owner()
+    async def rename(self, ctx, username:str):
+        await ctx.bot.user.edit(username=username)
+        await ctx.send(f"Username changed. :3")
     
     @commands.command(aliases=["listguilds"])
     @commands.is_owner()
