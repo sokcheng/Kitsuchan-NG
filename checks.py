@@ -4,4 +4,7 @@
 
 def is_nsfw(ctx):
     """An NSFW check for the bot."""
-    return "nsfw" in ctx.channel.name.lower()
+    try:
+        return "nsfw" in ctx.channel.name.lower()
+    except AttributeError:
+        return False

@@ -21,8 +21,6 @@ logger = logging.getLogger(__name__)
 # Constants
 BASE_URL_IBSEARCH_API = "https://ibsear.ch/api/v1/images.json?{0}"
 BASE_URL_IBSEARCH_IMAGE = "https://{0[server]}.ibsear.ch/{0[path]}"
-BASE_URL_IBSEARCH_XXX_API = "https://ibsearch.xxx/api/v1/images.json?{0}"
-BASE_URL_IBSEARCH_XXX_IMAGE = "https://{0[server]}.ibsearch.xxx/{0[path]}"
 
 class IbSearch:
     """This cog handles IbSear.ch queries."""
@@ -49,16 +47,8 @@ class IbSearch:
             await ctx.send(message)
             raise errors.KeyError(message)
         logger.info(f"Fetching image with tags {tags}.")
-        if checks.is_nsfw(ctx):
-            logger.info(f"NSFW allowed for channel {ctx.channel.id}.")
-            base_url_api = BASE_URL_IBSEARCH_XXX_API
-            base_url_image = BASE_URL_IBSEARCH_XXX_IMAGE
-        else:
-            logger.info(f"NSFW disallowed for channel {ctx.channel.id}.")
-            base_url_api = BASE_URL_IBSEARCH_API
-            base_url_image = BASE_URL_IBSEARCH_IMAGE
         params = urllib.parse.urlencode({"key": self.key_ibsearch, "q": tags})
-        url = base_url_api.format(*params)
+        url = BASE_URL_IBSEARCH_API.format(*params)
         async with ctx.bot.session.get(url) as response:
             if response.status == 200:
                 data = await response.json()
@@ -67,7 +57,7 @@ class IbSearch:
                     raise errors.ZeroDataLengthError()
                 index = random.randint(1, len(data)) - 1
                 result = data[index]
-                url_image = base_url_image.format(result)
+                url_image = BASE_URL_IBSEARCH_IMAGE.format(result)
                 if ctx.guild and ctx.guild.explicit_content_filter.name == "disabled":
                     embed = discord.Embed(title="Click here for full image")
                     embed.url = url_image
