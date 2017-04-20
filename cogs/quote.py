@@ -70,18 +70,27 @@ class Quoting:
             if message.author.id == user.id:
                 if quote.lower() in message.content.lower():
                     lines = message.content.split("\n")
-                    paginator.add_line(f"{message.created_at.ctime()}:")
-                    for line in lines:
-                        line = line.replace("```", "'''")
-                        paginator.add_line(line)
+                    if len(lines) == 1:
+                        line = message.content.replace("```", "'''")
+                        paginator.add_line(f"{message.created_at.ctime()}: {line}")
+                    else:
+                        paginator.add_line(f"{message.created_at.ctime()}:")
+                        for line in lines:
+                            line = line.replace("```", "'''")
+                            paginator.add_line(line)
                 for embed in message.embeds:
                     quotes_embed = self.scan_embed_didsay(embed.to_dict(), quote.lower())
                     for quote_embed in quotes_embed:
                         paginator.add_line(f"{message.created_at.ctime()}:")
                         lines = quote_embed.split("\n")
-                        for line in lines:
-                            line = line.replace("```", "'''")
-                            paginator.add_line(line)
+                        if len(lines) == 1:
+                            line = message.content.replace("```", "'''")
+                            paginator.add_line(f"{message.created_at.ctime()}: {line}")
+                        else:
+                            paginator.add_line(f"{message.created_at.ctime()}:")
+                            for line in lines:
+                                line = line.replace("```", "'''")
+                                paginator.add_line(line)
             length += 1
         if len(paginator.pages) == 0:
             await ctx.send((f"{user.name} did not say **{quote}** in the last {length} messages. "
