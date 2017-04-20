@@ -22,14 +22,17 @@ class Process:
     bot - The parent discord.Client object for the cog.
     """
 
-    @commands.command()
+    @commands.command(aliases=["shutdown", "kys"])
     @commands.is_owner()
     async def halt(self, ctx):
         """Halt the bot. Only the bot owner can use this."""
         confirm = await helpers.yes_no(ctx, ctx.bot)
         if not confirm:
             return
-        message = "Bot is going for halt NOW!"
+        if ctx.invoked_with == "kys":
+            message = "Dead! x.x"
+        else:
+            message = "Bot is going for halt NOW!"
         logger.warning(message)
         await ctx.send(message)
         await ctx.bot.logout()

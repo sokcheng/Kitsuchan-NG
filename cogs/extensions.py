@@ -16,14 +16,11 @@ import settings
 logger = logging.getLogger(__name__)
 
 class Extensions:
-    """discord.py cog containing extension-related functions of the bot.
-    
-    bot - The parent discord.Client object for the cog.
-    """
+    """discord.py cog containing extension-related functions of the bot."""
 
-    @commands.command(aliases=["load-extension"])
+    @commands.command(aliases=["loade"])
     @commands.is_owner()
-    async def loade(self, ctx, extension_name:str):
+    async def load(self, ctx, extension_name:str):
         """Enable the use of an extension.
         
         Only the bot owner can use this."""
@@ -38,9 +35,9 @@ class Extensions:
         await ctx.send(message)
         logger.info(message)
 
-    @commands.command(aliases=["reload-extension"])
+    @commands.command(aliases=["reload", "rloade"])
     @commands.is_owner()
-    async def rloade(self, ctx, extension_name:str):
+    async def rload(self, ctx, extension_name:str):
         """Reload an already-loaded extension.
         
         Only the bot owner can use this."""
@@ -48,16 +45,20 @@ class Extensions:
         settings.manager.setdefault("EXTENSIONS", settings.DEFAULT_EXTENSIONS)
         if extension_name in settings.manager["EXTENSIONS"]:
             ctx.bot.unload_extension(extension_name)
-            ctx.bot.load_extension(extension_name)
-            message = f"Extension {extension_name} reloaded."
+            try:
+                ctx.bot.load_extension(extension_name)
+            except Exception as error:
+                message = f"An error occurred while trying to reload {extension_name}! x.x"
+            else:
+                message = f"Extension {extension_name} reloaded."
         else:
             message = f"Extension {extension_name} not currently loaded; please load it. :<"
         await ctx.send(message)
         logger.info(message)
 
-    @commands.command(aliases=["unload-extension"])
+    @commands.command(aliases=["unload", "uloade"])
     @commands.is_owner()
-    async def uloade(self, ctx, extension_name:str):
+    async def uload(self, ctx, extension_name:str):
         """Disable the use of an extension.
         
         Only the bot owner can use this."""
@@ -76,7 +77,7 @@ class Extensions:
         await ctx.send(message)
         logger.info(message)
 
-    @commands.command(aliases=["list-extensions"])
+    @commands.command()
     @commands.is_owner()
     async def liste(self, ctx):
         """Display list of currently-enabled bot extensions.

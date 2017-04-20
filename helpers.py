@@ -56,8 +56,9 @@ def generate_help_embed(thing):
                 pass
         return embed
 
-async def yes_no(ctx, client:discord.Client, message:str="Are you sure? Type yes to confirm."):
-    """Yes no helper. Ask a confirmation message with a timeout of 5 seconds.
+async def yes_no(ctx, client:discord.Client,
+                 message:str="Are you sure? Type **yes** within 10 seconds to confirm. o.o"):
+    """Yes no helper. Ask a confirmation message with a timeout of 10 seconds.
     
     ctx - The context in which the question is being asked.
     client - The client handling the question responses.
@@ -65,12 +66,12 @@ async def yes_no(ctx, client:discord.Client, message:str="Are you sure? Type yes
     """
     await ctx.send(message)
     try:
-        message = await client.wait_for("message", timeout=5,
+        message = await client.wait_for("message", timeout=10,
                                         check=lambda message: message.author == ctx.message.author)
     except asyncio.TimeoutError:
-        await ctx.send("Timed out waiting.")
+        await ctx.send("Timed out waiting. :<")
         return False
     if message.clean_content.lower() != "yes":
-        await ctx.send("Command cancelled.")
+        await ctx.send("Command cancelled. :<")
         return False
     return True
