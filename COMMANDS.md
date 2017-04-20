@@ -3,6 +3,7 @@
 * Note 2: This file was automatically generated and may look bad.
 
 ## 8ball
+### Aliases: eightball
 Ask the Magic 8-Ball a question.
 
 * question - The question to ask. Must end in a ?
@@ -103,6 +104,7 @@ Originally made by Kowlin https://github.com/Kowlin/refactored-cogs, edited by A
 Modified to work with Kitsuchan-NG.
 
 ## halt
+### Aliases: shutdown, kys
 Halt the bot. Only the bot owner can use this.
 
 ## help
@@ -157,7 +159,6 @@ Lick a member!
 * member - The member to be licked.
 
 ## liste
-### Aliases: list-extensions
 Display list of currently-enabled bot extensions.
 
 Only the bot owner can use this.
@@ -170,8 +171,8 @@ List all guilds that the bot is in.
 ### Aliases: letmeloveyou
 Let me love you!
 
-## loade
-### Aliases: load-extension
+## load
+### Aliases: loade
 Enable the use of an extension.
 
 Only the bot owner can use this.
@@ -230,8 +231,8 @@ Restart the bot. Only the bot owner can use this.
 ## reverse
 Reverse input text.
 
-## rloade
-### Aliases: reload-extension
+## rload
+### Aliases: reload, rloade
 Reload an already-loaded extension.
 
 Only the bot owner can use this.
@@ -283,8 +284,8 @@ Subcommands that encode plaintext. (e.g. to binary)
 ## triggered
 Triggered!
 
-## uloade
-### Aliases: unload-extension
+## uload
+### Aliases: unload, uloade
 Disable the use of an extension.
 
 Only the bot owner can use this.
