@@ -5,6 +5,8 @@
 ## 8ball
 Ask the Magic 8-Ball a question.
 
+* question - The question to ask. Must end in a ?
+
 ## about
 ### Aliases: a, info, i
 Information subcommands, e.g. channel information.
@@ -21,13 +23,18 @@ Defaults to displaying the avatar of the user who invoked the command.
 ## ban
 Ban all users mentioned by this command.
 
+Requires both the user and bot to have `ban_members` to execute.
+
 ## block
 Blocking commands (e.g. block user).
+
+Only the bot owner can use this.
 
 ## boots
 Boots!
 
 ## censor
+### Aliases: clean
 Delete the bot's previous message(s).
 
 * times - Number of message to delete. Defaults to 1.
@@ -43,6 +50,7 @@ Shows the currently most played games
 Choose between one of various supplied things.
 
 Syntax:
+
 * choose x | y | z - Choose between x, y, and z.
 
 ## cry
@@ -60,7 +68,7 @@ Dead!
 Checks if a user said a particular phrase.
 
 * user - A member to mention.
-* *phrase - Command checks against this to see what was said.
+* phrase - A phrase to check against. Leave blank to show all instances.
 
 ## echo
 ### Aliases: say
@@ -95,7 +103,7 @@ Originally made by Kowlin https://github.com/Kowlin/refactored-cogs, edited by A
 Modified to work with Kitsuchan-NG.
 
 ## halt
-Halt the bot. Must be bot owner to execute.
+Halt the bot. Only the bot owner can use this.
 
 ## help
 Shows this message.
@@ -109,7 +117,7 @@ Hug a member!
 ### Aliases: ib
 Fetch a randomized anime image from IbSear.ch, optional tags.
 
-* *tags - A list of tag strings to be used in the search criteria.
+* tags - A list of tags to be used in the search criteria.
 
 This command accepts common imageboard tags and keywords. Here are a few examples:
 
@@ -128,6 +136,8 @@ Works with Romaji, Hiragana, Kanji, and Katakana.
 
 ## kick
 Kick all users mentioned by this command.
+
+Requires both the user and bot to have `kick_members` to execute.
 
 ## kiss
 Kiss a member!
@@ -150,6 +160,8 @@ Lick a member!
 ### Aliases: list-extensions
 Display list of currently-enabled bot extensions.
 
+Only the bot owner can use this.
+
 ## listg
 ### Aliases: listguilds
 List all guilds that the bot is in.
@@ -162,8 +174,13 @@ Let me love you!
 ### Aliases: load-extension
 Enable the use of an extension.
 
+Only the bot owner can use this.
+
 ## mods
-None
+### Aliases: moderators
+Display moderators for the given channel.
+
+Assumes that members with `manage_messages`, `kick_members`, and `ban_members` are mods.
 
 ## nom
 Nom!
@@ -194,7 +211,10 @@ This is the list of pokemon queries you can perform.
 Pout!
 
 ## purge
-Purge a certain number of messages.
+### Aliases: prune
+Purge a certain number of messages from the channel.
+
+Requires both the user and bot to have `manage_messages` to execute.
 
 ## quote
 Quote a user.
@@ -202,7 +222,7 @@ Quote a user.
 * user - The user you wish to quote.
 
 ## restart
-Restart the bot. Must be bot owner to execute.
+Restart the bot. Only the bot owner can use this.
 
 ## reverse
 Reverse input text.
@@ -210,6 +230,8 @@ Reverse input text.
 ## rloade
 ### Aliases: reload-extension
 Reload an already-loaded extension.
+
+Only the bot owner can use this.
 
 ## rng
 ### Aliases: randint
@@ -262,12 +284,18 @@ Triggered!
 ### Aliases: unload-extension
 Disable the use of an extension.
 
+Only the bot owner can use this.
+
 ## unban
 Unban all users mentioned by this command.
 
+Requires both the user and bot to have `ban_members` to execute.
+
 ## unblock
 ### Aliases: ublock
-Unblocking commands. (e.g. unblock user)
+Unblocking commands (e.g. unblock user).
+
+Only the bot owner can use this.
 
 ## what
 What?
@@ -279,7 +307,7 @@ Shows a list of all the people playing a game.
 ### Aliases: wikipedia
 Search Wikipedia.
 
-* *query - A list of strings to be used in the search criteria.
+* query - A list of strings to be used in the search criteria.
 
 ## wlol
 ### Aliases: wakarimasenlol
