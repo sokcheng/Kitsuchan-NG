@@ -20,6 +20,7 @@ STATUS_INDICATORS = {"online": ":green_heart:",
                      "idle": ":yellow_heart:",
                      "dnd": ":heart:",
                      "offline": ":black_heart:"}
+# This relies on Python 3.6's dictionary implementation to not break.
 STATUS_SORTED = list(STATUS_INDICATORS.keys())
 
 class Moderation:
