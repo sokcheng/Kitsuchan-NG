@@ -15,7 +15,7 @@ class Owner:
     
     @commands.command()
     @commands.is_owner()
-    async def rename(self, ctx, username:str):
+    async def rename(self, ctx, *, username):
         await ctx.bot.user.edit(username=username)
         await ctx.send(f"Username changed. :3")
     
