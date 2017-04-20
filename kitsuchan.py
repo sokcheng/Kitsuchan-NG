@@ -50,8 +50,9 @@ async def on_ready():
     """Conduct preparations once the bot is ready to go."""
     bot.time_started = datetime.datetime.now()
     
-    command_prefix_firstletter = f"{bot.user.name[:3].lower()}"
-    additional_prefixes = [command_prefix_firstletter]
+    command_prefix_three_letters = f"{bot.user.name[:3].lower()}"
+    command_prefix_three_letters_space = f"{bot.user.name[:3].lower()} "
+    additional_prefixes = [command_prefix_three_letters_space, command_prefix_three_letters]
     
     command_prefix_custom = settings.manager.get("COMMAND_PREFIX")
     if isinstance(command_prefix_custom, str):
@@ -62,7 +63,7 @@ async def on_ready():
     if isinstance(command_prefix_custom, str):
         game.name = f"{bot.command_prefix}help"
     else:
-        game.name = f"{command_prefix_firstletter}help or @{bot.user.name} help"
+        game.name = f"{command_prefix_three_letters_space}help or @{bot.user.name} help"
     
     await bot.change_presence(game=game)
     logger.info(f"Bot is ONLINE! Username: {bot.user.name}, User ID: {bot.user.id}")
