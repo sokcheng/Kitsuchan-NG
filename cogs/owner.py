@@ -16,7 +16,7 @@ class Owner:
     @commands.command()
     @commands.is_owner()
     async def rename(self, ctx, *, username):
-        """Change the bot's username. Only the owner may run this."""
+        """Change the bot's username. Bot owner only."""
         await ctx.bot.user.edit(username=username)
         logger.info(f"Username changed to {username}.")
         await ctx.send(f"Username changed. :3")
@@ -24,7 +24,7 @@ class Owner:
     @commands.command(aliases=["listguilds"])
     @commands.is_owner()
     async def listg(self, ctx):
-        """List all guilds that the bot is in."""
+        """List all guilds that the bot is in. Bot owner only."""
         paginator = commands.Paginator()
         paginator.add_line("Guilds this bot is in:")
         for guild in ctx.bot.guilds:
@@ -39,7 +39,7 @@ class Owner:
     @commands.command(aliases=["clean"])
     @commands.is_owner()
     async def censor(self, ctx, times:int=1):
-        """Delete the bot's previous message(s).
+        """Delete the bot's previous message(s). Bot owner only.
         
         * times - Number of message to delete. Defaults to 1."""
         if times < 1:
@@ -56,9 +56,9 @@ class Owner:
     @commands.command(aliases=["say"])
     @commands.is_owner()
     async def echo(self, ctx, *, text=""):
-        """Repeat the user's text back at them.
+        """Repeat the user's text back at them. Bot owner only.
         
-        * *text - A list of strings, which is concatenated into one string before being echoed.
+        * text - A string to be echoed back.
         """
         logger.info(f"ctx.author.display_name {ctx.author.id} requested echo of {text}")
         if len(text) == 0:
@@ -70,7 +70,7 @@ class Owner:
     @commands.command()
     @commands.is_owner()
     async def sh(self, ctx, *, expression=""):
-        """Execute a system command. Only the owner may run this."""
+        """Execute a system command. Bot owner only."""
         if len(expression) == 0:
             raise commands.UserInputError("No command was specified.")
         logger.info(f"Shell execution of {expression} requested.")
@@ -96,7 +96,7 @@ class Owner:
     @commands.command(name="eval")
     @commands.is_owner()
     async def _eval(self, ctx, *, expression=""):
-        """Evaluate a Python expression. Only the owner may run this."""
+        """Evaluate a Python expression. Bot owner only."""
         if len(expression) == 0:
             raise commands.UserInputError("No expression was specified.")
         logger.info(f"Evaluation of {expression} requested.")
@@ -115,7 +115,7 @@ class Owner:
     @commands.command(hidden=True)
     @commands.is_owner()
     async def ghelp(self, ctx):
-        """Generate a file listing commands that the bot is capable of."""
+        """Generate a file listing currently loaded commands. Bot owner only."""
         data = ["# List of commands",
                 ("* Note 1: Some of these commands are in the [Kitsuchan-NG-cogs]"
                  "(https://github.com/n303p4/Kitsuchan-NG-cogs) repo."),
