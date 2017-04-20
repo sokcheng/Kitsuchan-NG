@@ -1,10 +1,8 @@
 #!/usr/bin/env python3
 
-class Error(Exception):
-    """Generic Error class for Kitsuchan-NG errors."""
-    pass
+from discord.ext import commands
 
-class ContextError(Error):
+class ContextError(commands.CommandError):
     """Raise when a command is called in the wrong context.
     This may randomly change at some point as the error handling matures.
     
@@ -16,7 +14,7 @@ class ContextError(Error):
     def __str__(self):
         return self.message
 
-class ZeroDataLengthError(Error):
+class ZeroDataLengthError(commands.CommandError):
     """Raise when a command executes and receives data of length 0.
     
     This is mainly to be used in conjunction with aiohttp.ClientSession.get(), which may return
@@ -27,7 +25,7 @@ class ZeroDataLengthError(Error):
     def __str__(self):
         return self.message
 
-class KeyError(Error):
+class KeyError(commands.CommandError):
     """Raise when a command executes, but needs an API key that was not specified.
     
     message - The message associated with the command."""
@@ -39,3 +37,6 @@ class KeyError(Error):
                             "configuration files.")
     def __str__(self):
         return self.message
+
+class NSFWDisallowed(commands.CommandError):
+    pass

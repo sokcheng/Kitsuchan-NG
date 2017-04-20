@@ -2,9 +2,20 @@
 
 """Custom checks for the bot."""
 
+# Third-party libraries
+from discord.ext import commands
+
+# Bundled modules
+import errors
+
+NSFW_DISALLOWED = "NSFW disallowed for this context."
+
 def is_nsfw(ctx):
     """An NSFW check for the bot."""
     try:
-        return "nsfw" in ctx.channel.name.lower()
+        allowed = "nsfw" in ctx.channel.name.lower()
+        if allowed:
+            return True
+        raise errors.NSFWDisallowed(NSFW_DISALLOWED)
     except AttributeError:
-        return False
+        raise errors.NSFWDisallowed(NSFW_DISALLOWED)

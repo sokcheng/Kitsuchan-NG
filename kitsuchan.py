@@ -14,6 +14,7 @@ from discord.ext import commands
 
 # Bundled modules
 import app_info
+import errors
 import settings
 
 assert (sys.version_info >= (3,6)), "This program requires Python 3.6 or higher."
@@ -39,7 +40,9 @@ def is_public(ctx):
     """Prevent the bot from responding to DMs, unless it's the bot owner sending the DM."""
     if bot.is_owner(ctx.author):
         return True
-    return not isinstance(ctx.channel, discord.DMChannel)
+    elif isinstance(ctx.channel, discord.DMChannel)
+        raise commands.NoPrivateMessage()
+    return True
 
 # Events
 @bot.event
@@ -80,22 +83,20 @@ async def on_command_error(exception, ctx):
     or (isinstance(exception, commands.CommandInvokeError) \
         and isinstance(exception.original, (discord.HTTPException,
                                             ModuleNotFoundError))):
-        embed = discord.Embed(title="Error! x.x", color=discord.Color.red())
-        embed.description = str(exception)
-        await ctx.send(embed=embed)
+        await ctx.send(f"{exception} x.x")
         logger.warning(exception)
     elif isinstance(exception, commands.NotOwner):
         await ctx.send("Only the owner can do that. :<")
         logger.warning((f"{ctx.author.name} ({ctx.author.id}) tried to issue a command but "
                         "was denied."))
     elif isinstance(exception, commands.NoPrivateMessage):
-        await ctx.send("Can't do that outside of a guild. :<")
-        logger.warning((f"{ctx.author.name} ({ctx.author.id}) tried to issue a command but "
-                        "was denied."))
+        logger.warning((f"{ctx.author.name} ({ctx.author.id}) tried to issue a command in a DM."))
     elif isinstance(exception, commands.CommandOnCooldown):
         await ctx.send(("Command on cooldown; "
                         f"try again after {exception.retry_after:.2f} seconds. :<"))
         logger.warning("A command is being spammed too much.")
+    elif isinstance(exception, errors.NSFWDisallowed):
+        await ctx.send("Channel must have `nsfw` in its name to use that. x.x")
     elif isinstance(exception, commands.CheckFailure):
         await ctx.send("No. Now move your hands away from that command. :<")
         logger.warning((f"{ctx.author.name} ({ctx.author.id}) tried to issue a command but "
