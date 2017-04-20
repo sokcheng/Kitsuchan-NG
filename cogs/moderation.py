@@ -20,6 +20,7 @@ STATUS_INDICATORS = {"online": ":green_heart:",
                      "idle": ":yellow_heart:",
                      "dnd": ":heart:",
                      "offline": ":black_heart:"}
+STATUS_SORTED = list(STATUS_INDICATORS.keys())
 
 class Moderation:
     """discord.py cog containing moderation functions of the bot."""
@@ -66,6 +67,11 @@ class Moderation:
         """
         await ctx.channel.purge(limit=limit)
 
+    def _sort_roles(self, status):
+        if status in STATUS_SORTED:
+            return STATUS_SORTED.index(status)
+        return 10
+
     @commands.command(aliases=["moderators"])
     @commands.cooldown(1, 12, commands.BucketType.channel)
     async def mods(self, ctx):
@@ -80,6 +86,7 @@ class Moderation:
             and ctx.channel.permissions_for(member).ban_members \
             and not member.bot:
                 the_mods.append(member)
+        the_mods.sort(key=lambda mod: self._sort_roles(mod.status.name))
         message = ["**__Moderators__**"]
         for mod in the_mods:
             try:
