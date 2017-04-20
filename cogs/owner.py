@@ -16,6 +16,7 @@ class Owner:
     @commands.command()
     @commands.is_owner()
     async def rename(self, ctx, *, username):
+        """Change the bot's username. Only the owner may run this."""
         await ctx.bot.user.edit(username=username)
         logger.info(f"Username changed to {username}.")
         await ctx.send(f"Username changed. :3")
