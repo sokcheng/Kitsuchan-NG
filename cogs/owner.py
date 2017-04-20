@@ -17,6 +17,7 @@ class Owner:
     @commands.is_owner()
     async def rename(self, ctx, *, username):
         await ctx.bot.user.edit(username=username)
+        logger.info(f"Username changed to {username}.")
         await ctx.send(f"Username changed. :3")
     
     @commands.command(aliases=["listguilds"])
