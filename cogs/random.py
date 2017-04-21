@@ -29,11 +29,12 @@ systemrandom = random.SystemRandom()
 class Random:
     """A dice roller module for the Utilities category."""
 
-    @commands.command(aliases=["coinflip"])
+    @commands.command(aliases=["cflip", "coinflip"])
     @commands.cooldown(4, 12, commands.BucketType.channel)
-    async def cflip(self, ctx):
+    async def coin(self, ctx):
         """Flip a coin."""
         choice = systemrandom.choice(SIDES_COIN)
+        logger.info(f"Flipping a coin; it's {choice}")
         await ctx.send(choice)
 
     @commands.command(aliases=["randint"])

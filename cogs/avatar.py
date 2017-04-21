@@ -16,14 +16,14 @@ class Avatar:
     
     @commands.command()
     @commands.cooldown(4, 12, commands.BucketType.channel)
-    async def avatar(self, ctx, user:discord.Member=None):
+    async def avatar(self, ctx, *, user:discord.Member=None):
         """Display a user's avatar.
         Defaults to displaying the avatar of the user who invoked the command.
         
         * user - A member who you can mention for avatar."""
-        logger.info("Displaying user avatar.")
         if not user:
             user = ctx.author
+        logger.info(f"Displaying user avatar for {user.name} ({user.id}).")
         if ctx.guild and ctx.guild.explicit_content_filter.name == "disabled":
             embed = discord.Embed()
             embed.url = user.avatar_url

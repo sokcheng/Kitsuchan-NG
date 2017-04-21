@@ -91,7 +91,8 @@ class Owner:
             paginator.add_line(line)
         for page in paginator.pages:
             await ctx.send(page)
-        logger.info(f"Execution of {expression} complete. Output:\n{output}")
+        string_output = "\n".join(output)
+        logger.info(f"Execution of {expression} complete. Output:\n{string_output}")
 
     @commands.command(name="eval")
     @commands.is_owner()
@@ -110,7 +111,8 @@ class Owner:
             paginator.add_line(line)
         for page in paginator.pages:
             await ctx.send(page)
-        logger.info(f"Evaluation of {expression} complete. Output:\n{output}")
+        string_output = "\n".join(output)
+        logger.info(f"Evaluation of {expression} complete. Output:\n{string_output}")
 
     @commands.command(hidden=True)
     @commands.is_owner()

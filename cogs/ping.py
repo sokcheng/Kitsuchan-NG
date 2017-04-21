@@ -25,6 +25,7 @@ class Ping:
         else:
             variant = ":ping_pong:"
         await ctx.send(f"{variant} {pingtime} ms!")
+        logger.info(f"Ping! False ping time: {pingtime} ms")
 
 def setup(bot):
     """Setup function for ping."""
