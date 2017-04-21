@@ -47,16 +47,6 @@ class Moderation:
         """
         await helpers.function_by_mentions(ctx, ctx.guild.ban)
 
-    @commands.command()
-    @commands.has_permissions(ban_members=True)
-    @commands.cooldown(1, 8, commands.BucketType.user)
-    async def unban(self, ctx):
-        """Unban all users mentioned by this command.
-        
-        Requires both the user and bot to have `ban_members` to execute.
-        """
-        await helpers.function_by_mentions(ctx, ctx.guild.unban)
-
     @commands.command(aliases=["prune"])
     @commands.has_permissions(manage_messages=True)
     @commands.bot_has_permissions(manage_messages=True)
