@@ -88,7 +88,7 @@ class Reactions:
                 elif ctx.author.id != member.id:
                     message=f"**{member.display_name}**, you got a {kind} from **{ctx.author.display_name}!**"
                 else:
-                    message=f"**{member.display_name}**, I'm so sorry. Have a {kind} anyway."
+                    message=f"**{member.display_name}**, I'm so sorry. Have a {kind} anyway. :<"
                 if ctx.guild and ctx.guild.explicit_content_filter.name == "disabled":
                     embed = discord.Embed(color=utils.random_color())
                     embed.set_image(url=url_image)
