@@ -40,10 +40,6 @@ Delete the bot's previous message(s). Bot owner only.
 
 * times - Number of message to delete. Defaults to 1.
 
-## cflip
-### Aliases: coinflip
-Flip a coin.
-
 ## cgames
 Shows the currently most played games
 
@@ -53,6 +49,10 @@ Choose between one of various supplied things.
 Syntax:
 
 * choose x | y | z - Choose between x, y, and z.
+
+## coin
+### Aliases: cflip, coinflip
+Flip a coin.
 
 ## cry
 Cry!
@@ -167,8 +167,8 @@ Only the bot owner can use this.
 ### Aliases: listguilds
 List all guilds that the bot is in. Bot owner only.
 
-## lmly
-### Aliases: letmeloveyou
+## lmlu
+### Aliases: lmly, letmeloveyou
 Let me love you!
 
 ## load
