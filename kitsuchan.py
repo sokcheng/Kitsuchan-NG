@@ -27,6 +27,7 @@ logger.setLevel(logging.INFO)
 
 bot = commands.Bot(command_prefix=commands.when_mentioned, pm_help=True)
 bot.description = app_info.DESCRIPTION
+bot._owner_id = None
 bot.session = aiohttp.ClientSession(loop=bot.loop)
 
 # Checking functions
@@ -38,7 +39,9 @@ def is_human(ctx):
 @bot.check
 def is_public(ctx):
     """Prevent the bot from responding to DMs, unless it's the bot owner sending the DM."""
-    if isinstance(ctx.channel, discord.DMChannel):
+    if ctx.author.id == bot._owner_id:
+        return True
+    elif isinstance(ctx.channel, discord.DMChannel):
         raise commands.NoPrivateMessage("You are not allowed to DM this bot.")
     return True
 
@@ -47,6 +50,9 @@ def is_public(ctx):
 async def on_ready():
     """Conduct preparations once the bot is ready to go."""
     bot.time_started = datetime.datetime.now()
+    
+    app_info = await bot.application_info()
+    bot._owner_id = app_info.owner.id
     
     command_prefix_three_letters = f"{bot.user.name[:3].lower()}"
     command_prefix_three_letters_space = f"{bot.user.name[:3].lower()} "
