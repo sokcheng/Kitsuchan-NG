@@ -99,7 +99,6 @@ async def on_command_error(exception, ctx):
         await ctx.send(f"{exception} x.x")
         logger.warning(exception)
     elif isinstance(exception, commands.NotOwner):
-        await ctx.send("Only the owner can do that. :<")
         logger.warning((f"{ctx.author.name} ({ctx.author.id}) tried to issue a command but "
                         "was denied."))
     elif isinstance(exception, commands.NoPrivateMessage):
