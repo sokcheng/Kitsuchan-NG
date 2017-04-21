@@ -24,7 +24,7 @@ BASE_URL_IMAGE = "https://wia.ram.moe{0[path]}"
 
 # Single image links.
 IMAGE_FACEDESK = "https://media.tumblr.com/tumblr_lqegp8wjxZ1qktqch.gif"
-IMAGE_LMLY = "https://68.media.tumblr.com/tumblr_mej070O7Lj1qktqch.gif"
+IMAGE_LMLU = "https://68.media.tumblr.com/tumblr_mej070O7Lj1qktqch.gif"
 IMAGE_WHAT = "https://media.tumblr.com/tumblr_lnvtzjiY4J1qktqch.png"
 IMAGE_WLOL = "https://68.media.tumblr.com/tumblr_lqehb0eOK01qktqch.jpg"
 
@@ -131,11 +131,11 @@ class Reactions:
         """Kon, kon!"""
         await self._send_image(ctx, IMAGES_KONKON)
 
-    @commands.command(aliases=["letmeloveyou"])
+    @commands.command(aliases=["lmly", "letmeloveyou"])
     @commands.cooldown(4, 12, commands.BucketType.channel)
-    async def lmly(self, ctx):
+    async def lmlu(self, ctx):
         """Let me love you!"""
-        await self._send_image(ctx, IMAGE_LMLY)
+        await self._send_image(ctx, IMAGE_LMLU)
 
     @commands.command()
     @commands.cooldown(4, 12, commands.BucketType.channel)
