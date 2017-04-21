@@ -39,7 +39,7 @@ def is_human(ctx):
 def is_public(ctx):
     """Prevent the bot from responding to DMs, unless it's the bot owner sending the DM."""
     if isinstance(ctx.channel, discord.DMChannel):
-        raise commands.NoPrivateMessage()
+        raise commands.NoPrivateMessage("You are not allowed to DM this bot.")
     return True
 
 # Events
