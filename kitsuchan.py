@@ -38,9 +38,7 @@ def is_human(ctx):
 @bot.check
 def is_public(ctx):
     """Prevent the bot from responding to DMs, unless it's the bot owner sending the DM."""
-    if bot.is_owner(ctx.author):
-        return True
-    elif isinstance(ctx.channel, discord.DMChannel):
+    if isinstance(ctx.channel, discord.DMChannel):
         raise commands.NoPrivateMessage()
     return True
 
@@ -81,7 +79,8 @@ async def on_command_error(exception, ctx):
     
     # This section checks if the bot's owner DM'ed the bot the command.
     # The point of this is that the owner can debug the bot easily.
-    if isinstance(ctx.channel, discord.DMChannel) and bot.is_owner(ctx.author):
+    is_owner = await bot.is_owner(ctx.author)
+    if isinstance(ctx.channel, discord.DMChannel) and is_owner:
         await ctx.author.send(f"`{exception.__class__.__name__}`\n`{exception}`")
         return
     
