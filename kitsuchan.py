@@ -101,7 +101,7 @@ async def on_command_error(exception, ctx):
         logger.warning(exception)
     elif isinstance(exception, commands.NotOwner):
         logger.warning((f"{ctx.author.name} ({ctx.author.id}) tried to issue a command but "
-                        "was denied."))
+                        "was denied. Attempted command: {ctx.invoked_with}"))
     elif isinstance(exception, commands.NoPrivateMessage):
         logger.warning((f"{ctx.author.name} ({ctx.author.id}) tried to issue a command in a DM."))
     elif isinstance(exception, commands.CommandOnCooldown):
@@ -113,7 +113,7 @@ async def on_command_error(exception, ctx):
     elif isinstance(exception, commands.CheckFailure):
         await ctx.send("No. Now move your hands away from that command. :<")
         logger.warning((f"{ctx.author.name} ({ctx.author.id}) tried to issue a command but "
-                        "was denied."))
+                        "was denied. Attempted command: {ctx.invoked_with}"))
     else:
         logger.warning(f"{exception.__class__.__name__}:{exception}")
 
