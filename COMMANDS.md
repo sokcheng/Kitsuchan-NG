@@ -199,6 +199,7 @@ Pat a member!
 * member - The member to be patted.
 
 ## ping
+### Aliases: bang, bang!, pong
 Ping the bot.
 
 ## poke
@@ -289,11 +290,6 @@ Triggered!
 Disable the use of an extension.
 
 Only the bot owner can use this.
-
-## unban
-Unban all users mentioned by this command.
-
-Requires both the user and bot to have `ban_members` to execute.
 
 ## unblock
 ### Aliases: ublock
