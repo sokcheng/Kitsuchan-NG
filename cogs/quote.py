@@ -17,7 +17,7 @@ class Quoting:
 
     @commands.command()
     @commands.cooldown(4, 12, commands.BucketType.channel)
-    async def quote(self, ctx, user:discord.Member):
+    async def quote(self, ctx, *, user:discord.Member):
         """Quote a user.
         
         * user - The user you wish to quote.
