@@ -41,7 +41,7 @@ class Blacklisting:
                                            f"**Bots:** {num_bots}\n"
                                            f"**Region:** {guild.region}"))
             else:
-                logger.info((f"Automatically left guild {guild.name} ({guild.id}) ",
+                logger.info((f"Automatically left guild {guild.name} ({guild.id}) "
                              f"(reason: {reason})"))
                 await app_info.owner.send((f"Rejected new guild **{guild.name}** ({guild.id}) "
                                            f"(reason: {reason})\n"
