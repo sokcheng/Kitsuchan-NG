@@ -54,7 +54,7 @@ async def on_ready():
     app_info = await bot.application_info()
     bot._owner_id = app_info.owner.id
     
-    username_spaceless = bot.user.name[:3].lower().replace(" ", "")
+    username_spaceless = bot.user.name.lower().replace(" ", "")[:3]
     command_prefix_three_letters = f"{username_spaceless}"
     command_prefix_three_letters_space = f"{username_spaceless} "
     additional_prefixes = [command_prefix_three_letters_space, command_prefix_three_letters]
