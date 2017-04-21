@@ -3,7 +3,6 @@
 # Standard modules
 import datetime
 import logging
-import psutil
 import resource
 import sys
 
