@@ -36,7 +36,7 @@ class About:
         embed = discord.Embed()
         embed.description = ctx.bot.description
         if ctx.guild and ctx.guild.explicit_content_filter.name == "disabled":
-            embed.set_thumbnail(url=ctx.bot.user.avatar_url_as("png", 128))
+            embed.set_thumbnail(url=ctx.bot.user.avatar_url_as(format="png", size=128))
         else:
             embed.set_footer(text="Thumbnail omitted on this guild due to image scanning.")
         ainfo = await ctx.bot.application_info()
@@ -130,7 +130,7 @@ class About:
         if user.display_name != user.name:
             embed.description = user.name
         if ctx.guild and ctx.guild.explicit_content_filter.name == "disabled":
-            embed.set_thumbnail(url=user.avatar_url)
+            embed.set_thumbnail(url=user.avatar_url_as(format="png", size=128))
         else:
             embed.set_footer(text="Thumbnail omitted on this guild due to image scanning.")
         embed.add_field(name="User ID", value=str(user.id))
