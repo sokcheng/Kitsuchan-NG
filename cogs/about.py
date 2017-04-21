@@ -73,7 +73,10 @@ class About:
         else:
             embed.set_footer(text="Thumbnail omitted on this guild due to image scanning.")
         embed.add_field(name="Owner", value=guild.owner.name)
-        embed.add_field(name="Members", value=str(guild.member_count))
+        num_humans = helpers.count_humans(guild)
+        embed.add_field(name="Humans", value=str(num_humans))
+        num_bots = helpers.count_bots(guild)
+        embed.add_field(name="Bots", value=str(num_bots))
         count_channels = str(len(tuple(0 for x in guild.channels if isinstance(x, discord.TextChannel))))
         embed.add_field(name="Text channels", value=count_channels)
         count_channels_voice = str(len(tuple(0 for x in guild.channels if isinstance(x, discord.VoiceChannel))))

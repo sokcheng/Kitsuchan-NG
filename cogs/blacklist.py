@@ -31,7 +31,8 @@ class Blacklisting:
         async def on_guild_join(guild):
             reason = await self.prune_guild(guild)
             app_info = await self.bot.application_info()
-            num_humans, num_bots = self.humans_vs_bots(guild)
+            num_humans = helpers.count_humans(guild)
+            num_bots = helpers.count_bots(guild)
             if not reason:
                 logger.info(f"Joined guild {guild.name} ({guild.id})")
                 await app_info.owner.send((f"Joined new guild **{guild.name}** ({guild.id})\n"
@@ -49,13 +50,9 @@ class Blacklisting:
                                            f"**Bots:** {num_bots}\n"
                                            f"**Region:** {guild.region}"))
 
-    def humans_vs_bots(self, guild):
-        num_humans = len([member for member in guild.members if not member.bot])
-        num_bots = len([member for member in guild.members if member.bot])
-        return num_humans, num_bots
-
     async def prune_guild(self, guild:discord.Guild):
-        num_humans, num_bots = self.humans_vs_bots(guild)
+        num_humans = helpers.count_humans(guild)
+        num_bots = helpers.count_bots(guild)
         collection = num_bots > num_humans * 0.8 and num_bots + num_humans > 10
         reason = None
         logger.debug(f"Checking guild {guild.name} ({guild.id}) (collection: {collection})...")

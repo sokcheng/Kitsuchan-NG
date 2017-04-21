@@ -75,3 +75,13 @@ async def yes_no(ctx, client:discord.Client,
         await ctx.send("Command cancelled. :<")
         return False
     return True
+
+def count_humans(guild:discord.Guild):
+    """Tally the humans in a guild."""
+    num_humans = len(tuple(filter(lambda member: not member.bot, guild.members)))
+    return num_humans
+
+def count_bots(guild:discord.Guild):
+    """Tally the bots in a guild."""
+    num_bots = len(tuple(filter(lambda member: member.bot, guild.members)))
+    return num_bots
