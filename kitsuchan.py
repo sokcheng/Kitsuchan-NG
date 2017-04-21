@@ -54,8 +54,9 @@ async def on_ready():
     app_info = await bot.application_info()
     bot._owner_id = app_info.owner.id
     
-    command_prefix_three_letters = f"{bot.user.name[:3].lower()}"
-    command_prefix_three_letters_space = f"{bot.user.name[:3].lower()} "
+    username_spaceless = bot.user.name[:3].lower().replace(" ", "")
+    command_prefix_three_letters = f"{username_spaceless}"
+    command_prefix_three_letters_space = f"{username_spaceless} "
     additional_prefixes = [command_prefix_three_letters_space, command_prefix_three_letters]
     
     command_prefix_custom = settings.manager.get("COMMAND_PREFIX")
