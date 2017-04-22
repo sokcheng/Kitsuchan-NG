@@ -22,7 +22,7 @@ class Wikipedia:
     """This cog contains a Wikipedia query command."""
 
     @commands.command(aliases=["wikipedia"])
-    @commands.cooldown(4, 12, commands.BucketType.user)
+    @commands.cooldown(6, 12, commands.BucketType.user)
     async def wiki(self, ctx, *, query=""):
         """Search Wikipedia.
         

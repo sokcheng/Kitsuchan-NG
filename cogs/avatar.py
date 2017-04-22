@@ -15,7 +15,7 @@ class Avatar:
     """discord.py cog containing avatar fetcher."""
     
     @commands.command()
-    @commands.cooldown(4, 12, commands.BucketType.channel)
+    @commands.cooldown(6, 12, commands.BucketType.channel)
     async def avatar(self, ctx, *, user:discord.Member=None):
         """Display a user's avatar.
         Defaults to displaying the avatar of the user who invoked the command.

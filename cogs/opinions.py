@@ -16,7 +16,7 @@ class Opinions:
     """discord.py cog containing functions that give the bot's opinion on something."""
 
     @commands.command()
-    @commands.cooldown(4, 12, commands.BucketType.channel)
+    @commands.cooldown(6, 12, commands.BucketType.channel)
     async def choose(self, ctx, *, choices):
         """Choose between one of various supplied things.
         

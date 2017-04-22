@@ -12,7 +12,10 @@ from discord.ext import commands
 
 logger = logging.getLogger(__name__)
 
-ANSWERS = ["It it certain.",
+systemrandom = random.SystemRandom()
+
+ANSWERS = [# Stock replies.
+           "It it certain.",
            "It is decidedly so.",
            "Without a doubt.",
            "Yes definitely.",
@@ -33,12 +36,36 @@ ANSWERS = ["It it certain.",
            "My reply is no.",
            "My sources say no.",
            "Outlook not so good.",
-           "Very doubtful."]
+           "Very doubtful.",
+           
+           # Kitsuchan replies
+           "Yay!",
+           ":fox:",
+           ":sunny: :3",
+           ":clap:",
+           "Kon kon!",
+           "+1",
+           "Awau! :3",
+           ":thumbsup:",
+           "Yes. :3",
+           ":3",
+           
+           "Awau? o.o",
+           "Ask again later?",
+           "/mobileshrug",
+           "Don't know? :<",
+           "Kon kon kon.",
+           
+           "Awau. :<",
+           "Get bent. :3",
+           "No. :<",
+           ":thumbsdown:",
+           "RIP"]
 
 class Eightball:
     """Cog containing 8ball command."""
     @commands.command(name="8ball", aliases=["eightball"])
-    @commands.cooldown(4, 12, commands.BucketType.channel)
+    @commands.cooldown(6, 6, commands.BucketType.channel)
     async def _eightball(self, ctx, *, question=""):
         """Ask the Magic 8-Ball a question.
         
@@ -47,7 +74,7 @@ class Eightball:
             message = "Please specify a question."
             logger.warning(message)
             raise commands.UserInputError(message)
-        choice = random.choice(ANSWERS)
+        choice = systemrandom.choice(ANSWERS)
         logger.info(f"Magic 8-Ball queried with {question}; answer: {choice}")
         await ctx.send(choice)
 

@@ -71,7 +71,7 @@ class xkcd:
                 logger.warning(message)
 
     @commands.command(aliases=["xk"])
-    @commands.cooldown(4, 12, commands.BucketType.channel)
+    @commands.cooldown(6, 12, commands.BucketType.channel)
     async def xkcd(self, ctx, comic_id=""):
         """Fetch a comic from xkcd.
         
@@ -80,13 +80,13 @@ class xkcd:
         await self._xkcd(ctx, comic_id)
 
     @commands.command(hidden=True)
-    @commands.cooldown(4, 12, commands.BucketType.channel)
+    @commands.cooldown(6, 12, commands.BucketType.channel)
     async def antigravity(self, ctx):
         """Fetch the antigravity comic from xkcd."""
         await self._xkcd(ctx, "353")
 
     @commands.command(hidden=True)
-    @commands.cooldown(4, 12, commands.BucketType.channel)
+    @commands.cooldown(6, 12, commands.BucketType.channel)
     async def sudo(self, ctx):
         """Fetch the sudo comic from xkcd."""
         await self._xkcd(ctx, "149")

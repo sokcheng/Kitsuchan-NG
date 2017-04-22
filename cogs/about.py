@@ -28,7 +28,7 @@ class About:
         await ctx.send(embed=embed)
 
     @about.command(name="bot")
-    @commands.cooldown(4, 12, commands.BucketType.channel)
+    @commands.cooldown(6, 12, commands.BucketType.channel)
     async def _infobot(self, ctx):
         """Display bot info, e.g. library versions."""
         logger.info("Displaying info about the bot.")
@@ -60,7 +60,7 @@ class About:
 
     @about.command(brief="Display guild info.", aliases=["g", "server", "s"])
     @commands.guild_only()
-    @commands.cooldown(4, 12, commands.BucketType.channel)
+    @commands.cooldown(6, 12, commands.BucketType.channel)
     async def guild(self, ctx):
         """Display information about the current guild, such as owner, region, emojis, and roles."""
         logger.info("Displaying info about guild.")
@@ -92,7 +92,7 @@ class About:
 
     @about.command(brief="Display channel info.", aliases=["c"])
     @commands.guild_only()
-    @commands.cooldown(4, 12, commands.BucketType.channel)
+    @commands.cooldown(6, 12, commands.BucketType.channel)
     async def channel(self, ctx, *, channel:discord.TextChannel=None):
         """Display information about a channel channel.
         Defaults to the current channel.
@@ -116,7 +116,7 @@ class About:
 
     @about.command(brief="Display user info.", aliases=["u"])
     @commands.guild_only()
-    @commands.cooldown(4, 12, commands.BucketType.channel)
+    @commands.cooldown(6, 12, commands.BucketType.channel)
     async def user(self, ctx, *, user:discord.Member=None):
         """Display information about a user, such as status and roles.
         Defaults to the user who invoked the command.

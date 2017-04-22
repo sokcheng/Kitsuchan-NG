@@ -30,7 +30,7 @@ class Random:
     """A dice roller module for the Utilities category."""
 
     @commands.command(aliases=["cflip", "coinflip"])
-    @commands.cooldown(4, 12, commands.BucketType.channel)
+    @commands.cooldown(6, 12, commands.BucketType.channel)
     async def coin(self, ctx):
         """Flip a coin."""
         choice = systemrandom.choice(SIDES_COIN)
@@ -38,7 +38,7 @@ class Random:
         await ctx.send(choice)
 
     @commands.command(aliases=["randint"])
-    @commands.cooldown(4, 12, commands.BucketType.channel)
+    @commands.cooldown(6, 12, commands.BucketType.channel)
     async def rng(self, ctx, start:int=1, end:int=100):
         """Randomly generate a number. Default range 1-100.
         
@@ -52,7 +52,7 @@ class Random:
         await ctx.send(message)
 
     @commands.command()
-    @commands.cooldown(4, 12, commands.BucketType.channel)
+    @commands.cooldown(6, 12, commands.BucketType.channel)
     async def roll(self, ctx, *expressions):
         """Roll some dice, using D&D syntax.
         

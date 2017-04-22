@@ -16,7 +16,7 @@ class Encoding:
     """A cog containing commands that encode/decode text in some form or another."""
     
     @commands.command()
-    @commands.cooldown(4, 12, commands.BucketType.channel)
+    @commands.cooldown(6, 12, commands.BucketType.channel)
     async def reverse(self, ctx, *, message):
         """Reverse input text."""
         logger.info("Reversing text.")
@@ -29,7 +29,7 @@ class Encoding:
         await ctx.send(embed=embed)
     
     @to.command(name="binary")
-    @commands.cooldown(4, 12, commands.BucketType.channel)
+    @commands.cooldown(6, 12, commands.BucketType.channel)
     async def to_binary(self, ctx, *, message):
         """Encode plaintext to binary.
         
@@ -48,7 +48,7 @@ class Encoding:
         await ctx.send(embed=embed)
     
     @from_.command(name="binary")
-    @commands.cooldown(4, 12, commands.BucketType.channel)
+    @commands.cooldown(6, 12, commands.BucketType.channel)
     async def from_binary(self, ctx, *, message):
         """Decode plaintext from binary.
         
