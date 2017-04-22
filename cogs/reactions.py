@@ -39,6 +39,11 @@ IMAGES_DEAD = (("https://s-media-cache-ak0.pinimg.com/736x/ec/61/ef/"
                 "ec61ef110a5d2e01bf8ae48331b63723.jpg"),
                "http://safebooru.org//images/2048/60ce6f6888ba2fce6393638223dcc8d7c67f0655.jpg",
                "https://i.giphy.com/xT1XGLm7CJknNZKVS8.gif")
+IMAGES_GLOMP = ("http://safebooru.org/images/1575/8e2b95aefa17208aa5b5bc2aa687a8d791adf20a.gif",
+                "http://safebooru.org/images/1860/e8562c569fb94477671947ad96a0b88ac999569a.gif",
+                "http://safebooru.org/images/579/cd1913e6aaa91bb3abb752ebd9fb410099396acd.gif",
+                ("http://safebooru.org/samples/2095/"
+                 "sample_c1fc61605ea086c339d0b8376efbfb83003d1a96.jpg"))
 IMAGES_LEWD = ("https://i.imgur.com/5JZH78a.jpg",
                "https://i.imgur.com/RdQ3FFA.jpg",
                "https://i.imgur.com/98tad3K.gif",
@@ -52,9 +57,9 @@ IMAGES_LEWD = ("https://i.imgur.com/5JZH78a.jpg",
                "https://i.imgur.com/GTfWFm6.jpg",
                "https://i.imgur.com/Iz315vJ.jpg",
                "https://i.imgur.com/rWLoIzf.png")
-IMAGES_POKE = ("http://safebooru.org//images/1880/e3b020472d86b0a04ffec8cdf41049ef66cf3a68.gif",
-               "http://safebooru.org//images/2051/031566980728255e6d7e2fba8c12a3c38ea7598a.gif",
-               "http://safebooru.org//images/1169/3edae332d38c887a8723207d1bc0dffac8244591.gif")
+IMAGES_POKE = ("http://safebooru.org/images/1880/e3b020472d86b0a04ffec8cdf41049ef66cf3a68.gif",
+               "http://safebooru.org/images/2051/031566980728255e6d7e2fba8c12a3c38ea7598a.gif",
+               "http://safebooru.org/images/1169/3edae332d38c887a8723207d1bc0dffac8244591.gif")
 IMAGES_SANDWICHES = ("https://i.imgur.com/kyTDwIX.png",
                      "https://i.imgur.com/ULKlVhU.png",
                      "https://i.imgur.com/Z2RvlBx.png",
@@ -62,10 +67,10 @@ IMAGES_SANDWICHES = ("https://i.imgur.com/kyTDwIX.png",
                      "https://i.imgur.com/SzuegH9.png",
                      "https://i.imgur.com/ppcHtKd.png",
                      "https://i.imgur.com/xy8iwN5.png")
-IMAGES_KONKON = ("http://safebooru.org//images/1856/6e6b3319f2a0a3fe5e77567ebdc998b3c4cb3900.jpg",
-                 "http://safebooru.org//samples/1832/sample_25adf8a37226fa003a6a6d7b0f3171f5764bba7d.jpg",
-                 "http://safebooru.org//images/1270/a9c1744fb4676f743c4dbc7668a39e72decdde16.jpg",
-                 "http://safebooru.org//images/2077/12bddb7bd2274f0ba9abe2d72c994555d562e0df.jpg")
+IMAGES_KONKON = ("http://safebooru.org/images/1856/6e6b3319f2a0a3fe5e77567ebdc998b3c4cb3900.jpg",
+                 "http://safebooru.org/samples/1832/sample_25adf8a37226fa003a6a6d7b0f3171f5764bba7d.jpg",
+                 "http://safebooru.org/images/1270/a9c1744fb4676f743c4dbc7668a39e72decdde16.jpg",
+                 "http://safebooru.org/images/2077/12bddb7bd2274f0ba9abe2d72c994555d562e0df.jpg")
 
 class Reactions:
     """Cog containing various weeb reaction commands."""
@@ -126,6 +131,12 @@ class Reactions:
         """Facedesk!"""
         await self._send_image(ctx, IMAGE_FACEDESK)
 
+    @commands.command(aliases=["tacklehug", "tackle"])
+    @commands.cooldown(6, 12, commands.BucketType.channel)
+    async def glomp(self, ctx):
+        """Glomp!"""
+        await self._send_image(ctx, IMAGES_GLOMP)
+
     @commands.command(aliases=["konkon"])
     @commands.cooldown(6, 12, commands.BucketType.channel)
     async def kon(self, ctx):
@@ -175,7 +186,7 @@ class Reactions:
         """Cry!"""
         await self._rra(ctx, "cry")
 
-    @commands.command()
+    @commands.command(aliases=["snuggle"])
     @commands.cooldown(6, 12, commands.BucketType.channel)
     async def cuddle(self, ctx, member:discord.Member):
         """Cuddle a member!
