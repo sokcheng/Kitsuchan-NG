@@ -116,7 +116,7 @@ Hug a member!
 * member - The member to be hugged.
 
 ## ibsearch
-### Aliases: ib
+### Aliases: ib, ibs
 Fetch a randomized anime image from IbSear.ch, optional tags.
 
 * tags - A list of tags to be used in the search criteria.
@@ -125,7 +125,7 @@ This command accepts common imageboard tags and keywords. Here are a few example
 
 * ib red_hair armor - Search for images tagged with `red_hair` and `armor`.
 * ib red_hair -armor - Search for images tagged with `red_hair` and not `armor`.
-* ib 1280x1024 - Search for images that are 1920x1080.
+* ib 1280x1024 - Search for images that are 1280x1024.
 * ib 5:4 - Search for images in 5:4 aspect ratio.
 * ib random: - You don't care about what you get.
 

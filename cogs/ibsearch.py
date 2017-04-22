@@ -27,7 +27,7 @@ class IbSearch:
     def __init__(self):
         self.key_ibsearch = settings.manager.get("API_KEY_IBSEARCH")
 
-    @commands.command(aliases=["ib"])
+    @commands.command(aliases=["ib", "ibs"])
     @commands.cooldown(6, 12, commands.BucketType.channel)
     async def ibsearch(self, ctx, *, tags=""):
         """Fetch a randomized anime image from IbSear.ch, optional tags.
@@ -38,7 +38,7 @@ class IbSearch:
         
         * ib red_hair armor - Search for images tagged with `red_hair` and `armor`.
         * ib red_hair -armor - Search for images tagged with `red_hair` and not `armor`.
-        * ib 1280x1024 - Search for images that are 1920x1080.
+        * ib 1280x1024 - Search for images that are 1280x1024.
         * ib 5:4 - Search for images in 5:4 aspect ratio.
         * ib random: - You don't care about what you get.
         """

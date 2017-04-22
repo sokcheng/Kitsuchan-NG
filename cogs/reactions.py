@@ -80,7 +80,7 @@ class Reactions:
         async with ctx.bot.session.get(url) as response:
             if response.status == 200:
                 data = await response.json()
-                url_image = BASE_URL_IMAGE.format(data).replace("/i", "")
+                url_image = BASE_URL_IMAGE.format(data).replace("i/", "")
                 if not member:
                     message=""
                 elif ctx.bot.user.id == member.id:
