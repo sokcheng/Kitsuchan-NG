@@ -48,7 +48,7 @@ class IbSearch:
             raise errors.KeyError(message)
         logger.info(f"Fetching image with tags {tags}.")
         params = urllib.parse.urlencode({"key": self.key_ibsearch, "q": tags})
-        url = BASE_URL_IBSEARCH_API.format(*params)
+        url = BASE_URL_IBSEARCH_API.format(params)
         async with ctx.bot.session.get(url) as response:
             if response.status == 200:
                 data = await response.json()
