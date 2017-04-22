@@ -37,10 +37,10 @@ class Wikipedia:
         async with ctx.bot.session.get(url) as response:
             if response.status == 200:
                 data = await response.json()
-                embed = discord.Embed()
                 if len(data[1]) == 0:
                     await ctx.send("Could not find any results. :<")
                     raise errors.ZeroDataLengthError()
+                embed = discord.Embed()
                 for index in range(0, min(3, len(data[1]))):
                     description = f"{data[3][index]}\n{data[2][index]}"
                     embed.add_field(name=data[1][index], value=description, inline=True)
