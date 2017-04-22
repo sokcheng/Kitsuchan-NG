@@ -107,15 +107,19 @@ class Random:
             message = "Your rolls have been ignored, as they were too large."
             raise commands.UserInputError(message)
         
-        embed = discord.Embed(title="Rolls")
+        paginator = commands.Paginator()
         
         for roll in list_rolls:
             roll_string = ", ".join([str(value) for value in roll[1:]])
             roll_sum_string = str(sum(roll[1:]))
-            embed.add_field(name=f"{roll_string} ({roll_sum_string})", value=roll[0])
+            paginator.add_line(f"{roll[0]}: ({roll_sum_string}) {roll_string}")
         
         logger.info("Rolling some dice.")
-        await ctx.send(message, embed=embed)
+        
+        if message:
+            await ctx.send(message)
+        for page in paginator.pages:
+            await ctx.send(page)
 
 def setup(bot):
     """Setup function for random."""

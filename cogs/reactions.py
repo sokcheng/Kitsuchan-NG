@@ -37,7 +37,8 @@ IMAGES_BOOTS = (("https://media-cache-ak0.pinimg.com/736x/db/b9/a3/"
                  "https://i.imgur.com/EC4UXCI.jpg")
 IMAGES_DEAD = (("https://s-media-cache-ak0.pinimg.com/736x/ec/61/ef/"
                 "ec61ef110a5d2e01bf8ae48331b63723.jpg"),
-               "http://safebooru.org//images/2048/60ce6f6888ba2fce6393638223dcc8d7c67f0655.jpg")
+               "http://safebooru.org//images/2048/60ce6f6888ba2fce6393638223dcc8d7c67f0655.jpg",
+               "https://i.giphy.com/xT1XGLm7CJknNZKVS8.gif")
 IMAGES_LEWD = ("https://i.imgur.com/5JZH78a.jpg",
                "https://i.imgur.com/RdQ3FFA.jpg",
                "https://i.imgur.com/98tad3K.gif",
