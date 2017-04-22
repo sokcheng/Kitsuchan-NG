@@ -70,7 +70,9 @@ IMAGES_SANDWICHES = ("https://i.imgur.com/kyTDwIX.png",
 IMAGES_KONKON = ("http://safebooru.org/images/1856/6e6b3319f2a0a3fe5e77567ebdc998b3c4cb3900.jpg",
                  "http://safebooru.org/samples/1832/sample_25adf8a37226fa003a6a6d7b0f3171f5764bba7d.jpg",
                  "http://safebooru.org/images/1270/a9c1744fb4676f743c4dbc7668a39e72decdde16.jpg",
-                 "http://safebooru.org/images/2077/12bddb7bd2274f0ba9abe2d72c994555d562e0df.jpg")
+                 "http://safebooru.org/images/2077/12bddb7bd2274f0ba9abe2d72c994555d562e0df.jpg",
+                 ("http:/safebooru.org//samples/2045/"
+                  "sample_c2a906de7bf13b48c7c971e909f1beef75766c34.png"))
 
 class Reactions:
     """Cog containing various weeb reaction commands."""
