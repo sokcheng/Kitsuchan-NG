@@ -58,6 +58,7 @@ Flip a coin.
 Cry!
 
 ## cuddle
+### Aliases: snuggle
 Cuddle a member!
 
 * member - The member to be cuddled.
@@ -89,6 +90,10 @@ Subcommands that decode plaintext. (e.g. from binary)
 
 ## ghelp
 Generate a file listing currently loaded commands. Bot owner only.
+
+## glomp
+### Aliases: tacklehug, tackle
+Glomp!
 
 ## google
 ### Aliases: g
@@ -251,6 +256,10 @@ Roll some dice, using D&D syntax.
 Examples:
 * roll 5d6 - Roll five six sided dice.
 * roll 1d20 2d8 - Roll one twenty sided die, and two eight sided dice.
+
+## rwg
+### Aliases: rword, randword
+Randomly generate a word.
 
 ## sandwich
 Sandwich!
