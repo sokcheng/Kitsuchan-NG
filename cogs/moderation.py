@@ -24,7 +24,7 @@ STATUS_INDICATORS = {"online": ":green_heart:",
 STATUS_SORTED = list(STATUS_INDICATORS.keys())
 
 class Moderation:
-    """discord.py cog containing moderation functions of the bot."""
+    """Moderation commands."""
     
     @commands.command()
     @commands.has_permissions(kick_members=True)

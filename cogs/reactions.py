@@ -75,7 +75,7 @@ IMAGES_KONKON = ("http://safebooru.org/images/1856/6e6b3319f2a0a3fe5e77567ebdc99
                   "sample_c2a906de7bf13b48c7c971e909f1beef75766c34.png"))
 
 class Reactions:
-    """Cog containing various weeb reaction commands."""
+    """Weeb reaction commands."""
 
     async def _rra(self, ctx, kind:str, member:discord.Member=None):
         """A helper function that grabs an image and posts it in response to a member.

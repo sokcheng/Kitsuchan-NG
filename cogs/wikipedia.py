@@ -19,7 +19,7 @@ logger = logging.getLogger(__name__)
 BASE_URL_WIKIPEDIA_API = "https://en.wikipedia.org/w/api.php?{0}"
 
 class Wikipedia:
-    """This cog contains a Wikipedia query command."""
+    """Wikipedia command."""
 
     @commands.command(aliases=["wikipedia"])
     @commands.cooldown(6, 12, commands.BucketType.user)

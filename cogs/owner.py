@@ -11,7 +11,7 @@ from discord.ext import commands
 logger = logging.getLogger(__name__)
 
 class Owner:
-    """discord.py cog containing commands that only the owner should use."""
+    """Commands that are only for the bot owner."""
     
     @commands.command()
     @commands.is_owner()

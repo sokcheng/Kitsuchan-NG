@@ -19,7 +19,7 @@ import settings
 logger = logging.getLogger(__name__)
 
 class About:
-    """discord.py cog containing info commands, such as server and user info."""
+    """Commands that display information about the bot, user, etc."""
 
     @commands.group(aliases=["a", "info", "i"], invoke_without_command=True)
     async def about(self, ctx):

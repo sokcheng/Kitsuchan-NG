@@ -16,7 +16,7 @@ import settings
 logger = logging.getLogger(__name__)
 
 class Extensions:
-    """discord.py cog containing extension-related functions of the bot."""
+    """Extension loading/unloading commands."""
 
     @commands.command(aliases=["loade"])
     @commands.is_owner()

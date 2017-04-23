@@ -18,7 +18,8 @@ logger = logging.getLogger(__name__)
 FILENAME_BLACKLIST = "blacklist.json"
 
 class Blacklisting:
-    """This cog contains blacklisting functions."""
+    """Blacklisting commands, to prevent abusive usage of the bot."""
+    
     def __init__(self, bot):
         self.bot = bot
         self.bot.check(self.blacklist_user)

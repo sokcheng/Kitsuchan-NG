@@ -18,7 +18,7 @@ BASE_URL_XKCD_API = "https://xkcd.com/{0}/info.0.json"
 BASE_URL_XKCD_EXPLAIN = "http://www.explainxkcd.com/wiki/index.php/{0}"
 
 class xkcd:
-    """This cog contains some basic xkcd commands."""
+    """xkcd command."""
 
     async def _xkcd(self, ctx, comic_id=""):
         """Helper function for xkcd comics."""

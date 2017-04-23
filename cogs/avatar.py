@@ -12,7 +12,7 @@ from discord.ext import commands
 logger = logging.getLogger(__name__)
 
 class Avatar:
-    """discord.py cog containing avatar fetcher."""
+    """Avatar command."""
     
     @commands.command()
     @commands.cooldown(6, 12, commands.BucketType.channel)

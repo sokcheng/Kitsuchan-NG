@@ -13,7 +13,7 @@ import helpers
 logger = logging.getLogger(__name__)
 
 class Encoding:
-    """A cog containing commands that encode/decode text in some form or another."""
+    """Commands that encode and decode text."""
     
     @commands.command()
     @commands.cooldown(6, 12, commands.BucketType.channel)

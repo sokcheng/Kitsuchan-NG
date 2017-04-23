@@ -11,10 +11,7 @@ from discord.ext import commands
 logger = logging.getLogger(__name__)
 
 class Invite:
-    """discord.py cog containing core functions of the bot.
-    
-    * bot - The parent discord.Client object for the cog.
-    """
+    """Invite command."""
 
     @commands.command()
     @commands.cooldown(1, 30, commands.BucketType.channel)

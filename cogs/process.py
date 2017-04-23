@@ -17,10 +17,7 @@ import settings
 logger = logging.getLogger(__name__)
 
 class Process:
-    """discord.py cog containing functions that halt/restart the bot.
-    
-    bot - The parent discord.Client object for the cog.
-    """
+    """Commands that affect the bot's running process."""
 
     @commands.command(aliases=["shutdown", "kys"])
     @commands.is_owner()

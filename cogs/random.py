@@ -4,6 +4,7 @@
 
 # Standard library
 import logging
+import os
 import random
 import re
 
@@ -23,11 +24,21 @@ MAX_ROLL_COUNT = 20
 MAX_DICE_PER_ROLL = 30
 MAX_DIE_SIZE = 2000
 
+WORDS = None
+for fname in ("/usr/share/dict/words", "/usr/dict/words"):
+    if os.path.exists(fname):
+        try:
+            with open(fname) as f:
+                WORDS = f.read().split("\n")
+            break
+        except Exception:
+            pass
+
 # Instantiate a SystemRandom object to produce cryptographically secure random numbers.
 systemrandom = random.SystemRandom()
 
 class Random:
-    """A dice roller module for the Utilities category."""
+    """Commands that generate things at random."""
 
     @commands.command(aliases=["cflip", "coinflip"])
     @commands.cooldown(6, 12, commands.BucketType.channel)
@@ -50,6 +61,15 @@ class Random:
         message = f"Random number from {start} to {end}: {number}"
         logger.info(message)
         await ctx.send(message)
+
+    if WORDS:
+        @commands.command(aliases=["rword", "randword"])
+        @commands.cooldown(6, 12, commands.BucketType.channel)
+        async def rwg(self, ctx):
+            """Randomly generate a word."""
+            word = systemrandom.choice(WORDS)
+            logger.info(f"Random word: {word}")
+            await ctx.send(word)
 
     @commands.command()
     @commands.cooldown(6, 12, commands.BucketType.channel)

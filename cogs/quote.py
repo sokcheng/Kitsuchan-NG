@@ -13,7 +13,7 @@ from discord.ext import commands
 logger = logging.getLogger(__name__)
 
 class Quoting:
-    """discord.py cog containing commands that quote people."""
+    """Commands that quote people."""
 
     @commands.command()
     @commands.cooldown(6, 12, commands.BucketType.channel)

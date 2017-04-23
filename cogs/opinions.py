@@ -13,7 +13,7 @@ from discord.ext import commands
 logger = logging.getLogger(__name__)
 
 class Opinions:
-    """discord.py cog containing functions that give the bot's opinion on something."""
+    """Commands that give the bot's opinion on something."""
 
     @commands.command()
     @commands.cooldown(6, 12, commands.BucketType.channel)

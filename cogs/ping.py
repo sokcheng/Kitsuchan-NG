@@ -13,7 +13,7 @@ VARIANTS = {"bang": ":gun: **BANG!**",
             "bang!": ":gun: **BANG!**"}
 
 class Ping:
-    """discord.py cog containing a ping command."""
+    """Ping command."""
     
     @commands.command(aliases=["bang", "bang!", "pong"])
     @commands.cooldown(1, 10, commands.BucketType.guild)

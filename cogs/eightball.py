@@ -63,7 +63,7 @@ ANSWERS = [# Stock replies.
            "RIP"]
 
 class Eightball:
-    """Cog containing 8ball command."""
+    """Magic Eight Ball command."""
     @commands.command(name="8ball", aliases=["eightball"])
     @commands.cooldown(6, 6, commands.BucketType.channel)
     async def _eightball(self, ctx, *, question=""):
