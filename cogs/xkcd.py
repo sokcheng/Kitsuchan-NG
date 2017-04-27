@@ -22,7 +22,6 @@ class xkcd:
 
     async def _xkcd(self, ctx, comic_id=""):
         """Helper function for xkcd comics."""
-        logger.info(f"Retrieving xkcd comic with ID {comic_id}.")
         if comic_id.lower() in ("random", "r"):
             url = BASE_URL_XKCD_API.format("")
             async with ctx.bot.session.get(url) as response:

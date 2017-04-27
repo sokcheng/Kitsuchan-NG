@@ -25,6 +25,12 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger('discord')
 logger.setLevel(logging.INFO)
 
+command_log = logging.getLogger('command-log')
+command_log.setLevel(logging.INFO)
+file_handler_command_log = logging.FileHandler("commands.log")
+file_handler_command_log.setLevel(logging.DEBUG)
+command_log.addHandler(file_handler_command_log)
+
 bot = commands.Bot(command_prefix=commands.when_mentioned, pm_help=True)
 bot.description = app_info.DESCRIPTION
 bot._owner_id = None
@@ -47,11 +53,17 @@ def is_public(ctx):
 
 # Events
 @bot.event
+async def on_command(ctx):
+    message = f"Execution of {ctx.message.content} requested by {ctx.author.name} ({ctx.author.id})."
+    command_log.info(message)
+
+@bot.event
 async def on_ready():
     """Conduct preparations once the bot is ready to go."""
     bot.time_started = datetime.datetime.now()
     
     app_info = await bot.application_info()
+    bot._owner = app_info.owner
     bot._owner_id = app_info.owner.id
     
     username_spaceless = bot.user.name.lower().replace(" ", "")[:3]

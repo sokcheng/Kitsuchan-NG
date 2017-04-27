@@ -23,7 +23,6 @@ class Avatar:
         * user - A member who you can mention for avatar."""
         if not user:
             user = ctx.author
-        logger.info(f"Displaying user avatar for {user.name} ({user.id}).")
         if ctx.guild and ctx.guild.explicit_content_filter.name == "disabled":
             embed = discord.Embed()
             embed.url = user.avatar_url

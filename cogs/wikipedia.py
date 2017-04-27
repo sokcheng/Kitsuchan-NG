@@ -31,7 +31,6 @@ class Wikipedia:
         if len(query) == 0:
             message = "Query not specified."
             raise commands.UserInputError(message)
-        logger.info(f"Searching Wikipedia with query {query}.")
         params = urllib.parse.urlencode({"action": "opensearch", "search": query})
         url = BASE_URL_WIKIPEDIA_API.format(params)
         async with ctx.bot.session.get(url) as response:

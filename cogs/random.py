@@ -45,7 +45,7 @@ class Random:
     async def coin(self, ctx):
         """Flip a coin."""
         choice = systemrandom.choice(SIDES_COIN)
-        logger.info(f"Flipping a coin; it's {choice}")
+        logger.info(f"Flipped a coin; it's {choice}")
         await ctx.send(choice)
 
     @commands.command(aliases=["randint"])
@@ -133,8 +133,6 @@ class Random:
             roll_string = ", ".join([str(value) for value in roll[1:]])
             roll_sum_string = str(sum(roll[1:]))
             paginator.add_line(f"{roll[0]}: ({roll_sum_string}) {roll_string}")
-        
-        logger.info("Rolling some dice.")
         
         if message:
             await ctx.send(message)

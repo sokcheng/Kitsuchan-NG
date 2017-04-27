@@ -44,7 +44,6 @@ class Owner:
         * times - Number of message to delete. Defaults to 1."""
         if times < 1:
             return commands.UserInputError("Can't delete less than 1 message.")
-        logger.info(f"Deleting {times} previous messages.")
         times_executed = 0
         async for message in ctx.channel.history():
             if times_executed == times:
@@ -60,7 +59,6 @@ class Owner:
         
         * text - A string to be echoed back.
         """
-        logger.info(f"ctx.author.display_name {ctx.author.id} requested echo of {text}")
         if len(text) == 0:
             text = "Echo?"
         # Split the message up by zero-width spaces so the bot doesn't trigger other bots.
@@ -73,7 +71,6 @@ class Owner:
         """Execute a system command. Bot owner only."""
         if len(expression) == 0:
             raise commands.UserInputError("No command was specified.")
-        logger.info(f"Shell execution of {expression} requested.")
         expression = expression.split(" ")
         process = subprocess.Popen(expression,
                                    universal_newlines=True,
@@ -100,7 +97,6 @@ class Owner:
         """Evaluate a Python expression. Bot owner only."""
         if len(expression) == 0:
             raise commands.UserInputError("No expression was specified.")
-        logger.info(f"Evaluation of {expression} requested.")
         try:
             output = eval(expression)
             output = str(output).split("\n")

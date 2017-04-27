@@ -17,7 +17,6 @@ class Invite:
     @commands.cooldown(1, 30, commands.BucketType.channel)
     async def invite(self, ctx):
         """Generate an invite link for this bot."""
-        logger.info(f"Invite requested by {ctx.author.name} ({ctx.author.id}).")
         message = f"https://discordapp.com/oauth2/authorize?client_id={ctx.bot.user.id}&scope=bot"
         await ctx.send(message)
 

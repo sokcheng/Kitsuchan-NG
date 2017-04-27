@@ -24,7 +24,6 @@ class Extensions:
         """Enable the use of an extension.
         
         Only the bot owner can use this."""
-        logger.info(f"Loading extension {extension_name}...")
         ctx.bot.load_extension(extension_name)
         settings.manager.setdefault("EXTENSIONS", settings.DEFAULT_EXTENSIONS)
         if extension_name not in settings.manager["EXTENSIONS"]:
@@ -41,7 +40,6 @@ class Extensions:
         """Reload an already-loaded extension.
         
         Only the bot owner can use this."""
-        logger.info(f"Reloading extension {extension_name}...")
         settings.manager.setdefault("EXTENSIONS", settings.DEFAULT_EXTENSIONS)
         if extension_name in settings.manager["EXTENSIONS"]:
             ctx.bot.unload_extension(extension_name)
@@ -65,7 +63,6 @@ class Extensions:
         prompt = await helpers.yes_no(ctx, ctx.bot)
         if not prompt:
             return
-        logger.info(f"Unloading extension {extension_name}...")
         ctx.bot.unload_extension(extension_name)
         settings.manager.setdefault("EXTENSIONS", settings.DEFAULT_EXTENSIONS)
         try:
@@ -83,7 +80,6 @@ class Extensions:
         """Display list of currently-enabled bot extensions.
         
         Only the bot owner can use this."""
-        logger.info("Extension list requested.")
         extensions = "\n".join(ctx.bot.extensions)
         message = f"```Loaded extensions:\n{extensions}```"
         await ctx.author.send(message)

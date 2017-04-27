@@ -30,7 +30,6 @@ class Opinions:
         # Eliminate leading and trailing whitespace.
         for index in range(0, len(choices)):
             choices[index] = choices[index].strip()
-        logger.info(f"Choosing between {choices}")
         choice = None
         # Loaded choice. The program biases in favor of pythons.
         for choice_loaded in choices:

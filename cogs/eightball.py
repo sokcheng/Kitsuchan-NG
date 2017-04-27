@@ -75,7 +75,7 @@ class Eightball:
             logger.warning(message)
             raise commands.UserInputError(message)
         choice = systemrandom.choice(ANSWERS)
-        logger.info(f"Magic 8-Ball queried with {question}; answer: {choice}")
+        logger.info(f"Magic 8-Ball answer: {choice}")
         await ctx.send(choice)
 
 def setup(bot):

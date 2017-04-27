@@ -31,7 +31,6 @@ class About:
     @commands.cooldown(6, 12, commands.BucketType.channel)
     async def _infobot(self, ctx):
         """Display bot info, e.g. library versions."""
-        logger.info("Displaying info about the bot.")
         uptime = str(datetime.datetime.now() - ctx.bot.time_started).split(".")[0]
         embed = discord.Embed()
         embed.description = ctx.bot.description
@@ -63,7 +62,6 @@ class About:
     @commands.cooldown(6, 12, commands.BucketType.channel)
     async def guild(self, ctx):
         """Display information about the current guild, such as owner, region, emojis, and roles."""
-        logger.info("Displaying info about guild.")
         guild = ctx.guild
         embed = discord.Embed(title=guild.name)
         embed.description = str(guild.id)
@@ -98,7 +96,6 @@ class About:
         Defaults to the current channel.
         
         * channel - Optional argument. A specific channel to get information about."""
-        logger.info("Displaying info about channel.")
         if not channel:
             channel = ctx.channel
         embed = discord.Embed(title=f"{channel.name}")
@@ -122,7 +119,6 @@ class About:
         Defaults to the user who invoked the command.
         
         * user - Optional argument. A user in the current channel to get user information about."""
-        logger.info("Displaying info about user.")
         if not user:
             user = ctx.author
         embed = discord.Embed(title=user.display_name)

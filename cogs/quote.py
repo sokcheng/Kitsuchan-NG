@@ -22,7 +22,6 @@ class Quoting:
         
         * user - The user you wish to quote.
         """
-        logger.info("Quoting a user.")
         quotes = []
         async for message in ctx.channel.history():
             if message.author.id == user.id:
@@ -63,7 +62,6 @@ class Quoting:
         * user - A member to mention.
         * phrase - A phrase to check against. Leave blank to show all instances.
         """
-        logger.info(f"Checking if someone said \"{quote}\".")
         paginator = commands.Paginator()
         length = 0
         async for message in ctx.channel.history():

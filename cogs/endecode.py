@@ -19,7 +19,6 @@ class Encoding:
     @commands.cooldown(6, 12, commands.BucketType.channel)
     async def reverse(self, ctx, *, message):
         """Reverse input text."""
-        logger.info("Reversing text.")
         await ctx.send(message[::-1])
     
     @commands.group(invoke_without_command=True)
@@ -34,7 +33,6 @@ class Encoding:
         """Encode plaintext to binary.
         
         Note, the behavior of this command isn't 100% correct as it may slip on Unicode."""
-        logger.info("Converting a message to binary.")
         message = list(message)
         for index in range(len(message)):
             message[index] = str(bin(ord(message[index])))[2:].zfill(8)
@@ -53,7 +51,6 @@ class Encoding:
         """Decode plaintext from binary.
         
         Note, the behavior of this command isn't 100% correct as it may slip on Unicode."""
-        logger.info("Converting a message from binary.")
         message = message.split()
         for index in range(len(message)):
             try:

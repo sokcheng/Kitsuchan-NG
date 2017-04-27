@@ -46,7 +46,6 @@ class IbSearch:
             message = "API key required for this command, but none found. Contact the bot owner?"
             await ctx.send(message)
             raise errors.KeyError(message)
-        logger.info(f"Fetching image with tags {tags}.")
         params = urllib.parse.urlencode({"key": self.key_ibsearch, "q": tags})
         url = BASE_URL_IBSEARCH_API.format(params)
         async with ctx.bot.session.get(url) as response:
