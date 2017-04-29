@@ -12,10 +12,6 @@ NSFW_DISALLOWED = "NSFW disallowed for this context."
 
 def is_nsfw(ctx):
     """An NSFW check for the bot."""
-    try:
-        allowed = "nsfw" in ctx.channel.name.lower()
-        if allowed:
-            return True
-        raise errors.NSFWDisallowed(NSFW_DISALLOWED)
-    except AttributeError:
-        raise errors.NSFWDisallowed(NSFW_DISALLOWED)
+    if hasattr(ctx.channel, "is_nsfw") and ctx.channel.is_nsfw():
+        return True
+    raise errors.NSFWDisallowed(NSFW_DISALLOWED)

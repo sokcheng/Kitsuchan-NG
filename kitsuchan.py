@@ -8,6 +8,7 @@ import datetime
 import logging
 
 # Third-party modules
+import asyncio
 import aiohttp
 import discord
 from discord.ext import commands
@@ -25,11 +26,13 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger('discord')
 logger.setLevel(logging.INFO)
 
-command_log = logging.getLogger('command-log')
+command_log = logging.getLogger('command.log')
 command_log.setLevel(logging.INFO)
 file_handler_command_log = logging.FileHandler("commands.log")
 file_handler_command_log.setLevel(logging.DEBUG)
 command_log.addHandler(file_handler_command_log)
+
+command_cache = []
 
 bot = commands.Bot(command_prefix=commands.when_mentioned, pm_help=True)
 bot.description = app_info.DESCRIPTION
@@ -56,6 +59,8 @@ def is_public(ctx):
 async def on_command(ctx):
     message = f"Execution of {ctx.message.content} requested by {ctx.author.name} ({ctx.author.id})."
     command_log.info(message)
+    message = f"{ctx.message.created_at.ctime()}: {message}"
+    command_cache.append(message)
 
 @bot.event
 async def on_ready():
@@ -129,6 +134,18 @@ async def on_command_error(exception, ctx):
     else:
         logger.warning(f"{exception.__class__.__name__}:{exception}")
 
+# Background tasks
+async def send_owner_commands():
+    await bot.wait_until_ready()
+    while not bot.is_closed():
+        if len(command_cache) > 0 and hasattr(bot, "_owner"):
+            paginator = commands.Paginator()
+            for line in command_cache:
+                paginator.add_line(command_cache.pop(0))
+            for page in paginator.pages:
+                await bot._owner.send(page)
+        await asyncio.sleep(1800)
+
 def main():
     """It's the main function. You call this to start the bot."""
     try:
@@ -152,6 +169,7 @@ def main():
             logger.warning(f"Extension {extension} seems to be broken")
             logger.warning(error)
     
+    bot.loop.create_task(send_owner_commands())
     bot.run(settings.manager["OAUTH_TOKEN_DISCORD"])
 
 if __name__ == "__main__":

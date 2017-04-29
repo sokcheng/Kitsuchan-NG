@@ -58,7 +58,7 @@ class Random:
         if start > end:
             start, end = end, start
         number = systemrandom.randint(start, end)
-        message = f"Random number from {start} to {end}: {number}"
+        message = f"{number} (random number from {start} to {end})"
         logger.info(message)
         await ctx.send(message)
 

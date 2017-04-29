@@ -65,51 +65,6 @@ class Owner:
         text = "\u200B"*8 + text
         await ctx.send(text)
 
-    @commands.command()
-    @commands.is_owner()
-    async def sh(self, ctx, *, expression=""):
-        """Execute a system command. Bot owner only."""
-        if len(expression) == 0:
-            raise commands.UserInputError("No command was specified.")
-        expression = expression.split(" ")
-        process = subprocess.Popen(expression,
-                                   universal_newlines=True,
-                                   stdout=subprocess.PIPE,
-                                   stderr=subprocess.PIPE)
-        try:
-            output, errors = process.communicate(timeout=8)
-            output = output.split("\n")
-            process.terminate()
-        except subprocess.TimeoutExpired:
-            process.kill()
-            output = ["Command timed out. x.x"]
-        paginator = commands.Paginator(prefix="```bash")
-        for line in output:
-            paginator.add_line(line)
-        for page in paginator.pages:
-            await ctx.send(page)
-        string_output = "\n".join(output)
-        logger.info(f"Execution of {expression} complete. Output:\n{string_output}")
-
-    @commands.command(name="eval")
-    @commands.is_owner()
-    async def _eval(self, ctx, *, expression=""):
-        """Evaluate a Python expression. Bot owner only."""
-        if len(expression) == 0:
-            raise commands.UserInputError("No expression was specified.")
-        try:
-            output = eval(expression)
-            output = str(output).split("\n")
-        except Exception as error:
-            output = [f"x.x An error has occurred: {error}"]
-        paginator = commands.Paginator(prefix="```py")
-        for line in output:
-            paginator.add_line(line)
-        for page in paginator.pages:
-            await ctx.send(page)
-        string_output = "\n".join(output)
-        logger.info(f"Evaluation of {expression} complete. Output:\n{string_output}")
-
     @commands.command(hidden=True)
     @commands.is_owner()
     async def ghelp(self, ctx):
