@@ -22,14 +22,21 @@ assert (sys.version_info >= (3,6)), "This program requires Python 3.6 or higher.
 assert (discord.version_info >= (1,0)), "This program requires Discord 1.0 or higher."
 
 # Initialization
-logging.basicConfig(level=logging.INFO)
+FORMAT = "%(asctime)-15s: %(message)s"
+formatter = logging.Formatter(FORMAT)
+
 logger = logging.getLogger('discord')
 logger.setLevel(logging.INFO)
+file_handler_logger = logging.FileHandler("discord.log")
+file_handler_logger.setFormatter(formatter)
+file_handler_logger.setLevel(logging.INFO)
+logger.addHandler(file_handler_logger)
 
-command_log = logging.getLogger('command.log')
+command_log = logging.getLogger('commands.log')
 command_log.setLevel(logging.INFO)
 file_handler_command_log = logging.FileHandler("commands.log")
-file_handler_command_log.setLevel(logging.DEBUG)
+file_handler_command_log.setFormatter(formatter)
+file_handler_command_log.setLevel(logging.INFO)
 command_log.addHandler(file_handler_command_log)
 
 command_cache = []
