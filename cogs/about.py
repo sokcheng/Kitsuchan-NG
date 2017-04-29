@@ -34,7 +34,7 @@ class About:
         uptime = str(datetime.datetime.now() - ctx.bot.time_started).split(".")[0]
         embed = discord.Embed()
         embed.description = ctx.bot.description
-        if ctx.guild and ctx.guild.explicit_content_filter.name == "disabled":
+        if not helpers.has_scanning(ctx):
             embed.set_thumbnail(url=ctx.bot.user.avatar_url_as(format="png", size=128))
         else:
             embed.set_footer(text="Thumbnail omitted on this guild due to image scanning.")
@@ -65,7 +65,7 @@ class About:
         guild = ctx.guild
         embed = discord.Embed(title=guild.name)
         embed.description = str(guild.id)
-        if ctx.guild.explicit_content_filter.name == "disabled":
+        if not helpers.has_scanning(ctx):
             embed.set_thumbnail(url=guild.icon_url)
         else:
             embed.set_footer(text="Thumbnail omitted on this guild due to image scanning.")
@@ -125,7 +125,7 @@ class About:
         embed.color = user.color
         if user.display_name != user.name:
             embed.description = user.name
-        if ctx.guild and ctx.guild.explicit_content_filter.name == "disabled":
+        if not helpers.has_scanning(ctx):
             embed.set_thumbnail(url=user.avatar_url_as(format="png", size=128))
         else:
             embed.set_footer(text="Thumbnail omitted on this guild due to image scanning.")

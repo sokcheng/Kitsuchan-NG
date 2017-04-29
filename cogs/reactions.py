@@ -12,6 +12,7 @@ from discord.ext import commands
 
 # Bundled modules
 import checks
+import helpers
 import utils
 
 logger = logging.getLogger(__name__)
@@ -97,7 +98,7 @@ class Reactions:
                     message=f"**{member.display_name}**, you got a {kind} from **{ctx.author.display_name}!**"
                 else:
                     message=f"**{member.display_name}**, I'm so sorry. Have a {kind} anyway. :<"
-                if ctx.guild and ctx.guild.explicit_content_filter.name == "disabled":
+                if not helpers.has_scanning(ctx):
                     embed = discord.Embed(color=utils.random_color())
                     embed.set_image(url=url_image)
                     await ctx.send(message, embed=embed)
@@ -113,7 +114,7 @@ class Reactions:
         """A helper function that creates an embed with an image and sends it off."""
         if isinstance(url_image, (tuple, list)):
             url_image = systemrandom.choice(url_image)
-        if ctx.guild and ctx.guild.explicit_content_filter.name == "disabled":
+        if not helpers.has_scanning(ctx):
             embed = discord.Embed(color=utils.random_color())
             embed.set_image(url=url_image)
             await ctx.send(embed=embed)

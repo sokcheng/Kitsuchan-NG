@@ -66,7 +66,7 @@ class IbSearch:
                 index = random.randint(1, len(data)) - 1
                 result = data[index]
                 url_image = base_url_image.format(result)
-                if ctx.guild and ctx.guild.explicit_content_filter.name == "disabled":
+                if not helpers.has_scanning(ctx):
                     embed = discord.Embed(title="Click here for full image")
                     embed.url = url_image
                     embed.set_image(url=url_image)

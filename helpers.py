@@ -85,3 +85,9 @@ def count_bots(guild:discord.Guild):
     """Tally the bots in a guild."""
     num_bots = len(tuple(filter(lambda member: member.bot, guild.members)))
     return num_bots
+
+def has_scanning(ctx:commands.Context):
+    if (ctx.guild and ctx.guild.explicit_content_filter.name == "disabled")\
+    or (hasattr(ctx.channel, "is_nsfw") and ctx.channel.is_nsfw()):
+        return False
+    return True

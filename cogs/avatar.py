@@ -9,6 +9,9 @@ import logging
 import discord
 from discord.ext import commands
 
+# Bundled modules
+import helpers
+
 logger = logging.getLogger(__name__)
 
 class Avatar:
@@ -23,7 +26,7 @@ class Avatar:
         * user - A member who you can mention for avatar."""
         if not user:
             user = ctx.author
-        if ctx.guild and ctx.guild.explicit_content_filter.name == "disabled":
+        if not helpers.has_scanning(ctx):
             embed = discord.Embed()
             embed.url = user.avatar_url
             embed.set_image(url=user.avatar_url)

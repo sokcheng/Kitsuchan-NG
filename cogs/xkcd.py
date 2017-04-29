@@ -10,6 +10,9 @@ import random
 import discord
 from discord.ext import commands
 
+# Bundled modules
+import helpers
+
 logger = logging.getLogger(__name__)
 
 # Constants
@@ -42,7 +45,7 @@ class xkcd:
                 url_explanation = BASE_URL_XKCD_EXPLAIN.format(data["num"])
                 url_image = data["img"]
                 alt = data.get('alt')
-                if ctx.guild and ctx.guild.explicit_content_filter.name == "disabled":
+                if not helpers.has_scanning(ctx):
                     embed = discord.Embed(title=f'{title} ({data["num"]})')
                     embed.description = f"[Explanation]({url_explanation})"
                     embed.url = url
