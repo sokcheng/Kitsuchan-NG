@@ -58,10 +58,6 @@ class Blacklisting:
         reason = None
         logger.debug(f"Checking guild {guild.name} ({guild.id}) (collection: {collection})...")
         if collection:
-            try:
-                await guild.owner.send("Leaving guild; too many bots. :<")
-            except Exception:
-                pass
             await guild.leave()
             return "bot collection"
         elif guild.id in self.settings.get("GUILDS"):
