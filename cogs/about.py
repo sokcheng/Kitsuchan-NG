@@ -37,7 +37,7 @@ class About:
         if not helpers.has_scanning(ctx):
             embed.set_thumbnail(url=ctx.bot.user.avatar_url_as(format="png", size=128))
         else:
-            embed.set_footer(text="Thumbnail omitted on this guild due to image scanning.")
+            embed.set_footer(text="Thumbnail omitted on this channel due to image scanning.")
         ainfo = await ctx.bot.application_info()
         owner = ainfo.owner.mention
         embed.add_field(name="Version", value=app_info.VERSION_STRING)
@@ -68,7 +68,7 @@ class About:
         if not helpers.has_scanning(ctx):
             embed.set_thumbnail(url=guild.icon_url)
         else:
-            embed.set_footer(text="Thumbnail omitted on this guild due to image scanning.")
+            embed.set_footer(text="Thumbnail omitted on this channel due to image scanning.")
         embed.add_field(name="Owner", value=guild.owner.name)
         num_humans = helpers.count_humans(guild)
         embed.add_field(name="Humans", value=str(num_humans))
@@ -128,7 +128,7 @@ class About:
         if not helpers.has_scanning(ctx):
             embed.set_thumbnail(url=user.avatar_url_as(format="png", size=128))
         else:
-            embed.set_footer(text="Thumbnail omitted on this guild due to image scanning.")
+            embed.set_footer(text="Thumbnail omitted on this channel due to image scanning.")
         embed.add_field(name="User ID", value=str(user.id))
         if user.bot:
             embed.add_field(name="Bot?", value="Yes")
