@@ -14,6 +14,7 @@ from discord.ext import commands
 # Bundled modules
 import checks
 import errors
+import helpers
 import settings
 
 logger = logging.getLogger(__name__)
