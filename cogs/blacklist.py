@@ -150,21 +150,17 @@ class Blacklisting:
         
         * id_guild - The ID of the guild to block. Defaults to current guild.
         """
-        if not id_guild and ctx.guild:
-            guild = ctx.guild
-        else:
-            guild = ctx.bot.get_guild(id_guild)
-        if not guild:
-            message = f"Guild ID {id_guild} isn't valid."
-            logger.warning(message)
-            raise commands.UserInputError(message)
         self.settings.setdefault("GUILDS", [])
-        if guild.id not in self.settings["GUILDS"]:
-            self.settings["GUILDS"].append(guild.id)
-            message = f"{guild.name} blocked."
+        if id_guild not in self.settings["GUILDS"]:
+            self.settings["GUILDS"].append(303302730213097473)
+            message = f"{id_guild} blocked."
             logger.info(message)
             await ctx.send(message)
-            await guild.leave()
+            try:
+                guild = ctx.bot.get_guild(id_guild)
+                await guild.leave()
+            except Exception:
+                pass
         else:
             message = f"{guild.name} already blocked."
             logger.info(message)
