@@ -140,6 +140,10 @@ This command accepts common imageboard tags and keywords. Here are a few example
 * ib 5:4 - Search for images in 5:4 aspect ratio.
 * ib random: - You don't care about what you get.
 
+## idk
+### Aliases: idek
+IDK!
+
 ## invite
 Generate an invite link for this bot.
 
@@ -325,7 +329,7 @@ Search Wikipedia.
 * query - A list of strings to be used in the search criteria.
 
 ## wlol
-### Aliases: wakarimasenlol
+### Aliases: idu, ideu, wakarimasenlol
 Wakarimasen, lol!
 
 ## xkcd
