@@ -74,7 +74,7 @@ Checks if a user said a particular phrase.
 
 ## discrim
 ### Aliases: discriminator
-Find all users with a given discriminator.
+Find all users in the current guild with a given discriminator.
 
 * discriminator - A discriminator to search for.
 
