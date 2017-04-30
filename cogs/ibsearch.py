@@ -20,11 +20,15 @@ import settings
 logger = logging.getLogger(__name__)
 
 # Constants
+BASE_URL_IBSEARCH = "https://ibsear.ch/images/{0[id]}"
 BASE_URL_IBSEARCH_API = "https://ibsear.ch/api/v1/images.json?{0}"
 BASE_URL_IBSEARCH_IMAGE = "https://{0[server]}.ibsear.ch/{0[path]}"
 
+BASE_URL_IBSEARCH_NSFW = "https://ibsearch.xxx/images/{0[id]}"
 BASE_URL_IBSEARCH_API_NSFW = "https://ibsearch.xxx/api/v1/images.json?{0}"
 BASE_URL_IBSEARCH_IMAGE_NSFW = "https://{0[server]}.ibsearch.xxx/{0[path]}"
+
+MAX_LENGTH_TAGS = 200
 
 class IbSearch:
     """IbSear.ch command."""
@@ -51,9 +55,11 @@ class IbSearch:
             await ctx.send(message)
             raise errors.KeyError(message)
         if hasattr(ctx.channel, "is_nsfw") and ctx.channel.is_nsfw():
+            base_url = BASE_URL_IBSEARCH_NSFW
             base_url_api = BASE_URL_IBSEARCH_API_NSFW
             base_url_image = BASE_URL_IBSEARCH_IMAGE_NSFW
         else:
+            base_url = BASE_URL_IBSEARCH
             base_url_api = BASE_URL_IBSEARCH_API
             base_url_image = BASE_URL_IBSEARCH_IMAGE
         params = urllib.parse.urlencode({"key": self.key_ibsearch, "q": tags})
@@ -68,9 +74,18 @@ class IbSearch:
                 result = data[index]
                 url_image = base_url_image.format(result)
                 if not helpers.has_scanning(ctx):
-                    embed = discord.Embed(title="Click here for full image")
-                    embed.url = url_image
+                    tags = result["tags"]
+                    if len(tags) > MAX_LENGTH_TAGS:
+                        ellipsis = "..."
+                    else:
+                        ellipsis = ""
+                    
+                    url_ibsearch = base_url.format(result)
+                    embed = discord.Embed(title=result["id"])
+                    embed.url = url_ibsearch
+                    embed.description = f"[Image link]({url_image})"
                     embed.set_image(url=url_image)
+                    embed.set_footer(text=f"Tags: {tags}"[:MAX_LENGTH_TAGS] + ellipsis)
                     await ctx.send(embed=embed)
                 else:
                     await ctx.send(url_image)
