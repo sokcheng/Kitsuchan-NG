@@ -35,7 +35,7 @@ Only the bot owner can use this.
 Boots!
 
 ## catgirl
-### Aliases: nekomimi
+### Aliases: neko, nekomimi
 Find a random cat-eared person.
 
 ## censor
@@ -100,7 +100,7 @@ Evaluate a Python expression. Bot owner only.
 Facedesk!
 
 ## foxgirl
-### Aliases: kitsunemimi
+### Aliases: kitsune, kitsunemimi
 Find a random fox-eared person.
 
 ## from
@@ -180,6 +180,10 @@ Kiss a member!
 ## kon
 ### Aliases: konkon
 Kon, kon!
+
+## konachan
+### Aliases: kchan, kwp
+Shortcut function to search Konachan through IbSear.ch.
 
 ## lewd
 Lewd!
@@ -361,3 +365,7 @@ Wakarimasen, lol!
 Fetch a comic from xkcd.
 
 * comic_id - A desired comic ID. Leave blank for latest comic. Set to r for a random comic.
+
+## yandere
+### Aliases: yd
+Shortcut function to search Yande.re through IbSear.ch.

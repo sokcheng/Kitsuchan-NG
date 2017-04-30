@@ -91,6 +91,7 @@ class IbSearch:
         This command accepts common imageboard tags and keywords. Here are a few examples:
         
         * ib red_hair armor - Search for images tagged with `red_hair` and `armor`.
+        * ib red_hair | armor - Search for images tagged with `red_hair` or `armor`.
         * ib red_hair -armor - Search for images tagged with `red_hair` and not `armor`.
         * ib 1280x1024 - Search for images that are 1280x1024.
         * ib 5:4 - Search for images in 5:4 aspect ratio.
@@ -129,6 +130,20 @@ class IbSearch:
     async def safebooru(self, ctx, *, tags=""):
         """Shortcut function to search Safebooru through IbSear.ch."""
         await self._ibsearch_generic(ctx, tags=" ".join(("site:safebooru", tags)))
+
+    @commands.command(aliases=["kchan", "kwp"])
+    @commands.cooldown(6, 12, commands.BucketType.channel)
+    @commands.check(checks.is_nsfw)
+    async def konachan(self, ctx, *, tags=""):
+        """Shortcut function to search Konachan through IbSear.ch."""
+        await self._ibsearch_generic(ctx, tags=" ".join(("site:konachan", tags)))
+
+    @commands.command(aliases=["yd"])
+    @commands.cooldown(6, 12, commands.BucketType.channel)
+    @commands.check(checks.is_nsfw)
+    async def yandere(self, ctx, *, tags=""):
+        """Shortcut function to search Yande.re through IbSear.ch."""
+        await self._ibsearch_generic(ctx, tags=" ".join(("site:yandere", tags)))
 
     @commands.command(aliases=["r34"])
     @commands.cooldown(6, 12, commands.BucketType.channel)
