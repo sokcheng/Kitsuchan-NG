@@ -34,6 +34,10 @@ Only the bot owner can use this.
 ## boots
 Boots!
 
+## catgirl
+### Aliases: nekomimi
+Find a random cat-eared person.
+
 ## censor
 ### Aliases: clean
 Delete the bot's previous message(s). Bot owner only.
@@ -63,6 +67,10 @@ Cuddle a member!
 
 * member - The member to be cuddled.
 
+## danbooru
+### Aliases: dbooru, db
+Shortcut function to search Danbooru through IbSear.ch.
+
 ## dead
 Dead!
 
@@ -91,8 +99,16 @@ Evaluate a Python expression. Bot owner only.
 ### Aliases: facedesk
 Facedesk!
 
+## foxgirl
+### Aliases: kitsunemimi
+Find a random fox-eared person.
+
 ## from
 Subcommands that decode plaintext. (e.g. from binary)
+
+## gelbooru
+### Aliases: gbooru, gb
+Shortcut function to search Gelbooru through IbSear.ch.
 
 ## ghelp
 Generate a file listing currently loaded commands. Bot owner only.
@@ -267,9 +283,17 @@ Examples:
 * roll 5d6 - Roll five six sided dice.
 * roll 1d20 2d8 - Roll one twenty sided die, and two eight sided dice.
 
+## rule34
+### Aliases: r34
+Shortcut function to search Rule34 through IbSear.ch.
+
 ## rwg
 ### Aliases: rword, randword
 Randomly generate a word.
+
+## safebooru
+### Aliases: sbooru, sb
+Shortcut function to search Safebooru through IbSear.ch.
 
 ## sandwich
 Sandwich!

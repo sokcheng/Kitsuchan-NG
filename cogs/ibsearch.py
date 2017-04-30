@@ -77,7 +77,7 @@ class IbSearch:
                     await ctx.send(url_image)
                     logger.info("Image retrieved!")
             else:
-                message = "Could not reach IbSear.ch. x.x"
+                message = "Could not reach site; please wait and try again. x.x"
                 await ctx.send(message)
                 logger.warning(message)
 
@@ -97,6 +97,45 @@ class IbSearch:
         * ib random: - You don't care about what you get.
         """
         await self._ibsearch_generic(ctx, tags=tags)
+
+    @commands.command(aliases=["kitsune", "kitsunemimi"])
+    @commands.cooldown(6, 12, commands.BucketType.channel)
+    async def foxgirl(self, ctx, *, tags=""):
+        """Find a random fox-eared person."""
+        await self._ibsearch_generic(ctx, tags="fox_ears | kitsunemimi | foxgirl")
+
+    @commands.command(aliases=["neko", "nekomimi"])
+    @commands.cooldown(6, 12, commands.BucketType.channel)
+    async def catgirl(self, ctx, *, tags=""):
+        """Find a random cat-eared person."""
+        await self._ibsearch_generic(ctx, tags="cat_ears | neko | nekomimi | catgirl")
+
+    @commands.command(aliases=["gbooru", "gb"])
+    @commands.cooldown(6, 12, commands.BucketType.channel)
+    @commands.check(checks.is_nsfw)
+    async def gelbooru(self, ctx, *, tags=""):
+        """Shortcut function to search Gelbooru through IbSear.ch."""
+        await self._ibsearch_generic(ctx, tags=" ".join(("site:gelbooru", tags)))
+
+    @commands.command(aliases=["dbooru", "db"])
+    @commands.cooldown(6, 12, commands.BucketType.channel)
+    @commands.check(checks.is_nsfw)
+    async def danbooru(self, ctx, *, tags=""):
+        """Shortcut function to search Danbooru through IbSear.ch."""
+        await self._ibsearch_generic(ctx, tags=" ".join(("site:danbooru", tags)))
+
+    @commands.command(aliases=["sbooru", "sb"])
+    @commands.cooldown(6, 12, commands.BucketType.channel)
+    async def safebooru(self, ctx, *, tags=""):
+        """Shortcut function to search Safebooru through IbSear.ch."""
+        await self._ibsearch_generic(ctx, tags=" ".join(("site:safebooru", tags)))
+
+    @commands.command(aliases=["r34"])
+    @commands.cooldown(6, 12, commands.BucketType.channel)
+    @commands.check(checks.is_nsfw)
+    async def rule34(self, ctx, *, tags=""):
+        """Shortcut function to search Rule34 through IbSear.ch."""
+        await self._ibsearch_generic(ctx, tags=" ".join(("site:rule34", tags)))
 
 def setup(bot):
     """Setup function for Web."""
