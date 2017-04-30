@@ -30,12 +30,6 @@ BASE_URL_IBSEARCH_IMAGE_NSFW = "https://{0[server]}.ibsearch.xxx/{0[path]}"
 
 MAX_LENGTH_TAGS = 200
 
-TAGS_BLACKLIST = ["loli",
-                  "lolicon",
-                  "shota",
-                  "shotacon",
-                  "scat"]
-
 class IbSearch:
     """IbSear.ch command."""
     def __init__(self):
@@ -54,9 +48,9 @@ class IbSearch:
             base_url = BASE_URL_IBSEARCH
             base_url_api = BASE_URL_IBSEARCH_API
             base_url_image = BASE_URL_IBSEARCH_IMAGE
-        tags = " -".join([tags] + TAGS_BLACKLIST)
         params = urllib.parse.urlencode({"key": self.key_ibsearch, "q": tags})
         url = base_url_api.format(params)
+        print(url)
         async with ctx.bot.session.get(url) as response:
             if response.status == 200:
                 data = await response.json()
