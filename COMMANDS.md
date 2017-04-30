@@ -72,6 +72,12 @@ Checks if a user said a particular phrase.
 * user - A member to mention.
 * phrase - A phrase to check against. Leave blank to show all instances.
 
+## discrim
+### Aliases: discriminator
+Find all users with a given discriminator.
+
+* discriminator - A discriminator to search for.
+
 ## echo
 ### Aliases: say
 Repeat the user's text back at them. Bot owner only.
