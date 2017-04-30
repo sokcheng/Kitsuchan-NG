@@ -158,7 +158,7 @@ async def send_owner_commands():
                 del command_cache[0]
             for page in paginator.pages:
                 await bot._owner.send(page)
-        await asyncio.sleep(10)
+        await asyncio.sleep(1800)
 
 def main():
     """It's the main function. You call this to start the bot."""
