@@ -29,7 +29,7 @@ class Discriminator:
         results = []
         for member in ctx.guild.members:
             if str(member.discriminator) == discriminator:
-                results.append(f"[{len(results)}] {member.name}#{member.discriminator}")
+                results.append(f"[{len(results)+1}] {member.name}#{member.discriminator}")
         if len(results) == 0:
             await ctx.send("Could not find any members with that discriminator.")
             return
