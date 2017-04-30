@@ -100,13 +100,13 @@ class IbSearch:
 
     @commands.command(aliases=["kitsune", "kitsunemimi"])
     @commands.cooldown(6, 12, commands.BucketType.channel)
-    async def foxgirl(self, ctx, *, tags=""):
+    async def foxgirl(self, ctx):
         """Find a random fox-eared person."""
         await self._ibsearch_generic(ctx, tags="fox_ears | kitsunemimi | foxgirl")
 
     @commands.command(aliases=["neko", "nekomimi"])
     @commands.cooldown(6, 12, commands.BucketType.channel)
-    async def catgirl(self, ctx, *, tags=""):
+    async def catgirl(self, ctx):
         """Find a random cat-eared person."""
         await self._ibsearch_generic(ctx, tags="cat_ears | neko | nekomimi | catgirl")
 

@@ -133,7 +133,7 @@ async def on_command_error(exception, ctx):
                         f"try again after {exception.retry_after:.2f} seconds. :<"))
         logger.warning(f"A command is being spammed too much by {ctx.author.name} ({ctx.author.id}).")
     elif isinstance(exception, errors.NSFWDisallowed):
-        await ctx.send("Channel must have `nsfw` in its name to use that. x.x")
+        await ctx.send("Channel must be marked as NSFW to use that. x.x")
     elif isinstance(exception, commands.CheckFailure):
         await ctx.send("No. Now move your hands away from that command. :<")
         logger.warning((f"{ctx.author.name} ({ctx.author.id}) tried to issue a command but "
