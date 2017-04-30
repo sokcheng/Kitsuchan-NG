@@ -21,7 +21,7 @@ class Discriminator:
     @commands.guild_only()
     @commands.cooldown(6, 12, commands.BucketType.channel)
     async def discrim(self, ctx, *, discriminator:str=None):
-        """Find all users with a given discriminator.
+        """Find all users in the current guild with a given discriminator.
         
         * discriminator - A discriminator to search for."""
         if not discriminator:
@@ -38,7 +38,7 @@ class Discriminator:
             plural = "s"
         else:
             plural = ""
-        paginator.add_line(f"Found {len(results)} member{plural} with discriminator {discriminator}:")
+        paginator.add_line(f"Found {len(results)} member{plural} of this guild ({discriminator}):")
         for member in results:
             paginator.add_line(member)
         for page in paginator.pages:
