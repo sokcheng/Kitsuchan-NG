@@ -153,11 +153,12 @@ async def send_owner_commands():
     while not bot.is_closed():
         if len(command_cache) > 0 and hasattr(bot, "_owner"):
             paginator = commands.Paginator()
-            for line in command_cache:
-                paginator.add_line(command_cache.pop(0))
+            for index in range(0, len(command_cache)):
+                paginator.add_line(command_cache[0])
+                del command_cache[0]
             for page in paginator.pages:
                 await bot._owner.send(page)
-        await asyncio.sleep(1800)
+        await asyncio.sleep(10)
 
 def main():
     """It's the main function. You call this to start the bot."""
