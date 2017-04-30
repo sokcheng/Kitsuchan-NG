@@ -46,6 +46,10 @@ bot.description = app_info.DESCRIPTION
 bot._owner_id = None
 bot.session = aiohttp.ClientSession(loop=bot.loop)
 
+# Monkey patch to add commands as an alias of help
+bot.all_commands["help"].aliases = ["commands"]
+bot.all_commands["commands"] = bot.all_commands["help"]
+
 # Checking functions
 @bot.check
 def is_human(ctx):

@@ -50,7 +50,6 @@ class IbSearch:
             base_url_image = BASE_URL_IBSEARCH_IMAGE
         params = urllib.parse.urlencode({"key": self.key_ibsearch, "q": tags})
         url = base_url_api.format(params)
-        print(url)
         async with ctx.bot.session.get(url) as response:
             if response.status == 200:
                 data = await response.json()
@@ -112,46 +111,53 @@ class IbSearch:
         """Find a random cat-eared person."""
         await self._ibsearch_generic(ctx, tags="cat_ears | neko | nekomimi | catgirl")
 
-    @commands.command(aliases=["gbooru", "gb"])
-    @commands.cooldown(6, 12, commands.BucketType.channel)
-    @commands.check(checks.is_nsfw)
-    async def gelbooru(self, ctx, *, tags=""):
-        """Shortcut function to search Gelbooru through IbSear.ch."""
-        await self._ibsearch_generic(ctx, tags=" ".join(("site:gelbooru", tags)))
-
     @commands.command(aliases=["dbooru", "db"])
     @commands.cooldown(6, 12, commands.BucketType.channel)
     @commands.check(checks.is_nsfw)
     async def danbooru(self, ctx, *, tags=""):
-        """Shortcut function to search Danbooru through IbSear.ch."""
+        """Shortcut command to search Danbooru through IbSear.ch."""
         await self._ibsearch_generic(ctx, tags=" ".join(("site:danbooru", tags)))
 
-    @commands.command(aliases=["sbooru", "sb"])
+    @commands.command(aliases=["gbooru", "gb"])
     @commands.cooldown(6, 12, commands.BucketType.channel)
-    async def safebooru(self, ctx, *, tags=""):
-        """Shortcut function to search Safebooru through IbSear.ch."""
-        await self._ibsearch_generic(ctx, tags=" ".join(("site:safebooru", tags)))
+    @commands.check(checks.is_nsfw)
+    async def gelbooru(self, ctx, *, tags=""):
+        """Shortcut command to search Gelbooru through IbSear.ch."""
+        await self._ibsearch_generic(ctx, tags=" ".join(("site:gelbooru", tags)))
 
     @commands.command(aliases=["kchan", "kwp"])
     @commands.cooldown(6, 12, commands.BucketType.channel)
     @commands.check(checks.is_nsfw)
     async def konachan(self, ctx, *, tags=""):
-        """Shortcut function to search Konachan through IbSear.ch."""
+        """Shortcut command to search Konachan through IbSear.ch."""
         await self._ibsearch_generic(ctx, tags=" ".join(("site:konachan", tags)))
-
-    @commands.command(aliases=["yd"])
-    @commands.cooldown(6, 12, commands.BucketType.channel)
-    @commands.check(checks.is_nsfw)
-    async def yandere(self, ctx, *, tags=""):
-        """Shortcut function to search Yande.re through IbSear.ch."""
-        await self._ibsearch_generic(ctx, tags=" ".join(("site:yandere", tags)))
 
     @commands.command(aliases=["r34"])
     @commands.cooldown(6, 12, commands.BucketType.channel)
     @commands.check(checks.is_nsfw)
     async def rule34(self, ctx, *, tags=""):
-        """Shortcut function to search Rule34 through IbSear.ch."""
+        """Shortcut command to search Rule34 through IbSear.ch."""
         await self._ibsearch_generic(ctx, tags=" ".join(("site:rule34", tags)))
+
+    @commands.command(aliases=["sbooru", "sb"])
+    @commands.cooldown(6, 12, commands.BucketType.channel)
+    async def safebooru(self, ctx, *, tags=""):
+        """Shortcut command to search Safebooru through IbSear.ch."""
+        await self._ibsearch_generic(ctx, tags=" ".join(("site:safebooru", tags)))
+
+    @commands.command(aliases=["xb"])
+    @commands.cooldown(6, 12, commands.BucketType.channel)
+    @commands.check(checks.is_nsfw)
+    async def xbooru(self, ctx, *, tags=""):
+        """Shortcut command to search Xbooru through IbSear.ch."""
+        await self._ibsearch_generic(ctx, tags=" ".join(("site:xbooru", tags)))
+
+    @commands.command(aliases=["yd"])
+    @commands.cooldown(6, 12, commands.BucketType.channel)
+    @commands.check(checks.is_nsfw)
+    async def yandere(self, ctx, *, tags=""):
+        """Shortcut command to search Yande.re through IbSear.ch."""
+        await self._ibsearch_generic(ctx, tags=" ".join(("site:yandere", tags)))
 
 def setup(bot):
     """Setup function for Web."""
