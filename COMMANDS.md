@@ -69,7 +69,7 @@ Cuddle a member!
 
 ## danbooru
 ### Aliases: dbooru, db
-Shortcut function to search Danbooru through IbSear.ch.
+Shortcut command to search Danbooru through IbSear.ch.
 
 ## dead
 Dead!
@@ -108,7 +108,7 @@ Subcommands that decode plaintext. (e.g. from binary)
 
 ## gelbooru
 ### Aliases: gbooru, gb
-Shortcut function to search Gelbooru through IbSear.ch.
+Shortcut command to search Gelbooru through IbSear.ch.
 
 ## ghelp
 Generate a file listing currently loaded commands. Bot owner only.
@@ -135,6 +135,7 @@ Modified to work with Kitsuchan-NG.
 Halt the bot. Only the bot owner can use this.
 
 ## help
+### Aliases: commands
 Shows this message.
 
 ## hug
@@ -151,6 +152,7 @@ Fetch a randomized anime image from IbSear.ch, optional tags.
 This command accepts common imageboard tags and keywords. Here are a few examples:
 
 * ib red_hair armor - Search for images tagged with `red_hair` and `armor`.
+* ib red_hair | armor - Search for images tagged with `red_hair` or `armor`.
 * ib red_hair -armor - Search for images tagged with `red_hair` and not `armor`.
 * ib 1280x1024 - Search for images that are 1280x1024.
 * ib 5:4 - Search for images in 5:4 aspect ratio.
@@ -183,7 +185,7 @@ Kon, kon!
 
 ## konachan
 ### Aliases: kchan, kwp
-Shortcut function to search Konachan through IbSear.ch.
+Shortcut command to search Konachan through IbSear.ch.
 
 ## lewd
 Lewd!
@@ -289,7 +291,7 @@ Examples:
 
 ## rule34
 ### Aliases: r34
-Shortcut function to search Rule34 through IbSear.ch.
+Shortcut command to search Rule34 through IbSear.ch.
 
 ## rwg
 ### Aliases: rword, randword
@@ -297,7 +299,7 @@ Randomly generate a word.
 
 ## safebooru
 ### Aliases: sbooru, sb
-Shortcut function to search Safebooru through IbSear.ch.
+Shortcut command to search Safebooru through IbSear.ch.
 
 ## sandwich
 Sandwich!
@@ -360,6 +362,10 @@ Search Wikipedia.
 ### Aliases: idu, ideu, wakarimasenlol
 Wakarimasen, lol!
 
+## xbooru
+### Aliases: xb
+Shortcut command to search Xbooru through IbSear.ch.
+
 ## xkcd
 ### Aliases: xk
 Fetch a comic from xkcd.
@@ -368,4 +374,4 @@ Fetch a comic from xkcd.
 
 ## yandere
 ### Aliases: yd
-Shortcut function to search Yande.re through IbSear.ch.
+Shortcut command to search Yande.re through IbSear.ch.
