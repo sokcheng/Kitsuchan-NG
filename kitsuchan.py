@@ -102,7 +102,10 @@ async def on_command_completion(ctx):
     """Trigger when a command completes successfully."""
     if not isinstance(ctx.channel, discord.DMChannel):
         if ctx.command.name == "help":
-            await ctx.send("Help sent to DM.")
+            try:
+                await ctx.send("Help sent to DM.")
+            except discord.Forbidden:
+                pass
 
 @bot.event
 async def on_command_error(exception, ctx):
@@ -121,7 +124,10 @@ async def on_command_error(exception, ctx):
     or (isinstance(exception, commands.CommandInvokeError) \
         and isinstance(exception.original, (discord.HTTPException,
                                             ModuleNotFoundError))):
-        await ctx.send(f"{exception} x.x")
+        try:
+            await ctx.send(f"{exception} x.x")
+        except discord.Forbidden:
+            pass
         logger.warning(exception)
     elif isinstance(exception, commands.NotOwner):
         logger.warning((f"{ctx.author.name} ({ctx.author.id}) tried to issue a command but "
