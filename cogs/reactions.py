@@ -45,6 +45,11 @@ IMAGES_GLOMP = ("http://safebooru.org/images/1575/8e2b95aefa17208aa5b5bc2aa687a8
                 "http://safebooru.org/images/579/cd1913e6aaa91bb3abb752ebd9fb410099396acd.gif",
                 ("http://safebooru.org/samples/2095/"
                  "sample_c1fc61605ea086c339d0b8376efbfb83003d1a96.jpg"))
+IMAGES_IDK = ("http://safebooru.org/images/1513/6198de35cc3a7ffb2bd5cd46a89ca91fb117b3db.gif",
+              "http://safebooru.org/images/2098/bbe8b8f0fc5b630133d10a16bbeb29b81d64db50.jpg",
+              "http://safebooru.org/images/1977/e3988fa3bb6125f77b8e55d648ab1aebdd317bc7.jpg",
+              "http://safebooru.org/samples/1768/sample_2bf2f0acc1c06e34deef043066ebb17c21de4238.jpg",
+              "http://safebooru.org/images/937/ae704e58e0d58ddf57d3793609f9994a2b831301.jpg")
 IMAGES_LEWD = ("https://i.imgur.com/5JZH78a.jpg",
                "https://i.imgur.com/RdQ3FFA.jpg",
                "https://i.imgur.com/98tad3K.gif",
@@ -140,6 +145,12 @@ class Reactions:
         """Glomp!"""
         await self._send_image(ctx, IMAGES_GLOMP)
 
+    @commands.command(aliases=["idek"])
+    @commands.cooldown(6, 12, commands.BucketType.channel)
+    async def idk(self, ctx):
+        """IDK!"""
+        await self._send_image(ctx, IMAGES_IDK)
+
     @commands.command(aliases=["konkon"])
     @commands.cooldown(6, 12, commands.BucketType.channel)
     async def kon(self, ctx):
@@ -164,7 +175,7 @@ class Reactions:
         """What?"""
         await self._send_image(ctx, IMAGE_WHAT)
 
-    @commands.command(aliases=["wakarimasenlol"])
+    @commands.command(aliases=["idu", "ideu", "wakarimasenlol"])
     @commands.cooldown(6, 12, commands.BucketType.channel)
     async def wlol(self, ctx):
         """Wakarimasen, lol!"""

@@ -35,21 +35,7 @@ class IbSearch:
     def __init__(self):
         self.key_ibsearch = settings.manager.get("API_KEY_IBSEARCH")
 
-    @commands.command(aliases=["ib", "ibs"])
-    @commands.cooldown(6, 12, commands.BucketType.channel)
-    async def ibsearch(self, ctx, *, tags=""):
-        """Fetch a randomized anime image from IbSear.ch, optional tags.
-        
-        * tags - A list of tags to be used in the search criteria.
-        
-        This command accepts common imageboard tags and keywords. Here are a few examples:
-        
-        * ib red_hair armor - Search for images tagged with `red_hair` and `armor`.
-        * ib red_hair -armor - Search for images tagged with `red_hair` and not `armor`.
-        * ib 1280x1024 - Search for images that are 1280x1024.
-        * ib 5:4 - Search for images in 5:4 aspect ratio.
-        * ib random: - You don't care about what you get.
-        """
+    async def _ibsearch_generic(self, ctx, *, tags=""):
         if not self.key_ibsearch:
             message = "API key required for this command, but none found. Contact the bot owner?"
             await ctx.send(message)
@@ -94,6 +80,23 @@ class IbSearch:
                 message = "Could not reach IbSear.ch. x.x"
                 await ctx.send(message)
                 logger.warning(message)
+
+    @commands.command(aliases=["ib", "ibs"])
+    @commands.cooldown(6, 12, commands.BucketType.channel)
+    async def ibsearch(self, ctx, *, tags=""):
+        """Fetch a randomized anime image from IbSear.ch, optional tags.
+        
+        * tags - A list of tags to be used in the search criteria.
+        
+        This command accepts common imageboard tags and keywords. Here are a few examples:
+        
+        * ib red_hair armor - Search for images tagged with `red_hair` and `armor`.
+        * ib red_hair -armor - Search for images tagged with `red_hair` and not `armor`.
+        * ib 1280x1024 - Search for images that are 1280x1024.
+        * ib 5:4 - Search for images in 5:4 aspect ratio.
+        * ib random: - You don't care about what you get.
+        """
+        await self._ibsearch_generic(ctx, tags=tags)
 
 def setup(bot):
     """Setup function for Web."""
