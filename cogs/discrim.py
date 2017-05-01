@@ -31,7 +31,7 @@ class Discriminator:
             if str(member.discriminator) == discriminator:
                 results.append(f"[{len(results)+1}] {member.name}#{member.discriminator}")
         if len(results) == 0:
-            await ctx.send("Could not find any members with that discriminator.")
+            await ctx.send("Could not find any members in this guild with that discriminator.")
             return
         paginator = commands.Paginator(prefix="```py")
         if len(results) > 1:
