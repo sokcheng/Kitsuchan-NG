@@ -61,8 +61,8 @@ class Owner:
         """
         if len(text) == 0:
             text = "Echo?"
-        # Split the message up by zero-width spaces so the bot doesn't trigger other bots.
-        text = "\u200B"*8 + text
+        # This mostly prevents the bot from triggering other bots.
+        text = "\u200B" + text
         await ctx.send(text)
 
     @commands.command(hidden=True)
