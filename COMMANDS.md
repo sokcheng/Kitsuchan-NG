@@ -45,7 +45,10 @@ Delete the bot's previous message(s). Bot owner only.
 * times - Number of message to delete. Defaults to 1.
 
 ## cgames
-Shows the currently most played games
+### Aliases: games
+List all games currently being played in the current guild.
+
+* page_number - Optional parameter if there are too many pages.
 
 ## choose
 Choose between one of various supplied things.
@@ -350,7 +353,10 @@ Only the bot owner can use this.
 What?
 
 ## whoplays
-Shows a list of all the people playing a game.
+### Aliases: playing
+List all members in the current guild playing a game.
+
+* game_name - The game to be checked.
 
 ## wiki
 ### Aliases: wikipedia
