@@ -76,8 +76,9 @@ class Playing:
             line = f"{player.name}#{player.discriminator}"
             line.replace("```", "'''")
             paginator.add_line(line)
-        for page in paginator.pages:
-            await ctx.send(page)
+        await ctx.send(paginator.pages[0])
+        if len(paginator.pages) > 1:
+            await ctx.send("...and some others.")
 
 def setup(bot):
     """Setup function for Playing."""
