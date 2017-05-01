@@ -74,6 +74,8 @@ Cuddle a member!
 ### Aliases: dbooru, db
 Shortcut command to search Danbooru through IbSear.ch.
 
+* tags - A list of tags to be used in the search criteria.
+
 ## dead
 Dead!
 
@@ -112,6 +114,8 @@ Subcommands that decode plaintext. (e.g. from binary)
 ## gelbooru
 ### Aliases: gbooru, gb
 Shortcut command to search Gelbooru through IbSear.ch.
+
+* tags - A list of tags to be used in the search criteria.
 
 ## ghelp
 Generate a file listing currently loaded commands. Bot owner only.
@@ -189,6 +193,8 @@ Kon, kon!
 ## konachan
 ### Aliases: kchan, kwp
 Shortcut command to search Konachan through IbSear.ch.
+
+* tags - A list of tags to be used in the search criteria.
 
 ## lewd
 Lewd!
@@ -296,6 +302,8 @@ Examples:
 ### Aliases: r34
 Shortcut command to search Rule34 through IbSear.ch.
 
+* tags - A list of tags to be used in the search criteria.
+
 ## rwg
 ### Aliases: rword, randword
 Randomly generate a word.
@@ -303,6 +311,8 @@ Randomly generate a word.
 ## safebooru
 ### Aliases: sbooru, sb
 Shortcut command to search Safebooru through IbSear.ch.
+
+* tags - A list of tags to be used in the search criteria.
 
 ## sandwich
 Sandwich!
@@ -372,6 +382,8 @@ Wakarimasen, lol!
 ### Aliases: xb
 Shortcut command to search Xbooru through IbSear.ch.
 
+* tags - A list of tags to be used in the search criteria.
+
 ## xkcd
 ### Aliases: xk
 Fetch a comic from xkcd.
@@ -381,3 +393,5 @@ Fetch a comic from xkcd.
 ## yandere
 ### Aliases: yd
 Shortcut command to search Yande.re through IbSear.ch.
+
+* tags - A list of tags to be used in the search criteria.
