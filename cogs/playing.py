@@ -19,8 +19,10 @@ class Playing:
 
     @commands.command(aliases=["games"])
     @commands.cooldown(6, 12, commands.BucketType.user)
-    async def cgames(self, ctx):
-        """List all games currently being played in the current guild."""
+    async def cgames(self, ctx, page_number:int=None):
+        """List all games currently being played in the current guild.
+        
+        * page_number - Optional parameter if there are too many pages."""
         players = {}
         for member in ctx.guild.members:
             if member.game and not member.bot:
@@ -29,16 +31,25 @@ class Playing:
         if len(players) == 0:
             await ctx.send(f"Nobody in this guild is playing anything. :<")
             return
-        sorted_players = sorted(players.items(), key=lambda item: item[1])
+        sorted_players = sorted(players.items(), key=lambda item: item[1], reverse=True)
         paginator = commands.Paginator()
         for player in sorted_players:
             if player[1] > 1:
                 plural = "s"
             else:
                 plural = ""
-            paginator.add_line(f"{player[1]} player{plural} of {player[0]}")
-        for page in paginator.pages:
-            await ctx.send(page)
+            line = f"{player[1]} member{plural} playing {player[0]}"
+            line = line.replace("```", "'''")
+            paginator.add_line(line)
+        if len(paginator.pages) == 1:
+            await ctx.send(paginator.pages[0])
+        elif len(paginator.pages) > 1 and not page_number:
+            raise commands.UserInputError("Please specify a page number (1-{len(paginator.pages)}).")
+        else:
+            try:
+                await ctx.send(paginator.pages[page_number-1])
+            except IndexError:
+                raise commands.UserInputError("That page is not valid. :<")
 
     @commands.command(aliases=["playing"])
     @commands.cooldown(6, 12, commands.BucketType.user)
@@ -62,7 +73,9 @@ class Playing:
         paginator = commands.Paginator(prefix="```py")
         paginator.add_line(f"Found {len(players)} member{plural} playing {game_name}:")
         for player in players:
-            paginator.add_line(f"{player.name}#{player.discriminator}")
+            line = f"{player.name}#{player.discriminator}"
+            line.replace("```", "'''")
+            paginator.add_line(line)
         for page in paginator.pages:
             await ctx.send(page)
 
