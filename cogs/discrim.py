@@ -39,8 +39,10 @@ class Discriminator:
         else:
             plural = ""
         paginator.add_line(f"Found {len(results)} member{plural} of this guild ({discriminator}):")
-        for member in results:
+        for member in results[:10]:
             paginator.add_line(member)
+        if len(results) > 10:
+            paginator.add_line(f"...and {len(results)-10} others.")
         for page in paginator.pages:
             await ctx.send(page)
 
