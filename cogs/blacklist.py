@@ -52,6 +52,7 @@ class Blacklisting:
                                            f"**Region:** {guild.region}"))
 
     async def prune_guild(self, guild:discord.Guild):
+        """Automatically prune a guild."""
         num_humans = helpers.count_humans(guild)
         num_bots = helpers.count_bots(guild)
         collection = num_bots > num_humans * 0.8 and num_bots > 10
@@ -68,7 +69,7 @@ class Blacklisting:
             return "user blacklisted"
 
     async def prune_guilds(self):
-        """Automatically leave guilds if they're found to be too bot-heavy."""
+        """Automatically leave guilds."""
         number = 0
         for guild in self.bot.guilds:
             reason = await self.prune_guild(guild)
@@ -133,6 +134,7 @@ class Blacklisting:
             message = f"{id_user} blocked."
             logger.info(message)
             await ctx.send(message)
+            await self.prune_guilds()
         else:
             message = f"{id_user} already blocked."
             logger.info(message)
@@ -141,10 +143,10 @@ class Blacklisting:
 
     @block.command(name="guild", aliases=["server"])
     @commands.is_owner()
-    async def _blockguild(self, ctx, id_guild:int=None):
+    async def _blockguild(self, ctx, id_guild:int):
         """Block a guild. Only the bot owner can use this.
         
-        * id_guild - The ID of the guild to block. Defaults to current guild.
+        * id_guild - The ID of the guild to block.
         """
         self.settings.setdefault("GUILDS", [])
         if id_guild not in self.settings["GUILDS"]:
@@ -154,7 +156,7 @@ class Blacklisting:
             await ctx.send(message)
             try:
                 guild = ctx.bot.get_guild(id_guild)
-                await guild.leave()
+                await self.prune_guild(guild)
             except Exception:
                 pass
         else:
