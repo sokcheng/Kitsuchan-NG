@@ -33,7 +33,7 @@ class KIMP:
         if not member:
             member = ctx.author
         url_avatar = member.avatar_url.replace(".webp", ".png")
-        url = self.mogrify("standard", image=url_avatar, top=top, bottom=bottom)
+        url = self.mogrify("standard", title=" ".join((top, bottom)), image=url_avatar, top=top, bottom=bottom)
         embed = discord.Embed(title=f"{member.display_name} as a standard meme!")
         embed.description = f"[Click here to view]({url})"
         await ctx.send(embed=embed)
