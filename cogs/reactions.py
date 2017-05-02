@@ -88,6 +88,18 @@ IMAGES_WHAT = ("https://media.tumblr.com/tumblr_lnvtzjiY4J1qktqch.png",
 class Reactions:
     """Weeb reaction commands."""
 
+    def _generate_message(self, ctx, kind:str=None, member:discord.Member=None):
+        """Generate a message based on the member."""
+        if not kind or not member:
+            message=""
+        elif ctx.bot.user.id == member.id:
+            message=f"Aw, thank you. Here, have one back. :3"
+        elif ctx.author.id != member.id:
+            message=f"**{member.display_name}**, you got a {kind} from **{ctx.author.display_name}!**"
+        else:
+            message=f"**{member.display_name}**, I'm so sorry. Have a {kind} anyway. :<"
+        return message
+
     async def _rra(self, ctx, kind:str, member:discord.Member=None):
         """A helper function that grabs an image and posts it in response to a member.
         
@@ -100,14 +112,7 @@ class Reactions:
             if response.status == 200:
                 data = await response.json()
                 url_image = BASE_URL_IMAGE.format(data).replace("i/", "")
-                if not member:
-                    message=""
-                elif ctx.bot.user.id == member.id:
-                    message=f"Aw, thank you. Here, have one back. :3"
-                elif ctx.author.id != member.id:
-                    message=f"**{member.display_name}**, you got a {kind} from **{ctx.author.display_name}!**"
-                else:
-                    message=f"**{member.display_name}**, I'm so sorry. Have a {kind} anyway. :<"
+                message = self._generate_message(ctx, kind, member)
                 if not helpers.has_scanning(ctx):
                     embed = discord.Embed(color=utils.random_color())
                     embed.set_image(url=url_image)
@@ -120,16 +125,18 @@ class Reactions:
                 await ctx.send(message)
                 logger.info(message)
 
-    async def _send_image(self, ctx, url_image):
+    async def _send_image(self, ctx, url_image, kind:str=None, member:discord.Member=None):
         """A helper function that creates an embed with an image and sends it off."""
         if isinstance(url_image, (tuple, list)):
             url_image = systemrandom.choice(url_image)
+        message = self._generate_message(ctx, kind, member)
         if not helpers.has_scanning(ctx):
             embed = discord.Embed(color=utils.random_color())
             embed.set_image(url=url_image)
-            await ctx.send(embed=embed)
+            await ctx.send(message, embed=embed)
         else:
-            await ctx.send(url_image)
+            message = "\n".join([str(message), url_image])
+            await ctx.send(message)
 
     # Commands based on _send_image()
     @commands.command(aliases=["rip"])
@@ -146,9 +153,9 @@ class Reactions:
 
     @commands.command(aliases=["tacklehug", "tackle"])
     @commands.cooldown(6, 12, commands.BucketType.channel)
-    async def glomp(self, ctx):
+    async def glomp(self, ctx, member:discord.Member):
         """Glomp!"""
-        await self._send_image(ctx, IMAGES_GLOMP)
+        await self._send_image(ctx, IMAGES_GLOMP, "glomp", member)
 
     @commands.command(aliases=["idek"])
     @commands.cooldown(6, 12, commands.BucketType.channel)
@@ -170,9 +177,9 @@ class Reactions:
 
     @commands.command()
     @commands.cooldown(6, 12, commands.BucketType.channel)
-    async def poke(self, ctx):
+    async def poke(self, ctx, member:discord.Member):
         """Poke!"""
-        await self._send_image(ctx, IMAGES_POKE)
+        await self._send_image(ctx, IMAGES_POKE, "poke", member)
 
     @commands.command()
     @commands.cooldown(6, 12, commands.BucketType.channel)
