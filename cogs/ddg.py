@@ -49,28 +49,6 @@ async def _duckduckgo(ctx, *, query):
             logger.info(message)
             return message
 
-class Temperature:
-
-    @commands.command(name="f2c")
-    @commands.cooldown(6, 12, commands.BucketType.user)
-    async def fahrenheit_to_celsius(self, ctx, temperature:int):
-        """Convert temperature in Fahrenheit to Celsius.
-        
-        * temperature - An integer representing temperature in Fahrenheit."""
-        query = f"{temperature} f in c"
-        answer = await _duckduckgo(ctx, query=query)
-        await ctx.send(answer)
-
-    @commands.command(name="c2f")
-    @commands.cooldown(6, 12, commands.BucketType.user)
-    async def celsius_to_fahrenheit(self, ctx, temperature:int):
-        """Convert temperature in Celsius to Fahrenheit.
-        
-        * temperature - An integer representing temperature in Celsius."""
-        query = f"{temperature} c in f"
-        answer = await _duckduckgo(ctx, query=query)
-        await ctx.send(answer)
-
 class Fortune:
 
     @commands.command()
@@ -150,7 +128,6 @@ class Crypto:
 
 def setup(bot):
     """Setup function for DuckDuckGo."""
-    bot.add_cog(Temperature())
     bot.add_cog(Fortune())
     bot.add_cog(Words())
     bot.add_cog(Crypto())
