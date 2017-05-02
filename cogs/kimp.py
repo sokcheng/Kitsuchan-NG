@@ -1,0 +1,23 @@
+#!/usr/bin/env python3
+
+import kimp
+import logging
+
+import discord
+from discord.ext import commands
+
+class KIMP:
+
+    @commands.command()
+    @commands.cooldown(6, 12, commands.BucketType.user)
+    async def test(self, ctx, image_url:str):
+        """A KIMP test."""
+        data = kimp.mogrify("test", image_url)
+        if data:
+            embed = discord.Embed(title="This is a test!")
+            embed.description = f"[It's a data URI]({data})"
+            await ctx.send(embed=embed)
+
+def setup(bot):
+    """Setup function."""
+    bot.add_cog(KIMP())
