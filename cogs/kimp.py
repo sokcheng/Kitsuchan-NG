@@ -8,7 +8,7 @@ from discord.ext import commands
 import kimp
 import logging
 
-BASE_URL_KIMP = "https://n303p4.github.io/memes/{0}.html?{1}"
+BASE_URL_KIMP = "https://n303p4.github.io/{0}.html?{1}"
 
 class KIMP:
 
