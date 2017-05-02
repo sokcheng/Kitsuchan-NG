@@ -62,6 +62,9 @@ IMAGES_LEWD = ("https://i.imgur.com/5JZH78a.jpg",
                "https://i.imgur.com/GTfWFm6.jpg",
                "https://i.imgur.com/Iz315vJ.jpg",
                "https://i.imgur.com/rWLoIzf.png")
+IMAGES_LICK = ("http://safebooru.org/images/189/0a412d1db7f53cd2505df9cf16be693dcac0855b.jpeg",
+               "http://safebooru.org/images/358/f64d461f47319d8dae9adb899c0de24fca70127d.png",
+               "http://safebooru.org//images/2116/4b8cf6a3f4cd38a610697df4f0fe1074e67070af.jpg")
 IMAGES_POKE = ("http://safebooru.org/images/1880/e3b020472d86b0a04ffec8cdf41049ef66cf3a68.gif",
                "http://safebooru.org/images/2051/031566980728255e6d7e2fba8c12a3c38ea7598a.gif",
                "http://safebooru.org/images/1169/3edae332d38c887a8723207d1bc0dffac8244591.gif")
@@ -237,13 +240,15 @@ class Reactions:
             await self._send_image(ctx, IMAGES_LEWD)
 
     @commands.command()
-    @commands.check(checks.is_nsfw)
     @commands.cooldown(6, 12, commands.BucketType.channel)
     async def lick(self, ctx, member:discord.Member):
         """Lick a member!
         
         * member - The member to be licked."""
-        await self._rra(ctx, "lick", member)
+        if hasattr(ctx.channel, "is_nsfw") and ctx.channel.is_nsfw():
+            await self._rra(ctx, "lick", member)
+        else:
+            await self._send_image(ctx, IMAGES_LICK)
 
     @commands.command()
     @commands.cooldown(6, 12, commands.BucketType.channel)
