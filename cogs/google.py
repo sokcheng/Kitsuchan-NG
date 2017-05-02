@@ -64,6 +64,7 @@ class Google:
                 logger.warning(message)
     
     @commands.group(aliases=["g"], invoke_without_command=True)
+    @commands.cooldown(6, 12, commands.BucketType.channel)
     async def google(self, ctx, *, query:str):
         """Search Google.
         
@@ -74,6 +75,7 @@ class Google:
         await self._google(ctx, query=query)
 
     @google.command(aliases=["i"])
+    @commands.cooldown(6, 12, commands.BucketType.channel)
     async def image(self, ctx, *, query:str):
         """Search Google Images."""
         await self._google(ctx, query=query, base_url=BASE_URL_GOOGLE_IMAGES)
