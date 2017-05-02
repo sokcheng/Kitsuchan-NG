@@ -5,22 +5,21 @@ import urllib
 import discord
 from discord.ext import commands
 
-import kimp
 import logging
 
 BASE_URL_KIMP = "https://n303p4.github.io/{0}.html?{1}"
 
 class KIMP:
 
-    @commands.command()
-    @commands.cooldown(6, 12, commands.BucketType.user)
-    async def test(self, ctx, image_url:str):
-        """A KIMP test."""
-        data = kimp.mogrify("test", image_url)
-        if data:
-            embed = discord.Embed(title="This is a test!")
-            embed.description = f"[It's a data URI]({data})"
-            await ctx.send(embed=embed)
+    def mogrify(self, template:str, **kwargs):
+        """Meme generation.
+        
+        * template - The name of the template to use.
+        * **args - The arguments to use in the format.
+        """
+        params = urllib.parse.urlencode(kwargs)
+        url = BASE_URL_KIMP.format(template, params)
+        return url
 
     @commands.command()
     @commands.cooldown(6, 12, commands.BucketType.user)
@@ -33,11 +32,8 @@ class KIMP:
         * kit standard \"This is\" "A meme\" @Kitsuchan"""
         if not member:
             member = ctx.author
-        # This is shit.
         url_avatar = member.avatar_url.replace(".webp", ".png")
-        params = urllib.parse.urlencode({"image": url_avatar, "top": top,
-                                         "bottom": bottom})
-        url = BASE_URL_KIMP.format("standard", params)
+        url = self.mogrify("standard", image=url_avatar, top=top, bottom=bottom)
         embed = discord.Embed(title=f"{member.display_name} as a standard meme!")
         embed.description = f"[Click here to view]({url})"
         await ctx.send(embed=embed)
