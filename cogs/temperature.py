@@ -4,6 +4,8 @@ import logging
 
 from discord.ext import commands
 
+DIGITS_MAX = 16
+
 class Temperature:
 
     @commands.command(name="f2c")
@@ -12,6 +14,8 @@ class Temperature:
         """Convert temperature in Fahrenheit to Celsius.
         
         * temperature - An integer representing temperature in Fahrenheit."""
+        if len(str(temperature)) > DIGITS_MAX:
+            raise commands.UserInputError("Too long.")
         fahrenheit = round(temperature, 3)
         celsius = round((temperature - 32) * 5/9, 3)
         await ctx.send(f"{fahrenheit} Fahrenheit = {celsius} Celsius")
@@ -22,6 +26,8 @@ class Temperature:
         """Convert temperature in Celsius to Fahrenheit.
         
         * temperature - An integer representing temperature in Celsius."""
+        if len(str(temperature)) > DIGITS_MAX:
+            raise commands.UserInputError("Too long.")
         celsius = round(temperature, 3)
         fahrenheit = round((temperature * 9/5) + 32, 3)
         await ctx.send(f"{celsius} Celsius = {fahrenheit} Fahrenheit")
