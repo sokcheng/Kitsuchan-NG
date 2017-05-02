@@ -1,10 +1,14 @@
 #!/usr/bin/env python3
 
-import kimp
-import logging
+import urllib
 
 import discord
 from discord.ext import commands
+
+import kimp
+import logging
+
+BASE_URL_KIMP = "https://n303p4.github.io/memes/{0}.html?{1}"
 
 class KIMP:
 
@@ -20,25 +24,23 @@ class KIMP:
 
     @commands.command()
     @commands.cooldown(6, 12, commands.BucketType.user)
-    async def standard(self, ctx, *args):
+    async def standard(self, ctx, top:str, bottom:str, *, member:discord.Member=None):
         """Standard meme. Use quotes around your arguments.
         
         Example usage:
         
         * kit standard \"This is\" "A meme\"
         * kit standard \"This is\" "A meme\" @Kitsuchan"""
-        if len(ctx.message.mentions) > 0:
-            member = ctx.message.mentions[0]
-        else:
+        if not member:
             member = ctx.author
-        if len(args) < 2:
-            raise commands.UserInputError("Need a top and a bottom phrase!")
         # This is shit.
-        data = kimp.mogrify("standard", member.avatar_url.replace(".webp", ".png"), *args)
-        if data:
-            embed = discord.Embed(title=f"{member.display_name} as a standard meme!")
-            embed.description = f"[Click here to view]({data})"
-            await ctx.send(embed=embed)
+        url_avatar = member.avatar_url.replace(".webp", ".png")
+        params = urllib.parse.urlencode({"image": url_avatar, "top": top,
+                                         "bottom": bottom})
+        url = BASE_URL_KIMP.format("standard", params)
+        embed = discord.Embed(title=f"{member.display_name} as a standard meme!")
+        embed.description = f"[Click here to view]({url})"
+        await ctx.send(embed=embed)
 
 def setup(bot):
     """Setup function."""
