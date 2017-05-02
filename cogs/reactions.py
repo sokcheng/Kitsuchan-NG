@@ -255,7 +255,7 @@ class Reactions:
         if hasattr(ctx.channel, "is_nsfw") and ctx.channel.is_nsfw():
             await self._rra(ctx, "lick", member)
         else:
-            await self._send_image(ctx, IMAGES_LICK)
+            await self._send_image(ctx, IMAGES_LICK, "lick", member)
 
     @commands.command()
     @commands.cooldown(6, 12, commands.BucketType.channel)
