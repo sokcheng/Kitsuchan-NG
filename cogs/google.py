@@ -10,11 +10,7 @@ import re
 
 # Third-party modules
 from bs4 import BeautifulSoup
-import discord
 from discord.ext import commands
-
-# Bundled modules
-import helpers
 
 systemrandom = random.SystemRandom()
 
@@ -69,7 +65,12 @@ class Google:
     
     @commands.group(aliases=["g"], invoke_without_command=True)
     async def google(self, ctx, *, query:str):
-        """Search Google."""
+        """Search Google.
+        
+        Example queries:
+        
+        * google A cat - Search Google for a cat.
+        * google image A cat - Search Google for an image of a cat."""
         await self._google(ctx, query=query)
 
     @google.command(aliases=["i"])

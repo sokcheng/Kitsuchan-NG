@@ -12,8 +12,18 @@ Ask the Magic 8-Ball a question.
 ### Aliases: a, info, i
 Information subcommands, e.g. channel information.
 
+## anagram
+Find possible anagrams of a phrase.
+
+* text = The message to find an anagram for.
+
 ## antigravity
 Fetch the antigravity comic from xkcd.
+
+## atbash
+Convert text using a reversed alphabet.
+
+* text = The message to be encoded.
 
 ## avatar
 Display a user's avatar.
@@ -26,6 +36,11 @@ Ban all users mentioned by this command.
 
 Requires both the user and bot to have `ban_members` to execute.
 
+## base64
+Convert a phrase into Base64.
+
+* text = The text to convert.
+
 ## block
 Blocking commands (e.g. block user).
 
@@ -33,6 +48,11 @@ Only the bot owner can use this.
 
 ## boots
 Boots!
+
+## c2f
+Convert temperature in Celsius to Fahrenheit.
+
+* temperature - An integer representing temperature in Celsius.
 
 ## catgirl
 ### Aliases: neko, nekomimi
@@ -77,6 +97,7 @@ Shortcut command to search Danbooru through IbSear.ch.
 * tags - A list of tags to be used in the search criteria.
 
 ## dead
+### Aliases: rip
 Dead!
 
 ## didsay
@@ -100,9 +121,17 @@ Repeat the user's text back at them. Bot owner only.
 ## eval
 Evaluate a Python expression. Bot owner only.
 
+## f2c
+Convert temperature in Fahrenheit to Celsius.
+
+* temperature - An integer representing temperature in Fahrenheit.
+
 ## fdesk
 ### Aliases: facedesk
 Facedesk!
+
+## fortune
+Produce a random fortune. :3
 
 ## foxgirl
 ### Aliases: kitsune, kitsunemimi
@@ -126,16 +155,7 @@ Glomp!
 
 ## google
 ### Aliases: g
-Search the web with Google.
-
-Example usage:
-* google a cat - Google search for a cat.
-* google image a cat - Google image search for a cat.
-* google maps a cat - Google maps search for a cat.
-
-Originally made by Kowlin https://github.com/Kowlin/refactored-cogs, edited by Aioxas.
-
-Modified to work with Kitsuchan-NG.
+Search Google.
 
 ## halt
 ### Aliases: shutdown, kys
@@ -284,6 +304,10 @@ Reload an already-loaded extension.
 
 Only the bot owner can use this.
 
+## rname
+### Aliases: randomname
+Generate a random name.
+
 ## rng
 ### Aliases: randint
 Randomly generate a number. Default range 1-100.
@@ -297,6 +321,11 @@ Roll some dice, using D&D syntax.
 Examples:
 * roll 5d6 - Roll five six sided dice.
 * roll 1d20 2d8 - Roll one twenty sided die, and two eight sided dice.
+
+## rot13
+Convert a phrase into ROT13.
+
+* text = The text to convert.
 
 ## rule34
 ### Aliases: r34
@@ -319,6 +348,11 @@ Sandwich!
 
 ## sh
 Execute a system command. Bot owner only.
+
+## sha3
+Convert a phrase into its SHA-3 hash.
+
+* text = The text to convert.
 
 ## slap
 Slap a member!
