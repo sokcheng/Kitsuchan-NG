@@ -154,4 +154,3 @@ def setup(bot):
     bot.add_cog(Fortune())
     bot.add_cog(Words())
     bot.add_cog(Crypto())
-    bot.add_cog(Web())
