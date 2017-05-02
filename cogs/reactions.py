@@ -129,7 +129,7 @@ class Reactions:
             await ctx.send(url_image)
 
     # Commands based on _send_image()
-    @commands.command()
+    @commands.command(aliases=["rip"])
     @commands.cooldown(6, 12, commands.BucketType.channel)
     async def dead(self, ctx):
         """Dead!"""
