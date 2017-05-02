@@ -34,11 +34,5 @@ def mogrify(template, *arguments):
     template - The key of the template desired.
     *arguments - The formatting arguments to use.
     """
-    try:
-        result = templates[template].format(*arguments)
-        return HTML_HEADER.format(base64.b64encode(result.encode()).decode("ascii"))
-    # Need to actually raise errors at some point. For now, returns None if failed.
-    except KeyError:
-        pass
-    except IndexError:
-        pass
+    result = templates[template].format(*arguments)
+    return HTML_HEADER.format(base64.b64encode(result.encode()).decode("ascii"))
