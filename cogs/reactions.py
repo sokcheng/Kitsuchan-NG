@@ -26,7 +26,6 @@ BASE_URL_IMAGE = "https://wia.ram.moe{0[path]}"
 # Single image links.
 IMAGE_FACEDESK = "https://media.tumblr.com/tumblr_lqegp8wjxZ1qktqch.gif"
 IMAGE_LMLU = "https://68.media.tumblr.com/tumblr_mej070O7Lj1qktqch.gif"
-IMAGE_WHAT = "https://media.tumblr.com/tumblr_lnvtzjiY4J1qktqch.png"
 IMAGE_WLOL = "https://68.media.tumblr.com/tumblr_lqehb0eOK01qktqch.jpg"
 
 # Tuples of image links.
@@ -79,6 +78,9 @@ IMAGES_KONKON = ("http://safebooru.org/images/1856/6e6b3319f2a0a3fe5e77567ebdc99
                  "http://safebooru.org/images/2077/12bddb7bd2274f0ba9abe2d72c994555d562e0df.jpg",
                  ("http://safebooru.org/samples/2045/"
                   "sample_c2a906de7bf13b48c7c971e909f1beef75766c34.png"))
+IMAGES_WHAT = ("https://media.tumblr.com/tumblr_lnvtzjiY4J1qktqch.png",
+               "https://owo.whats-th.is/a740f1.png",
+               "http://media.tumblr.com/tumblr_lpob17Ru5v1qktqch.gif")
 
 class Reactions:
     """Weeb reaction commands."""
@@ -173,7 +175,7 @@ class Reactions:
     @commands.cooldown(6, 12, commands.BucketType.channel)
     async def what(self, ctx):
         """What?"""
-        await self._send_image(ctx, IMAGE_WHAT)
+        await self._send_image(ctx, IMAGES_WHAT)
 
     @commands.command(aliases=["idu", "ideu", "wakarimasenlol"])
     @commands.cooldown(6, 12, commands.BucketType.channel)
