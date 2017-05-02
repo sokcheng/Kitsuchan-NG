@@ -157,6 +157,11 @@ Glomp!
 ### Aliases: g
 Search Google.
 
+Example queries:
+
+* google A cat - Search Google for a cat.
+* google image A cat - Search Google for an image of a cat.
+
 ## halt
 ### Aliases: shutdown, kys
 Halt the bot. Only the bot owner can use this.
