@@ -25,11 +25,16 @@ class KIMP:
         
         Example usage:
         
-        * kit standard \"This is\" "A meme\""""
+        * kit standard \"This is\" "A meme\"
+        * kit standard \"This is\" "A meme\" @Kitsuchan"""
+        if len(ctx.message.mentions) > 0:
+            member = ctx.message.mentions[0]
+        else:
+            member = ctx.author
         if len(args) < 2:
             raise commands.UserInputError("Need a top and a bottom phrase!")
         # This is shit.
-        data = kimp.mogrify("standard", ctx.author.avatar_url.replace(".webp", ".png"), *args)
+        data = kimp.mogrify("standard", member.avatar_url.replace(".webp", ".png"), *args)
         if data:
             embed = discord.Embed(title="You as a standard meme!")
             embed.description = f"[Click here to view]({data})"
