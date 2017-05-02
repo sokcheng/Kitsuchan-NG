@@ -8,21 +8,23 @@ class Temperature:
 
     @commands.command(name="f2c")
     @commands.cooldown(6, 12, commands.BucketType.user)
-    async def fahrenheit_to_celsius(self, ctx, temperature:int):
+    async def fahrenheit_to_celsius(self, ctx, temperature:float):
         """Convert temperature in Fahrenheit to Celsius.
         
         * temperature - An integer representing temperature in Fahrenheit."""
+        fahrenheit = round(temperature, 3)
         celsius = round((temperature - 32) * 5/9, 3)
-        await ctx.send(f"{temperature} Fahrenheit = {celsius} Celsius")
+        await ctx.send(f"{fahrenheit} Fahrenheit = {celsius} Celsius")
 
     @commands.command(name="c2f")
     @commands.cooldown(6, 12, commands.BucketType.user)
-    async def celsius_to_fahrenheit(self, ctx, temperature:int):
+    async def celsius_to_fahrenheit(self, ctx, temperature:float):
         """Convert temperature in Celsius to Fahrenheit.
         
         * temperature - An integer representing temperature in Celsius."""
+        celsius = round(temperature, 3)
         fahrenheit = round((temperature * 9/5) + 32, 3)
-        await ctx.send(f"{temperature} Celsius = {fahrenheit} Fahrenheit")
+        await ctx.send(f"{celsius} Celsius = {fahrenheit} Fahrenheit")
 
 def setup(bot):
     """Setup function."""
