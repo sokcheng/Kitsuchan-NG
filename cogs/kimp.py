@@ -31,8 +31,8 @@ class KIMP:
         # This is shit.
         data = kimp.mogrify("standard", ctx.author.avatar_url.replace(".webp", ".png"), *args)
         if data:
-            embed = discord.Embed(title="This is a test!")
-            embed.description = f"[It's a data URI]({data})"
+            embed = discord.Embed(title="You as a standard meme!")
+            embed.description = f"[Click here to view]({data})"
             await ctx.send(embed=embed)
 
 def setup(bot):
