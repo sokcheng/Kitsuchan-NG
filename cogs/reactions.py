@@ -153,7 +153,7 @@ class Reactions:
 
     @commands.command(aliases=["tacklehug", "tackle"])
     @commands.cooldown(6, 12, commands.BucketType.channel)
-    async def glomp(self, ctx, member:discord.Member):
+    async def glomp(self, ctx, *, member:discord.Member):
         """Glomp!"""
         await self._send_image(ctx, IMAGES_GLOMP, "glomp", member)
 
@@ -177,7 +177,7 @@ class Reactions:
 
     @commands.command()
     @commands.cooldown(6, 12, commands.BucketType.channel)
-    async def poke(self, ctx, member:discord.Member):
+    async def poke(self, ctx, *, member:discord.Member):
         """Poke!"""
         await self._send_image(ctx, IMAGES_POKE, "poke", member)
 
@@ -214,7 +214,7 @@ class Reactions:
 
     @commands.command(aliases=["snuggle"])
     @commands.cooldown(6, 12, commands.BucketType.channel)
-    async def cuddle(self, ctx, member:discord.Member):
+    async def cuddle(self, ctx, *, member:discord.Member):
         """Cuddle a member!
         
         * member - The member to be cuddled."""
@@ -222,7 +222,7 @@ class Reactions:
 
     @commands.command()
     @commands.cooldown(6, 12, commands.BucketType.channel)
-    async def hug(self, ctx, member:discord.Member):
+    async def hug(self, ctx, *, member:discord.Member):
         """Hug a member!
         
         * member - The member to be hugged."""
@@ -230,7 +230,7 @@ class Reactions:
         
     @commands.command()
     @commands.cooldown(6, 12, commands.BucketType.channel)
-    async def kiss(self, ctx, member:discord.Member):
+    async def kiss(self, ctx, *, member:discord.Member):
         """Kiss a member!
         
         * member - The member to be kissed."""
@@ -248,7 +248,7 @@ class Reactions:
 
     @commands.command()
     @commands.cooldown(6, 12, commands.BucketType.channel)
-    async def lick(self, ctx, member:discord.Member):
+    async def lick(self, ctx, *, member:discord.Member):
         """Lick a member!
         
         * member - The member to be licked."""
@@ -277,7 +277,7 @@ class Reactions:
 
     @commands.command()
     @commands.cooldown(6, 12, commands.BucketType.channel)
-    async def pat(self, ctx, member:discord.Member):
+    async def pat(self, ctx, *, member:discord.Member):
         """Pat a member!
         
         * member - The member to be patted."""
@@ -291,7 +291,7 @@ class Reactions:
 
     @commands.command()
     @commands.cooldown(6, 12, commands.BucketType.channel)
-    async def slap(self, ctx, member:discord.Member):
+    async def slap(self, ctx, *, member:discord.Member):
         """Slap a member!
         
         * member - The member to be slapped."""
@@ -305,7 +305,7 @@ class Reactions:
 
     @commands.command()
     @commands.cooldown(6, 12, commands.BucketType.channel)
-    async def stare(self, ctx, member:discord.Member):
+    async def stare(self, ctx, *, member:discord.Member):
         """Stare at a member!
         
         * member - The member to be stared at."""
@@ -313,7 +313,7 @@ class Reactions:
 
     @commands.command()
     @commands.cooldown(6, 12, commands.BucketType.channel)
-    async def tickle(self, ctx, member:discord.Member):
+    async def tickle(self, ctx, *, member:discord.Member):
         """Tickle a member!
         
         * member - The member to be tickled."""
