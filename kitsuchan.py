@@ -43,10 +43,26 @@ command_log.addHandler(file_handler_command_log)
 # This way, the bot doesn't just flood the logging channel by posting on every command execution.
 command_cache = []
 
-bot = commands.Bot(command_prefix=commands.when_mentioned, pm_help=True)
+class Bot(commands.Bot):
+
+    """Custom bot object."""
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.session = aiohttp.ClientSession(loop=self.loop)
+
+    @property
+    def logging_channels(self):
+        channels = []
+        for guild in self.guilds:
+            if guild.owner.id == self.owner_id:
+                for channel in guild.text_channels:
+                    if channel.name == "log" or channel.name.startswith("log-"):
+                        channels.append(channel)
+        return channels
+
+bot = Bot(command_prefix=commands.when_mentioned, pm_help=True)
 bot.description = app_info.DESCRIPTION
-bot._owner_id = None
-bot.session = aiohttp.ClientSession(loop=bot.loop)
 
 # Monkey patch to add commands as an alias of help
 bot.all_commands["help"].aliases = ["commands"]
@@ -61,7 +77,7 @@ def is_human(ctx):
 @bot.check
 def is_public(ctx):
     """Prevent the bot from responding to DMs, unless it's the bot owner sending the DM."""
-    if ctx.author.id == bot._owner_id:
+    if ctx.author.id == bot.owner_id:
         return True
     elif isinstance(ctx.channel, discord.DMChannel):
         raise commands.NoPrivateMessage("You are not allowed to DM this bot.")
@@ -73,18 +89,8 @@ async def on_ready():
     """Conduct preparations once the bot is ready to go."""
     bot.time_started = datetime.datetime.now()
     
-    app_info = await bot.application_info()
-    bot._owner = app_info.owner
-    bot._owner_id = app_info.owner.id
-    
-    # Monkey patch logging_channels as an attribute of the bot.
-    # This is used as an output for logs.
-    bot.logging_channels = []
-    for guild in bot.guilds:
-        if guild.owner.id == bot._owner_id:
-            for channel in guild.text_channels:
-                if channel.name == "log" or channel.name.startswith("log-"):
-                    bot.logging_channels.append(channel)
+    # This hack forces bot.owner_id to be set internally by discord.py.
+    await bot.is_owner(bot.user)
     
     username_spaceless = bot.user.name.lower().replace(" ", "")[:3]
     command_prefix_three_letters = f"{username_spaceless}"
