@@ -39,6 +39,8 @@ file_handler_command_log.setFormatter(formatter)
 file_handler_command_log.setLevel(logging.INFO)
 command_log.addHandler(file_handler_command_log)
 
+# list to temporarily store executed commands. This is used for logging behavior.
+# This way, the bot doesn't just flood the logging channel by posting on every command execution.
 command_cache = []
 
 bot = commands.Bot(command_prefix=commands.when_mentioned, pm_help=True)
@@ -108,6 +110,8 @@ async def on_command(ctx):
     message = f"Execution of {ctx.message.content} requested by {ctx.author.name} ({ctx.author.id})."
     command_log.info(message)
     message = f"{ctx.message.created_at.ctime()}: {message}"
+    
+    # Append the command to the command_cache for further processing in the bot's logging behavior.
     command_cache.append(message)
 
 @bot.event
