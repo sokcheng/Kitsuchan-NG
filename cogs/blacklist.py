@@ -33,10 +33,9 @@ class Blacklisting:
             reason = await self.prune_guild(guild)
             num_humans = helpers.count_humans(guild)
             num_bots = helpers.count_bots(guild)
-            logging_channels = await helpers.logging_channels(bot)
             if not reason:
                 logger.info(f"Joined guild {guild.name} ({guild.id})")
-                for channel in logging_channels:
+                for channel in self.bot.logging_channels:
                     await channel.send((f"Joined new guild **{guild.name}** ({guild.id})\n"
                                         f"**Owner:** {guild.owner.name} ({guild.owner.id})\n"
                                         f"**Humans:** {num_humans}\n"
@@ -45,7 +44,7 @@ class Blacklisting:
             else:
                 logger.info((f"Automatically left guild {guild.name} ({guild.id}) "
                              f"(reason: {reason})"))
-                for channel in logging_channels:
+                for channel in self.bot.logging_channels:
                     await channel.send((f"Rejected new guild **{guild.name}** ({guild.id}) "
                                         f"(reason: {reason})\n"
                                         f"**Owner:** {guild.owner.name} ({guild.owner.id})\n"

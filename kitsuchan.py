@@ -16,7 +16,6 @@ from discord.ext import commands
 # Bundled modules
 import app_info
 import errors
-import helpers
 import settings
 
 assert (sys.version_info >= (3,6)), "This program requires Python 3.6 or higher."
@@ -68,13 +67,6 @@ def is_public(ctx):
 
 # Events
 @bot.event
-async def on_command(ctx):
-    message = f"Execution of {ctx.message.content} requested by {ctx.author.name} ({ctx.author.id})."
-    command_log.info(message)
-    message = f"{ctx.message.created_at.ctime()}: {message}"
-    command_cache.append(message)
-
-@bot.event
 async def on_ready():
     """Conduct preparations once the bot is ready to go."""
     bot.time_started = datetime.datetime.now()
@@ -82,6 +74,15 @@ async def on_ready():
     app_info = await bot.application_info()
     bot._owner = app_info.owner
     bot._owner_id = app_info.owner.id
+    
+    # Monkey patch logging_channels as an attribute of the bot.
+    # This is used as an output for logs.
+    bot.logging_channels = []
+    for guild in bot.guilds:
+        if guild.owner.id == bot._owner_id:
+            for channel in guild.text_channels:
+                if channel.name == "log" or channel.name.startswith("log-"):
+                    bot.logging_channels.append(channel)
     
     username_spaceless = bot.user.name.lower().replace(" ", "")[:3]
     command_prefix_three_letters = f"{username_spaceless}"
@@ -101,6 +102,13 @@ async def on_ready():
     
     await bot.change_presence(game=game)
     logger.info(f"Bot is ONLINE! Username: {bot.user.name}, User ID: {bot.user.id}")
+
+@bot.event
+async def on_command(ctx):
+    message = f"Execution of {ctx.message.content} requested by {ctx.author.name} ({ctx.author.id})."
+    command_log.info(message)
+    message = f"{ctx.message.created_at.ctime()}: {message}"
+    command_cache.append(message)
 
 @bot.event
 async def on_command_completion(ctx):
@@ -123,8 +131,7 @@ async def on_command_error(exception, ctx):
         await ctx.author.send(f"`{exception.__class__.__name__}`\n`{exception}`")
         return
     
-    if isinstance(exception, (commands.BadArgument,
-                              commands.MissingRequiredArgument,
+    if isinstance(exception, (commands.BadArgument, commands.MissingRequiredArgument,
                               commands.UserInputError)) \
     or (isinstance(exception, commands.CommandInvokeError) \
         and isinstance(exception.original, (discord.HTTPException,
@@ -154,15 +161,15 @@ async def on_command_error(exception, ctx):
 
 # Background tasks
 async def send_owner_commands():
+    """This function logs commands and stuff."""
     await bot.wait_until_ready()
     while not bot.is_closed():
-        logging_channels = await helpers.logging_channels(bot)
         if len(command_cache) > 0 and hasattr(bot, "_owner"):
             paginator = commands.Paginator()
             for index in range(0, len(command_cache)):
                 paginator.add_line(command_cache[0])
                 del command_cache[0]
-            for channel in logging_channels:
+            for channel in bot.logging_channels:
                 for page in paginator.pages:
                     await channel.send(page)
         await asyncio.sleep(1800)

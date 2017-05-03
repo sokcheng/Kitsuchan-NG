@@ -91,14 +91,3 @@ def has_scanning(ctx:commands.Context):
     or (hasattr(ctx.channel, "is_nsfw") and ctx.channel.is_nsfw()):
         return False
     return True
-
-async def logging_channels(bot:commands.Bot):
-    channels = []
-    app_info = await bot.application_info()
-    owner = app_info.owner
-    for guild in bot.guilds:
-        if guild.owner.id == owner.id:
-            for channel in guild.text_channels:
-                if channel.name == "log" or channel.name.startswith("log-"):
-                    channels.append(channel)
-    return channels
