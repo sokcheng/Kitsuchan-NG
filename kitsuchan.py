@@ -54,8 +54,8 @@ class Bot(commands.Bot):
 
     async def logout(self):
         """The logout function must end the ClientSession as well."""
+        await super().logout()
         self.session.close()
-        super().logout()
 
     @property
     def logging_channels(self):
