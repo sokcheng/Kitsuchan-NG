@@ -110,9 +110,6 @@ async def handle_error(exception, ctx):
         except discord.Forbidden:
             pass
         logger.warning(exception)
-    elif isinstance(exception, commands.NotOwner):
-        logger.warning((f"{ctx.author.name} ({ctx.author.id}) tried to issue a command but "
-                        f"was denied. Attempted command: {ctx.invoked_with}"))
     elif isinstance(exception, commands.NoPrivateMessage):
         logger.warning((f"{ctx.author.name} ({ctx.author.id}) tried to issue a command in a DM."))
     elif isinstance(exception, commands.CommandOnCooldown):
@@ -121,8 +118,13 @@ async def handle_error(exception, ctx):
         logger.warning(f"A command is being spammed too much by {ctx.author.name} ({ctx.author.id}).")
     elif isinstance(exception, errors.NSFWDisallowed):
         await ctx.send("Channel must be marked as NSFW to use that. x.x")
+    elif isinstance(exception, commands.NotOwner):
+        await ctx.send("Only the owner may do that. :<")
+        logger.warning((f"{ctx.author.name} ({ctx.author.id}) tried to issue a command but "
+                        f"was denied. Attempted command: {ctx.invoked_with}"))
     elif isinstance(exception, commands.CheckFailure):
-        await ctx.send("No. Now move your hands away from that command. :<")
+        await ctx.send(("Permission denied. "
+                        "Check your permissions and my permissions and try again. :<"))
         logger.warning((f"{ctx.author.name} ({ctx.author.id}) tried to issue a command but "
                         f"was denied. Attempted command: {ctx.invoked_with}"))
     else:
