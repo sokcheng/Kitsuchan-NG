@@ -40,6 +40,25 @@ class Memes:
         embed.description = f"[Click here to view]({url})"
         await ctx.send(embed=embed)
 
+    @commands.command(aliases=["poster"])
+    @commands.cooldown(6, 12, commands.BucketType.user)
+    async def wanted(self, ctx, *, member:discord.Member=None):
+        """Create a wanted poster of a user.
+        
+        Example usage:
+        
+        * kit usermeme \"This is\" "A meme\"
+        * kit usermeme \"This is\" "A meme\" @Kitsuchan
+        """
+        if not member:
+            member = ctx.author
+        url_avatar = member.avatar_url.replace(".webp", ".png")
+        url = self.mogrify("wanted", title=f"WANTED: {member.display_name}",
+                           image=url_avatar)
+        embed = discord.Embed(title=f"WANTED: {member.display_name}!")
+        embed.description = f"[Click here to view]({url})"
+        await ctx.send(embed=embed)
+
 def setup(bot):
     """Setup function."""
     bot.add_cog(Memes())
