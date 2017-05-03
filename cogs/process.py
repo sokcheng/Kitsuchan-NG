@@ -34,7 +34,6 @@ class Process:
         await ctx.send(message)
         await ctx.bot.logout()
         settings.save()
-        ctx.bot.session.close()
 
     @commands.command()
     @commands.is_owner()
@@ -47,7 +46,6 @@ class Process:
         logger.warning(message)
         await ctx.send(message)
         await ctx.bot.logout()
-        ctx.bot.session.close()
         settings.save()
         os.execv(sys.executable, [sys.executable] + sys.argv)
 

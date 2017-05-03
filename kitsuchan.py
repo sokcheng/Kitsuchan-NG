@@ -48,18 +48,26 @@ class Bot(commands.Bot):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        
+        # This bot has a global aiohttp.ClientSession to manage HTTP connections.
         self.session = aiohttp.ClientSession(loop=self.loop)
+
+    async def logout(self):
+        """The logout function must end the ClientSession as well."""
+        self.session.close()
+        super().logout()
 
     @property
     def logging_channels(self):
-        """A list of channels that the bot will use for logging purposes."""
-        
+        """Return a list of channels that the bot can use for logging purposes."""
         channels = []
+        
         for guild in self.guilds:
             if guild.owner.id == self.owner_id:
                 for channel in guild.text_channels:
                     if channel.name == "log" or channel.name.startswith("log-"):
                         channels.append(channel)
+        
         return channels
 
 bot = Bot(command_prefix=commands.when_mentioned, pm_help=True)
