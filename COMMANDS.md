@@ -155,7 +155,7 @@ Glomp!
 
 ## google
 ### Aliases: g
-Search Google.
+Search Google. Optional "image" argument for images.
 
 Example queries:
 
