@@ -25,6 +25,7 @@ class Bot(commands.Bot):
         self.event_coroutines = {}
         
         # Dynamically create event handlers.
+        # There's still got to be a better way. But this is OK for now.
         for name in ("on_ready", "on_error",
                      "on_message_delete", "on_message_edit",
                      "on_reaction_add", "on_reaction_remove", "on_reaction_clear",
