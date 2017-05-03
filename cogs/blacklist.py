@@ -53,6 +53,11 @@ class Blacklisting:
                                         f"**Bots:** {num_bots}\n"
                                         f"**Region:** {guild.region}"))
 
+        @bot.add_to_event("on_guild_remove")
+        async def guild_left_why(guild):
+            for channel in self.bot.logging_channels:
+                await channel.send(f"Got the boot from **{guild.name}** ({guild.id}).")
+
     async def prune_guild(self, guild:discord.Guild):
         """Automatically prune a guild."""
         num_humans = helpers.count_humans(guild)
