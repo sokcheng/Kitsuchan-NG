@@ -398,6 +398,24 @@ Unblocking commands (e.g. unblock user).
 
 Only the bot owner can use this.
 
+## usermeme
+### Aliases: um, standard
+Create a meme of a user. Use quotes around your arguments.
+
+Example usage:
+
+* kit usermeme "This is" "A meme"
+* kit usermeme "This is" "A meme" @Kitsuchan
+
+## wanted
+### Aliases: poster
+Create a wanted poster of a user.
+
+Example usage:
+
+* kit wanted
+* kit wanted @Kitsuchan
+
 ## what
 What?
 

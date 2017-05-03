@@ -47,8 +47,8 @@ class Memes:
         
         Example usage:
         
-        * kit usermeme \"This is\" "A meme\"
-        * kit usermeme \"This is\" "A meme\" @Kitsuchan
+        * kit wanted
+        * kit wanted @Kitsuchan
         """
         if not member:
             member = ctx.author
