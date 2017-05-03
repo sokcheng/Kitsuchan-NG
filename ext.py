@@ -89,6 +89,14 @@ class Bot(commands.Bot):
         del self.event_coroutines[event][name]
         logger.info(f"Successfully removed coroutine {name} from event {event}!")
 
+    def unload_extension(self, name:str):
+        """Redefined so that it removes any event listeners associated with the extension."""
+        for key_event in self.event_coroutines.keys():
+            for key_coro in tuple(self.event_coroutines[key_event].keys()):
+                if getattr(self.event_coroutines[key_event][key_coro], "__module__", None) == name:
+                    self.remove_from_event(key_event, key_coro)
+        super().unload_extension(name)
+    
     async def logout(self):
         """The logout function must end the ClientSession as well."""
         await super().logout()
