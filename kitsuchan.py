@@ -164,7 +164,7 @@ async def send_owner_commands():
     """This function logs commands and stuff."""
     await bot.wait_until_ready()
     while not bot.is_closed():
-        if len(command_cache) > 0 and hasattr(bot, "_owner"):
+        if len(command_cache) > 0:
             paginator = commands.Paginator()
             for index in range(0, len(command_cache)):
                 paginator.add_line(command_cache[0])
