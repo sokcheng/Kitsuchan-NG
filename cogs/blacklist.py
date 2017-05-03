@@ -31,25 +31,27 @@ class Blacklisting:
         @self.bot.event
         async def on_guild_join(guild):
             reason = await self.prune_guild(guild)
-            app_info = await self.bot.application_info()
             num_humans = helpers.count_humans(guild)
             num_bots = helpers.count_bots(guild)
+            logging_channels = await helpers.logging_channels(bot)
             if not reason:
                 logger.info(f"Joined guild {guild.name} ({guild.id})")
-                await app_info.owner.send((f"Joined new guild **{guild.name}** ({guild.id})\n"
-                                           f"**Owner:** {guild.owner.name} ({guild.owner.id})\n"
-                                           f"**Humans:** {num_humans}\n"
-                                           f"**Bots:** {num_bots}\n"
-                                           f"**Region:** {guild.region}"))
+                for channel in logging_channels:
+                    await channel.send((f"Joined new guild **{guild.name}** ({guild.id})\n"
+                                        f"**Owner:** {guild.owner.name} ({guild.owner.id})\n"
+                                        f"**Humans:** {num_humans}\n"
+                                        f"**Bots:** {num_bots}\n"
+                                        f"**Region:** {guild.region}"))
             else:
                 logger.info((f"Automatically left guild {guild.name} ({guild.id}) "
                              f"(reason: {reason})"))
-                await app_info.owner.send((f"Rejected new guild **{guild.name}** ({guild.id}) "
-                                           f"(reason: {reason})\n"
-                                           f"**Owner:** {guild.owner.name} ({guild.owner.id})\n"
-                                           f"**Humans:** {num_humans}\n"
-                                           f"**Bots:** {num_bots}\n"
-                                           f"**Region:** {guild.region}"))
+                for channel in logging_channels:
+                    await channel.send((f"Rejected new guild **{guild.name}** ({guild.id}) "
+                                        f"(reason: {reason})\n"
+                                        f"**Owner:** {guild.owner.name} ({guild.owner.id})\n"
+                                        f"**Humans:** {num_humans}\n"
+                                        f"**Bots:** {num_bots}\n"
+                                        f"**Region:** {guild.region}"))
 
     async def prune_guild(self, guild:discord.Guild):
         """Automatically prune a guild."""

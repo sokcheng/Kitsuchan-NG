@@ -16,6 +16,7 @@ from discord.ext import commands
 # Bundled modules
 import app_info
 import errors
+import helpers
 import settings
 
 assert (sys.version_info >= (3,6)), "This program requires Python 3.6 or higher."
@@ -154,21 +155,14 @@ async def on_command_error(exception, ctx):
 # Background tasks
 async def send_owner_commands():
     await bot.wait_until_ready()
-    app_info = await bot.application_info()
-    owner = app_info.owner
     while not bot.is_closed():
-        log_channels = []
-        for guild in bot.guilds:
-            if guild.owner.id == owner.id:
-                for channel in guild.text_channels:
-                    if channel.name == "log" or channel.name.startswith("log-"):
-                        log_channels.append(channel)
+        logging_channels = await helpers.logging_channels(bot)
         if len(command_cache) > 0 and hasattr(bot, "_owner"):
             paginator = commands.Paginator()
             for index in range(0, len(command_cache)):
                 paginator.add_line(command_cache[0])
                 del command_cache[0]
-            for channel in log_channels:
+            for channel in logging_channels:
                 for page in paginator.pages:
                     await channel.send(page)
         await asyncio.sleep(1800)

@@ -38,4 +38,4 @@ with the aforementioned `COMMAND_PREFIX` parameter.
 # Logging
 
 If you create a guild, and make a channel called either `log` or something that starts with
-`log-`, Kitsuchan-NG will automatically post logs there.
+`log-`, Kitsuchan-NG will automatically post command logs there.
