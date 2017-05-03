@@ -217,7 +217,7 @@ class Bot(commands.Bot):
                 continue
     
     async def on_command_error(self, exc, ctx):
-        super().on_message(*args, **kwargs)
+        super().on_command_error(*args, **kwargs)
         coros = self.event_coroutines.get("on_command_error", {})
         for coro in coros.values():
             try:
