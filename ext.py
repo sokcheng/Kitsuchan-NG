@@ -63,6 +63,151 @@ class Bot(commands.Bot):
 
     # Redefine all the event coros so that we have our own event handling system.
     # There REALLY has to be a better way of doing it than this. But for now, it will do. :|
+    
+    # Basic group
+    async def on_ready(self):
+        coros = self.event_coroutines.get("on_ready", {})
+        for coro in coros.values():
+            try:
+                await coro()
+            except Exception:
+                continue
+    
+    async def on_error(self, *args, **kwargs):
+        coros = self.event_coroutines.get("on_error", {})
+        for coro in coros.values():
+            try:
+                await coro(*args, **kwargs)
+            except Exception:
+                continue
+    
+    # Message group
+    async def on_message(self, message):
+        super().on_message(message)
+        coros = self.event_coroutines.get("on_message", {})
+        for coro in coros.values():
+            try:
+                await coro(message)
+            except Exception:
+                continue
+    
+    async def on_message_delete(self, message):
+        coros = self.event_coroutines.get("on_message_delete", {})
+        for coro in coros.values():
+            try:
+                await coro(message)
+            except Exception:
+                continue
+    
+    async def on_message_edit(self, message):
+        coros = self.event_coroutines.get("on_message_edit", {})
+        for coro in coros.values():
+            try:
+                await coro(message)
+            except Exception:
+                continue
+    
+    # Reaction group
+    async def on_reaction_add(self, reaction, user):
+        coros = self.event_coroutines.get("on_reaction_add", {})
+        for coro in coros.values():
+            try:
+                await coro(reaction, user)
+            except Exception:
+                continue
+    
+    async def on_reaction_remove(self, reaction, user):
+        coros = self.event_coroutines.get("on_reaction_remove", {})
+        for coro in coros.values():
+            try:
+                await coro(reaction, user)
+            except Exception:
+                continue
+    
+    async def on_reaction_clear(self, message, reactions):
+        coros = self.event_coroutines.get("on_reaction_clear", {})
+        for coro in coros.values():
+            try:
+                await coro(message, reactions)
+            except Exception:
+                continue
+    
+    # Channel group
+    async def on_channel_delete(self, channel):
+        coros = self.event_coroutines.get("on_channel_delete", {})
+        for coro in coros.values():
+            try:
+                await coro(channel)
+            except Exception:
+                continue
+    
+    async def on_channel_create(self, channel):
+        coros = self.event_coroutines.get("on_channel_create", {})
+        for coro in coros.values():
+            try:
+                await coro(channel)
+            except Exception:
+                continue
+    
+    async def on_channel_update(self, before, after):
+        coros = self.event_coroutines.get("on_channel_update", {})
+        for coro in coros.values():
+            try:
+                await coro(before, after)
+            except Exception:
+                continue
+    
+    # Member group
+    async def on_member_join(self, member):
+        coros = self.event_coroutines.get("on_member_join", {})
+        for coro in coros.values():
+            try:
+                await coro(member)
+            except Exception:
+                continue
+    
+    async def on_member_remove(self, member):
+        coros = self.event_coroutines.get("on_member_remove", {})
+        for coro in coros.values():
+            try:
+                await coro(member)
+            except Exception:
+                continue
+    
+    async def on_member_update(self, before, after):
+        coros = self.event_coroutines.get("on_member_update", {})
+        for coro in coros.values():
+            try:
+                await coro(before, after)
+            except Exception:
+                continue
+    
+    # Guild group
+    async def on_guild_join(self, guild):
+        coros = self.event_coroutines.get("on_guild_join", {})
+        for coro in coros.values():
+            try:
+                await coro(guild)
+            except Exception:
+                continue
+
+    async def on_guild_remove(self, guild):
+        coros = self.event_coroutines.get("on_guild_remove", {})
+        for coro in coros.values():
+            try:
+                await coro(guild)
+            except Exception:
+                continue
+    
+    async def on_guild_update(self, before, after):
+        coros = self.event_coroutines.get("on_guild_update", {})
+        for coro in coros.values():
+            try:
+                await coro(before, after)
+            except Exception:
+                continue
+    
+    # Command group
     async def on_command(self, ctx):
         coros = self.event_coroutines.get("on_command", {})
         for coro in coros.values():
@@ -72,6 +217,7 @@ class Bot(commands.Bot):
                 continue
     
     async def on_command_error(self, exc, ctx):
+        super().on_message(*args, **kwargs)
         coros = self.event_coroutines.get("on_command_error", {})
         for coro in coros.values():
             try:
@@ -84,30 +230,6 @@ class Bot(commands.Bot):
         for coro in coros.values():
             try:
                 await coro(ctx)
-            except Exception:
-                continue
-    
-    async def on_ready(self):
-        coros = self.event_coroutines.get("on_ready", {})
-        for coro in coros.values():
-            try:
-                await coro()
-            except Exception:
-                continue
-
-    async def on_guild_join(self, guild):
-        coros = self.event_coroutines.get("on_guild_join", {})
-        for coro in coros.values():
-            try:
-                await coro(guild)
-            except Exception:
-                continue
-
-    async def on_guild_leave(self, guild):
-        coros = self.event_coroutines.get("on_guild_leave", {})
-        for coro in coros.values():
-            try:
-                await coro(guild)
             except Exception:
                 continue
 
