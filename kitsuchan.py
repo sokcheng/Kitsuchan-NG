@@ -44,7 +44,6 @@ command_log.addHandler(file_handler_command_log)
 command_cache = []
 
 class Bot(commands.Bot):
-
     """Custom bot object."""
 
     def __init__(self, *args, **kwargs):
@@ -53,6 +52,8 @@ class Bot(commands.Bot):
 
     @property
     def logging_channels(self):
+        """A list of channels that the bot will use for logging purposes."""
+        
         channels = []
         for guild in self.guilds:
             if guild.owner.id == self.owner_id:
