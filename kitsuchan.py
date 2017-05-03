@@ -62,8 +62,7 @@ def is_public(ctx):
     return True
 
 # Events
-@bot.event
-async def on_ready():
+async def when_ready():
     """Conduct preparations once the bot is ready to go."""
     bot.time_started = datetime.datetime.now()
     
@@ -89,17 +88,19 @@ async def on_ready():
     await bot.change_presence(game=game)
     logger.info(f"Bot is ONLINE! Username: {bot.user.name}, User ID: {bot.user.id}")
 
-@bot.event
-async def on_command(ctx):
+# Kitsuchan-specific idiom.
+bot.add_to_event("on_ready", when_ready)
+
+async def log_command(ctx):
     message = f"Execution of {ctx.message.content} requested by {ctx.author.name} ({ctx.author.id})."
     command_log.info(message)
     message = f"{ctx.message.created_at.ctime()}: {message}"
     
     # Append the command to the command_cache for further processing in the bot's logging behavior.
     command_cache.append(message)
+bot.add_to_event("on_command", log_command)
 
-@bot.event
-async def on_command_completion(ctx):
+async def help_sent(ctx):
     """Trigger when a command completes successfully."""
     if not isinstance(ctx.channel, discord.DMChannel):
         if ctx.command.name == "help":
@@ -107,9 +108,9 @@ async def on_command_completion(ctx):
                 await ctx.send("Help sent to DM.")
             except discord.Forbidden:
                 pass
+bot.add_to_event("on_command_completion", help_sent)
 
-@bot.event
-async def on_command_error(exception, ctx):
+async def handle_error(exception, ctx):
     """Handle errors that occur in commands."""
     
     # This section checks if the bot's owner DM'ed the bot the command.
@@ -146,6 +147,7 @@ async def on_command_error(exception, ctx):
                         f"was denied. Attempted command: {ctx.invoked_with}"))
     else:
         logger.warning(f"{exception.__class__.__name__}:{exception}")
+bot.add_to_event("on_command_error", handle_error)
 
 # Background tasks
 async def send_owner_commands():
