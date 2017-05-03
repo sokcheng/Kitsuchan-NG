@@ -9,13 +9,13 @@ import logging
 
 # Third-party modules
 import asyncio
-import aiohttp
 import discord
 from discord.ext import commands
 
 # Bundled modules
 import app_info
 import errors
+import ext
 import settings
 
 assert (sys.version_info >= (3,6)), "This program requires Python 3.6 or higher."
@@ -43,38 +43,7 @@ command_log.addHandler(file_handler_command_log)
 # This way, the bot doesn't just flood the logging channel by posting on every command execution.
 command_cache = []
 
-class Bot(commands.Bot):
-    """Custom bot object."""
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        
-        # This bot has a global aiohttp.ClientSession to manage HTTP connections.
-        self.session = aiohttp.ClientSession(loop=self.loop)
-        
-        # Add commands as an alias of help. Ignore this awful thing.
-        self.all_commands["help"].aliases = ["commands"]
-        self.all_commands["commands"] = self.all_commands["help"]
-
-    async def logout(self):
-        """The logout function must end the ClientSession as well."""
-        await super().logout()
-        self.session.close()
-
-    @property
-    def logging_channels(self):
-        """Return a list of channels that the bot can use for logging purposes."""
-        channels = []
-        
-        for guild in self.guilds:
-            if guild.owner.id == self.owner_id:
-                for channel in guild.text_channels:
-                    if channel.name == "log" or channel.name.startswith("log-"):
-                        channels.append(channel)
-        
-        return channels
-
-bot = Bot(command_prefix=commands.when_mentioned, pm_help=True)
+bot = ext.Bot(command_prefix=commands.when_mentioned, pm_help=True)
 bot.description = app_info.DESCRIPTION
 
 # Checking functions
@@ -97,7 +66,7 @@ def is_public(ctx):
 async def on_ready():
     """Conduct preparations once the bot is ready to go."""
     bot.time_started = datetime.datetime.now()
-    
+        
     # This hack forces bot.owner_id to be set internally by discord.py.
     await bot.is_owner(bot.user)
     
