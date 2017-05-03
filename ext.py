@@ -1,7 +1,12 @@
 #!/usr/bin/env python3
 
+import asyncio
+import logging
+
 import aiohttp
 from discord.ext import commands
+
+logger = logging.getLogger('discord')
 
 class Bot(commands.Bot):
     """Custom bot object with additional helper functionality."""
@@ -19,16 +24,42 @@ class Bot(commands.Bot):
         # This stores a huge mass of coroutines for events.
         self.event_coroutines = {}
 
-    """The following two commands respectively add to and remove from an event."""
-    def add_to_event(self, event:str, coro):
-        """Add a coroutine to an event on the bot."""
-        self.event_coroutines.setdefault(event, {})
-        self.event_coroutines[event][coro.__name__] = coro
+    """
+    The following mechanisms allow us to add coroutines to an event, in contrast to d.py's
+    @bot.event decorator which only allows us to specify one at a time.
+    """
+    
+    def add_to_event(self, event:str):
+        """This is a decorator that adds a coroutine to an event on the bot.
+        
+        Example usage:
+        
+        @bot.add_to_event("on_ready")
+        async def handle_readiness():
+            pass
+        """
+        def decorator(coro):
+            if not asyncio.iscoroutinefunction(coro):
+                logger.info(f"{coro.__name__} is not a valid coroutine!")
+            else:
+                self.event_coroutines.setdefault(event, {})
+                self.event_coroutines[event][coro.__name__] = coro
+                logger.info(f"Successfully added coroutine {coro.__name__} to event {event}!")
+        return decorator
 
     def remove_from_event(self, event:str, name:str):
-        """Remove a coroutine from an event on the bot."""
+        """Remove a coroutine from an event on the bot. This is not a decorator.
+        
+        * event - The type of event we want to remove the coroutine from.
+        * name - The name of the coroutine we want to get rid of.
+        
+        Example usage:
+        
+        bot.remove_from_event("on_ready", "handle_readiness")
+        """
         self.event_coroutines.setdefault(event, {})
         del self.event_coroutines[event][name]
+        logger.info(f"Successfully removed coroutine {name} from event {event}!")
 
     # Redefine all the event coros so that we have our own event handling system.
     # There REALLY has to be a better way of doing it than this. But for now, it will do. :|

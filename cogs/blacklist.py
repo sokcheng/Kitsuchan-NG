@@ -28,6 +28,7 @@ class Blacklisting:
         self.settings = {}
         self.load()
         
+        @bot.add_to_event("on_guild_join")
         async def check_guild(guild):
             reason = await self.prune_guild(guild)
             num_humans = helpers.count_humans(guild)
@@ -50,9 +51,6 @@ class Blacklisting:
                                         f"**Humans:** {num_humans}\n"
                                         f"**Bots:** {num_bots}\n"
                                         f"**Region:** {guild.region}"))
-        
-        # This is a Kitsuchan-specific thing, not a d.py thing.
-        self.bot.add_to_event("on_guild_join", check_guild)
 
     async def prune_guild(self, guild:discord.Guild):
         """Automatically prune a guild."""
