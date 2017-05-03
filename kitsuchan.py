@@ -161,7 +161,7 @@ async def send_owner_commands():
         for guild in bot.guilds:
             if guild.owner.id == owner.id:
                 for channel in guild.text_channels:
-                    if channel.name == "log":
+                    if channel.name == "log" or channel.name.startswith("log-"):
                         log_channels.append(channel)
         if len(command_cache) > 0 and hasattr(bot, "_owner"):
             paginator = commands.Paginator()

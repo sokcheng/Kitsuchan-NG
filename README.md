@@ -1,6 +1,6 @@
 # Kitsuchan-NG
 
-A small, modular, extensible Discord bot written in Python 3. There's a lot of stuff that can be
+A modular, extensible Discord bot written in Python 3. There's a lot of stuff that can be
 improved, but it's easy to add functions to it.
 
 # How to run
@@ -34,3 +34,8 @@ mine is to implement per-cog settings.
 
 By default, Kitsuchan-NG responds to mentions as its default command prefix. You can override this
 with the aforementioned `COMMAND_PREFIX` parameter.
+
+# Logging
+
+If you create a guild, and make a channel called either `log` or something that starts with
+`log-`, Kitsuchan-NG will automatically post logs there.
