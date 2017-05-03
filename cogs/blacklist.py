@@ -24,7 +24,7 @@ class Blacklisting:
         self.bot = bot
         self.bot.check(self.blacklist_user)
         self.bot.check(self.blacklist_guild)     
-        self.bot.loop.create_task(self.prune_guilds_auto())
+        self.bot.add_task(self.__module__, self.prune_guilds_auto())
         self.settings = {}
         self.load()
         

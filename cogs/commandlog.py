@@ -33,7 +33,7 @@ class CommandLog:
             # Append the command to the command_cache for further processing in the bot's logging behavior.
             self.command_cache.append(message)
 
-        self.bot.loop.create_task(self.send_to_log_channel())
+        self.bot.add_task(self.__module__, self.send_to_log_channel())
 
     # Background tasks
     async def send_to_log_channel(self):

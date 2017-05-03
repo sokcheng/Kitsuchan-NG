@@ -21,7 +21,12 @@ class Bot(commands.Bot):
         self.all_commands["help"].aliases = ["commands"]
         self.all_commands["commands"] = self.all_commands["help"]
         
+        # Store background tasks for management and possible eventual deletion.
+        # Nested dictionary with syntax [module_name][task_name]
+        self.background_tasks = {}
+        
         # This stores a huge mass of coroutines for events.
+        # Nested dictionary with syntax [event_name][coroutine_name]
         self.event_coroutines = {}
         
         # Dynamically create event handlers.
@@ -78,6 +83,8 @@ class Bot(commands.Bot):
     def remove_from_event(self, event:str, name:str):
         """Remove a coroutine from an event on the bot. This is not a decorator.
         
+        Generally, you won't be calling this manually, as it's called within bot.unload_extension()
+        
         * event - The type of event we want to remove the coroutine from.
         * name - The name of the coroutine we want to get rid of.
         
@@ -88,13 +95,58 @@ class Bot(commands.Bot):
         self.event_coroutines.setdefault(event, {})
         del self.event_coroutines[event][name]
         logger.info(f"Successfully removed coroutine {name} from event {event}!")
-
+    
+    """
+    The following mechanisms allow us to add background tasks to the bot such that they can be
+    deleted at any later point.
+    """
+    
+    def add_task(self, module:str, coro):
+        """Add a background task to the bot.
+        
+        * module - The name of the module that the task is found in. Use self.__module__ for this.
+        * coro - The coroutine to be added as a background task.
+        """
+        self.background_tasks.setdefault(module, {})
+        if not asyncio.iscoroutine(coro):
+            logger.info(f"{coro.__name__} is not a coroutine!")
+        else:
+            self.background_tasks[module][coro.__name__] = self.loop.create_task(coro)
+            logger.info(f"Registered background task {coro.__name__}!")
+    
+    def remove_task(self, module:str, name:str):
+        """Remove a background task from the bot.
+        
+        Generally, you won't be calling this manually, as it's called within bot.unload_extension()
+        
+        * module - The name of the module that the task is found in.
+        * coro - The name of the coroutine to be removed.
+        """
+        try:
+            self.background_tasks[module][name].cancel()
+            del self.background_tasks[module][name]
+            logger.info(f"Unregistered background task {name}!")
+        except KeyError:
+            logger.info(f"{name} is not a registered background task!")
+    
     def unload_extension(self, name:str):
-        """Redefined so that it removes any event listeners associated with the extension."""
-        for key_event in self.event_coroutines.keys():
+        """Removes any event listeners and background tasks associated with the extension."""
+        
+        # Remove event listeners.
+        for key_event in list(self.event_coroutines.keys()):
             for key_coro in tuple(self.event_coroutines[key_event].keys()):
                 if getattr(self.event_coroutines[key_event][key_coro], "__module__", None) == name:
                     self.remove_from_event(key_event, key_coro)
+            if len(self.event_coroutines[key_event]) == 0:
+                del self.event_coroutines[key_event]
+        
+        # Remove background tasks.
+        self.background_tasks.setdefault(name, {})
+        for key_task in list(self.background_tasks[name].keys()):
+            self.remove_task(name, key_task)
+        if len(self.background_tasks[name]) == 0:
+            del self.background_tasks[name]
+        
         super().unload_extension(name)
     
     async def logout(self):
