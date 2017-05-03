@@ -51,6 +51,10 @@ class Bot(commands.Bot):
         
         # This bot has a global aiohttp.ClientSession to manage HTTP connections.
         self.session = aiohttp.ClientSession(loop=self.loop)
+        
+        # Add commands as an alias of help. Ignore this awful thing.
+        self.all_commands["help"].aliases = ["commands"]
+        self.all_commands["commands"] = self.all_commands["help"]
 
     async def logout(self):
         """The logout function must end the ClientSession as well."""
@@ -72,10 +76,6 @@ class Bot(commands.Bot):
 
 bot = Bot(command_prefix=commands.when_mentioned, pm_help=True)
 bot.description = app_info.DESCRIPTION
-
-# Monkey patch to add commands as an alias of help
-bot.all_commands["help"].aliases = ["commands"]
-bot.all_commands["commands"] = bot.all_commands["help"]
 
 # Checking functions
 @bot.check
