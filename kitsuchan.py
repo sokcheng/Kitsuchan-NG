@@ -66,7 +66,7 @@ def is_public(ctx):
 async def on_ready():
     """Conduct preparations once the bot is ready to go."""
     bot.time_started = datetime.datetime.now()
-        
+    
     # This hack forces bot.owner_id to be set internally by discord.py.
     await bot.is_owner(bot.user)
     
