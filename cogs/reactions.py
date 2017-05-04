@@ -49,6 +49,16 @@ IMAGES_IDK = ("http://safebooru.org/images/1513/6198de35cc3a7ffb2bd5cd46a89ca91f
               "http://safebooru.org/images/1977/e3988fa3bb6125f77b8e55d648ab1aebdd317bc7.jpg",
               "http://safebooru.org/samples/1768/sample_2bf2f0acc1c06e34deef043066ebb17c21de4238.jpg",
               "http://safebooru.org/images/937/ae704e58e0d58ddf57d3793609f9994a2b831301.jpg")
+IMAGES_WAGGING = ("http://safebooru.org//images/146/78639fe8edd6cb75a0f031b4dfb0773fdda6b4e8.jpg",
+                  "http://safebooru.org//images/763/2136ae257bb49f34552070d566b9eb23884a48c4.jpg",
+                  "http://safebooru.org//images/599/7fc582995b8fa21555791bfed382f0f634ca3cbb.jpg",
+                  "http://safebooru.org//images/275/3c5368c8f7bd3795052ce38ae860c9fa4b97f473.gif",
+                  "http://safebooru.org//images/1990/96b8cf2274c20df69c3ba04d4a3a6647cb07a3f0.gif",
+                  "http://safebooru.org//images/824/c271151ac920b664ed4de06d9770199f6d16d70f.gif",
+                  "http://safebooru.org//images/906/fae7d69ba34b74795546d58b322d33189fce8418.gif",
+                  "http://safebooru.org//images/1428/f5bcb191dfdd0881db66eb676b9f42df214629b0.gif",
+                  "http://safebooru.org//images/1891/5922d9fe102f8b2e62b2761eb505ee75fdcde2df.gif",
+                  "http://safebooru.org//images/1853/10962bdb8ffeda856e15882593788cd09e58ee2e.gif")
 IMAGES_LEWD = ("https://i.imgur.com/5JZH78a.jpg",
                "https://i.imgur.com/RdQ3FFA.jpg",
                "https://i.imgur.com/98tad3K.gif",
@@ -204,6 +214,12 @@ class Reactions:
     async def sandwich(self, ctx):
         """Sandwich!"""
         await self._send_image(ctx, IMAGES_SANDWICHES)
+
+    @commands.command(aliases=["tailwag"])
+    @commands.cooldown(6, 12, commands.BucketType.channel)
+    async def wag(self, ctx):
+        """Tail wag!"""
+        await self._send_image(ctx, IMAGES_WAGGING)
 
     # Commands based on _rra()
     @commands.command()
