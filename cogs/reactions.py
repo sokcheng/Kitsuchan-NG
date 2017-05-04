@@ -37,7 +37,7 @@ IMAGES_BOOTS = (("https://media-cache-ak0.pinimg.com/736x/db/b9/a3/"
                  "https://i.imgur.com/EC4UXCI.jpg")
 IMAGES_DEAD = (("https://s-media-cache-ak0.pinimg.com/736x/ec/61/ef/"
                 "ec61ef110a5d2e01bf8ae48331b63723.jpg"),
-               "http://safebooru.org//images/2048/60ce6f6888ba2fce6393638223dcc8d7c67f0655.jpg",
+               "http://safebooru.org/images/2048/60ce6f6888ba2fce6393638223dcc8d7c67f0655.jpg",
                "https://i.giphy.com/xT1XGLm7CJknNZKVS8.gif")
 IMAGES_GLOMP = ("http://safebooru.org/images/1575/8e2b95aefa17208aa5b5bc2aa687a8d791adf20a.gif",
                 "http://safebooru.org/images/1860/e8562c569fb94477671947ad96a0b88ac999569a.gif",
@@ -49,16 +49,16 @@ IMAGES_IDK = ("http://safebooru.org/images/1513/6198de35cc3a7ffb2bd5cd46a89ca91f
               "http://safebooru.org/images/1977/e3988fa3bb6125f77b8e55d648ab1aebdd317bc7.jpg",
               "http://safebooru.org/samples/1768/sample_2bf2f0acc1c06e34deef043066ebb17c21de4238.jpg",
               "http://safebooru.org/images/937/ae704e58e0d58ddf57d3793609f9994a2b831301.jpg")
-IMAGES_WAGGING = ("http://safebooru.org//images/146/78639fe8edd6cb75a0f031b4dfb0773fdda6b4e8.jpg",
-                  "http://safebooru.org//images/763/2136ae257bb49f34552070d566b9eb23884a48c4.jpg",
-                  "http://safebooru.org//images/599/7fc582995b8fa21555791bfed382f0f634ca3cbb.jpg",
-                  "http://safebooru.org//images/275/3c5368c8f7bd3795052ce38ae860c9fa4b97f473.gif",
-                  "http://safebooru.org//images/1990/96b8cf2274c20df69c3ba04d4a3a6647cb07a3f0.gif",
-                  "http://safebooru.org//images/824/c271151ac920b664ed4de06d9770199f6d16d70f.gif",
-                  "http://safebooru.org//images/906/fae7d69ba34b74795546d58b322d33189fce8418.gif",
-                  "http://safebooru.org//images/1428/f5bcb191dfdd0881db66eb676b9f42df214629b0.gif",
-                  "http://safebooru.org//images/1891/5922d9fe102f8b2e62b2761eb505ee75fdcde2df.gif",
-                  "http://safebooru.org//images/1853/10962bdb8ffeda856e15882593788cd09e58ee2e.gif",
+IMAGES_WAGGING = ("http://safebooru.org/images/146/78639fe8edd6cb75a0f031b4dfb0773fdda6b4e8.jpg",
+                  "http://safebooru.org/images/763/2136ae257bb49f34552070d566b9eb23884a48c4.jpg",
+                  "http://safebooru.org/images/599/7fc582995b8fa21555791bfed382f0f634ca3cbb.jpg",
+                  "http://safebooru.org/images/275/3c5368c8f7bd3795052ce38ae860c9fa4b97f473.gif",
+                  "http://safebooru.org/images/1990/96b8cf2274c20df69c3ba04d4a3a6647cb07a3f0.gif",
+                  "http://safebooru.org/images/824/c271151ac920b664ed4de06d9770199f6d16d70f.gif",
+                  "http://safebooru.org/images/906/fae7d69ba34b74795546d58b322d33189fce8418.gif",
+                  "http://safebooru.org/images/1428/f5bcb191dfdd0881db66eb676b9f42df214629b0.gif",
+                  "http://safebooru.org/images/1891/5922d9fe102f8b2e62b2761eb505ee75fdcde2df.gif",
+                  "http://safebooru.org/images/1853/10962bdb8ffeda856e15882593788cd09e58ee2e.gif",
                   ("http://68.media.tumblr.com/01e9cc48310fbe72b2ccf1b52925d0c4/"
                    "tumblr_o3at2et2G31tydz8to1_540.gif"),
                   ("https://lh3.googleusercontent.com/-rrPLI80iYmw/VQbtiyQhFwI/"
