@@ -62,7 +62,7 @@ class Blacklisting:
         """Automatically prune a guild."""
         num_humans = helpers.count_humans(guild)
         num_bots = helpers.count_bots(guild)
-        collection = num_bots > num_humans * 0.8 and num_bots > 10
+        collection = (num_bots/(num_bots + num_humans) >= 0.48) and num_bots > 20
         reason = None
         logger.debug(f"Checking guild {guild.name} ({guild.id}) (collection: {collection})...")
         if collection:
