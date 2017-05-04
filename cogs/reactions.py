@@ -62,7 +62,9 @@ IMAGES_WAGGING = ("http://safebooru.org//images/146/78639fe8edd6cb75a0f031b4dfb0
                   ("http://68.media.tumblr.com/01e9cc48310fbe72b2ccf1b52925d0c4/"
                    "tumblr_o3at2et2G31tydz8to1_540.gif"),
                   ("https://lh3.googleusercontent.com/-rrPLI80iYmw/VQbtiyQhFwI/"
-                   "AAAAAAAA9Pg/XUGGf7yT6CY/w500-h273/tumblr_mmeanbZFmO1qg78wpo1_500.gif"))
+                   "AAAAAAAA9Pg/XUGGf7yT6CY/w500-h273/tumblr_mmeanbZFmO1qg78wpo1_500.gif"),
+                  ("http://24.media.tumblr.com/a1d0298a6c2e7821ed102ad2345fcc4a/"
+                   "tumblr_myauniO7nO1r0wlweo1_500.gif"))
 IMAGES_LEWD = ("https://i.imgur.com/5JZH78a.jpg",
                "https://i.imgur.com/RdQ3FFA.jpg",
                "https://i.imgur.com/98tad3K.gif",
