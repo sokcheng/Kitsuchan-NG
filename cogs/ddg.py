@@ -18,7 +18,7 @@ import errors
 logger = logging.getLogger(__name__)
 
 # Constants
-BASE_URL_DUCKDUCKGO = "https://duckduckgo.com/?%s"
+BASE_URL_DUCKDUCKGO = "https://duckduckgo.com/?{0}"
 
 async def _duckduckgo(ctx, *, query):
     """Retrieve an answer from DuckDuckGo, using the Instant Answers JSON API.
@@ -30,10 +30,10 @@ async def _duckduckgo(ctx, *, query):
     if len(query) == 0:
         message = "Query not specified."
         raise commands.UserInputError("", message)
-    logger.info("Retrieving DuckDuckGo answer with tags %s." % (query,))
+    logger.info(f"Retrieving DuckDuckGo answer with tags {query}.")
     params = urllib.parse.urlencode({"q": query, "t": "ffsb",
                                      "format": "json", "ia": "answer"})
-    url = BASE_URL_DUCKDUCKGO % params
+    url = BASE_URL_DUCKDUCKGO.format(params)
     async with ctx.bot.session.get(url) as response:
         if response.status == 200:
             # This should be response.json() directly, but DuckDuckGo returns an incorrect MIME.
