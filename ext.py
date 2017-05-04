@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import asyncio
+import traceback
 import logging
 
 import aiohttp
@@ -54,7 +55,9 @@ class Bot(commands.Bot):
                 try:
                     await coro(*args, **kwargs)
                 except Exception:
+                    exception = traceback.format_exc()
                     logger.warning(f"{coro.__name__} broke.")
+                    logger.warning(exception)
         return event_handler
 
     async def on_message(self, message):
@@ -65,7 +68,9 @@ class Bot(commands.Bot):
             try:
                 await coro(message)
             except Exception:
+                exception = traceback.format_exc()
                 logger.warning(f"{coro.__name__} broke.")
+                logger.warning(exception)
 
     """
     The following mechanisms allow us to add coroutines to an event, in contrast to d.py's
