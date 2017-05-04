@@ -54,8 +54,18 @@ class Bot(commands.Bot):
                 try:
                     await coro(*args, **kwargs)
                 except Exception:
-                    continue
+                    logger.warning(f"{coro.__name__} broke.")
         return event_handler
+
+    async def on_message(self, message):
+        """Redefine on_message to be similar to the above."""
+        await super().on_message(message)
+        coros = self.event_coroutines.get("on_message", {})
+        for coro in coros.values():
+            try:
+                await coro(message)
+            except Exception:
+                logger.warning(f"{coro.__name__} broke.")
 
     """
     The following mechanisms allow us to add coroutines to an event, in contrast to d.py's

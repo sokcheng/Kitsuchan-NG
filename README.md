@@ -15,6 +15,10 @@ run the following command:
 
 Then just run `kitsuchan.py`. On first run, the bot will prompt you for a Discord OAuth token.
 
+Note that some of the bot's cogs have additional dependencies. If something breaks, just check
+the source code for dependencies that might be missing. The `google` cog in particular requires
+Beautiful Soup 4.
+
 # How to configure
 
 Kitsuchan-NG reads and saves its config to and from the file `config.json`. This file will be
@@ -37,5 +41,20 @@ with the aforementioned `COMMAND_PREFIX` parameter.
 
 # Logging
 
-If you create a guild, and make a channel called either `log` or something that starts with
-`log-`, Kitsuchan-NG will automatically post command logs there.
+If you create a guild, and make a channel called either `log` or something that starts with `log-`,
+Kitsuchan-NG will automatically post command logs there via the `commandlog` cog.
+
+# Writing and porting cogs
+
+Writing Kitsuchan-NG cogs is essentially similar to writing cogs for any other discord.py bot.
+Remember however that the bot uses `rewrite`, so a number of things will be different. Refer to the
+official [discord.py repository](https://github.com/Rapptz/discord.py/tree/rewrite/) for more
+details on that.
+
+Porting cogs to Kitsuchan-NG's architecture is also generally simple, especially since the bot
+exposes some similar APIs to common bots such as Twentysix's Red. Again, remember to modify them so
+that they work with `rewrite`.
+
+Note that Kitsuchan-NG exposes additional APIs not found in the standard discord.py library, including
+a global `aiohttp.ClientSession` and a modified event handling subsystem that makes it easier to
+add event listeners in cogs. Check the wiki for more details on those.
