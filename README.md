@@ -36,9 +36,6 @@ Optionally, you may set the following as well:
 For your convenience, a `config.json.example` file is provided. In the future, one objective of
 mine is to implement per-cog settings.
 
-By default, Kitsuchan-NG responds to mentions as its default command prefix. You can override this
-with the aforementioned `COMMAND_PREFIX` parameter.
-
 # Logging
 
 If you create a guild, and make a channel called either `log` or something that starts with `log-`,
