@@ -98,7 +98,7 @@ class Google:
     @google.command(aliases=["n"])
     @commands.cooldown(6, 12, commands.BucketType.channel)
     async def news(self, ctx, *, query:str):
-        """Search Google Images."""
+        """Search Google News."""
         links = await self._google(ctx, query=query, base_url=BASE_URL_GOOGLE_NEWS)
         if isinstance(links, list):
             see_also = [f"<{link}>" for link in links[1:4]]
