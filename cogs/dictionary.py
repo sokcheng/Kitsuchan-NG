@@ -27,7 +27,7 @@ class Dictionary:
     @commands.command()
     @commands.cooldown(6, 12, commands.BucketType.user)
     async def define(self, ctx, word=""):
-        """Define a word
+        """Define a word.
         
         * word - A word to be looked up.
         """
