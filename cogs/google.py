@@ -19,6 +19,7 @@ logger = logging.getLogger(__name__)
 # Constants
 BASE_URL_GOOGLE = "https://www.google.com/search?q={0}"
 BASE_URL_GOOGLE_IMAGES = "https://www.google.com/search?q={0}&tbm=isch"
+BASE_URL_GOOGLE_NEWS = "https://www.google.com/search?q={0}&tbm=nws"
 
 USER_AGENT = "Mozilla/5.0 (X11; Linux x86_64; rv:54.0) Gecko/20100101 Firefox/54.0"
 HEADERS = {"User-Agent": USER_AGENT}
@@ -48,11 +49,16 @@ class Google:
                         if not re.match(PATTERN_URL_START, full_link):
                             full_link = "http://" + full_link
                         links[index] = full_link
-                    return links[:4]
-                else:
+                    return links
+                elif base_url == BASE_URL_GOOGLE_IMAGES:
                     links = soup.find_all("div", class_="rg_meta")
                     for index in range(len(links)):
                         links[index] = json.loads(links[index].contents[0]).get("ou")
+                    return links
+                elif base_url == BASE_URL_GOOGLE_NEWS:
+                    links = soup.find_all("a", class_="l _HId")
+                    for index in range(len(links)):
+                        links[index] = links[index]["href"]
                     return links
             else:
                 message = "Could not reach Google. x.x"
@@ -61,7 +67,7 @@ class Google:
     @commands.group(aliases=["g"], invoke_without_command=True)
     @commands.cooldown(6, 12, commands.BucketType.channel)
     async def google(self, ctx, *, query:str):
-        """Search Google. Optional "image" argument for images.
+        """Search Google. Optional "image" and "news" arguments.
         
         Example queries:
         
@@ -82,9 +88,23 @@ class Google:
     async def image(self, ctx, *, query:str):
         """Search Google Images."""
         links = await self._google(ctx, query=query, base_url=BASE_URL_GOOGLE_IMAGES)
-        if isinstance(links, message):
+        if isinstance(links, list):
             link = systemrandom.choice(links)
             await ctx.send(link)
+        else:
+            await ctx.send(links)
+            logger.warning(links)
+
+    @google.command(aliases=["n"])
+    @commands.cooldown(6, 12, commands.BucketType.channel)
+    async def news(self, ctx, *, query:str):
+        """Search Google Images."""
+        links = await self._google(ctx, query=query, base_url=BASE_URL_GOOGLE_NEWS)
+        if isinstance(links, list):
+            see_also = [f"<{link}>" for link in links[1:4]]
+            see_also = "\n".join(see_also)
+            message = f"{links[0]}\n\n**You may also want to look at:**\n{see_also}"
+            await ctx.send(message)
         else:
             await ctx.send(links)
             logger.warning(links)
