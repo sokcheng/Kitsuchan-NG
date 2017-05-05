@@ -52,7 +52,7 @@ class Dictionary:
                     example = re.sub("<.*?>|\u00E2|\u0080|\u0090", "",
                                      result['example'].capitalize())
                     description = f"{definition}\nExample: *{example}*"
-                    embed.add_field(name=result["type"], value=description, inline=True)
+                    embed.add_field(name=result["type"], value=description)
                 if len(data) > MAX_NUM_RESULTS:
                     embed.set_footer(text=f"...and {len(data)-MAX_NUM_RESULTS} other result(s)")
                 await ctx.send(embed=embed)

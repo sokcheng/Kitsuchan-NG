@@ -42,7 +42,7 @@ class Wikipedia:
                 embed = discord.Embed()
                 for index in range(0, min(3, len(data[1]))):
                     description = f"{data[3][index]}\n{data[2][index]}"
-                    embed.add_field(name=data[1][index], value=description, inline=True)
+                    embed.add_field(name=data[1][index], value=description)
                 await ctx.send(embed=embed)
                 logger.info("Data retrieved!")
             else:
