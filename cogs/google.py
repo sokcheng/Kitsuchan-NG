@@ -48,20 +48,15 @@ class Google:
                         if not re.match(PATTERN_URL_START, full_link):
                             full_link = "http://" + full_link
                         links[index] = full_link
-                    see_also = [f"<{link}>" for link in links[1:4]]
-                    see_also = "\n".join(see_also)
-                    message = f"{links[0]}\n\n**You may also want to look at:**\n{see_also}"
-                    await ctx.send(message)
+                    return links[:4]
                 else:
                     links = soup.find_all("div", class_="rg_meta")
                     for index in range(len(links)):
                         links[index] = json.loads(links[index].contents[0]).get("ou")
-                    link = systemrandom.choice(links)
-                    await ctx.send(link)
+                    return links
             else:
                 message = "Could not reach Google. x.x"
-                await ctx.send(message)
-                logger.warning(message)
+                return message
     
     @commands.group(aliases=["g"], invoke_without_command=True)
     @commands.cooldown(6, 12, commands.BucketType.channel)
@@ -72,13 +67,27 @@ class Google:
         
         * google A cat - Search Google for a cat.
         * google image A cat - Search Google for an image of a cat."""
-        await self._google(ctx, query=query)
+        links = await self._google(ctx, query=query)
+        if isinstance(links, list):
+            see_also = [f"<{link}>" for link in links[1:4]]
+            see_also = "\n".join(see_also)
+            message = f"{links[0]}\n\n**You may also want to look at:**\n{see_also}"
+            await ctx.send(message)
+        else:
+            await ctx.send(links)
+            logger.warning(links)
 
     @google.command(aliases=["i"])
     @commands.cooldown(6, 12, commands.BucketType.channel)
     async def image(self, ctx, *, query:str):
         """Search Google Images."""
-        await self._google(ctx, query=query, base_url=BASE_URL_GOOGLE_IMAGES)
+        links = await self._google(ctx, query=query, base_url=BASE_URL_GOOGLE_IMAGES)
+        if isinstance(links, message):
+            link = systemrandom.choice(links)
+            await ctx.send(link)
+        else:
+            await ctx.send(links)
+            logger.warning(links)
 
 def setup(bot):
     """Setup function for Google."""
