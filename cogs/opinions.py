@@ -22,11 +22,12 @@ class Opinions:
         
         Syntax:
         
-        * choose x | y | z - Choose between x, y, and z.
+        * choose x, y, z - Choose between x, y, and z.
         """
-        choices = choices.split("|")
+        choices = choices.split(",")
         if len(choices) <= 1:
-            raise commands.UserInputError("Not enough choices specified. Separate choices with |")
+            raise commands.UserInputError(("Not enough choices specified. "
+                                           "Separate choices with commas."))
         # Eliminate leading and trailing whitespace.
         for index in range(0, len(choices)):
             choices[index] = choices[index].strip()

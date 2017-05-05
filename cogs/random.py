@@ -101,7 +101,7 @@ class Random:
                 list_roll_parameters.append(roll_parameters)
         
         if len(list_roll_parameters) == 0:
-            message = "No valid rolls given; please use D&D format."
+            message = "No valid rolls given; please use D&D format. (e.g. 1d6)"
             raise commands.UserInputError(message)
         
         elif len(list_roll_parameters) > MAX_ROLL_COUNT:
