@@ -26,7 +26,7 @@ class Dictionary:
 
     @commands.command()
     @commands.cooldown(6, 12, commands.BucketType.user)
-    async def define(self, ctx, *, word=""):
+    async def define(self, ctx, word=""):
         """Define a word
         
         * word - A word to be looked up.
@@ -58,7 +58,7 @@ class Dictionary:
                 await ctx.send(embed=embed)
                 logger.info("Data retrieved!")
             else:
-                message = "Something broke. x.x"
+                message = "Doesn't seem to be a word. :<"
                 await ctx.send(message)
                 logger.warning(message)
 
