@@ -100,6 +100,11 @@ Shortcut command to search Danbooru through IbSear.ch.
 ### Aliases: rip
 Dead!
 
+## define
+Define a word
+
+* word - A word to be looked up.
+
 ## didsay
 Checks if a user said a particular phrase.
 
@@ -247,6 +252,13 @@ Let me love you!
 Enable the use of an extension.
 
 Only the bot owner can use this.
+
+## makepoll
+Create a Straw Poll.
+
+Example usage:
+
+kit makepoll "Name of poll" "Option 1" "Option 2" Option3
 
 ## mods
 ### Aliases: moderators
