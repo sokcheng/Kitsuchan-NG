@@ -67,7 +67,9 @@ IMAGES_WAGGING = ("http://safebooru.org/images/146/78639fe8edd6cb75a0f031b4dfb07
                    "tumblr_myauniO7nO1r0wlweo1_500.gif"),
                   "http://i.imgur.com/MSCtuve.gif",
                   ("https://38.media.tumblr.com/8203abcf4aef7f528eb61206710bfdce/"
-                   "tumblr_nnwn56DQuR1ty38iao1_400.gif"))
+                   "tumblr_nnwn56DQuR1ty38iao1_400.gif"),
+                  ("https://68.media.tumblr.com/c54e506582785a3e89d223fa3dba2fd6/"
+                   "tumblr_nyman1FuBi1tydz8to1_500.gif"))
 IMAGES_LEWD = ("https://i.imgur.com/5JZH78a.jpg",
                "https://i.imgur.com/RdQ3FFA.jpg",
                "https://i.imgur.com/98tad3K.gif",
@@ -80,7 +82,8 @@ IMAGES_LEWD = ("https://i.imgur.com/5JZH78a.jpg",
                "https://i.imgur.com/XzQRDDl.jpg",
                "https://i.imgur.com/GTfWFm6.jpg",
                "https://i.imgur.com/Iz315vJ.jpg",
-               "https://i.imgur.com/rWLoIzf.png")
+               "https://i.imgur.com/rWLoIzf.png",
+               "https://secure.static.tumblr.com/753b4405d4c926ef8224e3ac5ec30aef/f52giag/4Uin6xuha/tumblr_static_tumblr_static_2p47ogg0mhus4gs8skwwcc8sw_640.gif")
 IMAGES_LICK = ("http://safebooru.org/images/189/0a412d1db7f53cd2505df9cf16be693dcac0855b.jpeg",
                "http://safebooru.org/images/358/f64d461f47319d8dae9adb899c0de24fca70127d.png",
                "http://safebooru.org/images/2116/4b8cf6a3f4cd38a610697df4f0fe1074e67070af.jpg")
