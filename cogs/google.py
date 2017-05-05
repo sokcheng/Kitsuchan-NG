@@ -67,7 +67,7 @@ class Google:
     @commands.group(aliases=["g"], invoke_without_command=True)
     @commands.cooldown(6, 12, commands.BucketType.channel)
     async def google(self, ctx, *, query:str):
-        """Search Google. Optional "image" and "news" arguments.
+        """Search Google. Optional image and news arguments.
         
         Example queries:
         

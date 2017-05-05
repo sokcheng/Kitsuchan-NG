@@ -75,7 +75,7 @@ Choose between one of various supplied things.
 
 Syntax:
 
-* choose x | y | z - Choose between x, y, and z.
+* choose x, y, z - Choose between x, y, and z.
 
 ## coin
 ### Aliases: cflip, coinflip
@@ -101,7 +101,7 @@ Shortcut command to search Danbooru through IbSear.ch.
 Dead!
 
 ## define
-Define a word
+Define a word.
 
 * word - A word to be looked up.
 
@@ -160,7 +160,7 @@ Glomp!
 
 ## google
 ### Aliases: g
-Search Google. Optional "image" and "news" arguments.
+Search Google. Optional image and news arguments.
 
 Example queries:
 
