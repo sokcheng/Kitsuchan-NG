@@ -33,6 +33,7 @@ class Extensions:
             message = f"Extension {extension_name} is already loaded. :<"
         await ctx.send(message)
         logger.info(message)
+        settings.save()
 
     @commands.command(aliases=["reload", "rloade"])
     @commands.is_owner()
@@ -53,6 +54,7 @@ class Extensions:
             message = f"Extension {extension_name} not currently loaded; please load it. :<"
         await ctx.send(message)
         logger.info(message)
+        settings.save()
 
     @commands.command(aliases=["unload", "uloade"])
     @commands.is_owner()
@@ -73,6 +75,7 @@ class Extensions:
             message = f"Extension {extension_name} unloaded."
         await ctx.send(message)
         logger.info(message)
+        settings.save()
 
     @commands.command()
     @commands.is_owner()
