@@ -13,15 +13,21 @@ class StrawPoll:
     
     @commands.command()
     @commands.cooldown(100, 60)
-    async def makepoll(self, ctx, title:str, *options):
+    async def makepoll(self, ctx, *, options=""):
         """Create a Straw Poll.
         
         Example usage:
         
         kit makepoll "Name of poll" "Option 1" "Option 2" Option3
         """
-        if len(options) < 2:
-            raise commands.UserInputError("Please specify at least two options!")
+        options = options.split(",")
+        if len(options) < 3:
+            raise commands.UserInputError(("Please specify a title and at least two options. "
+                                           "Arguments must be separated with commas, e.g. "
+                                           "`makepoll Test Poll, Option 1, Option 2`"))
+        for index in range(0, len(options)):
+            options[index] = options[index].strip()
+        title = options.pop(0)
         logger.info("POSTing to Straw Poll API.")
         data = {"title": title, "options": options}
         async with ctx.bot.session.request("POST", BASE_URL_STRAWPOLL_API, json=data) as response:

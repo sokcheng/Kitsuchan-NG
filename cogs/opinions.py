@@ -17,7 +17,7 @@ class Opinions:
 
     @commands.command()
     @commands.cooldown(6, 12, commands.BucketType.channel)
-    async def choose(self, ctx, *, choices):
+    async def choose(self, ctx, *, choices=""):
         """Choose between one of various supplied things.
         
         Syntax:
@@ -26,8 +26,9 @@ class Opinions:
         """
         choices = choices.split(",")
         if len(choices) <= 1:
-            raise commands.UserInputError(("Not enough choices specified. "
-                                           "Separate choices with commas."))
+            raise commands.UserInputError(("Not enough choices! "
+                                           "Separate choices with commas, e.g. "
+                                           "`choose A cat, A bear, A python`"))
         # Eliminate leading and trailing whitespace.
         for index in range(0, len(choices)):
             choices[index] = choices[index].strip()
