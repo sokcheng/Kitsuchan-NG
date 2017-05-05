@@ -47,11 +47,14 @@ class Dictionary:
                 embed.url = BASE_URL_OWL_API.format(word, "")
                 for index in range(0, min(MAX_NUM_RESULTS, len(data))):
                     result = data[index]
-                    definition = re.sub("<.*?>|\u00E2|\u0080|\u0090", "",
-                                        result['defenition'].capitalize())
-                    example = re.sub("<.*?>|\u00E2|\u0080|\u0090", "",
-                                     result['example'].capitalize())
-                    description = f"{definition}\nExample: *{example}*"
+                    definition = result.get('defenition')
+                    description = re.sub("<.*?>|\u00E2|\u0080|\u0090", "",
+                                         definition.capitalize())
+                    example = result.get('example')
+                    if example:
+                        example = re.sub("<.*?>|\u00E2|\u0080|\u0090", "",
+                                         example.capitalize())
+                        description = f"{description}\nExample: *{example}*"
                     embed.add_field(name=result["type"], value=description, inline=False)
                 if len(data) > MAX_NUM_RESULTS:
                     embed.set_footer(text=f"...and {len(data)-MAX_NUM_RESULTS} other result(s)")
