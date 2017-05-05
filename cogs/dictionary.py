@@ -58,7 +58,7 @@ class Dictionary:
                 await ctx.send(embed=embed)
                 logger.info("Data retrieved!")
             else:
-                message = "Doesn't seem to be a word. :<"
+                message = "Connection failed, or that isn't a word. :<"
                 await ctx.send(message)
                 logger.warning(message)
 
