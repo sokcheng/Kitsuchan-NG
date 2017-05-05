@@ -47,7 +47,7 @@ class Process:
         await ctx.send(message)
         await ctx.bot.logout()
         settings.save()
-        os.execv(sys.executable, [sys.executable] + sys.argv)
+        os.execv(sys.executable, [sys.executable] + sys.argv + ["&"])
 
 def setup(bot):
     """Setup function for process."""
