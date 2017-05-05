@@ -155,7 +155,7 @@ Glomp!
 
 ## google
 ### Aliases: g
-Search Google. Optional "image" argument for images.
+Search Google. Optional "image" and "news" arguments.
 
 Example queries:
 
@@ -406,6 +406,10 @@ Example usage:
 
 * kit usermeme "This is" "A meme"
 * kit usermeme "This is" "A meme" @Kitsuchan
+
+## wag
+### Aliases: tailwag
+Tail wag!
 
 ## wanted
 ### Aliases: poster
