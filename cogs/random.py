@@ -24,15 +24,7 @@ MAX_ROLL_COUNT = 20
 MAX_DICE_PER_ROLL = 30
 MAX_DIE_SIZE = 2000
 
-WORDS = None
-for fname in ("/usr/share/dict/words", "/usr/dict/words"):
-    if os.path.exists(fname):
-        try:
-            with open(fname) as f:
-                WORDS = f.read().split("\n")
-            break
-        except Exception:
-            pass
+URL_RANDOM_WORD_API = "http://setgetgo.com/randomword/get.php"
 
 # Instantiate a SystemRandom object to produce cryptographically secure random numbers.
 systemrandom = random.SystemRandom()
@@ -62,14 +54,17 @@ class Random:
         logger.info(message)
         await ctx.send(message)
 
-    if WORDS:
-        @commands.command(aliases=["rword", "randword"])
-        @commands.cooldown(6, 12, commands.BucketType.channel)
-        async def rwg(self, ctx):
-            """Randomly generate a word."""
-            word = systemrandom.choice(WORDS)
-            logger.info(f"Random word: {word}")
-            await ctx.send(word)
+    @commands.command(aliases=["rword", "randword"])
+    @commands.cooldown(6, 12, commands.BucketType.channel)
+    async def rwg(self, ctx):
+        """Randomly generate a word."""
+        async with ctx.bot.session.get(URL_RANDOM_WORD_API) as response:
+            if response.status == 200:
+                word = await response.text()
+                await ctx.send(word)
+            else:
+                message = "Could not reach API. x.x"
+                await ctx.send(message)
 
     @commands.command()
     @commands.cooldown(6, 12, commands.BucketType.channel)
