@@ -15,7 +15,8 @@ class Memchecker:
             memory_usage = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
             if memory_usage != self.previous_memory_usage:
                 for channel in bot.logging_channels:
-                    await channel.send(f"Memory usage is now {memory_usage} KB")
+                    await channel.send((f"Memory usage is now {memory_usage} KB "
+                                        f"(following `{ctx.message.content}`)"))
                 self.previous_memory_usage = memory_usage
 
 def setup(bot):
