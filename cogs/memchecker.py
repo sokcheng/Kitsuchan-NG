@@ -19,5 +19,23 @@ class Memchecker:
                                         f"(following `{ctx.message.content}`)"))
                 self.previous_memory_usage = memory_usage
 
+        @bot.add_to_event("on_guild_join")
+        async def check_memory(ctx):
+            memory_usage = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
+            if memory_usage != self.previous_memory_usage:
+                for channel in bot.logging_channels:
+                    await channel.send((f"Memory usage is now {memory_usage} KB "
+                                        "(following guild join)"))
+                self.previous_memory_usage = memory_usage
+
+        @bot.add_to_event("on_guild_remove")
+        async def check_memory(ctx):
+            memory_usage = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
+            if memory_usage != self.previous_memory_usage:
+                for channel in bot.logging_channels:
+                    await channel.send((f"Memory usage is now {memory_usage} KB "
+                                        "(following guild leave)"))
+                self.previous_memory_usage = memory_usage
+
 def setup(bot):
     bot.add_cog(Memchecker(bot))
