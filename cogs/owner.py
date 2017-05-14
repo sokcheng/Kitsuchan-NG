@@ -29,6 +29,7 @@ class Owner:
     async def set(self, ctx, key:str, *, value):
         """Change a value in the bot's settings."""
         settings.manager[key] = value
+        settings.save()
         await ctx.send(f"`{key}` set to `{value}`")
     
     @commands.command(aliases=["listguilds"])
