@@ -141,6 +141,11 @@ def main():
     except KeyError:
         print("Please enter an OAuth token for this bot, so it can sign into Discord.")
         settings.manager["OAUTH_TOKEN_DISCORD"] = input("> ")
+    try:
+        settings.manager["SUPPORT_GUILD"]
+    except KeyError:
+        print("Please enter a support guild link for this bot. You may leave it blank.")
+        settings.manager["SUPPORT_GUILD"] = input("> ")
     logger.info("Warming up...")
     extensions = settings.manager.get("EXTENSIONS", settings.DEFAULT_EXTENSIONS)
     

@@ -8,6 +8,9 @@ import subprocess
 import discord
 from discord.ext import commands
 
+# Bundled modules
+import settings
+
 logger = logging.getLogger(__name__)
 
 class Owner:
@@ -20,6 +23,13 @@ class Owner:
         await ctx.bot.user.edit(username=username)
         logger.info(f"Username changed to {username}.")
         await ctx.send(f"Username changed. :3")
+    
+    @commands.command()
+    @commands.is_owner()
+    async def set(self, ctx, key:str, *, value):
+        """Change a value in the bot's settings."""
+        settings.manager[key] = value
+        await ctx.send(f"`{key}` set to `{value}`")
     
     @commands.command(aliases=["listguilds"])
     @commands.is_owner()

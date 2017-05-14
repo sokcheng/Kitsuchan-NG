@@ -42,6 +42,9 @@ class About:
         owner = ainfo.owner.mention
         embed.add_field(name="Version", value=app_info.VERSION_STRING)
         embed.add_field(name="Owner", value=owner)
+        support_guild = settings.manager.get("SUPPORT_GUILD")
+        if len(support_guild) > 0:
+            embed.add_field(name="Support guild", value=support_guild)
         num_guilds = len(ctx.bot.guilds)
         num_users = len(list(filter(lambda member: not member.bot, ctx.bot.get_all_members())))
         embed.add_field(name="Serving", value=f"{num_users} people in {num_guilds} guilds")
