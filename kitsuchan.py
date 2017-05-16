@@ -51,9 +51,8 @@ def is_public(ctx):
     return True
 
 # Events
-# These use the Kitsuchan-specific idiom of @bot.add_to_event, instead of d.py's @bot.event
-@bot.add_to_event("on_ready")
-async def when_ready():
+@bot.listen()
+async def on_ready():
     """Conduct preparations once the bot is ready to go."""
     bot.time_started = datetime.datetime.now()
     
@@ -79,8 +78,8 @@ async def when_ready():
     await bot.change_presence(game=game)
     logger.info(f"Bot is ONLINE! Username: {bot.user.name}, User ID: {bot.user.id}")
 
-@bot.add_to_event("on_command_completion")
-async def help_sent(ctx):
+@bot.listen()
+async def on_command_completion(ctx):
     """Trigger when a command completes successfully."""
     if not isinstance(ctx.channel, discord.DMChannel):
         if ctx.command.name == "help":
@@ -89,8 +88,8 @@ async def help_sent(ctx):
             except discord.Forbidden:
                 pass
 
-@bot.add_to_event("on_command_error")
-async def handle_error(ctx, exception):
+@bot.listen()
+async def on_command_error(ctx, exception):
     """Handle errors that occur in commands."""
     
     # This section checks if the bot's owner DM'ed the bot the command.

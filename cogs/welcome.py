@@ -15,7 +15,7 @@ class Welcome:
 
     def __init__(self, bot):
     
-        @bot.add_to_event("on_member_join")
+        @bot.listen("on_member_join")
         async def welcome(member):
             guild = member.guild
             await guild.default_channel.send((f"Welcome to **{guild.name}**, {member.mention}. "

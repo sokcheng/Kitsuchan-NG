@@ -17,7 +17,9 @@ systemrandom = random.SystemRandom()
 logger = logging.getLogger(__name__)
 
 VARIANTS = {"bang": ":gun: **BANG!**",
-            "bang!": ":gun: **BANG!**"}
+            "bang!": ":gun: **BANG!**",
+            "beep": ":robot: Beep beep, I'm a bot!",
+            "beep!": ":robot: Beep beep, I'm a bot!"}
 GUNS = ("http://safebooru.org/samples/79/sample_d848db3fbe3fc8dc0f2cbb328f3af71c4e49989f.jpg",
         "http://safebooru.org/images/121/af2b15dbcd0a8feac03a4b990a600837724c84ec.jpg",
         "http://safebooru.org/images/1652/3f6d218b2433c9fe4e80f29a1a95eace88188f87.png",
@@ -26,7 +28,7 @@ GUNS = ("http://safebooru.org/samples/79/sample_d848db3fbe3fc8dc0f2cbb328f3af71c
 class Ping:
     """Ping command."""
     
-    @commands.command(aliases=["bang", "bang!", "pong"])
+    @commands.command(aliases=list(VARIANTS.keys()) + ["pong"])
     @commands.cooldown(1, 10, commands.BucketType.guild)
     async def ping(self, ctx):
         """Ping the bot."""

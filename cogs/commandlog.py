@@ -24,7 +24,7 @@ class CommandLog:
 
         self.bot = bot
 
-        @bot.add_to_event("on_command")
+        @bot.listen("on_command")
         async def log_command(ctx):
             message = f"Execution of {ctx.message.content} requested by {ctx.author.name} ({ctx.author.id})."
             logger.info(message)

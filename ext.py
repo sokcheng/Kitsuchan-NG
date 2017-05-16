@@ -25,92 +25,6 @@ class Bot(commands.Bot):
         # Store background tasks for management and possible eventual deletion.
         # Nested dictionary with syntax [module_name][task_name]
         self.background_tasks = {}
-        
-        # This stores a huge mass of coroutines for events.
-        # Nested dictionary with syntax [event_name][coroutine_name]
-        self.event_coroutines = {}
-        
-        # Dynamically create event handlers.
-        # There's still got to be a better way. But this is OK for now.
-        for name in ("on_ready", "on_error",
-                     "on_message_delete", "on_message_edit",
-                     "on_reaction_add", "on_reaction_remove", "on_reaction_clear",
-                     "on_guild_channel_delete", "on_guild_channel_create", "on_guild_channel_update",
-                     "on_private_channel_delete", "on_private_channel_create", "on_private_channel_update",
-                     "on_member_join", "on_member_remove", "on_member_update",
-                     "on_guild_join", "on_guild_remove", "on_guild_update",
-                     "on_guild_role_create", "on_guild_role_delete", "on_guild_role_update",
-                     "on_guild_emojis_update",
-                     "on_guild_available", "on_guild_unavailable",
-                     "on_member_ban", "on_member_unban",
-                     "on_typing",
-                     "on_command", "on_command_completion", "on_command_error"):
-            event = self.create_event_handler(name)
-            setattr(self, name, event)
-
-    def create_event_handler(self, name:str):
-        """This function dynamically creates a generic event handler."""
-        async def event_handler(*args, **kwargs):
-            coros = self.event_coroutines.get(name, {})
-            for coro in coros.values():
-                try:
-                    await coro(*args, **kwargs)
-                except Exception:
-                    exception = traceback.format_exc()
-                    logger.warning(f"{coro.__name__} broke.")
-                    logger.warning(exception)
-        return event_handler
-
-    async def on_message(self, message):
-        """Redefine on_message to be similar to the above."""
-        await super().on_message(message)
-        coros = self.event_coroutines.get("on_message", {})
-        for coro in coros.values():
-            try:
-                await coro(message)
-            except Exception:
-                exception = traceback.format_exc()
-                logger.warning(f"{coro.__name__} broke.")
-                logger.warning(exception)
-
-    """
-    The following mechanisms allow us to add coroutines to an event, in contrast to d.py's
-    @bot.event decorator which only allows us to specify one at a time.
-    """
-    
-    def add_to_event(self, event:str):
-        """This is a decorator that adds a coroutine to an event on the bot.
-        
-        Example usage:
-        
-        @bot.add_to_event("on_ready")
-        async def handle_readiness():
-            pass
-        """
-        def decorator(coro):
-            if not asyncio.iscoroutinefunction(coro):
-                logger.info(f"{coro.__name__} is not a valid coroutine!")
-            else:
-                self.event_coroutines.setdefault(event, {})
-                self.event_coroutines[event][coro.__name__] = coro
-                logger.info(f"Successfully added coroutine {coro.__name__} to event {event}!")
-        return decorator
-
-    def remove_from_event(self, event:str, name:str):
-        """Remove a coroutine from an event on the bot. This is not a decorator.
-        
-        Generally, you won't be calling this manually, as it's called within bot.unload_extension()
-        
-        * event - The type of event we want to remove the coroutine from.
-        * name - The name of the coroutine we want to get rid of.
-        
-        Example usage:
-        
-        bot.remove_from_event("on_ready", "handle_readiness")
-        """
-        self.event_coroutines.setdefault(event, {})
-        del self.event_coroutines[event][name]
-        logger.info(f"Successfully removed coroutine {name} from event {event}!")
     
     """
     The following mechanisms allow us to add background tasks to the bot such that they can be
@@ -146,15 +60,7 @@ class Bot(commands.Bot):
             logger.info(f"{name} is not a registered background task!")
     
     def unload_extension(self, name:str):
-        """Removes any event listeners and background tasks associated with the extension."""
-        
-        # Remove event listeners.
-        for key_event in list(self.event_coroutines.keys()):
-            for key_coro in tuple(self.event_coroutines[key_event].keys()):
-                if getattr(self.event_coroutines[key_event][key_coro], "__module__", None) == name:
-                    self.remove_from_event(key_event, key_coro)
-            if len(self.event_coroutines[key_event]) == 0:
-                del self.event_coroutines[key_event]
+        """Removes any background tasks associated with the extension."""
         
         # Remove background tasks.
         self.background_tasks.setdefault(name, {})

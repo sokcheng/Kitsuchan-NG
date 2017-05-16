@@ -28,8 +28,7 @@ class Blacklisting:
         self.settings = {}
         self.load()
         
-        # Kitsuchan-specific idiom; @bot.add_to_event isn't a thing in standard d.py.
-        @bot.add_to_event("on_guild_join")
+        @bot.listen("on_guild_join")
         async def check_guild(guild):
             reason = await self.prune_guild(guild)
             num_humans = helpers.count_humans(guild)
@@ -53,7 +52,7 @@ class Blacklisting:
                                         f"**Bots:** {num_bots}\n"
                                         f"**Region:** {guild.region}"))
 
-        @bot.add_to_event("on_guild_remove")
+        @bot.listen("on_guild_remove")
         async def guild_left_why(guild):
             for channel in self.bot.logging_channels:
                 await channel.send(f"Got the boot from **{guild.name}** ({guild.id}).")

@@ -10,7 +10,7 @@ class Memchecker:
     
         self.previous_memory_usage = 0
         
-        @bot.add_to_event("on_command_completion")
+        @bot.listen("on_command_completion")
         async def check_memory(ctx):
             memory_usage = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
             if memory_usage != self.previous_memory_usage:
@@ -19,7 +19,7 @@ class Memchecker:
                                         f"(following `{ctx.message.content}`)"))
                 self.previous_memory_usage = memory_usage
 
-        @bot.add_to_event("on_guild_join")
+        @bot.listen("on_guild_join")
         async def check_memory(ctx):
             memory_usage = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
             if memory_usage != self.previous_memory_usage:
@@ -28,7 +28,7 @@ class Memchecker:
                                         "(following guild join)"))
                 self.previous_memory_usage = memory_usage
 
-        @bot.add_to_event("on_guild_remove")
+        @bot.listen("on_guild_remove")
         async def check_memory(ctx):
             memory_usage = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
             if memory_usage != self.previous_memory_usage:
