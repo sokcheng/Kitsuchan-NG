@@ -51,8 +51,8 @@ def is_public(ctx):
     return True
 
 # Events
-@bot.listen()
-async def on_ready():
+@bot.listen("on_ready")
+async def when_ready():
     """Conduct preparations once the bot is ready to go."""
     bot.time_started = datetime.datetime.now()
     
@@ -78,8 +78,8 @@ async def on_ready():
     await bot.change_presence(game=game)
     logger.info(f"Bot is ONLINE! Username: {bot.user.name}, User ID: {bot.user.id}")
 
-@bot.listen()
-async def on_command_completion(ctx):
+@bot.listen("on_command_completion")
+async def help_sent(ctx):
     """Trigger when a command completes successfully."""
     if not isinstance(ctx.channel, discord.DMChannel):
         if ctx.command.name == "help":
@@ -88,8 +88,8 @@ async def on_command_completion(ctx):
             except discord.Forbidden:
                 pass
 
-@bot.listen()
-async def on_command_error(ctx, exception):
+@bot.listen("on_command_error")
+async def handle_error(ctx, exception):
     """Handle errors that occur in commands."""
     
     # This section checks if the bot's owner DM'ed the bot the command.
