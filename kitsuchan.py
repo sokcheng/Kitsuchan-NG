@@ -90,7 +90,7 @@ async def help_sent(ctx):
                 pass
 
 @bot.add_to_event("on_command_error")
-async def handle_error(exception, ctx):
+async def handle_error(ctx, exception):
     """Handle errors that occur in commands."""
     
     # This section checks if the bot's owner DM'ed the bot the command.
