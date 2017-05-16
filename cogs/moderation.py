@@ -60,13 +60,7 @@ class Moderation:
             return STATUS_SORTED.index(status)
         return 10
 
-    @commands.command(aliases=["moderators"])
-    @commands.cooldown(1, 12, commands.BucketType.channel)
-    async def mods(self, ctx):
-        """Display moderators for the given channel.
-        
-        Assumes that members with `manage_messages`, `kick_members`, and `ban_members` are mods.
-        """
+    def _get_mods(self, ctx):
         the_mods = []
         for member in ctx.guild.members:
             if ctx.channel.permissions_for(member).manage_messages \
@@ -74,6 +68,16 @@ class Moderation:
             and ctx.channel.permissions_for(member).ban_members \
             and not member.bot:
                 the_mods.append(member)
+        return the_mods
+
+    @commands.command(aliases=["moderators"])
+    @commands.cooldown(1, 12, commands.BucketType.channel)
+    async def mods(self, ctx):
+        """Display moderators for the given channel.
+        
+        Assumes that members with `manage_messages`, `kick_members`, and `ban_members` are mods.
+        """
+        the_mods = self._get_mods(ctx)
         the_mods.sort(key=lambda mod: self._sort_by_status(mod.status.name))
         message = ["**__Moderators__**"]
         for mod in the_mods:
