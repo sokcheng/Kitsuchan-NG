@@ -50,8 +50,4 @@ details on that.
 
 Porting cogs to Kitsuchan-NG's architecture is also generally simple, especially since the bot
 exposes some similar APIs to common bots such as Twentysix's Red. Again, remember to modify them so
-that they work with `rewrite`.
-
-Note that Kitsuchan-NG exposes additional APIs not found in the standard discord.py library, including
-a global `aiohttp.ClientSession` and a modified event handling subsystem that makes it easier to
-add event listeners in cogs. Check the wiki for more details on those.
+that they work with `rewrite`. Check the wiki for more details on those.
