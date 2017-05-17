@@ -118,13 +118,13 @@ class About:
     @commands.guild_only()
     @commands.cooldown(6, 12, commands.BucketType.channel)
     async def channelinfo(self, ctx, *, channel:discord.TextChannel=None):
-        await self._channel(ctx, channel)
+        await self._channel(ctx, channel=channel)
 
     @info.command(brief="Display channel info.", aliases=["c"])
     @commands.guild_only()
     @commands.cooldown(6, 12, commands.BucketType.channel)
     async def channel(self, ctx, *, channel:discord.TextChannel=None):
-        await self._channel(ctx, channel)
+        await self._channel(ctx, channel=channel)
 
     async def _user(self, ctx, *, user:discord.Member=None):
         """Display information about a user, such as status and roles.
@@ -160,13 +160,13 @@ class About:
     @commands.guild_only()
     @commands.cooldown(6, 12, commands.BucketType.channel)
     async def userinfo(self, ctx, *, user:discord.Member=None):
-        await self._user(ctx, user)
+        await self._user(ctx, user=user)
 
     @info.command(brief="Display user info.", aliases=["u"])
     @commands.guild_only()
     @commands.cooldown(6, 12, commands.BucketType.channel)
     async def user(self, ctx, *, user:discord.Member=None):
-        await self._user(ctx, user)
+        await self._user(ctx, user=user)
 
 def setup(bot):
     """Setup function for About."""
