@@ -21,7 +21,7 @@ logger = logging.getLogger(__name__)
 class About:
     """Commands that display information about the bot, user, etc."""
 
-    @commands.command(aliases=["botinfo", "binfo", "about"])
+    @commands.group(aliases=["botinfo", "binfo", "about"], invoke_without_command=True)
     @commands.cooldown(6, 12, commands.BucketType.channel)
     async def info(self, ctx):
         """Display bot info, e.g. library versions."""
@@ -53,11 +53,8 @@ class About:
         except Exception:
             pass
         await ctx.send(embed=embed)
-
-    @commands.command(brief="Display guild (server) info.", aliases=["ginfo", "serverinfo", "sinfo"])
-    @commands.guild_only()
-    @commands.cooldown(6, 12, commands.BucketType.channel)
-    async def guildinfo(self, ctx):
+    
+    async def _guild(self, ctx):
         """Display information about the current guild, such as owner, region, emojis, and roles."""
         guild = ctx.guild
         embed = discord.Embed(title=guild.name)
@@ -85,10 +82,19 @@ class About:
         embed.add_field(name="Roles", value=roles, inline=False)
         await ctx.send(embed=embed)
 
-    @commands.command(brief="Display channel info.", aliases=["cinfo"])
+    @commands.command(brief="Display guild (server) info.", aliases=["ginfo", "serverinfo", "sinfo"])
     @commands.guild_only()
     @commands.cooldown(6, 12, commands.BucketType.channel)
-    async def channelinfo(self, ctx, *, channel:discord.TextChannel=None):
+    async def guildinfo(self, ctx):
+        await self._guild(ctx)
+
+    @info.command(brief="Display guild (server) info.", aliases=["g", "server", "s"])
+    @commands.guild_only()
+    @commands.cooldown(6, 12, commands.BucketType.channel)
+    async def guild(self, ctx):
+        await self._guild(ctx)
+
+    async def _channel(self, ctx, *, channel:discord.TextChannel=None):
         """Display information about a channel channel.
         Defaults to the current channel.
         
@@ -108,10 +114,19 @@ class About:
         embed.add_field(name="Created at", value=channel.created_at.ctime())
         await ctx.send(embed=embed)
 
-    @commands.command(brief="Display user info.", aliases=["uinfo"])
+    @commands.command(brief="Display channel info.", aliases=["cinfo"])
     @commands.guild_only()
     @commands.cooldown(6, 12, commands.BucketType.channel)
-    async def userinfo(self, ctx, *, user:discord.Member=None):
+    async def channelinfo(self, ctx, *, channel:discord.TextChannel=None):
+        await self._channel(ctx, channel)
+
+    @info.command(brief="Display channel info.", aliases=["c"])
+    @commands.guild_only()
+    @commands.cooldown(6, 12, commands.BucketType.channel)
+    async def channel(self, ctx, *, channel:discord.TextChannel=None):
+        await self._channel(ctx, channel)
+
+    async def _user(self, ctx, *, user:discord.Member=None):
         """Display information about a user, such as status and roles.
         Defaults to the user who invoked the command.
         
@@ -140,6 +155,18 @@ class About:
         roles = ", ".join((str(role) for role in user.roles))[:1024]
         embed.add_field(name="Roles", value=roles, inline=False)
         await ctx.send(embed=embed)
+    
+    @commands.command(brief="Display user info.", aliases=["uinfo"])
+    @commands.guild_only()
+    @commands.cooldown(6, 12, commands.BucketType.channel)
+    async def userinfo(self, ctx, *, user:discord.Member=None):
+        await self._user(ctx, user)
+
+    @info.command(brief="Display user info.", aliases=["u"])
+    @commands.guild_only()
+    @commands.cooldown(6, 12, commands.BucketType.channel)
+    async def user(self, ctx, *, user:discord.Member=None):
+        await self._user(ctx, user)
 
 def setup(bot):
     """Setup function for About."""

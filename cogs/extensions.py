@@ -4,6 +4,7 @@
 
 # Standard modules
 import logging
+import traceback
 
 # Third party modules
 import discord
@@ -48,6 +49,8 @@ class Extensions:
                 ctx.bot.load_extension(extension_name)
             except Exception as error:
                 message = f"An error occurred while trying to reload {extension_name}! x.x"
+                exception = traceback.format_exc()
+                logger.info(exception)
             else:
                 message = f"Extension {extension_name} reloaded."
         else:

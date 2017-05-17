@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
 import asyncio
-import traceback
 import logging
 
 import aiohttp
