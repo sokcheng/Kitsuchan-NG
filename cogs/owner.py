@@ -39,6 +39,17 @@ class Owner:
         settings.save()
         await ctx.send(f"`{key}` set to `{value}`")
     
+    @commands.command()
+    @commands.is_owner()
+    async def del(self, ctx, key:str):
+        """Delete a value in the bot's settings by key. Bot owner only."""
+        try:
+            del settings.manager[key]
+        except KeyError:
+            raise commands.UserInputError("You entered an invalid key!")
+        settings.save()
+        await ctx.send(f"`{key}` removed from settings.")
+    
     @commands.command(aliases=["listguilds"])
     @commands.is_owner()
     async def listg(self, ctx):
