@@ -71,7 +71,7 @@ async def when_ready():
     
     game = discord.Game()
     if isinstance(command_prefix_custom, str):
-        game.name = f"{bot.command_prefix}help"
+        game.name = f"{command_prefix_custom}help"
     else:
         game.name = f"{command_prefix_three_letters_space}help or @{bot.user.name} help"
     
