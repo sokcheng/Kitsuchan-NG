@@ -46,12 +46,7 @@ class About:
         embed.add_field(name="Python", value="{0}.{1}.{2}".format(*sys.version_info))
         embed.add_field(name="discord.py", value=discord.__version__)
         usage_memory = round(resource.getrusage(resource.RUSAGE_SELF).ru_maxrss/1000, 2)
-        embed.add_field(name="Memory usage", value=f"{usage_memory} MB")
-        try:
-            cookies_eaten = sum(discord.version_info[:3]) * sum(app_info.VERSION[:3])
-            embed.add_field(name="Cookies eaten", value=str(cookies_eaten))
-        except Exception:
-            pass
+        embed.add_field(name="Cookies eaten", value=f"{usage_memory} megabites")
         await ctx.send(embed=embed)
     
     async def _guild(self, ctx):
