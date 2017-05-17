@@ -111,22 +111,22 @@ class Reactions:
     """Weeb reaction commands."""
 
     def _generate_message(self, ctx, kind:str=None, user:discord.Member=None):
-        """Generate a message based on the member."""
+        """Generate a message based on the user."""
         if not kind or not user:
             message=""
-        elif ctx.bot.user.id == member.id:
+        elif ctx.bot.user.id == user.id:
             message=f"Aw, thank you. Here, have one back. :3"
-        elif ctx.author.id != member.id:
-            message=f"**{member.display_name}**, you got a {kind} from **{ctx.author.display_name}!**"
+        elif ctx.author.id != user.id:
+            message=f"**{user.display_name}**, you got a {kind} from **{ctx.author.display_name}!**"
         else:
-            message=f"**{member.display_name}**, I'm so sorry. Have a {kind} anyway. :<"
+            message=f"**{user.display_name}**, I'm so sorry. Have a {kind} anyway. :<"
         return message
 
     async def _rra(self, ctx, kind:str, user:discord.Member=None):
-        """A helper function that grabs an image and posts it in response to a member.
+        """A helper function that grabs an image and posts it in response to a user.
         
         * kind - The type of image to retrieve.
-        * member - The member to mention in the command."""
+        * user - The member to mention in the command."""
         logger.info(f"Fetching {kind} image.")
         hash_id_channel = utils.to_hash(str(ctx.channel.id))
         url = BASE_URL_API.format(kind)
@@ -134,7 +134,7 @@ class Reactions:
             if response.status == 200:
                 data = await response.json()
                 url_image = BASE_URL_IMAGE.format(data).replace("i/", "")
-                message = self._generate_message(ctx, kind, member)
+                message = self._generate_message(ctx, kind, user)
                 if not helpers.has_scanning(ctx):
                     embed = discord.Embed(color=utils.random_color())
                     embed.set_image(url=url_image)
@@ -151,7 +151,7 @@ class Reactions:
         """A helper function that creates an embed with an image and sends it off."""
         if isinstance(url_image, (tuple, list)):
             url_image = systemrandom.choice(url_image)
-        message = self._generate_message(ctx, kind, member)
+        message = self._generate_message(ctx, kind, user)
         if not helpers.has_scanning(ctx):
             embed = discord.Embed(color=utils.random_color())
             embed.set_image(url=url_image)
@@ -177,7 +177,7 @@ class Reactions:
     @commands.cooldown(6, 12, commands.BucketType.channel)
     async def glomp(self, ctx, *, user:discord.Member):
         """Glomp!"""
-        await self._send_image(ctx, IMAGES_GLOMP, "glomp", member)
+        await self._send_image(ctx, IMAGES_GLOMP, "glomp", user)
 
     @commands.command(aliases=["idek"])
     @commands.cooldown(6, 12, commands.BucketType.channel)
@@ -201,7 +201,7 @@ class Reactions:
     @commands.cooldown(6, 12, commands.BucketType.channel)
     async def poke(self, ctx, *, user:discord.Member):
         """Poke!"""
-        await self._send_image(ctx, IMAGES_POKE, "poke", member)
+        await self._send_image(ctx, IMAGES_POKE, "poke", user)
 
     @commands.command()
     @commands.cooldown(6, 12, commands.BucketType.channel)
@@ -243,26 +243,26 @@ class Reactions:
     @commands.command(aliases=["snuggle"])
     @commands.cooldown(6, 12, commands.BucketType.channel)
     async def cuddle(self, ctx, *, user:discord.Member):
-        """Cuddle a member!
+        """Cuddle a user!
         
-        * member - The member to be cuddled."""
-        await self._rra(ctx, "cuddle", member)
+        * user - The user to be cuddled."""
+        await self._rra(ctx, "cuddle", user)
 
     @commands.command()
     @commands.cooldown(6, 12, commands.BucketType.channel)
     async def hug(self, ctx, *, user:discord.Member):
-        """Hug a member!
+        """Hug a user!
         
-        * member - The member to be hugged."""
-        await self._rra(ctx, "hug", member)
+        * user - The user to be hugged."""
+        await self._rra(ctx, "hug", user)
         
     @commands.command()
     @commands.cooldown(6, 12, commands.BucketType.channel)
     async def kiss(self, ctx, *, user:discord.Member):
-        """Kiss a member!
+        """Kiss a user!
         
-        * member - The member to be kissed."""
-        await self._rra(ctx, "kiss", member)
+        * user - The user to be kissed."""
+        await self._rra(ctx, "kiss", user)
 
     @commands.command()
     @commands.cooldown(6, 12, commands.BucketType.channel)
@@ -277,13 +277,13 @@ class Reactions:
     @commands.command()
     @commands.cooldown(6, 12, commands.BucketType.channel)
     async def lick(self, ctx, *, user:discord.Member):
-        """Lick a member!
+        """Lick a user!
         
-        * member - The member to be licked."""
+        * user - The user to be licked."""
         if hasattr(ctx.channel, "is_nsfw") and ctx.channel.is_nsfw():
-            await self._rra(ctx, "lick", member)
+            await self._rra(ctx, "lick", user)
         else:
-            await self._send_image(ctx, IMAGES_LICK, "lick", member)
+            await self._send_image(ctx, IMAGES_LICK, "lick", user)
 
     @commands.command()
     @commands.cooldown(6, 12, commands.BucketType.channel)
@@ -306,10 +306,10 @@ class Reactions:
     @commands.command()
     @commands.cooldown(6, 12, commands.BucketType.channel)
     async def pat(self, ctx, *, user:discord.Member):
-        """Pat a member!
+        """Pat a user!
         
-        * member - The member to be patted."""
-        await self._rra(ctx, "pat", member)
+        * user - The user to be patted."""
+        await self._rra(ctx, "pat", user)
 
     @commands.command()
     @commands.cooldown(6, 12, commands.BucketType.channel)
@@ -320,10 +320,10 @@ class Reactions:
     @commands.command()
     @commands.cooldown(6, 12, commands.BucketType.channel)
     async def slap(self, ctx, *, user:discord.Member):
-        """Slap a member!
+        """Slap a user!
         
-        * member - The member to be slapped."""
-        await self._rra(ctx, "slap", member)
+        * user - The user to be slapped."""
+        await self._rra(ctx, "slap", user)
 
     @commands.command()
     @commands.cooldown(6, 12, commands.BucketType.channel)
@@ -334,18 +334,18 @@ class Reactions:
     @commands.command()
     @commands.cooldown(6, 12, commands.BucketType.channel)
     async def stare(self, ctx, *, user:discord.Member):
-        """Stare at a member!
+        """Stare at a user!
         
-        * member - The member to be stared at."""
-        await self._rra(ctx, "stare", member)
+        * user - The user to be stared at."""
+        await self._rra(ctx, "stare", user)
 
     @commands.command()
     @commands.cooldown(6, 12, commands.BucketType.channel)
     async def tickle(self, ctx, *, user:discord.Member):
-        """Tickle a member!
+        """Tickle a user!
         
-        * member - The member to be tickled."""
-        await self._rra(ctx, "tickle", member)
+        * user - The user to be tickled."""
+        await self._rra(ctx, "tickle", user)
 
     @commands.command()
     @commands.cooldown(6, 12, commands.BucketType.channel)
