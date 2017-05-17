@@ -6,6 +6,7 @@
 import sys
 import datetime
 import logging
+import os
 
 # Third-party modules
 import asyncio
@@ -18,6 +19,7 @@ import errors
 import ext
 import settings
 
+assert (os.geteuid() > 0), "Please don't run me as root. :<"
 assert (sys.version_info >= (3,6)), "This program requires Python 3.6 or higher."
 assert (discord.version_info >= (1,0)), "This program requires Discord 1.0 or higher."
 
@@ -105,7 +107,8 @@ async def handle_error(ctx, exception):
     elif isinstance(exception, (commands.BadArgument, commands.UserInputError)) \
     or (isinstance(exception, commands.CommandInvokeError) \
         and isinstance(exception.original, (discord.HTTPException,
-                                            ModuleNotFoundError))):
+                                            ModuleNotFoundError,
+                                            RuntimeError))):
         try:
             await ctx.send(f"{exception} x.x")
         except discord.Forbidden:
@@ -129,6 +132,7 @@ async def handle_error(ctx, exception):
         logger.warning((f"{ctx.author.name} ({ctx.author.id}) tried to issue a command but "
                         f"was denied. Attempted command: {ctx.invoked_with}"))
     else:
+        await ctx.send("An error has occurred.")
         logger.warning(f"{exception.__class__.__name__}:{exception}")
 
 def main():
