@@ -26,9 +26,16 @@ class Owner:
     
     @commands.command()
     @commands.is_owner()
+    async def get(self, ctx, key:str):
+        """Get a value in the bot's settings by key. Bot owner only."""
+        value = settings.manager.get(key)
+        await ctx.send(f"Value of `{key}`: `{value}`")
+    
+    @commands.command()
+    @commands.is_owner()
     async def set(self, ctx, key:str, *, value):
-        """Change a value in the bot's settings."""
-        settings.manager[key] = value
+        """Set a value in the bot's settings by key, value. Bot owner only."""
+        settings.manager[key] = eval(value)
         settings.save()
         await ctx.send(f"`{key}` set to `{value}`")
     
