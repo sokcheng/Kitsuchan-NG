@@ -197,7 +197,7 @@ class Reactions:
         """Let me love you!"""
         await self._send_image(ctx, IMAGE_LMLU)
 
-    @commands.command()
+    @commands.command(aliases=["boop"])
     @commands.cooldown(6, 12, commands.BucketType.channel)
     async def poke(self, ctx, *, member:discord.Member):
         """Poke!"""
