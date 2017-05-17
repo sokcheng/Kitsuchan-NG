@@ -20,10 +20,10 @@ VARIANTS = {"bang": ":gun: **BANG!**",
             "bang!": ":gun: **BANG!**",
             "beep": ":robot: Beep beep, I'm a bot!",
             "beep!": ":robot: Beep beep, I'm a bot!"}
-GUNS = ("http://safebooru.org/samples/79/sample_d848db3fbe3fc8dc0f2cbb328f3af71c4e49989f.jpg",
-        "http://safebooru.org/images/121/af2b15dbcd0a8feac03a4b990a600837724c84ec.jpg",
-        "http://safebooru.org/images/1652/3f6d218b2433c9fe4e80f29a1a95eace88188f87.png",
-        "http://safebooru.org/images/1591/ff08983843fe399487629927d2e10bc8a9dc51d2.jpg")
+GUNS = ("http://i.imgur.com/s6SMlIT.jpg",
+        "http://i.imgur.com/GPZsqyr.jpg",
+        "http://i.imgur.com/TQI7PZ0.png",
+        "http://i.imgur.com/5hxnDDq.jpg")
 
 class Ping:
     """Ping command."""
