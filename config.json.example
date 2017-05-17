@@ -2,5 +2,6 @@
     "API_KEY_IBSEARCH": "Your Key Goes Here",
     "COMMAND_PREFIX": "myprefix!",
     "EXTENSIONS": ["cogs.core", "cogs.utilities", "cogs.moderation", "cogs.wikipedia", "cogs.ibsearch", "cogs.xkcd", "cogs.reactions"],
-    "OAUTH_TOKEN_DISCORD": "Your OAuth Token Goes Here"
+    "OAUTH_TOKEN_DISCORD": "Your OAuth Token Goes Here",
+    "SUPPORT_GUILD": "No support guild yet."
 }

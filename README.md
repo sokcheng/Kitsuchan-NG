@@ -24,17 +24,23 @@ Beautiful Soup 4.
 Kitsuchan-NG reads and saves its config to and from the file `config.json`. This file will be
 created automatically upon startup. The following parameter in the config is **mandatory**:
 
-* `OAUTH_TOKEN_DISCORD` - OAuth token for your Discord bot account.
+* `OAUTH_TOKEN_DISCORD` - OAuth token for your Discord bot's account.
 
-Optionally, you may set the following as well:
+Optionally, you may set the following as well. They are not required for the bot to run.
 
 * `API_KEY_IBSEARCH` - API key for IbSear.ch. You can get one for free with no registration.
-  The `ibsearch` command will refuse to run without this.
-* `COMMAND_PREFIX` - Override the command prefix with anything of your liking.
-* `EXTENSIONS` - This overrides the bot's default extension list.
+  The `ibsearch` command will not run without this.
+* `COMMAND_PREFIX` - A custom command prefix of your liking. Does not override the defaults.
+* `EXTENSIONS` - Overrides the bot's default extension list.
+* `SUPPORT_GUILD` - Contains a link for the bot's support server.
 
-For your convenience, a `config.json.example` file is provided. In the future, one objective of
-mine is to implement per-cog settings.
+Kitsuchan-NG has `get`, `set`, and `del` commands that allow arbitrary settings to be viewed and
+modified during runtime. For example, `set COMMAND_PREFIX 'meow'` will set the `COMMAND_PREFIX`
+to `meow`, and `del COMMAND_PREFIX` will clear the `COMMAND_PREFIX` from the config entirely. Note
+that the bot might have to be restarted for certain changes to take effect!
+
+For your convenience, a `config.json.example` file is provided. Cogs may generate separate
+configuration files of their own.
 
 # Logging
 
