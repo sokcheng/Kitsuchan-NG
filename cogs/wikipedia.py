@@ -23,14 +23,11 @@ class Wikipedia:
 
     @commands.command(aliases=["wikipedia"])
     @commands.cooldown(6, 12, commands.BucketType.user)
-    async def wiki(self, ctx, *, query=""):
+    async def wiki(self, ctx, *, query:str):
         """Search Wikipedia.
         
         * query - A list of strings to be used in the search criteria.
         """
-        if len(query) == 0:
-            message = "Query not specified."
-            raise commands.UserInputError(message)
         params = urllib.parse.urlencode({"action": "opensearch", "search": query})
         url = BASE_URL_WIKIPEDIA_API.format(params)
         async with ctx.bot.session.get(url) as response:

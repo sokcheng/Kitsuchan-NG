@@ -70,11 +70,11 @@ class Words:
 
     @commands.command()
     @commands.cooldown(6, 12, commands.BucketType.user)
-    async def anagram(self, ctx, *, text:str):
+    async def anagram(self, ctx, *, phrase:str):
         """Find possible anagrams of a phrase.
         
-        * text = The message to find an anagram for."""
-        query = f"find anagram for {text}"
+        * phrase = The message to find an anagram for."""
+        query = f"find anagram for {phrase}"
         answer = await _duckduckgo(ctx, query=query)
         if answer:
             await ctx.send(answer)
@@ -85,44 +85,44 @@ class Crypto:
 
     @commands.command()
     @commands.cooldown(6, 12, commands.BucketType.user)
-    async def atbash(self, ctx, *, text:str):
+    async def atbash(self, ctx, *, phrase:str):
         """Convert text using a reversed alphabet.
         
-        * text = The message to be encoded."""
-        query = f"atbash {text}"
+        * phrase = The message to be encoded."""
+        query = f"atbash {phrase}"
         answer = await _duckduckgo(ctx, query=query)
         answer = answer.replace("Atbash: ", "", 1)
         await ctx.send(answer)
 
     @commands.command()
     @commands.cooldown(6, 12, commands.BucketType.user)
-    async def base64(self, ctx, *, text:str):
+    async def base64(self, ctx, *, phrase:str):
         """Convert a phrase into Base64.
         
-        * text = The text to convert."""
-        query = f"base64 {text}"
+        * phrase = The text to convert."""
+        query = f"base64 {phrase}"
         answer = await _duckduckgo(ctx, query=query)
         answer = answer.replace("Base64 encode d: ", "")
         await ctx.send(answer)
 
     @commands.command()
     @commands.cooldown(6, 12, commands.BucketType.user)
-    async def rot13(self, ctx, *, text:str):
+    async def rot13(self, ctx, *, phrase:str):
         """Convert a phrase into ROT13.
         
-        * text = The text to convert."""
-        query = f"rot13 {text}"
+        * phrase = The text to convert."""
+        query = f"rot13 {phrase}"
         answer = await _duckduckgo(ctx, query=query)
         answer = answer.replace("ROT13: ", "", 1)
         await ctx.send(answer)
 
     @commands.command()
     @commands.cooldown(6, 12, commands.BucketType.user)
-    async def sha3(self, ctx, *, text:str):
+    async def sha3(self, ctx, *, phrase:str):
         """Convert a phrase into its SHA-3 hash.
         
-        * text = The text to convert."""
-        query = f"sha3 {text}"
+        * phrase = The text to convert."""
+        query = f"sha3 {phrase}"
         answer = await _duckduckgo(ctx, query=query)
         await ctx.send(answer)
 

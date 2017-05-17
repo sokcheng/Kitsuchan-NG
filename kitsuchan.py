@@ -99,8 +99,10 @@ async def handle_error(ctx, exception):
         await ctx.author.send(f"`{exception.__class__.__name__}`\n`{exception}`")
         return
     
-    if isinstance(exception, (commands.BadArgument, commands.MissingRequiredArgument,
-                              commands.UserInputError)) \
+    if isinstance(exception, commands.MissingRequiredArgument):
+        await ctx.send(f"Please specify `{exception.param}` and try again. :<")
+        logger.warning(exception)
+    elif isinstance(exception, (commands.BadArgument, commands.UserInputError)) \
     or (isinstance(exception, commands.CommandInvokeError) \
         and isinstance(exception.original, (discord.HTTPException,
                                             ModuleNotFoundError))):

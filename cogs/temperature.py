@@ -12,26 +12,26 @@ class Temperature:
 
     @commands.command(name="f2c")
     @commands.cooldown(6, 12, commands.BucketType.user)
-    async def fahrenheit_to_celsius(self, ctx, temperature:float):
+    async def fahrenheit_to_celsius(self, ctx, fahrenheit:float):
         """Convert temperature in Fahrenheit to Celsius.
         
         * temperature - An integer representing temperature in Fahrenheit."""
-        if len(str(temperature)) > DIGITS_MAX:
+        if len(str(fahrenheit)) > DIGITS_MAX:
             raise commands.UserInputError("Too long.")
-        fahrenheit = round(temperature, 3)
-        celsius = round((temperature - 32) * 5/9, 3)
+        celsius = round((fahrenheit - 32) * 5/9, 3)
+        fahrenheit = round(fahrenheit, 3)
         await ctx.send(f"{fahrenheit} Fahrenheit = {celsius} Celsius")
 
     @commands.command(name="c2f")
     @commands.cooldown(6, 12, commands.BucketType.user)
-    async def celsius_to_fahrenheit(self, ctx, temperature:float):
+    async def celsius_to_fahrenheit(self, ctx, celsius:float):
         """Convert temperature in Celsius to Fahrenheit.
         
         * temperature - An integer representing temperature in Celsius."""
-        if len(str(temperature)) > DIGITS_MAX:
+        if len(str(celsius)) > DIGITS_MAX:
             raise commands.UserInputError("Too long.")
-        celsius = round(temperature, 3)
-        fahrenheit = round((temperature * 9/5) + 32, 3)
+        fahrenheit = round((celsius * 9/5) + 32, 3)
+        celsius = round(celsius, 3)
         await ctx.send(f"{celsius} Celsius = {fahrenheit} Fahrenheit")
 
 def setup(bot):

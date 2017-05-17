@@ -15,12 +15,10 @@ class Evaluation:
     
     @commands.command()
     @commands.is_owner()
-    async def sh(self, ctx, *, expression=""):
+    async def sh(self, ctx, *, command):
         """Execute a system command. Bot owner only."""
-        if len(expression) == 0:
-            raise commands.UserInputError("No command was specified.")
-        expression = expression.split(" ")
-        process = subprocess.Popen(expression,
+        command = command.split(" ")
+        process = subprocess.Popen(command,
                                    universal_newlines=True,
                                    stdout=subprocess.PIPE,
                                    stderr=subprocess.PIPE)
@@ -41,10 +39,8 @@ class Evaluation:
 
     @commands.command(name="eval")
     @commands.is_owner()
-    async def _eval(self, ctx, *, expression=""):
+    async def _eval(self, ctx, *, expression):
         """Evaluate a Python expression. Bot owner only."""
-        if len(expression) == 0:
-            raise commands.UserInputError("No expression was specified.")
         try:
             output = eval(expression)
             output = str(output).split("\n")

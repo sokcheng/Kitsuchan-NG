@@ -110,9 +110,9 @@ IMAGES_WHAT = ("https://media.tumblr.com/tumblr_lnvtzjiY4J1qktqch.png",
 class Reactions:
     """Weeb reaction commands."""
 
-    def _generate_message(self, ctx, kind:str=None, member:discord.Member=None):
+    def _generate_message(self, ctx, kind:str=None, user:discord.Member=None):
         """Generate a message based on the member."""
-        if not kind or not member:
+        if not kind or not user:
             message=""
         elif ctx.bot.user.id == member.id:
             message=f"Aw, thank you. Here, have one back. :3"
@@ -122,7 +122,7 @@ class Reactions:
             message=f"**{member.display_name}**, I'm so sorry. Have a {kind} anyway. :<"
         return message
 
-    async def _rra(self, ctx, kind:str, member:discord.Member=None):
+    async def _rra(self, ctx, kind:str, user:discord.Member=None):
         """A helper function that grabs an image and posts it in response to a member.
         
         * kind - The type of image to retrieve.
@@ -147,7 +147,7 @@ class Reactions:
                 await ctx.send(message)
                 logger.info(message)
 
-    async def _send_image(self, ctx, url_image, kind:str=None, member:discord.Member=None):
+    async def _send_image(self, ctx, url_image, kind:str=None, user:discord.Member=None):
         """A helper function that creates an embed with an image and sends it off."""
         if isinstance(url_image, (tuple, list)):
             url_image = systemrandom.choice(url_image)
@@ -175,7 +175,7 @@ class Reactions:
 
     @commands.command(aliases=["tacklehug", "tackle"])
     @commands.cooldown(6, 12, commands.BucketType.channel)
-    async def glomp(self, ctx, *, member:discord.Member):
+    async def glomp(self, ctx, *, user:discord.Member):
         """Glomp!"""
         await self._send_image(ctx, IMAGES_GLOMP, "glomp", member)
 
@@ -199,7 +199,7 @@ class Reactions:
 
     @commands.command(aliases=["boop"])
     @commands.cooldown(6, 12, commands.BucketType.channel)
-    async def poke(self, ctx, *, member:discord.Member):
+    async def poke(self, ctx, *, user:discord.Member):
         """Poke!"""
         await self._send_image(ctx, IMAGES_POKE, "poke", member)
 
@@ -242,7 +242,7 @@ class Reactions:
 
     @commands.command(aliases=["snuggle"])
     @commands.cooldown(6, 12, commands.BucketType.channel)
-    async def cuddle(self, ctx, *, member:discord.Member):
+    async def cuddle(self, ctx, *, user:discord.Member):
         """Cuddle a member!
         
         * member - The member to be cuddled."""
@@ -250,7 +250,7 @@ class Reactions:
 
     @commands.command()
     @commands.cooldown(6, 12, commands.BucketType.channel)
-    async def hug(self, ctx, *, member:discord.Member):
+    async def hug(self, ctx, *, user:discord.Member):
         """Hug a member!
         
         * member - The member to be hugged."""
@@ -258,7 +258,7 @@ class Reactions:
         
     @commands.command()
     @commands.cooldown(6, 12, commands.BucketType.channel)
-    async def kiss(self, ctx, *, member:discord.Member):
+    async def kiss(self, ctx, *, user:discord.Member):
         """Kiss a member!
         
         * member - The member to be kissed."""
@@ -276,7 +276,7 @@ class Reactions:
 
     @commands.command()
     @commands.cooldown(6, 12, commands.BucketType.channel)
-    async def lick(self, ctx, *, member:discord.Member):
+    async def lick(self, ctx, *, user:discord.Member):
         """Lick a member!
         
         * member - The member to be licked."""
@@ -305,7 +305,7 @@ class Reactions:
 
     @commands.command()
     @commands.cooldown(6, 12, commands.BucketType.channel)
-    async def pat(self, ctx, *, member:discord.Member):
+    async def pat(self, ctx, *, user:discord.Member):
         """Pat a member!
         
         * member - The member to be patted."""
@@ -319,7 +319,7 @@ class Reactions:
 
     @commands.command()
     @commands.cooldown(6, 12, commands.BucketType.channel)
-    async def slap(self, ctx, *, member:discord.Member):
+    async def slap(self, ctx, *, user:discord.Member):
         """Slap a member!
         
         * member - The member to be slapped."""
@@ -333,7 +333,7 @@ class Reactions:
 
     @commands.command()
     @commands.cooldown(6, 12, commands.BucketType.channel)
-    async def stare(self, ctx, *, member:discord.Member):
+    async def stare(self, ctx, *, user:discord.Member):
         """Stare at a member!
         
         * member - The member to be stared at."""
@@ -341,7 +341,7 @@ class Reactions:
 
     @commands.command()
     @commands.cooldown(6, 12, commands.BucketType.channel)
-    async def tickle(self, ctx, *, member:discord.Member):
+    async def tickle(self, ctx, *, user:discord.Member):
         """Tickle a member!
         
         * member - The member to be tickled."""

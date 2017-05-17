@@ -26,14 +26,11 @@ class Dictionary:
 
     @commands.command()
     @commands.cooldown(6, 12, commands.BucketType.user)
-    async def define(self, ctx, word=""):
+    async def define(self, ctx, word:str):
         """Define a word.
         
         * word - A word to be looked up.
         """
-        if len(word) == 0:
-            message = "Word not specified."
-            raise commands.UserInputError(message)
         word = word.lower()
         params = "?{0}".format(urllib.parse.urlencode({"format": "json"}))
         url = BASE_URL_OWL_API.format(word, params)

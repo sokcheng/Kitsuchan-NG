@@ -65,12 +65,12 @@ class Eightball:
     """Magic Eight Ball command."""
     @commands.command(name="8ball", aliases=["eightball"])
     @commands.cooldown(6, 6, commands.BucketType.channel)
-    async def _eightball(self, ctx, *, question=""):
+    async def _eightball(self, ctx, *, question:str):
         """Ask the Magic 8-Ball a question.
         
         * question - The question to ask. Must end in a ?"""
-        if len(question) == 0 or not question.endswith("?"):
-            message = "Please specify a question."
+        if not question.endswith("?"):
+            message = "Your question must end with a question mark."
             logger.warning(message)
             raise commands.UserInputError(message)
         choice = systemrandom.choice(ANSWERS)

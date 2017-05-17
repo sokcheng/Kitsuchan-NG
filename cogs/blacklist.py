@@ -123,45 +123,45 @@ class Blacklisting:
 
     @block.command(name="user")
     @commands.is_owner()
-    async def _blockuser(self, ctx, id_user:int):
+    async def _blockuser(self, ctx, user_id:int):
         """Block a user. Only the bot owner can use this.
         
-        * id_user - The ID of the user to block.
+        * user_id - The ID of the user to block.
         """
         self.settings.setdefault("USERS", [])
         app_info = await ctx.bot.application_info()
-        is_owner = id_user == app_info.owner.id
+        is_owner = user_id == app_info.owner.id
         if is_owner:
             message = "Can't block bot owner."
             logger.warning(message)
             raise commands.UserInputError(message)
-        if id_user not in self.settings["USERS"]:
-            self.settings["USERS"].append(id_user)
-            message = f"{id_user} blocked."
+        if user_id not in self.settings["USERS"]:
+            self.settings["USERS"].append(user_id)
+            message = f"{user_id} blocked."
             logger.info(message)
             await ctx.send(message)
             await self.prune_guilds()
         else:
-            message = f"{id_user} already blocked."
+            message = f"{user_id} already blocked."
             logger.info(message)
             await ctx.send(message)
         self.save()
 
     @block.command(name="guild", aliases=["server"])
     @commands.is_owner()
-    async def _blockguild(self, ctx, id_guild:int):
+    async def _blockguild(self, ctx, guild_id:int):
         """Block a guild. Only the bot owner can use this.
         
-        * id_guild - The ID of the guild to block.
+        * guild_id - The ID of the guild to block.
         """
         self.settings.setdefault("GUILDS", [])
-        if id_guild not in self.settings["GUILDS"]:
+        if guild_id not in self.settings["GUILDS"]:
             self.settings["GUILDS"].append(303302730213097473)
-            message = f"{id_guild} blocked."
+            message = f"{guild_id} blocked."
             logger.info(message)
             await ctx.send(message)
             try:
-                guild = ctx.bot.get_guild(id_guild)
+                guild = ctx.bot.get_guild(guild_id)
                 await self.prune_guild(guild)
             except Exception:
                 pass
@@ -182,36 +182,36 @@ class Blacklisting:
 
     @unblock.command(name="user")
     @commands.is_owner()
-    async def _unblockuser(self, ctx, id_user:int):
+    async def _unblockuser(self, ctx, user_id:int):
         """Unblock a user. Only the bot owner can use this.
         
-        * id_user - The user ID to unblock.
+        * user_id - The user ID to unblock.
         """
         self.settings.setdefault("USERS", [])
-        if id_user in self.settings["USERS"]:
-            self.settings["USERS"].remove(id_user)
-            message = f"{id_user} unblocked."
+        if user_id in self.settings["USERS"]:
+            self.settings["USERS"].remove(user_id)
+            message = f"{user_id} unblocked."
             logger.info(message)
             await ctx.send(message)
         else:
-            await ctx.send(f"{id_user} already unblocked.")
+            await ctx.send(f"{user_id} already unblocked.")
         self.save()
 
     @unblock.command(name="guild", aliases=["server"])
     @commands.is_owner()
-    async def _unblockguild(self, ctx, id_guild:int):
+    async def _unblockguild(self, ctx, guild_id:int):
         """Unblock a guild. Only the bot owner can use this.
         
-        * id_guild - The ID of the guild to unblock.
+        * guild_id - The ID of the guild to unblock.
         """
         self.settings.setdefault("GUILDS", [])
-        if id_guild in self.settings["GUILDS"]:
-            self.settings["GUILDS"].remove(id_guild)
-            message = f"{id_guild} unblocked."
+        if guild_id in self.settings["GUILDS"]:
+            self.settings["GUILDS"].remove(guild_id)
+            message = f"{guild_id} unblocked."
             logger.info(message)
             await ctx.send(message)
         else:
-            message = f"{id_guild} already unblocked."
+            message = f"{guild_id} already unblocked."
             logger.info(message)
             await ctx.send(message)
         self.save()
