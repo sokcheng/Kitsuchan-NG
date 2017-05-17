@@ -95,6 +95,18 @@ class Google:
             await ctx.send(links)
             logger.warning(links)
 
+    @commands.command(aliases=["kats", "kitkat", "kitkats"])
+    @commands.cooldown(6, 12, commands.BucketType.channel)
+    async def kat(self, ctx):
+        """Kit Kats and stuff."""
+        links = await self._google(ctx, query="kit kat", base_url=BASE_URL_GOOGLE_IMAGES)
+        if isinstance(links, list):
+            link = systemrandom.choice(links)
+            await ctx.send(link)
+        else:
+            await ctx.send(links)
+            logger.warning(links)
+
     @google.command(aliases=["n"])
     @commands.cooldown(6, 12, commands.BucketType.channel)
     async def news(self, ctx, *, query:str):

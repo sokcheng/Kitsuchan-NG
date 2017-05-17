@@ -8,10 +8,6 @@ Ask the Magic 8-Ball a question.
 
 * question - The question to ask. Must end in a ?
 
-## about
-### Aliases: a, info, i
-Information subcommands, e.g. channel information.
-
 ## anagram
 Find possible anagrams of a phrase.
 
@@ -19,6 +15,10 @@ Find possible anagrams of a phrase.
 
 ## antigravity
 Fetch the antigravity comic from xkcd.
+
+## archnews
+### Aliases: anews
+Fetch the latest Arch Linux news.
 
 ## atbash
 Convert text using a reversed alphabet.
@@ -69,6 +69,13 @@ Delete the bot's previous message(s). Bot owner only.
 List all games currently being played in the current guild.
 
 * page_number - Optional parameter if there are too many pages.
+
+## channelinfo
+### Aliases: cinfo
+Display information about a channel channel.
+Defaults to the current channel.
+
+* channel - Optional argument. A specific channel to get information about.
 
 ## choose
 Choose between one of various supplied things.
@@ -167,6 +174,10 @@ Example queries:
 * google A cat - Search Google for a cat.
 * google image A cat - Search Google for an image of a cat.
 
+## guildinfo
+### Aliases: ginfo, serverinfo, sinfo
+Display information about the current guild, such as owner, region, emojis, and roles.
+
 ## halt
 ### Aliases: shutdown, kys
 Halt the bot. Only the bot owner can use this.
@@ -199,12 +210,20 @@ This command accepts common imageboard tags and keywords. Here are a few example
 ### Aliases: idek
 IDK!
 
+## info
+### Aliases: botinfo, binfo, about
+Display bot info, e.g. library versions.
+
 ## invite
 Generate an invite link for this bot.
 
 ## jisho
 Translates Japanese to English, and English to Japanese.
 Works with Romaji, Hiragana, Kanji, and Katakana.
+
+## kat
+### Aliases: kats, kitkat, kitkats
+Search Google Images.
 
 ## kick
 Kick all users mentioned by this command.
@@ -282,7 +301,7 @@ Pat a member!
 * member - The member to be patted.
 
 ## ping
-### Aliases: bang, bang!, pong
+### Aliases: bang, bang!, beep, beep!, pong
 Ping the bot.
 
 ## poke
@@ -363,6 +382,9 @@ Shortcut command to search Safebooru through IbSear.ch.
 ## sandwich
 Sandwich!
 
+## set
+Change a value in the bot's settings.
+
 ## sh
 Execute a system command. Bot owner only.
 
@@ -409,6 +431,13 @@ Only the bot owner can use this.
 Unblocking commands (e.g. unblock user).
 
 Only the bot owner can use this.
+
+## userinfo
+### Aliases: uinfo
+Display information about a user, such as status and roles.
+Defaults to the user who invoked the command.
+
+* user - Optional argument. A user in the current channel to get user information about.
 
 ## usermeme
 ### Aliases: um, standard

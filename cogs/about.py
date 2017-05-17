@@ -21,15 +21,9 @@ logger = logging.getLogger(__name__)
 class About:
     """Commands that display information about the bot, user, etc."""
 
-    @commands.group(aliases=["a", "info", "i"], invoke_without_command=True)
-    async def about(self, ctx):
-        """Information subcommands, e.g. channel information."""
-        embed = helpers.generate_help_embed(self.about)
-        await ctx.send(embed=embed)
-
-    @about.command(name="bot")
+    @commands.command(aliases=["botinfo", "binfo", "about"])
     @commands.cooldown(6, 12, commands.BucketType.channel)
-    async def _infobot(self, ctx):
+    async def info(self, ctx):
         """Display bot info, e.g. library versions."""
         uptime = str(datetime.datetime.now() - ctx.bot.time_started).split(".")[0]
         embed = discord.Embed()
@@ -60,10 +54,10 @@ class About:
             pass
         await ctx.send(embed=embed)
 
-    @about.command(brief="Display guild info.", aliases=["g", "server", "s"])
+    @commands.command(brief="Display guild (server) info.", aliases=["ginfo", "serverinfo", "sinfo"])
     @commands.guild_only()
     @commands.cooldown(6, 12, commands.BucketType.channel)
-    async def guild(self, ctx):
+    async def guildinfo(self, ctx):
         """Display information about the current guild, such as owner, region, emojis, and roles."""
         guild = ctx.guild
         embed = discord.Embed(title=guild.name)
@@ -91,10 +85,10 @@ class About:
         embed.add_field(name="Roles", value=roles, inline=False)
         await ctx.send(embed=embed)
 
-    @about.command(brief="Display channel info.", aliases=["c"])
+    @commands.command(brief="Display channel info.", aliases=["cinfo"])
     @commands.guild_only()
     @commands.cooldown(6, 12, commands.BucketType.channel)
-    async def channel(self, ctx, *, channel:discord.TextChannel=None):
+    async def channelinfo(self, ctx, *, channel:discord.TextChannel=None):
         """Display information about a channel channel.
         Defaults to the current channel.
         
@@ -114,10 +108,10 @@ class About:
         embed.add_field(name="Created at", value=channel.created_at.ctime())
         await ctx.send(embed=embed)
 
-    @about.command(brief="Display user info.", aliases=["u"])
+    @commands.command(brief="Display user info.", aliases=["uinfo"])
     @commands.guild_only()
     @commands.cooldown(6, 12, commands.BucketType.channel)
-    async def user(self, ctx, *, user:discord.Member=None):
+    async def userinfo(self, ctx, *, user:discord.Member=None):
         """Display information about a user, such as status and roles.
         Defaults to the user who invoked the command.
         
