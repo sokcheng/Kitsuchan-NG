@@ -133,7 +133,6 @@ async def handle_error(ctx, exception):
         logger.warning((f"{ctx.author.name} ({ctx.author.id}) tried to issue a command but "
                         f"was denied. Attempted command: {ctx.invoked_with}"))
     else:
-        await ctx.send("An error has occurred.")
         logger.warning(f"{exception.__class__.__name__}:{exception}")
     exception = traceback.format_exc()
     logger.warning(exception)
