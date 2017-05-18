@@ -13,6 +13,10 @@ run the following command:
 
 ```python3 -m pip install -U git+https://github.com/Rapptz/discord.py@rewrite```
 
+For voice support, use:
+
+```python3 -m pip install -U https://github.com/Rapptz/discord.py/archive/rewrite.zip#egg=discord.py[voice]```
+
 Then just run `kitsuchan.py`. On first run, the bot will prompt you for a Discord OAuth token.
 
 Note that some of the bot's cogs have additional dependencies. If something breaks, just check

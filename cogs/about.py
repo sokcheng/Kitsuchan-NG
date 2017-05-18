@@ -73,7 +73,7 @@ class About:
         emojis = ", ".join((emoji.name for emoji in guild.emojis))[:1024]
         if len(emojis) > 0:
             embed.add_field(name="Custom emojis", value=emojis)
-        roles = ", ".join((role.name for role in guild.roles))[:1024]
+        roles = ", ".join((role.name for role in guild.roles if not role.is_default()))[:1024]
         embed.add_field(name="Roles", value=roles, inline=False)
         await ctx.send(embed=embed)
 
@@ -147,7 +147,7 @@ class About:
             embed.add_field(name="Playing", value=user.game.name)
         embed.add_field(name="Joined guild at", value=user.joined_at.ctime())
         embed.add_field(name="Joined Discord at", value=user.created_at.ctime())
-        roles = ", ".join((str(role) for role in user.roles))[:1024]
+        roles = ", ".join((role.name for role in user.roles if not role.is_default()))[:1024]
         embed.add_field(name="Roles", value=roles, inline=False)
         await ctx.send(embed=embed)
     

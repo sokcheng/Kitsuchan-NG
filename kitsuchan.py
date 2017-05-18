@@ -6,6 +6,7 @@
 import sys
 import datetime
 import logging
+import traceback
 
 # Third-party modules
 import asyncio
@@ -130,6 +131,8 @@ async def handle_error(ctx, exception):
                         f"was denied. Attempted command: {ctx.invoked_with}"))
     else:
         logger.warning(f"{exception.__class__.__name__}:{exception}")
+    exception = traceback.format_exc()
+    logger.warning(exception)
 
 def main():
     """It's the main function. You call this to start the bot."""

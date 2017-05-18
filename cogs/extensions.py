@@ -50,7 +50,7 @@ class Extensions:
             except Exception as error:
                 message = f"An error occurred while trying to reload {extension_name}! x.x"
                 exception = traceback.format_exc()
-                logger.info(exception)
+                logger.warning(exception)
             else:
                 message = f"Extension {extension_name} reloaded."
         else:
