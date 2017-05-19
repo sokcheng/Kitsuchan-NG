@@ -21,7 +21,7 @@ systemrandom = random.SystemRandom()
 
 # Base URL strings for RRA API.
 BASE_URL_API = "https://rra.ram.moe/i/r?type={0}"
-BASE_URL_IMAGE = "https://wia.ram.moe{0[path]}"
+BASE_URL_IMAGE = "https://cdn.ram.moe{0[path]}"
 
 # Single image links.
 IMAGE_FACEDESK = "https://media.tumblr.com/tumblr_lqegp8wjxZ1qktqch.gif"

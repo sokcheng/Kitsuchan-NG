@@ -107,9 +107,9 @@ class Random:
             message = "Some rolls have been ignored, as they were invalid."
         
         for roll_parameters in list_roll_parameters:
-            # Skip overly massive rolls.
-            if roll_parameters[1] > MAX_DICE_PER_ROLL or roll_parameters[2] > MAX_DIE_SIZE:
-                message = "Some rolls have been ignored, as they were too large."
+            # Skip overly massive rolls, and skip d0.
+            if roll_parameters[1] > MAX_DICE_PER_ROLL or roll_parameters[2] > MAX_DIE_SIZE or roll_parameters[-1] == 0:
+                message = "Some rolls have been ignored, as they were invalid."
                 continue
             
             # Actually roll the dice now.
@@ -119,7 +119,7 @@ class Random:
             list_rolls.append(roll)
         
         if len(list_rolls) == 0:
-            message = "Your rolls have been ignored, as they were too large."
+            message = "Your rolls have been ignored, as they were too large or otherwise invalid."
             raise commands.UserInputError(message)
         
         paginator = commands.Paginator()

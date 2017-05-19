@@ -70,7 +70,7 @@ class About:
         embed.add_field(name="Region", value=str(guild.region))
         embed.add_field(name="Created at", value=guild.created_at.ctime())
         # 1024 to respect embed limits
-        emojis = ", ".join((emoji.name for emoji in guild.emojis))[:1024]
+        emojis = ", ".join((f":{emoji.name}:" for emoji in guild.emojis))[:1024]
         if len(emojis) > 0:
             embed.add_field(name="Custom emojis", value=emojis)
         roles = ", ".join((role.name for role in guild.roles if not role.is_default()))[:1024]
