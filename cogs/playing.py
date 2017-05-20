@@ -43,15 +43,14 @@ class Playing:
             paginator.add_line(line)
         if len(paginator.pages) == 1:
             await ctx.send(paginator.pages[0])
-        elif len(paginator.pages) > 1 and not page_number:
-            raise commands.UserInputError(("Too many users to display neatly. "
-                                           "Re-run this command with a page number "
-                                           f"(1-{len(paginator.pages)})."))
-        else:
-            try:
-                await ctx.send(paginator.pages[page_number-1])
-            except IndexError:
-                raise commands.UserInputError("That page is not valid. :<")
+            return
+        if len(paginator.pages) > 1 and not page_number:
+            page_number = await helpers.input_number(("Enter a page number from "
+                                                      f"(1-{len(paginator.pages)})."))
+        try:
+            await ctx.send(paginator.pages[page_number-1])
+        except IndexError:
+            raise commands.UserInputError("That page is not valid. :<")
 
     @commands.command(aliases=["playing"])
     @commands.cooldown(6, 12, commands.BucketType.user)
@@ -60,6 +59,7 @@ class Playing:
         
         * game_name - The game to be checked.
         """
+        # This implementation is bad.
         game_name = game_name.lower()
         players = []
         for member in ctx.guild.members:

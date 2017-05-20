@@ -79,6 +79,25 @@ async def yes_no(ctx, client:discord.Client,
         return False
     return True
 
+async def input_number(ctx, client:discord.Client,
+                        message:str="Please enter a number within 10 seconds."):
+    """Input number helper. Ask a confirmation message with a timeout of 10 seconds.
+    
+    ctx - The context in which the question is being asked.
+    client - The client handling the question responses.
+    message - Optional messsage that the question should ask.
+    """
+    await ctx.send(message)
+    try:
+        message = await client.wait_for("message", timeout=10,
+                                        check=lambda message: message.author == ctx.message.author)
+    except asyncio.TimeoutError:
+        raise commands.UserInputError("Timed out waiting.")
+    try:
+        return int(message.clean_content.lower())
+    except ValueError:
+        raise commands.UserInputError("Not a valid number.")
+
 def count_humans(guild:discord.Guild):
     """Tally the humans in a guild."""
     num_humans = len(tuple(filter(lambda member: not member.bot, guild.members)))
