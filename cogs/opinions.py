@@ -10,6 +10,9 @@ import random
 import discord
 from discord.ext import commands
 
+# Bundled modules
+import utils
+
 logger = logging.getLogger(__name__)
 
 class Opinions:
@@ -34,12 +37,15 @@ class Opinions:
             choices[index] = choices[index].strip()
         choice = None
         # Loaded choice. The program biases in favor of pythons.
-        for choice_loaded in choices:
-            if "python" in choice_loaded.lower():
-                python = (f"{choice_loaded}, obviously",
-                          f"{choice_loaded}, duh",
-                          choice_loaded)
-                choice = random.choice(python)
+        for distance in range(0, 3):
+            for choice_loaded in choices:
+                if utils.levenshtein("python", choice_loaded.lower()) == distance:
+                    python = (f"{choice_loaded}, obviously",
+                              f"{choice_loaded}, duh",
+                              choice_loaded)
+                    choice = random.choice(python)
+                    break
+            if choice:
                 break
         # Couldn't find a python, so now the program actually choses randomly.
         if not choice:
