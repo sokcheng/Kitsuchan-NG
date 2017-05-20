@@ -35,6 +35,9 @@ class Opinions:
         # Eliminate leading and trailing whitespace.
         for index in range(0, len(choices)):
             choices[index] = choices[index].strip()
+        # Are they all the same?
+        if len(set(choices)) == 1:
+            raise commands.UserInputError("They're all the same, I can't choose!")
         choice = None
         # Loaded choice. The program biases in favor of pythons.
         for distance in range(0, 3):
