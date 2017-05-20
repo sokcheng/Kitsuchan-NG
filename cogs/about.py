@@ -216,15 +216,13 @@ class About:
         * emoji - The emoji to get information about."""
         
         embed = discord.Embed(title=emoji.name)
-        embed.description = emoji.id
-        embed.url = emoji.url
+        embed.description = f"{emoji.id} | [Full image]({emoji.url})"
         embed.add_field(name="Guild", value=f"{emoji.guild.name} ({emoji.guild.id})")
         embed.add_field(name="Managed", value=emoji.managed)
         embed.add_field(name="Created at", value=emoji.created_at.ctime())
         if not helpers.has_scanning(ctx):
             embed.set_thumbnail(url=emoji.url)
         else:
-            embed.add_field(name="Full image", value=emoji.url, inline=False)
             embed.set_footer(text="Thumbnail omitted on this channel due to image scanning.")
         await ctx.send(embed=embed)
 
