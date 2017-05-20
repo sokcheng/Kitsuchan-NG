@@ -122,7 +122,11 @@ class About:
         except AttributeError:
             pass
         embed.add_field(name="Bitrate", value=f"{channel.bitrate}bps")
-        embed.add_field(name="User limit", value=channel.user_limit)
+        if channel.user_limit > 0:
+            user_limit = channel.user_limit
+        else:
+            user_limit = None
+        embed.add_field(name="User limit", value=user_limit)
         embed.add_field(name="Created at", value=channel.created_at.ctime())
         await ctx.send(embed=embed)
     
