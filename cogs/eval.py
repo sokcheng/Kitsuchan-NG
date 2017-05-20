@@ -35,7 +35,7 @@ class Evaluation:
         for page in paginator.pages:
             await ctx.send(page)
         string_output = "\n".join(output)
-        logger.info(f"Execution of {expression} complete. Output:\n{string_output}")
+        logger.info(f"Execution of {command} complete. Output:\n{string_output}")
 
     @commands.command(name="eval")
     @commands.is_owner()
