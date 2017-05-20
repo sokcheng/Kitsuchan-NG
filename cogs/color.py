@@ -13,6 +13,8 @@ from discord.ext import commands
 import helpers
 
 BASE_URL_COLOURLOVERS_API = "http://www.colourlovers.com/img/{0}/128/128/{0}.png"
+BASE_URL_TINEYE_MULTICOLR = "http://labs.tineye.com/multicolr/#colors={0};weights=100"
+BASE_URL_COLOR_HEX = "http://www.color-hex.com/color/{0}"
 
 systemrandom = random.SystemRandom()
 
@@ -48,6 +50,10 @@ class Color:
         embed.set_thumbnail(url=image_url)
         embed.add_field(name="RGB", value=f"{color.to_rgb()}")
         embed.add_field(name="Hex code", value=f"#{color_hex_value}")
+        embed.add_field(name="Images",
+                        value=BASE_URL_TINEYE_MULTICOLR.format(color_hex_value.lower()))
+        embed.add_field(name="Information",
+                        value=BASE_URL_COLOR_HEX.format(color_hex_value.lower()))
         await ctx.send(embed=embed)
         
         if helpers.has_scanning(ctx):
