@@ -12,6 +12,8 @@ from discord.ext import commands
 # Bundled modules
 import helpers
 
+BASE_URL_COLOURLOVERS_API = "http://www.colourlovers.com/img/{0}/128/128/{0}.png"
+
 systemrandom = random.SystemRandom()
 
 class Color:
@@ -42,8 +44,7 @@ class Color:
         
         embed = discord.Embed()
         embed.color = color
-        image_url = (f"http://www.colourlovers.com/img/{color_hex_value}/"
-                     f"128/128/{color_hex_value}.png")
+        image_url = BASE_URL_COLOURLOVERS_API.format(color_hex_value)
         embed.set_thumbnail(url=image_url)
         embed.add_field(name="RGB", value=f"{color.to_rgb()}")
         embed.add_field(name="Hex code", value=f"#{color_hex_value}")
