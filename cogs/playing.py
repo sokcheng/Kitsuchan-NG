@@ -32,7 +32,7 @@ class Playing:
             await ctx.send(f"Nobody in this guild is playing anything. :<")
             return
         sorted_players = sorted(players.items(), key=lambda item: item[1], reverse=True)
-        paginator = commands.Paginator()
+        paginator = commands.Paginator(max_size=375)
         for player in sorted_players:
             if player[1] > 1:
                 plural = "s"
@@ -73,7 +73,7 @@ class Playing:
             plural = "s"
         else:
             plural = ""
-        paginator = commands.Paginator(prefix="```py", max_size=375)
+        paginator = commands.Paginator(prefix="```py")
         paginator.add_line(f"Found {len(players)} member{plural} playing {game_name}:")
         for player in players:
             line = f"{player.name}#{player.discriminator}"
