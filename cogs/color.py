@@ -39,15 +39,15 @@ class Color:
                                            "Color must be in hex format (e.g. `808080`) "
                                            "and must be between `FFFFFF` and `000000`."))
         
-        if helpers.has_scanning(ctx):
-            message = await ctx.send("Waiting on image scanning to complete... -.-;")
-        
         color_hex_value = "%0.2X%0.2X%0.2X" % (color.r, color.g, color.b)
         
         embed = discord.Embed()
         embed.color = color
         image_url = BASE_URL_COLOURLOVERS_API.format(color_hex_value)
-        embed.set_thumbnail(url=image_url)
+        if not helpers.has_scanning(ctx):
+            embed.set_thumbnail(url=image_url)
+        else:
+            embed.set_footer(text="Thumbnail omitted on this channel due to image scanning.")
         embed.add_field(name="RGB", value=f"{color.to_rgb()}")
         embed.add_field(name="Hex code", value=f"#{color_hex_value}")
         embed.add_field(name="Images",
