@@ -209,12 +209,19 @@ class About:
         """Display information for a custom emoji.
         
         * emoji - The emoji to get information about."""
+        if not helpers.has_scanning(ctx):
+            message = await ctx.send("Waiting on image scanning to complete... -.-;")
+        
         embed = discord.Embed(title=emoji.name)
         embed.description = emoji.id
+        embed.url = emoji.url
         embed.set_thumbnail(url=emoji.url)
         embed.add_field(name="Managed", value=emoji.managed)
         embed.add_field(name="Created at", value=emoji.created_at.ctime())
         await ctx.send(embed=embed)
+        
+        if not helpers.has_scanning(ctx):
+            await message.delete()
 
 def setup(bot):
     """Setup function for About."""
