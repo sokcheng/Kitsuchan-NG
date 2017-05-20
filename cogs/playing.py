@@ -73,7 +73,7 @@ class Playing:
             plural = "s"
         else:
             plural = ""
-        paginator = commands.Paginator(prefix="```py")
+        paginator = commands.Paginator(prefix="```py", max_size=375)
         paginator.add_line(f"Found {len(players)} member{plural} playing {game_name}:")
         for player in players:
             line = f"{player.name}#{player.discriminator}"
