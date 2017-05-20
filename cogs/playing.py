@@ -52,7 +52,7 @@ class Playing:
         try:
             await ctx.send(paginator.pages[page_number-1])
         except IndexError:
-            raise commands.UserInputError("That page is not valid. :<")
+            raise commands.UserInputError("That page is not valid.")
 
     @commands.command(aliases=["playing"])
     @commands.cooldown(6, 12, commands.BucketType.user)
