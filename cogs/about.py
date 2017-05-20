@@ -209,7 +209,7 @@ class About:
         """Display information for a custom emoji.
         
         * emoji - The emoji to get information about."""
-        if not helpers.has_scanning(ctx):
+        if helpers.has_scanning(ctx):
             message = await ctx.send("Waiting on image scanning to complete... -.-;")
         
         embed = discord.Embed(title=emoji.name)
