@@ -25,6 +25,7 @@ class About:
     @commands.cooldown(6, 12, commands.BucketType.channel)
     async def info(self, ctx):
         """Display bot info, e.g. library versions."""
+        
         uptime = str(datetime.datetime.now() - ctx.bot.time_started).split(".")[0]
         embed = discord.Embed()
         embed.description = ctx.bot.description
@@ -88,6 +89,7 @@ class About:
         Defaults to the current channel.
         
         * channel - Optional argument. A specific channel to get information about."""
+        
         if not channel:
             channel = ctx.channel
         embed = discord.Embed(title=f"{channel.name}")
@@ -112,6 +114,7 @@ class About:
         """Display information about a voice channel.
         
         * channel - A specific voice channel to get information about."""
+        
         embed = discord.Embed(title=f"{channel.name}")
         embed.add_field(name="Channel ID", value=str(channel.id))
         try:
@@ -131,6 +134,7 @@ class About:
         Defaults to the user who invoked the command.
         
         * user - Optional argument. A user in the current channel to get user information about."""
+        
         if not user:
             user = ctx.author
         embed = discord.Embed(title=user.display_name)
@@ -163,6 +167,7 @@ class About:
         """Display information about a role.
         
         * role - The role to display information about."""
+        
         embed = discord.Embed(title=role.name)
         embed.color = role.color
         embed.description = role.id
@@ -209,20 +214,18 @@ class About:
         """Display information for a custom emoji.
         
         * emoji - The emoji to get information about."""
-        if helpers.has_scanning(ctx):
-            message = await ctx.send("Waiting on image scanning to complete... -.-;")
         
         embed = discord.Embed(title=emoji.name)
         embed.description = emoji.id
         embed.url = emoji.url
-        embed.set_thumbnail(url=emoji.url)
         embed.add_field(name="Guild", value=f"{emoji.guild.name} ({emoji.guild.id})")
         embed.add_field(name="Managed", value=emoji.managed)
         embed.add_field(name="Created at", value=emoji.created_at.ctime())
+        if not helpers.has_scanning(ctx):
+            embed.set_thumbnail(url=emoji.url)
+        else:
+            embed.add_field(name="Full image", value=emoji.url, inline=False)
         await ctx.send(embed=embed)
-        
-        if helpers.has_scanning(ctx):
-            await message.delete()
 
 def setup(bot):
     """Setup function for About."""
