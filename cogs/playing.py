@@ -47,8 +47,8 @@ class Playing:
             return
         if len(paginator.pages) > 1 and not page_number:
             page_number = await helpers.input_number(ctx, ctx.bot,
-                                                     ("Enter a page number from "
-                                                      f"(1-{len(paginator.pages)})."))
+                                                     ("Please enter a page number from "
+                                                      f"1-{len(paginator.pages)}."))
         try:
             await ctx.send(paginator.pages[page_number-1])
         except IndexError:
