@@ -225,6 +225,7 @@ class About:
             embed.set_thumbnail(url=emoji.url)
         else:
             embed.add_field(name="Full image", value=emoji.url, inline=False)
+            embed.set_footer(text="Thumbnail omitted on this channel due to image scanning.")
         await ctx.send(embed=embed)
 
 def setup(bot):
