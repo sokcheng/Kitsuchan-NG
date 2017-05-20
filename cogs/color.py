@@ -42,7 +42,8 @@ class Color:
         
         embed = discord.Embed()
         embed.color = color
-        image_url = f"http://www.colourlovers.com/img/{color_hex_value}/128/128/{color_hex_value}.png"
+        image_url = (f"http://www.colourlovers.com/img/{color_hex_value}/"
+                     f"128/128/{color_hex_value}.png")
         embed.set_thumbnail(url=image_url)
         embed.add_field(name="RGB", value=f"{color.to_rgb()}")
         embed.add_field(name="Hex code", value=f"#{color_hex_value}")
