@@ -80,7 +80,7 @@ async def yes_no(ctx, client:discord.Client,
     return True
 
 async def input_number(ctx, client:discord.Client,
-                        message:str="Please enter a number within 10 seconds."):
+                       message:str="Please enter a number within 10 seconds."):
     """Input number helper. Ask a confirmation message with a timeout of 10 seconds.
     
     ctx - The context in which the question is being asked.
