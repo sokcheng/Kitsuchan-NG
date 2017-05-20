@@ -12,7 +12,7 @@ from discord.ext import commands
 # Bundled modules
 import helpers
 
-BASE_URL_COLOURLOVERS_API = "http://www.colourlovers.com/img/{0}/128/128/{0}.png"
+BASE_URL_COLOURLOVERS_API = "http://www.colourlovers.com/img/{0}/80/80/{0}.png"
 BASE_URL_TINEYE_MULTICOLR = "http://labs.tineye.com/multicolr/#colors={0};weights=100"
 BASE_URL_COLOR_HEX = "http://www.color-hex.com/color/{0}"
 
