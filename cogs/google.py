@@ -98,7 +98,7 @@ class Google:
     @commands.command(aliases=["kats", "kitkat", "kitkats"])
     @commands.cooldown(6, 12, commands.BucketType.channel)
     async def kat(self, ctx):
-        """Kit Kats and stuff."""
+        """Random image of a Kit Kat."""
         links = await self._google(ctx, query="kit kat", base_url=BASE_URL_GOOGLE_IMAGES)
         if isinstance(links, list):
             link = systemrandom.choice(links)
