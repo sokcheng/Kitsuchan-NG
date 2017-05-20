@@ -49,6 +49,8 @@ Convert a phrase into Base64.
 ### Aliases: bwp
 Query Bing for a wallpaper. Optional number of wallpapers.
 
+* wallpaper_count - The number of wallpapers requested.
+
 ## block
 Blocking commands (e.g. block user).
 
@@ -137,9 +139,9 @@ Checks if a user said a particular phrase.
 
 ## discrim
 ### Aliases: discriminator
-Find all users in the current guild with a given discriminator.
+Find all users the bot can see with a given discriminator.
 
-* discriminator - A discriminator to search for.
+* discriminator - (optional) A discriminator to search for.
 
 ## echo
 ### Aliases: say
@@ -256,7 +258,7 @@ None
 
 ## kat
 ### Aliases: kats, kitkat, kitkats
-Kit Kats and stuff.
+Random image of a Kit Kat.
 
 ## kick
 Kick all users mentioned by this command.
@@ -519,6 +521,10 @@ Example usage:
 
 * kit wanted
 * kit wanted @Kitsuchan
+
+## wave
+### Aliases: waving
+Wakarimasen, lol!
 
 ## what
 What?
