@@ -44,7 +44,9 @@ class Playing:
         if len(paginator.pages) == 1:
             await ctx.send(paginator.pages[0])
         elif len(paginator.pages) > 1 and not page_number:
-            raise commands.UserInputError(f"Please specify a page number (1-{len(paginator.pages)}).")
+            raise commands.UserInputError(("Too many users to display neatly. "
+                                           "Re-run this command with a page number "
+                                           f"(1-{len(paginator.pages)})."))
         else:
             try:
                 await ctx.send(paginator.pages[page_number-1])
