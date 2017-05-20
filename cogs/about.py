@@ -49,7 +49,10 @@ class About:
         embed.add_field(name="Cookies eaten", value=f"{usage_memory} megabites")
         await ctx.send(embed=embed)
     
-    async def _guild(self, ctx):
+    @commands.command(brief="Display guild (server) info.", aliases=["ginfo", "serverinfo", "sinfo"])
+    @commands.guild_only()
+    @commands.cooldown(6, 12, commands.BucketType.channel)
+    async def guildinfo(self, ctx):
         """Display information about the current guild, such as owner, region, emojis, and roles."""
         guild = ctx.guild
         embed = discord.Embed(title=guild.name)
@@ -77,20 +80,11 @@ class About:
         embed.add_field(name="Roles", value=roles, inline=False)
         await ctx.send(embed=embed)
 
-    @commands.command(brief="Display guild (server) info.", aliases=["ginfo", "serverinfo", "sinfo"])
+    @commands.command(brief="Display channel info.", aliases=["cinfo"])
     @commands.guild_only()
     @commands.cooldown(6, 12, commands.BucketType.channel)
-    async def guildinfo(self, ctx):
-        await self._guild(ctx)
-
-    @info.command(brief="Display guild (server) info.", aliases=["g", "server", "s"])
-    @commands.guild_only()
-    @commands.cooldown(6, 12, commands.BucketType.channel)
-    async def guild(self, ctx):
-        await self._guild(ctx)
-
-    async def _channel(self, ctx, *, channel:discord.TextChannel=None):
-        """Display information about a channel channel.
+    async def channelinfo(self, ctx, *, channel:discord.TextChannel=None):
+        """Display information about a text channel.
         Defaults to the current channel.
         
         * channel - Optional argument. A specific channel to get information about."""
@@ -107,21 +101,32 @@ class About:
         except AttributeError:
             pass
         embed.add_field(name="Created at", value=channel.created_at.ctime())
+        if channel.is_nsfw():
+            embed.set_footer(text="NSFW content is allowed for this channel.")
         await ctx.send(embed=embed)
-
-    @commands.command(brief="Display channel info.", aliases=["cinfo"])
+    
+    @commands.command(brief="Display voice channel info.", aliases=["vcinfo"])
     @commands.guild_only()
     @commands.cooldown(6, 12, commands.BucketType.channel)
-    async def channelinfo(self, ctx, *, channel:discord.TextChannel=None):
-        await self._channel(ctx, channel=channel)
-
-    @info.command(brief="Display channel info.", aliases=["c"])
+    async def vchannelinfo(self, ctx, *, channel:discord.VoiceChannel):
+        """Display information about a voice channel.
+        
+        * channel - A specific voice channel to get information about."""
+        embed = discord.Embed(title=f"{channel.name}")
+        embed.add_field(name="Channel ID", value=str(channel.id))
+        try:
+            embed.add_field(name="Guild", value=channel.guild.name)
+        except AttributeError:
+            pass
+        embed.add_field(name="Bitrate", value=f"{channel.bitrate}bps")
+        embed.add_field(name="User limit", value=channel.user_limit)
+        embed.add_field(name="Created at", value=channel.created_at.ctime())
+        await ctx.send(embed=embed)
+    
+    @commands.command(brief="Display user info.", aliases=["uinfo"])
     @commands.guild_only()
     @commands.cooldown(6, 12, commands.BucketType.channel)
-    async def channel(self, ctx, *, channel:discord.TextChannel=None):
-        await self._channel(ctx, channel=channel)
-
-    async def _user(self, ctx, *, user:discord.Member=None):
+    async def userinfo(self, ctx, *, user:discord.Member=None):
         """Display information about a user, such as status and roles.
         Defaults to the user who invoked the command.
         
@@ -150,18 +155,66 @@ class About:
         roles = ", ".join((role.name for role in user.roles if not role.is_default()))[:1024]
         embed.add_field(name="Roles", value=roles, inline=False)
         await ctx.send(embed=embed)
-    
-    @commands.command(brief="Display user info.", aliases=["uinfo"])
-    @commands.guild_only()
-    @commands.cooldown(6, 12, commands.BucketType.channel)
-    async def userinfo(self, ctx, *, user:discord.Member=None):
-        await self._user(ctx, user=user)
 
-    @info.command(brief="Display user info.", aliases=["u"])
+    @commands.command(brief="Display role info.", aliases=["rinfo"])
     @commands.guild_only()
     @commands.cooldown(6, 12, commands.BucketType.channel)
-    async def user(self, ctx, *, user:discord.Member=None):
-        await self._user(ctx, user=user)
+    async def roleinfo(self, ctx, *, role:discord.Role):
+        """Display information about a role.
+        
+        * role - The role to display information about."""
+        embed = discord.Embed(title=role.name)
+        embed.color = role.color
+        embed.description = role.id
+        
+        embed.add_field(name="Create instant invite", value=role.permissions.create_instant_invite)
+        embed.add_field(name="Kick members", value=role.permissions.kick_members)
+        embed.add_field(name="Ban members", value=role.permissions.ban_members)
+        embed.add_field(name="Administrator", value=role.permissions.administrator)
+        embed.add_field(name="Manage channels", value=role.permissions.manage_channels)
+        embed.add_field(name="Manage guild", value=role.permissions.manage_guild)
+        embed.add_field(name="Add reactions", value=role.permissions.add_reactions)
+        embed.add_field(name="View audit logs", value=role.permissions.view_audit_logs)
+        embed.add_field(name="Read messages", value=role.permissions.read_messages)
+        embed.add_field(name="Send messages", value=role.permissions.send_messages)
+        embed.add_field(name="Send TTS messages", value=role.permissions.send_tts_messages)
+        embed.add_field(name="Manage messages", value=role.permissions.manage_messages)
+        embed.add_field(name="Embed links", value=role.permissions.embed_links)
+        embed.add_field(name="Attach files", value=role.permissions.attach_files)
+        embed.add_field(name="Read message history", value=role.permissions.read_message_history)
+        embed.add_field(name="Mention everyone", value=role.permissions.mention_everyone)
+        embed.add_field(name="External emojis", value=role.permissions.external_emojis)
+        embed.add_field(name="Connect to voice channel", value=role.permissions.connect)
+        embed.add_field(name="Speak in voice channel", value=role.permissions.speak)
+        embed.add_field(name="Mute members", value=role.permissions.mute_members)
+        embed.add_field(name="Deafen members", value=role.permissions.deafen_members)
+        embed.add_field(name="Move members", value=role.permissions.move_members)
+        embed.add_field(name="Use voice activation", value=role.permissions.use_voice_activation)
+        embed.add_field(name="Change nickname", value=role.permissions.change_nickname)
+        embed.add_field(name="Manage nicknames", value=role.permissions.manage_nicknames)
+        
+        embed2 = discord.Embed()
+        embed2.color = role.color
+        embed2.add_field(name="Manage roles", value=role.permissions.manage_roles)
+        embed2.add_field(name="Manage webhooks", value=role.permissions.manage_webhooks)
+        embed2.add_field(name="Manage emojis", value=role.permissions.manage_emojis)
+        
+        await ctx.send(embed=embed)
+        await ctx.send(embed=embed2)
+
+    @commands.command(brief="Display emoji info.", aliases=["einfo"])
+    @commands.guild_only()
+    @commands.cooldown(6, 12, commands.BucketType.channel)
+    async def emojiinfo(self, ctx, *, emoji:discord.Emoji):
+        """Display information for a custom emoji.
+        
+        * emoji - The emoji to get information about."""
+        embed = discord.Embed(title=emoji.name)
+        embed.description = emoji.id
+        embed.set_thumbnail(url=emoji.url)
+        embed.add_field(name="Managed", value=emoji.managed)
+        embed.add_field(name="Created at", value=emoji.created_at.ctime())
+        await ctx.send(embed=embed)
 
 def setup(bot):
     """Setup function for About."""
