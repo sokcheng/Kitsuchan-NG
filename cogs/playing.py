@@ -11,6 +11,7 @@ from discord.ext import commands
 
 # Bundled modules
 import errors
+import helpers
 
 logger = logging.getLogger(__name__)
 
