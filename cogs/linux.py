@@ -21,7 +21,7 @@ BASE_URL_ARCH_NEWS = "https://www.archlinux.org/news"
 
 BASE_URL_OMGUBUNTU = "http://www.omgubuntu.co.uk/"
 IMAGE_URL_OMGUBUNTU = ("http://www.omgubuntu.co.uk/wp-content/themes/"
-                   "omgubuntu-theme-3.6.1/images/logo.png")
+                       "omgubuntu-theme-3.6.1/images/logo.png")
 
 BASE_URL_FEDORA_MAGAZINE = "https://fedoramagazine.org/"
 
