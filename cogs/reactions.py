@@ -107,7 +107,8 @@ IMAGES_WAVE = ("http://safebooru.org/images/2131/321680e22202367aebff73781458612
                "http://safebooru.org/images/531/94bee4c0ba0055eb531893c2b0b231e809b6a885.png",
                "http://safebooru.org/images/540/73530f81c9a2675df3ceb0faf0d4a6f97478b8a2.jpg",
                "http://safebooru.org/images/1753/93b7b450403c2d08cb73429356725242124fe5aa.png",
-               "http://safebooru.org/images/1818/f9286e77a04f547d8da89349ebbdae8ad40286c0.jpg")
+               "http://safebooru.org/images/1818/f9286e77a04f547d8da89349ebbdae8ad40286c0.jpg",
+               "http://safebooru.org/images/1154/954c901ff38f9f294412c4f7cb416da42a5fdc05.jpg")
 IMAGES_WHAT = ("https://media.tumblr.com/tumblr_lnvtzjiY4J1qktqch.png",
                "https://owo.whats-th.is/a740f1.png",
                "http://media.tumblr.com/tumblr_lpob17Ru5v1qktqch.gif")
