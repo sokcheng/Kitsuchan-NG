@@ -11,7 +11,11 @@ Ask the Magic 8-Ball a question.
 ## anagram
 Find possible anagrams of a phrase.
 
-* text = The message to find an anagram for.
+* phrase = The message to find an anagram for.
+
+## antergosnews
+### Aliases: annews
+Fetch the latest Antergos news.
 
 ## antigravity
 Fetch the antigravity comic from xkcd.
@@ -23,7 +27,7 @@ Fetch the latest Arch Linux news.
 ## atbash
 Convert text using a reversed alphabet.
 
-* text = The message to be encoded.
+* phrase = The message to be encoded.
 
 ## avatar
 Display a user's avatar.
@@ -39,7 +43,11 @@ Requires both the user and bot to have `ban_members` to execute.
 ## base64
 Convert a phrase into Base64.
 
-* text = The text to convert.
+* phrase = The text to convert.
+
+## bingwp
+### Aliases: bwp
+Query Bing for a wallpaper. Optional number of wallpapers.
 
 ## block
 Blocking commands (e.g. block user).
@@ -72,7 +80,7 @@ List all games currently being played in the current guild.
 
 ## channelinfo
 ### Aliases: cinfo
-Display information about a channel channel.
+Display information about a text channel.
 Defaults to the current channel.
 
 * channel - Optional argument. A specific channel to get information about.
@@ -88,14 +96,20 @@ Syntax:
 ### Aliases: cflip, coinflip
 Flip a coin.
 
+## color
+### Aliases: colour
+Display a color.
+
+* color - This represents a color. Accepts hex input.
+
 ## cry
 Cry!
 
 ## cuddle
 ### Aliases: snuggle
-Cuddle a member!
+Cuddle a user!
 
-* member - The member to be cuddled.
+* user - The user to be cuddled.
 
 ## danbooru
 ### Aliases: dbooru, db
@@ -111,6 +125,9 @@ Dead!
 Define a word.
 
 * word - A word to be looked up.
+
+## del
+Delete a value in the bot's settings by key. Bot owner only.
 
 ## didsay
 Checks if a user said a particular phrase.
@@ -130,6 +147,12 @@ Repeat the user's text back at them. Bot owner only.
 
 * text - A string to be echoed back.
 
+## emojiinfo
+### Aliases: einfo
+Display information for a custom emoji.
+
+* emoji - The emoji to get information about.
+
 ## eval
 Evaluate a Python expression. Bot owner only.
 
@@ -141,6 +164,10 @@ Convert temperature in Fahrenheit to Celsius.
 ## fdesk
 ### Aliases: facedesk
 Facedesk!
+
+## fedoranews
+### Aliases: fnews
+Fetch the latest Fedora Linux news.
 
 ## fortune
 Produce a random fortune. :3
@@ -157,6 +184,9 @@ Subcommands that decode plaintext. (e.g. from binary)
 Shortcut command to search Gelbooru through IbSear.ch.
 
 * tags - A list of tags to be used in the search criteria.
+
+## get
+Get a value in the bot's settings by key. Bot owner only.
 
 ## ghelp
 Generate a file listing currently loaded commands. Bot owner only.
@@ -187,9 +217,9 @@ Halt the bot. Only the bot owner can use this.
 Shows this message.
 
 ## hug
-Hug a member!
+Hug a user!
 
-* member - The member to be hugged.
+* user - The user to be hugged.
 
 ## ibsearch
 ### Aliases: ib, ibs
@@ -221,9 +251,12 @@ Generate an invite link for this bot.
 Translates Japanese to English, and English to Japanese.
 Works with Romaji, Hiragana, Kanji, and Katakana.
 
+## join
+None
+
 ## kat
 ### Aliases: kats, kitkat, kitkats
-Search Google Images.
+Kit Kats and stuff.
 
 ## kick
 Kick all users mentioned by this command.
@@ -231,9 +264,9 @@ Kick all users mentioned by this command.
 Requires both the user and bot to have `kick_members` to execute.
 
 ## kiss
-Kiss a member!
+Kiss a user!
 
-* member - The member to be kissed.
+* user - The user to be kissed.
 
 ## kon
 ### Aliases: konkon
@@ -245,13 +278,16 @@ Shortcut command to search Konachan through IbSear.ch.
 
 * tags - A list of tags to be used in the search criteria.
 
+## leave
+None
+
 ## lewd
 Lewd!
 
 ## lick
-Lick a member!
+Lick a user!
 
-* member - The member to be licked.
+* user - The user to be licked.
 
 ## liste
 Display list of currently-enabled bot extensions.
@@ -296,15 +332,19 @@ Nyan!
 owo
 
 ## pat
-Pat a member!
+Pat a user!
 
-* member - The member to be patted.
+* user - The user to be patted.
 
 ## ping
 ### Aliases: bang, bang!, beep, beep!, pong
 Ping the bot.
 
+## play
+None
+
 ## poke
+### Aliases: boop
 Poke!
 
 ## pokedex
@@ -351,6 +391,12 @@ Randomly generate a number. Default range 1-100.
 * start - Specify the starting number of the range.
 * end - Specify the ending number of the range.
 
+## roleinfo
+### Aliases: rinfo
+Display information about a role.
+
+* role - The role to display information about.
+
 ## roll
 Roll some dice, using D&D syntax.
 
@@ -361,7 +407,7 @@ Examples:
 ## rot13
 Convert a phrase into ROT13.
 
-* text = The text to convert.
+* phrase = The text to convert.
 
 ## rule34
 ### Aliases: r34
@@ -383,7 +429,7 @@ Shortcut command to search Safebooru through IbSear.ch.
 Sandwich!
 
 ## set
-Change a value in the bot's settings.
+Set a value in the bot's settings by key, value. Bot owner only.
 
 ## sh
 Execute a system command. Bot owner only.
@@ -391,34 +437,41 @@ Execute a system command. Bot owner only.
 ## sha3
 Convert a phrase into its SHA-3 hash.
 
-* text = The text to convert.
+* phrase = The text to convert.
 
 ## slap
-Slap a member!
+Slap a user!
 
-* member - The member to be slapped.
+* user - The user to be slapped.
 
 ## smug
 Smug!
 
 ## stare
-Stare at a member!
+Stare at a user!
 
-* member - The member to be stared at.
+* user - The user to be stared at.
+
+## stop
+None
 
 ## sudo
 Fetch the sudo comic from xkcd.
 
 ## tickle
-Tickle a member!
+Tickle a user!
 
-* member - The member to be tickled.
+* user - The user to be tickled.
 
 ## to
 Subcommands that encode plaintext. (e.g. to binary)
 
 ## triggered
 Triggered!
+
+## ubuntunews
+### Aliases: unews, omgubuntu
+Fetch the latest Ubuntu Linux news.
 
 ## uload
 ### Aliases: unload, uloade
@@ -440,13 +493,19 @@ Defaults to the user who invoked the command.
 * user - Optional argument. A user in the current channel to get user information about.
 
 ## usermeme
-### Aliases: um, standard
+### Aliases: um, umeme, standard
 Create a meme of a user. Use quotes around your arguments.
 
 Example usage:
 
 * kit usermeme "This is" "A meme"
 * kit usermeme "This is" "A meme" @Kitsuchan
+
+## vchannelinfo
+### Aliases: vcinfo
+Display information about a voice channel.
+
+* channel - A specific voice channel to get information about.
 
 ## wag
 ### Aliases: tailwag
