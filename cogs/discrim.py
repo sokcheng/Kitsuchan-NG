@@ -21,24 +21,29 @@ class Discriminator:
     @commands.guild_only()
     @commands.cooldown(6, 12, commands.BucketType.channel)
     async def discrim(self, ctx, *, discriminator:str=None):
-        """Find all users in the current guild with a given discriminator.
+        """Find all users the bot can see with a given discriminator.
         
-        * discriminator - A discriminator to search for."""
+        * discriminator - (optional) A discriminator to search for."""
         if not discriminator:
             discriminator = str(ctx.author.discriminator)
         results = []
-        for member in ctx.guild.members:
-            if str(member.discriminator) == discriminator:
-                results.append(f"{len(results)+1}. {member.name}#{member.discriminator}")
+        for user in ctx.bot.users:
+            if str(user.discriminator) == discriminator:
+                results.append(f"{len(results)+1}. {user.name}#{user.discriminator}")
         if len(results) == 0:
-            await ctx.send(f"Could not find any members in this guild with that discriminator.")
+            await ctx.send(f"I couldn't find anyone with that discriminator. :<")
             return
         paginator = commands.Paginator(prefix="```markdown")
         if len(results) > 1:
-            plural = "s"
+            plural_users = "s"
         else:
-            plural = ""
-        paginator.add_line(f"# Found {len(results)} member{plural} in this guild ({discriminator}) #")
+            plural_users = ""
+        if len(ctx.bot.guilds) > 1:
+            plural_guilds = "s"
+        else:
+            plural_guilds = ""
+        paginator.add_line((f"# Found {len(results)} user{plural_users} across "
+                            f"{len(ctx.bot.guilds)} guild{plural_guilds} ({discriminator}) #"))
         for member in results[:10]:
             paginator.add_line(member)
         if len(results) > 10:
