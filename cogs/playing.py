@@ -46,7 +46,8 @@ class Playing:
             await ctx.send(paginator.pages[0])
             return
         if len(paginator.pages) > 1 and not page_number:
-            page_number = await helpers.input_number(("Enter a page number from "
+            page_number = await helpers.input_number(ctx, ctx.bot,
+                                                     ("Enter a page number from "
                                                       f"(1-{len(paginator.pages)})."))
         try:
             await ctx.send(paginator.pages[page_number-1])
