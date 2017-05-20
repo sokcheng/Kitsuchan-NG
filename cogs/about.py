@@ -220,7 +220,7 @@ class About:
         embed.add_field(name="Created at", value=emoji.created_at.ctime())
         await ctx.send(embed=embed)
         
-        if not helpers.has_scanning(ctx):
+        if helpers.has_scanning(ctx):
             await message.delete()
 
 def setup(bot):
