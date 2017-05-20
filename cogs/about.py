@@ -27,7 +27,6 @@ class About:
         """Display bot info, e.g. library versions."""
         uptime = str(datetime.datetime.now() - ctx.bot.time_started).split(".")[0]
         embed = discord.Embed()
-        embed.color = ctx.bot.user.id % 16777216
         embed.description = ctx.bot.description
         if not helpers.has_scanning(ctx):
             embed.set_thumbnail(url=ctx.bot.user.avatar_url_as(format="png", size=128))
@@ -57,7 +56,6 @@ class About:
         """Display information about the current guild, such as owner, region, emojis, and roles."""
         guild = ctx.guild
         embed = discord.Embed(title=guild.name)
-        embed.color = guild.id % 16777216
         embed.description = str(guild.id)
         if not helpers.has_scanning(ctx):
             embed.set_thumbnail(url=guild.icon_url)
@@ -97,7 +95,6 @@ class About:
             embed.description = channel.topic
         except AttributeError:
             pass
-        embed.color = channel.id % 16777216
         embed.add_field(name="Channel ID", value=str(channel.id))
         try:
             embed.add_field(name="Guild", value=channel.guild.name)
@@ -116,7 +113,6 @@ class About:
         
         * channel - A specific voice channel to get information about."""
         embed = discord.Embed(title=f"{channel.name}")
-        embed.color = channel.id % 16777216
         embed.add_field(name="Channel ID", value=str(channel.id))
         try:
             embed.add_field(name="Guild", value=channel.guild.name)
@@ -218,9 +214,9 @@ class About:
         
         embed = discord.Embed(title=emoji.name)
         embed.description = emoji.id
-        embed.color = emoji.id % 16777216
         embed.url = emoji.url
         embed.set_thumbnail(url=emoji.url)
+        embed.add_field(name="Guild", value=f"{emoji.guild.name} ({emoji.guild.id})")
         embed.add_field(name="Managed", value=emoji.managed)
         embed.add_field(name="Created at", value=emoji.created_at.ctime())
         await ctx.send(embed=embed)
