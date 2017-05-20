@@ -9,6 +9,9 @@ import asyncio
 import discord
 from discord.ext import commands
 
+# Bundled modules
+import utils
+
 async def function_by_mentions(ctx, func, pass_member_id:bool=False, *args, **kwargs):
     """A generic helper function that executes a function on all members listed in a context.
     
@@ -91,3 +94,15 @@ def has_scanning(ctx:commands.Context):
     or (hasattr(ctx.channel, "is_nsfw") and ctx.channel.is_nsfw()):
         return False
     return True
+
+def get_emoji(ctx, expression:str):
+    bot = ctx.bot
+    try:
+        return bot.get_emoji(int(expression))
+    except Exception:
+        pass
+    expression = expression.strip(":").lower()
+    for closeness in range(0, 4):
+        for emoji in bot.emojis:
+            if utils.levenshtein(expression, emoji.name.lower()) == closeness:
+                return emoji
