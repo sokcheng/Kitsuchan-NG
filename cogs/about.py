@@ -205,12 +205,10 @@ class About:
     @commands.command(brief="Display emoji info.", aliases=["einfo"])
     @commands.guild_only()
     @commands.cooldown(6, 12, commands.BucketType.channel)
-    async def emojiinfo(self, ctx, *, emoji:str):
+    async def emojiinfo(self, ctx, *, emoji:discord.Emoji):
         """Display information for a custom emoji.
         
         * emoji - The emoji to get information about."""
-        emoji = helpers.get_emoji(ctx, emoji)
-        
         if helpers.has_scanning(ctx):
             message = await ctx.send("Waiting on image scanning to complete... -.-;")
         
