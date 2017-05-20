@@ -57,19 +57,19 @@ class About:
         """Display information about the current guild, such as owner, region, emojis, and roles."""
         guild = ctx.guild
         embed = discord.Embed(title=guild.name)
-        embed.description = str(guild.id)
+        embed.description = guild.id
         if not helpers.has_scanning(ctx):
             embed.set_thumbnail(url=guild.icon_url)
         else:
             embed.set_footer(text="Thumbnail omitted on this channel due to image scanning.")
         embed.add_field(name="Owner", value=guild.owner.name)
         num_humans = helpers.count_humans(guild)
-        embed.add_field(name="Humans", value=str(num_humans))
+        embed.add_field(name="Humans", value=num_humans)
         num_bots = helpers.count_bots(guild)
-        embed.add_field(name="Bots", value=str(num_bots))
-        count_channels = str(len(tuple(0 for x in guild.channels if isinstance(x, discord.TextChannel))))
+        embed.add_field(name="Bots", value=num_bots)
+        count_channels = len(tuple(0 for x in guild.channels if isinstance(x, discord.TextChannel)))
         embed.add_field(name="Text channels", value=count_channels)
-        count_channels_voice = str(len(tuple(0 for x in guild.channels if isinstance(x, discord.VoiceChannel))))
+        count_channels_voice = len(tuple(0 for x in guild.channels if isinstance(x, discord.VoiceChannel)))
         embed.add_field(name="Voice channels", value=count_channels_voice)
         embed.add_field(name="Region", value=str(guild.region))
         embed.add_field(name="Created at", value=guild.created_at.ctime())
@@ -97,11 +97,12 @@ class About:
             embed.description = channel.topic
         except AttributeError:
             pass
-        embed.add_field(name="Channel ID", value=str(channel.id))
+        embed.add_field(name="Channel ID", value=channel.id)
         try:
             embed.add_field(name="Guild", value=channel.guild.name)
         except AttributeError:
             pass
+        embed.add_field(name="Members", value=len(channel.members))
         embed.add_field(name="Created at", value=channel.created_at.ctime())
         if channel.is_nsfw():
             embed.set_footer(text="NSFW content is allowed for this channel.")
@@ -116,7 +117,7 @@ class About:
         * channel - A specific voice channel to get information about."""
         
         embed = discord.Embed(title=f"{channel.name}")
-        embed.add_field(name="Channel ID", value=str(channel.id))
+        embed.add_field(name="Channel ID", value=channel.id)
         try:
             embed.add_field(name="Guild", value=channel.guild.name)
         except AttributeError:
@@ -149,7 +150,7 @@ class About:
             embed.set_thumbnail(url=user.avatar_url_as(format="png", size=128))
         else:
             embed.set_footer(text="Thumbnail omitted on this channel due to image scanning.")
-        embed.add_field(name="User ID", value=str(user.id))
+        embed.add_field(name="User ID", value=user.id)
         if user.bot:
             embed.add_field(name="Bot?", value="Yes")
         status = str(user.status).capitalize()
