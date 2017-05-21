@@ -13,31 +13,20 @@ class Wallpapers:
 
     @commands.command(aliases=["bwp"])
     @commands.cooldown(6, 12, commands.BucketType.channel)
-    async def bingwp(self, ctx, wallpaper_count:int=None):
-        """Query Bing for a wallpaper. Optional number of wallpapers.
+    async def bingwp(self, ctx):
+        """Query Bing for a wallpaper."""
         
-        * wallpaper_count - The number of wallpapers requested."""
-        
-        url = BASE_URL_BING_API.format(wallpaper_count if wallpaper_count else 1000)
+        url = BASE_URL_BING_API.format(8)
 
         async with ctx.bot.session.get(url) as response:
             if response.status == 200:
                 data = await response.json()
+                image = systemrandom.choice(data["images"])
+                url = BASE_URL_BING.format(image["url"])
+                await ctx.send(url)
             else:
-                message = "Could not fetch URL."
-                raise commands.UserInputError(message)
-
-        if wallpaper_count:
-            quote = []
-            for index in range(0, min(len(data["images"]), wallpaper_count)):
-                url = BASE_URL_BING.format(data["images"][index]["url"])
-                quote.append(url)
-            quote = "\n".join(quote)
-        else:
-            image = systemrandom.choice(data["images"])
-            quote = BASE_URL_BING.format(image["url"])
-        
-        await ctx.send(quote)
+                message = "Could not fetch wallpaper. :<"
+                await ctx.send(url)
 
 def setup(bot):
     bot.add_cog(Wallpapers())

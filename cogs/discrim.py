@@ -24,32 +24,32 @@ class Discriminator:
         """Find all users the bot can see with a given discriminator.
         
         * discriminator - (optional) A discriminator to search for."""
+        
         if not discriminator:
             discriminator = str(ctx.author.discriminator)
+        
         results = []
         for user in ctx.bot.users:
             if str(user.discriminator) == discriminator:
                 results.append(f"{len(results)+1}. {user.name}#{user.discriminator}")
+        
         if len(results) == 0:
-            await ctx.send(f"I couldn't find anyone with that discriminator. :<")
-            return
-        paginator = commands.Paginator(prefix="```markdown")
-        if len(results) > 1:
-            plural_users = "s"
+            await ctx.send(f"Couldn't find anyone with that discriminator. :<")
+
         else:
-            plural_users = ""
-        if len(ctx.bot.guilds) > 1:
-            plural_guilds = "s"
-        else:
-            plural_guilds = ""
-        paginator.add_line((f"# Found {len(results)} user{plural_users} across "
-                            f"{len(ctx.bot.guilds)} guild{plural_guilds} ({discriminator}) #"))
-        for member in results[:10]:
-            paginator.add_line(member)
-        if len(results) > 10:
-            paginator.add_line(f"...and {len(results)-10} others.")
-        for page in paginator.pages:
-            await ctx.send(page)
+            paginator = commands.Paginator(prefix="```markdown")
+            paginator.add_line(f"* Guilds searched: {len(ctx.bot.guilds)}")
+            paginator.add_line(f"* Users found: {len(results)}")
+            paginator.add_line("")
+            
+            for member in results[:10]:
+                paginator.add_line(member)
+            
+            if len(results) > 10:
+                paginator.add_line(f"...and {len(results)-10} others.")
+            
+            for page in paginator.pages:
+                await ctx.send(page)
 
 def setup(bot):
     """Setup function for Utilities."""
