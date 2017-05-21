@@ -36,10 +36,10 @@ class Playing:
             return
         
         sorted_players = sorted(players.items(), key=lambda item: item[1], reverse=True)
-        paginator = commands.Paginator(prefix="```markdown", max_size=375)
+        paginator = commands.Paginator(max_size=375)
         
         for player in sorted_players:
-            line = f"{player[1]}. playing {player[0]}"
+            line = f"{player[1]} playing {player[0]}"
             line = line.replace("```", "'''")
             paginator.add_line(line)
         
