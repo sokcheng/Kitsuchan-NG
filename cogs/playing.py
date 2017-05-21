@@ -75,10 +75,11 @@ class Playing:
             plural = "s"
         else:
             plural = ""
-        paginator = commands.Paginator(prefix="```py", max_size=375)
-        paginator.add_line(f"Found {len(players)} member{plural} playing {game_name}:")
-        for player in players:
-            line = f"{player.name}#{player.discriminator}"
+        paginator = commands.Paginator(prefix="```markdown", max_size=375)
+        paginator.add_line(f"# Found {len(players)} member{plural} playing {game_name} #")
+        for index in range(0, len(players)):
+            player = players[index]
+            line = f"{index+1}. {player.name}#{player.discriminator}"
             line.replace("```", "'''")
             paginator.add_line(line)
         await ctx.send(paginator.pages[0])
