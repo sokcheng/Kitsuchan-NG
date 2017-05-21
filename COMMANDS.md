@@ -367,6 +367,12 @@ Quote a user.
 
 * user - The user you wish to quote.
 
+## ratewaifu
+### Aliases: rate
+Rate a user as a waifu.
+
+* user - The user to be rated.
+
 ## rename
 Change the bot's username. Bot owner only.
 
