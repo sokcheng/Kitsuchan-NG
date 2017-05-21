@@ -173,8 +173,14 @@ class About:
         embed.add_field(name="User ID", value=user.id)
         embed.add_field(name="Nickname", value=user.nick)
         embed.add_field(name="Bot user?", value="Yes" if user.bot else "No")
-        status = user.status.name.capitalize() if user.status.name != "dnd" else "Do Not Disturb"
+        
+        # This is a bit awkward. Basically we don't want the bot to just say Dnd.
+        if user.status.name == "dnd":
+            status = "Do Not Disturb"
+        else:
+            status = user.status.name.capitalize()
         embed.add_field(name="Status", value=status)
+        
         embed.add_field(name="Joined guild at", value=user.joined_at.ctime())
         embed.add_field(name="Joined Discord at", value=user.created_at.ctime())
         roles = ", ".join((role.name for role in user.roles if not role.is_default()))[:1024]
