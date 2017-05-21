@@ -67,18 +67,12 @@ class About:
         embed.add_field(name="Humans", value=num_humans)
         num_bots = helpers.count_bots(guild)
         embed.add_field(name="Bots", value=num_bots)
-        count_channels = len(tuple(0 for x in guild.channels if isinstance(x, discord.TextChannel)))
-        embed.add_field(name="Text channels", value=count_channels)
-        count_channels_voice = len(tuple(0 for x in guild.channels if isinstance(x, discord.VoiceChannel)))
-        embed.add_field(name="Voice channels", value=count_channels_voice)
+        embed.add_field(name="Text channels", value=len(guild.text_channels))
+        embed.add_field(name="Voice channels", value=len(guild.voice_channels))
+        embed.add_field(name="Custom emojis", value=len(guild.emojis) or None)
+        embed.add_field(name="Roles", value=len(guild.roles)-1 or None)
         embed.add_field(name="Region", value=str(guild.region))
         embed.add_field(name="Created at", value=guild.created_at.ctime())
-        # 1024 to respect embed limits
-        emojis = ", ".join((emoji.name for emoji in guild.emojis))[:1024]
-        if len(emojis) > 0:
-            embed.add_field(name="Custom emojis", value=emojis)
-        roles = ", ".join((role.name for role in guild.roles if not role.is_default()))[:1024]
-        embed.add_field(name="Roles", value=roles, inline=False)
         await ctx.send(embed=embed)
 
     @commands.command(brief="Display channel info.", aliases=["cinfo"])
@@ -142,23 +136,22 @@ class About:
         
         if not user:
             user = ctx.author
-        embed = discord.Embed(title=user.display_name)
+        title = f"{user.name}#{user.discriminator}"
+        if user.nick:
+            title = title + f" ({user.nick})"
+        if user.bot:
+            title = title + " [BOT]"
+        embed = discord.Embed(title=title)
         embed.color = user.color
-        if user.display_name != user.name:
-            embed.description = user.name
+        if user.game:
+            embed.description = f"\nPlaying **{user.game}**"
         if not helpers.has_scanning(ctx):
             embed.set_thumbnail(url=user.avatar_url_as(format="png", size=128))
         else:
             embed.set_footer(text="Thumbnail omitted on this channel due to image scanning.")
         embed.add_field(name="User ID", value=user.id)
-        if user.bot:
-            embed.add_field(name="Bot?", value="Yes")
-        status = str(user.status).capitalize()
-        if status == "Dnd":
-            status = "Do Not Disturb"
+        status = user.status.name.capitalize() if user.status.name != "dnd" else "Do Not Disturb"
         embed.add_field(name="Status", value=status)
-        if user.game:
-            embed.add_field(name="Playing", value=user.game.name)
         embed.add_field(name="Joined guild at", value=user.joined_at.ctime())
         embed.add_field(name="Joined Discord at", value=user.created_at.ctime())
         roles = ", ".join((role.name for role in user.roles if not role.is_default()))[:1024]
