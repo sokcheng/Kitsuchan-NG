@@ -105,9 +105,9 @@ class Random:
                     
                     for times in range(0, roll[0]):
                         outcome = systemrandom.randint(1, roll[1])
-                        outcomes.append(str(outcome))
+                        outcomes.append(outcome)
                     
-                    outcomes_string = ", ".join(outcomes)
+                    outcomes_string = ", ".join((str(value) for value in outcomes))
                     rolls.append(f"{expression}: {outcomes_string} ({sum(outcomes)})")
                     
                     counter += 1
