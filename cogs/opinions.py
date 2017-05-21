@@ -15,6 +15,8 @@ import utils
 
 logger = logging.getLogger(__name__)
 
+systemrandom = random.SystemRandom()
+
 class Opinions:
     """Commands that give the bot's opinion on something."""
 
@@ -46,15 +48,33 @@ class Opinions:
                     python = (f"{choice_loaded}, obviously",
                               f"{choice_loaded}, duh",
                               choice_loaded)
-                    choice = random.choice(python)
+                    choice = systemrandom.choice(python)
                     break
             if choice:
                 break
         # Couldn't find a python, so now the program actually choses randomly.
         if not choice:
-            choice = random.choice(choices)
+            choice = systemrandom.choice(choices)
         logger.info(f"Chose {choice}")
         await ctx.send(choice)
+
+    @commands.command(aliases=["rate"])
+    @commands.cooldown(6, 12, commands.BucketType.channel)
+    async def ratewaifu(self, ctx, *, user:discord.Member):
+        """Rate a user's waifu-ness.
+        
+        * user - The user to be rated.
+        """
+        is_owner = await ctx.bot.is_owner(user)
+        if is_owner:
+            await ctx.send(f"That's a secret. :3")
+        elif ctx.bot.user.id == user.id:
+            await ctx.send(f"I'm perfect, of course. :3")
+        elif user.bot:
+            await ctx.send(f"Don't be silly, bots can't be waifus. :3")
+        else:
+            rating = systemrandom.randint(0, 10)
+            await ctx.send(f"I rate **{user.display_name}** a **{rating}/10!**")
 
 def setup(bot):
     """Setup function for Reactions."""
