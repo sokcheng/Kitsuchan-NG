@@ -1,5 +1,9 @@
 # Kitsuchan-NG
 
+[![MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://github.com/n303p4/Kitsuchan-NG/blob/master/LICENSE.txt)
+[![Python](https://img.shields.io/badge/Python-3.6-brightgreen.svg)](https://python.org/)
+[![GPA](https://codeclimate.com/github/n303p4/Kitsuchan-NG/badges/gpa.svg)](https://codeclimate.com/github/n303p4/Kitsuchan-NG/)
+
 A modular, extensible Discord bot written in Python 3. There's a lot of stuff that can be
 improved, but it's easy to add functions to it.
 
