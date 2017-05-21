@@ -108,7 +108,7 @@ class Random:
                         outcomes.append(str(outcome))
                     
                     outcomes_string = ", ".join(outcomes)
-                    rolls.append(f"{outcomes_string} ({expression})")
+                    rolls.append(f"{expression}: {outcomes_string} ({sum(outcomes)})")
                     
                     counter += 1
         
