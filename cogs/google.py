@@ -56,7 +56,7 @@ class Google:
                         links[index] = json.loads(links[index].contents[0]).get("ou")
                     return links
                 elif base_url == BASE_URL_GOOGLE_NEWS:
-                    links = soup.find_all("a", class_="l _HId")
+                    links = soup.find_all("a", class_="l")
                     for index in range(len(links)):
                         links[index] = links[index]["href"]
                     return links
@@ -107,7 +107,7 @@ class Google:
             await ctx.send(links)
             logger.warning(links)
 
-    """@google.command(aliases=["n"])
+    @google.command(aliases=["n"])
     @commands.cooldown(6, 12, commands.BucketType.channel)
     async def news(self, ctx, *, query:str):
         """Search Google News."""
@@ -119,7 +119,7 @@ class Google:
             await ctx.send(message)
         else:
             await ctx.send(links)
-            logger.warning(links)"""
+            logger.warning(links)
 
 def setup(bot):
     """Setup function for Google."""
