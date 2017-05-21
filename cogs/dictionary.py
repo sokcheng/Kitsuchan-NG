@@ -37,11 +37,14 @@ class Dictionary:
         async with ctx.bot.session.get(url) as response:
             if response.status == 200:
                 data = await response.json()
+                
                 if len(data) == 0:
                     await ctx.send("Could not find any results. :<")
                     raise errors.ZeroDataLengthError()
+                
                 embed = discord.Embed(title=word)
                 embed.url = BASE_URL_OWL_API.format(word, "")
+                
                 for index in range(0, min(MAX_NUM_RESULTS, len(data))):
                     result = data[index]
                     definition = result.get('defenition')
@@ -53,8 +56,10 @@ class Dictionary:
                                          example.capitalize())
                         description = f"{description}\nExample: *{example}*"
                     embed.add_field(name=result["type"], value=description, inline=False)
-                if len(data) > MAX_NUM_RESULTS:
-                    embed.set_footer(text=f"...and {len(data)-MAX_NUM_RESULTS} other result(s)")
+                
+                embed.set_footer(text=(f"Showing {min(MAX_NUM_RESULTS, len(data))} "
+                                       f"of {len(data)} results."))
+                
                 await ctx.send(embed=embed)
                 logger.info("Data retrieved!")
             else:
