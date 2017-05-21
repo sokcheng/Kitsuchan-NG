@@ -36,6 +36,7 @@ class Random:
     @commands.cooldown(6, 12, commands.BucketType.channel)
     async def coin(self, ctx):
         """Flip a coin."""
+        
         choice = systemrandom.choice(SIDES_COIN)
         logger.info(f"Flipped a coin; it's {choice}")
         await ctx.send(choice)
@@ -47,8 +48,10 @@ class Random:
         
         * start - Specify the starting number of the range.
         * end - Specify the ending number of the range."""
+        
         if start > end:
             start, end = end, start
+        
         number = systemrandom.randint(start, end)
         message = f"{number} (random number from {start} to {end})"
         logger.info(message)
@@ -58,10 +61,13 @@ class Random:
     @commands.cooldown(6, 12, commands.BucketType.channel)
     async def rwg(self, ctx):
         """Randomly generate a word."""
+        
         async with ctx.bot.session.get(URL_RANDOM_WORD_API) as response:
+            
             if response.status == 200:
                 word = await response.text()
                 await ctx.send(word)
+            
             else:
                 message = "Could not reach API. x.x"
                 await ctx.send(message)
@@ -75,64 +81,51 @@ class Random:
         * roll 5d6 - Roll five six sided dice.
         * roll 1d20 2d8 - Roll one twenty sided die, and two eight sided dice."""
         
-        # The former list nests sublists of format [expression, num dice, num sides per die]
-        # For example, ["5d6", 5, 6]
-        
-        # The latter list nests sublists of format [expression, outcome 1, outcome 2, ...]
-        # For example, ["5d6", 1, 6, 3, 4, 3]
-        list_roll_parameters = []
-        list_rolls = []
-        
-        # Message to be sent. Instantiated as None initially.
-        message = None
-        
-        for expression in expressions:
-            if isinstance(expression, str) and REGEX_OBJECT_DND.fullmatch(expression):
-                expression_parts = re.split(REGEX_DND_SPLIT, expression)
-                # Split the expression into two ints, one for the no. of dice and one for sides.
-                # After that, insert the original expression into the front.
-                roll_parameters = [int(value) for value in expression_parts]
-                roll_parameters.insert(0, expression)
-                list_roll_parameters.append(roll_parameters)
-        
-        if len(list_roll_parameters) == 0:
-            message = "No valid rolls given; please use D&D format. (e.g. 1d6)"
-            raise commands.UserInputError(message)
-        
-        elif len(list_roll_parameters) > MAX_ROLL_COUNT:
-            message = "Too many rolls requested."
-            raise commands.UserInputError(message)
-        
-        elif len(list_roll_parameters) != len(expressions):
-            message = "Some rolls have been ignored, as they were invalid."
-        
-        for roll_parameters in list_roll_parameters:
-            # Skip overly massive rolls, and skip d0.
-            if roll_parameters[1] > MAX_DICE_PER_ROLL or roll_parameters[2] > MAX_DIE_SIZE or roll_parameters[-1] == 0:
-                message = "Some rolls have been ignored, as they were invalid."
-                continue
-            
-            # Actually roll the dice now.
-            roll = [roll_parameters[0]]
-            for times in range(roll_parameters[1]):
-                roll.append(systemrandom.randint(1, roll_parameters[2]))
-            list_rolls.append(roll)
-        
-        if len(list_rolls) == 0:
-            message = "Your rolls have been ignored, as they were too large or otherwise invalid."
-            raise commands.UserInputError(message)
+        rolls = []
         
         paginator = commands.Paginator()
         
-        for roll in list_rolls:
-            roll_string = ", ".join([str(value) for value in roll[1:]])
-            roll_sum_string = str(sum(roll[1:]))
-            paginator.add_line(f"{roll[0]}: ({roll_sum_string}) {roll_string}")
+        counter = 0
         
-        if message:
-            await ctx.send(message)
-        for page in paginator.pages:
-            await ctx.send(page)
+        for expression in expressions:
+            
+            if counter == MAX_ROLL_COUNT:
+                break
+            
+            elif REGEX_OBJECT_DND.fullmatch(expression):
+                expression_parts = re.split(REGEX_DND_SPLIT, expression)
+                # Split the expression into two ints, one for the no. of dice and one for sides.
+                # After that, insert the original expression into the front.
+                roll = [int(value) for value in expression_parts]
+                
+                if roll[0] > MAX_DICE_PER_ROLL or roll[1] > MAX_DIE_SIZE:
+                    continue
+                
+                elif roll[1] > 1 and roll[0] > 1:
+                    outcomes = []
+                    
+                    for times in range(0, roll[0]):
+                        outcome = systemrandom.randint(1, roll[1])
+                        outcomes.append(str(outcome))
+                    
+                    outcomes_string = ", ".join(outcomes)
+                    rolls.append(f"{outcomes_string} ({expression})")
+                    
+                    counter += 1
+        
+        if len(rolls) > 0:
+            for roll in rolls:
+                paginator.add_line(roll)
+            
+            for page in paginator.pages:
+                await ctx.send(page)
+        
+        else:
+            raise commands.UserInputError(("No valid rolls supplied. "
+                                           f"Please use D&D format, e.g. `5d6`.\n"
+                                           "Individual rolls cannot have more than "
+                                           f"`{MAX_DICE_PER_ROLL}` dice, and dice cannot have "
+                                           f"more than `{MAX_DIE_SIZE}` sides."))
 
 def setup(bot):
     """Setup function for random."""
