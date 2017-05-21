@@ -100,7 +100,7 @@ class Random:
                 if roll[0] > MAX_DICE_PER_ROLL or roll[1] > MAX_DIE_SIZE:
                     continue
                 
-                elif roll[1] > 1 and roll[0] > 1:
+                elif roll[1] > 1 and roll[0] >= 1:
                     outcomes = []
                     
                     for times in range(0, roll[0]):
