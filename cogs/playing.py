@@ -83,7 +83,7 @@ class Playing:
                 line = f"{index+1}. {player.name}#{player.discriminator}"
                 line.replace("```", "'''")
                 paginator.add_line(line)
-            if len(len(players)) > 10:
+            if len(players) > 10:
                 paginator.add_line(f"...and {len(players)-10} others.")
             
             await ctx.send(paginator.pages[0])
