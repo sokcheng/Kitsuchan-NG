@@ -62,11 +62,10 @@ class Playing:
         * game_name - The game to be checked.
         """
         # This implementation is bad.
-        game_name = game_name.lower()
         players = []
         for member in ctx.guild.members:
             if member.game and isinstance(member.game.name, str) \
-            and member.game.name.lower() == game_name and not member.bot:
+            and member.game.name.lower() == game_name.lower() and not member.bot:
                 players.append(member)
         if len(players) == 0:
             await ctx.send(f"Nobody in this guild is playing **{game_name}**. :<")
