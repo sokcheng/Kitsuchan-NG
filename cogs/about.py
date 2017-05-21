@@ -2,7 +2,6 @@
 
 # Standard modules
 import datetime
-import logging
 import resource
 import sys
 
@@ -12,11 +11,8 @@ from discord.ext import commands
 
 # Bundled modules
 import app_info
-import errors
 import helpers
 import settings
-
-logger = logging.getLogger(__name__)
 
 class About:
     """Commands that display information about the bot, user, etc."""
@@ -27,27 +23,36 @@ class About:
         """Display bot info, e.g. library versions."""
         
         uptime = str(datetime.datetime.now() - ctx.bot.time_started).split(".")[0]
+        
         embed = discord.Embed()
         embed.description = ctx.bot.description
+        
         if not helpers.has_scanning(ctx):
             embed.set_thumbnail(url=ctx.bot.user.avatar_url_as(format="png", size=128))
         else:
             embed.set_footer(text="Thumbnail omitted on this channel due to image scanning.")
+        
+        embed.add_field(name="Version", value=app_info.VERSION_STRING)
+        
         ainfo = await ctx.bot.application_info()
         owner = ainfo.owner.mention
-        embed.add_field(name="Version", value=app_info.VERSION_STRING)
         embed.add_field(name="Owner", value=owner)
+        
         support_guild = settings.manager.get("SUPPORT_GUILD", "")
         if len(support_guild) > 0:
             embed.add_field(name="Support guild", value=support_guild)
+        
         num_guilds = len(ctx.bot.guilds)
         num_users = len(list(filter(lambda member: not member.bot, ctx.bot.get_all_members())))
         embed.add_field(name="Serving", value=f"{num_users} people in {num_guilds} guilds")
+        
         embed.add_field(name="Uptime", value=uptime)
         embed.add_field(name="Python", value="{0}.{1}.{2}".format(*sys.version_info))
         embed.add_field(name="discord.py", value=discord.__version__)
+        
         usage_memory = round(resource.getrusage(resource.RUSAGE_SELF).ru_maxrss/1000, 2)
         embed.add_field(name="Cookies eaten", value=f"{usage_memory} megabites")
+        
         await ctx.send(embed=embed)
     
     @commands.command(brief="Display guild (server) info.", aliases=["ginfo", "serverinfo", "sinfo"])
@@ -55,24 +60,32 @@ class About:
     @commands.cooldown(6, 12, commands.BucketType.channel)
     async def guildinfo(self, ctx):
         """Display information about the current guild, such as owner, region, emojis, and roles."""
+        
         guild = ctx.guild
+        
         embed = discord.Embed(title=guild.name)
         embed.description = guild.id
+        
         if not helpers.has_scanning(ctx):
             embed.set_thumbnail(url=guild.icon_url)
         else:
             embed.set_footer(text="Thumbnail omitted on this channel due to image scanning.")
+        
         embed.add_field(name="Owner", value=guild.owner.name)
+        
         num_humans = helpers.count_humans(guild)
         embed.add_field(name="Humans", value=num_humans)
+        
         num_bots = helpers.count_bots(guild)
         embed.add_field(name="Bots", value=num_bots)
+        
         embed.add_field(name="Text channels", value=len(guild.text_channels))
         embed.add_field(name="Voice channels", value=len(guild.voice_channels))
         embed.add_field(name="Custom emojis", value=len(guild.emojis) or None)
         embed.add_field(name="Roles", value=len(guild.roles)-1 or None)
         embed.add_field(name="Region", value=str(guild.region))
         embed.add_field(name="Created at", value=guild.created_at.ctime())
+        
         await ctx.send(embed=embed)
 
     @commands.command(brief="Display channel info.", aliases=["cinfo"])
@@ -84,22 +97,29 @@ class About:
         
         * channel - Optional argument. A specific channel to get information about."""
         
-        if not channel:
-            channel = ctx.channel
+        # If channel is None, then it is set to ctx.channel.
+        channel = channel or ctx.channel
+        
         embed = discord.Embed(title=f"{channel.name}")
+        
         try:
             embed.description = channel.topic
         except AttributeError:
             pass
+        
         embed.add_field(name="Channel ID", value=channel.id)
+        
         try:
             embed.add_field(name="Guild", value=channel.guild.name)
         except AttributeError:
             pass
+        
         embed.add_field(name="Members", value=len(channel.members))
         embed.add_field(name="Created at", value=channel.created_at.ctime())
+        
         if channel.is_nsfw():
             embed.set_footer(text="NSFW content is allowed for this channel.")
+        
         await ctx.send(embed=embed)
     
     @commands.command(brief="Display voice channel info.", aliases=["vcinfo"])
@@ -134,17 +154,22 @@ class About:
         
         * user - Optional argument. A user in the current channel to get user information about."""
         
+        # If user is None, then it is set equal to ctx.author.
         if not user:
             user = ctx.author
+        
         title = f"{user.name}#{user.discriminator}"
         embed = discord.Embed(title=title)
         embed.color = user.color
+        
         if user.game:
             embed.description = f"Playing **{user.game}**"
+        
         if not helpers.has_scanning(ctx):
             embed.set_thumbnail(url=user.avatar_url_as(format="png", size=128))
         else:
             embed.set_footer(text="Thumbnail omitted on this channel due to image scanning.")
+        
         embed.add_field(name="User ID", value=user.id)
         embed.add_field(name="Nickname", value=user.nick)
         embed.add_field(name="Bot user?", value="Yes" if user.bot else "No")
@@ -154,6 +179,7 @@ class About:
         embed.add_field(name="Joined Discord at", value=user.created_at.ctime())
         roles = ", ".join((role.name for role in user.roles if not role.is_default()))[:1024]
         embed.add_field(name="Roles", value=roles, inline=False)
+        
         await ctx.send(embed=embed)
 
     @commands.command(brief="Display role info.", aliases=["rinfo"])
@@ -213,13 +239,16 @@ class About:
         
         embed = discord.Embed(title=emoji.name)
         embed.description = f"{emoji.id} | [Full image]({emoji.url})"
+        
         embed.add_field(name="Guild", value=f"{emoji.guild.name} ({emoji.guild.id})")
         embed.add_field(name="Managed", value=emoji.managed)
         embed.add_field(name="Created at", value=emoji.created_at.ctime())
+        
         if not helpers.has_scanning(ctx):
             embed.set_thumbnail(url=emoji.url)
         else:
             embed.set_footer(text="Thumbnail omitted on this channel due to image scanning.")
+        
         await ctx.send(embed=embed)
 
 def setup(bot):
