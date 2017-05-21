@@ -16,7 +16,7 @@ import helpers
 logger = logging.getLogger(__name__)
 
 class Playing:
-    """Wikipedia command."""
+    """Playing commands."""
 
     @commands.command(aliases=["games"])
     @commands.cooldown(6, 12, commands.BucketType.user)
