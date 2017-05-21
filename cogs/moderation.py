@@ -4,6 +4,7 @@
 
 # Standard modules
 import logging
+import random
 
 # Third-party modules
 import discord
@@ -15,6 +16,8 @@ import helpers
 import utils
 
 logger = logging.getLogger(__name__)
+
+systemrandom = random.SystemRandom()
 
 STATUS_INDICATORS = {"online": ":green_heart:",
                      "idle": ":yellow_heart:",
@@ -66,6 +69,17 @@ class Moderation:
             if helpers.is_moderator(ctx, member):
                 the_mods.append(member)
         return the_mods
+
+    @commands.command()
+    @commands.cooldown(1, 12, commands.BucketType.guild)
+    async def pingmod(self, ctx, *, reason:str):
+        """Automatically ping a mod.
+        
+        * reason - The reason for pinging said mod."""
+        the_mods = list(filter(lambda mod: mod.status.name == "online", self._get_mods(ctx)))
+        mod = systemrandom.choice(the_mods)
+        await ctx.send((f"{mod.mention}, you have been automatically pinged.\n"
+                        f"Reason: `{reason}`"))
 
     @commands.command(aliases=["moderators"])
     @commands.cooldown(1, 12, commands.BucketType.channel)

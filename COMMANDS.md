@@ -199,7 +199,7 @@ Glomp!
 
 ## google
 ### Aliases: g
-Search Google. Optional image and news arguments.
+Search Google. Optional image argument.
 
 Example queries:
 
@@ -253,9 +253,6 @@ Generate an invite link for this bot.
 Translates Japanese to English, and English to Japanese.
 Works with Romaji, Hiragana, Kanji, and Katakana.
 
-## join
-None
-
 ## kat
 ### Aliases: kats, kitkat, kitkats
 Random image of a Kit Kat.
@@ -279,9 +276,6 @@ Kon, kon!
 Shortcut command to search Konachan through IbSear.ch.
 
 * tags - A list of tags to be used in the search criteria.
-
-## leave
-None
 
 ## lewd
 Lewd!
@@ -342,8 +336,10 @@ Pat a user!
 ### Aliases: bang, bang!, beep, beep!, pong
 Ping the bot.
 
-## play
-None
+## pingmod
+Automatically ping a mod.
+
+* reason - The reason for pinging said mod.
 
 ## poke
 ### Aliases: boop
@@ -369,7 +365,7 @@ Quote a user.
 
 ## ratewaifu
 ### Aliases: rate
-Rate a user as a waifu.
+Rate a user's waifu-ness.
 
 * user - The user to be rated.
 
@@ -459,9 +455,6 @@ Smug!
 Stare at a user!
 
 * user - The user to be stared at.
-
-## stop
-None
 
 ## sudo
 Fetch the sudo comic from xkcd.
