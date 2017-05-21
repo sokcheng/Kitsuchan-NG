@@ -11,6 +11,7 @@ import discord
 from discord.ext import commands
 
 # Bundled modules
+import helpers
 import utils
 
 logger = logging.getLogger(__name__)
@@ -73,7 +74,10 @@ class Opinions:
         elif user.bot:
             await ctx.send(f"Don't be silly, bots can't be waifus. :3")
         else:
-            rating = systemrandom.randint(0, 10)
+            if helpers.is_moderator(user):
+                rating = systemrandom.randint(5, 10)
+            else:
+                rating = systemrandom.randint(0, 10)
             await ctx.send(f"I rate **{user.display_name}** a **{rating}/10!**")
 
 def setup(bot):

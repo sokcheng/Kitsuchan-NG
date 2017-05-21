@@ -108,13 +108,24 @@ def count_bots(guild:discord.Guild):
     num_bots = len(tuple(filter(lambda member: member.bot, guild.members)))
     return num_bots
 
+def is_moderator(member:discord.Member):
+    """Check member permissions to decide if they're a moderator."""
+    if ctx.channel.permissions_for(member).manage_messages \
+    and ctx.channel.permissions_for(member).kick_members \
+    and ctx.channel.permissions_for(member).ban_members \
+    and not member.bot:
+        return True
+    return False
+
 def has_scanning(ctx:commands.Context):
+    """Checks if the current context has image scanning enabled."""
     if (ctx.guild and ctx.guild.explicit_content_filter.name == "disabled")\
     or (hasattr(ctx.channel, "is_nsfw") and ctx.channel.is_nsfw()):
         return False
     return True
 
 def get_emoji(ctx, expression:str):
+    """Doesn't really work that well."""
     bot = ctx.bot
     try:
         return bot.get_emoji(int(expression))

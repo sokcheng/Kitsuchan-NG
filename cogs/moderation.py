@@ -63,10 +63,7 @@ class Moderation:
     def _get_mods(self, ctx):
         the_mods = []
         for member in ctx.guild.members:
-            if ctx.channel.permissions_for(member).manage_messages \
-            and ctx.channel.permissions_for(member).kick_members \
-            and ctx.channel.permissions_for(member).ban_members \
-            and not member.bot:
+            if helpers.is_moderator(member):
                 the_mods.append(member)
         return the_mods
 
