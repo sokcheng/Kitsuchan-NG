@@ -45,7 +45,9 @@ class Dictionary:
                 embed = discord.Embed(title=word)
                 embed.url = BASE_URL_OWL_API.format(word, "")
                 
-                for index in range(0, min(MAX_NUM_RESULTS, len(data))):
+                results_to_display = min(MAX_NUM_RESULTS, len(data))
+                
+                for index in range(0, results_to_display):
                     result = data[index]
                     definition = result.get('defenition')
                     description = re.sub("<.*?>|\u00E2|\u0080|\u0090", "",
@@ -57,7 +59,7 @@ class Dictionary:
                         description = f"{description}\nExample: *{example}*"
                     embed.add_field(name=result["type"], value=description, inline=False)
                 
-                embed.set_footer(text=(f"Showing {min(MAX_NUM_RESULTS, len(data))} "
+                embed.set_footer(text=(f"Showing {results_to_display} "
                                        f"of {len(data)} results."))
                 
                 await ctx.send(embed=embed)
