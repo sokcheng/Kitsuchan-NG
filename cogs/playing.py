@@ -33,23 +33,25 @@ class Playing:
         
         if len(players) == 0:
             await ctx.send(f"Nobody in this guild is playing anything. :<")
-            return
         
-        sorted_players = sorted(players.items(), key=lambda item: item[1], reverse=True)
-        paginator = commands.Paginator(max_size=375)
-        
-        for player in sorted_players:
-            line = f"{player[1]} playing {player[0]}"
-            line = line.replace("```", "'''")
-            paginator.add_line(line)
-        
-        if len(paginator.pages) == 1:
-            await ctx.send(paginator.pages[0])
-        
-        elif len(paginator.pages) > 1 and not page_number:
-            page_number = await helpers.input_number(ctx, ctx.bot,
-                                                     ("Please enter a page number from "
-                                                      f"1-{len(paginator.pages)}."))
+        else:
+            sorted_players = sorted(players.items(), key=lambda item: item[1], reverse=True)
+            
+            paginator = commands.Paginator(max_size=375)
+            
+            for player in sorted_players:
+                line = f"{player[1]} playing {player[0]}"
+                line = line.replace("```", "'''")
+                paginator.add_line(line)
+            
+            if len(paginator.pages) == 1:
+                await ctx.send(paginator.pages[0])
+                return
+            
+            elif len(paginator.pages) > 1 and not page_number:
+                page_number = await helpers.input_number(ctx, ctx.bot,
+                                                         ("Please enter a page number from "
+                                                          f"1-{len(paginator.pages)}."))
             try:
                 await ctx.send(paginator.pages[page_number-1])
             except IndexError:
