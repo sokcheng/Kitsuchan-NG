@@ -63,7 +63,7 @@ class Moderation:
     def _get_mods(self, ctx):
         the_mods = []
         for member in ctx.guild.members:
-            if helpers.is_moderator(member):
+            if helpers.is_moderator(ctx, member):
                 the_mods.append(member)
         return the_mods
 

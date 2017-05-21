@@ -74,7 +74,7 @@ class Opinions:
         elif user.bot:
             await ctx.send(f"Don't be silly, bots can't be waifus. :3")
         else:
-            if helpers.is_moderator(user):
+            if helpers.is_moderator(ctx, user):
                 rating = systemrandom.randint(5, 10)
             else:
                 rating = systemrandom.randint(0, 10)

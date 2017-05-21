@@ -108,7 +108,7 @@ def count_bots(guild:discord.Guild):
     num_bots = len(tuple(filter(lambda member: member.bot, guild.members)))
     return num_bots
 
-def is_moderator(member:discord.Member):
+def is_moderator(ctx:commands.Context, member:discord.Member):
     """Check member permissions to decide if they're a moderator."""
     if ctx.channel.permissions_for(member).manage_messages \
     and ctx.channel.permissions_for(member).kick_members \
