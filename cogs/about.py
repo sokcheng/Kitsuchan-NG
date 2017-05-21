@@ -137,19 +137,17 @@ class About:
         if not user:
             user = ctx.author
         title = f"{user.name}#{user.discriminator}"
-        if user.nick:
-            title = title + f" ({user.nick})"
-        if user.bot:
-            title = title + " [BOT]"
         embed = discord.Embed(title=title)
         embed.color = user.color
         if user.game:
-            embed.description = f"\nPlaying **{user.game}**"
+            embed.description = f"Playing **{user.game}**"
         if not helpers.has_scanning(ctx):
             embed.set_thumbnail(url=user.avatar_url_as(format="png", size=128))
         else:
             embed.set_footer(text="Thumbnail omitted on this channel due to image scanning.")
         embed.add_field(name="User ID", value=user.id)
+        embed.add_field(name="Nickname", value=user.nick)
+        embed.add_field(name="Bot user?", value="Yes" if user.bot else "No")
         status = user.status.name.capitalize() if user.status.name != "dnd" else "Do Not Disturb"
         embed.add_field(name="Status", value=status)
         embed.add_field(name="Joined guild at", value=user.joined_at.ctime())
