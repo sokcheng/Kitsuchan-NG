@@ -183,6 +183,8 @@ class About:
         
         embed.add_field(name="Joined guild at", value=user.joined_at.ctime())
         embed.add_field(name="Joined Discord at", value=user.created_at.ctime())
+        
+        # This is crap.
         roles = ", ".join((role.name for role in user.roles if not role.is_default()))[:1024]
         embed.add_field(name="Roles", value=roles, inline=False)
         
