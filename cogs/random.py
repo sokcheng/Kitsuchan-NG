@@ -89,7 +89,7 @@ class Random:
         
         for expression in expressions:
             
-            if counter == MAX_ROLL_COUNT:
+            if counter >= MAX_ROLL_COUNT:
                 break
             
             elif REGEX_OBJECT_DND.fullmatch(expression):
