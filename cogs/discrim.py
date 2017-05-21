@@ -48,8 +48,7 @@ class Discriminator:
             if len(results) > 10:
                 paginator.add_line(f"...and {len(results)-10} others.")
             
-            for page in paginator.pages:
-                await ctx.send(page)
+            await ctx.send(paginator.pages[0])
 
 def setup(bot):
     """Setup function for Utilities."""
