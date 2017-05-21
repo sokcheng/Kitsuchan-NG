@@ -162,15 +162,15 @@ class About:
         embed = discord.Embed(title=title)
         embed.color = user.color
         
+        embed.description = str(user.id)
         if user.game:
-            embed.description = f"Playing **{user.game}**"
+            embed.description += f" | Playing **{user.game}**"
         
         if not helpers.has_scanning(ctx):
             embed.set_thumbnail(url=user.avatar_url_as(format="png", size=128))
         else:
             embed.set_footer(text="Thumbnail omitted on this channel due to image scanning.")
         
-        embed.add_field(name="User ID", value=user.id)
         embed.add_field(name="Nickname", value=user.nick)
         embed.add_field(name="Bot user?", value="Yes" if user.bot else "No")
         
