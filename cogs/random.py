@@ -94,8 +94,7 @@ class Random:
             
             elif REGEX_OBJECT_DND.fullmatch(expression):
                 expression_parts = re.split(REGEX_DND_SPLIT, expression)
-                # Split the expression into two ints, one for the no. of dice and one for sides.
-                # After that, insert the original expression into the front.
+                
                 roll = [int(value) for value in expression_parts]
                 
                 if roll[0] > MAX_DICE_PER_ROLL or roll[1] > MAX_DIE_SIZE:
