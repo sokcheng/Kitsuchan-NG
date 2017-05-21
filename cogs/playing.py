@@ -39,7 +39,7 @@ class Playing:
         paginator = commands.Paginator(prefix="```markdown", max_size=375)
         
         for player in sorted_players:
-            line = f"{player[1]}. {player[0]}"
+            line = f"{player[1]}. playing {player[0]}"
             line = line.replace("```", "'''")
             paginator.add_line(line)
         
